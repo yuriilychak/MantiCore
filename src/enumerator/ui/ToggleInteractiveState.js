@@ -1,6 +1,6 @@
 /**
  * @desc enumerator with toggle states.
- * @enum {int}
+ * @enumerator {int}
  * @memberOf MANTICORE.enumerator.ui
  */
 

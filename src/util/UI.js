@@ -10,11 +10,12 @@ import Button from "ui/Button";
  * @memberOf MANTICORE.util
  */
 
-export default {
+const ui = {
     /**
      * @desc Template for hierarchy log.
      * @readonly
      * @type {string}
+     * @memberOf MANTICORE.util.ui
      * @private
      */
 
@@ -24,6 +25,7 @@ export default {
      * @desc Log to console hierarchy of widget
      * @function
      * @public
+     * @memberOf MANTICORE.util.ui
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} widget
      */
 
@@ -34,6 +36,7 @@ export default {
     /**
      * @function
      * @private
+     * @memberOf MANTICORE.util.ui
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | PIXI.DisplayObject} widget
      * @param {?string} [parentPath = null]
      * @param {int} [tabCount = 0]
@@ -137,6 +140,7 @@ export default {
      * @desc Returns element that get from path.
      * @function
      * @public
+     * @memberOf MANTICORE.util.ui
      * @param {string} path
      * @param {PIXI.Container} firstElement
      * @returns {PIXI.DisplayObject | null}
@@ -162,3 +166,5 @@ export default {
         return element;
     }
 };
+
+export default ui;

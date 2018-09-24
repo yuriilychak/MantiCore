@@ -24,9 +24,13 @@
   "dependencies": {
     "@babel/core": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
+    "@otris/jsdoc-tsd": "^1.0.4",
     "@types/pixi.js": "^4.8.1",
     "babel-loader": "^8.0.2",
+    "jsdoc": "^3.5.5",
+    "jsdoc-webpack-plugin-v2": "^2.0.2",
     "pixi.js": "^4.8.2",
+    "tsd-jsdoc": "^2.0.0-beta.6",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.1"

@@ -1,6 +1,6 @@
 /**
  * @desc Enumerator for scroll directions.
- * @enum {int}
+ * @enumerator {int}
  * @memberOf MANTICORE.enumerator.ui
  */
 

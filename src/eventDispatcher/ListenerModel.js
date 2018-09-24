@@ -89,7 +89,7 @@ class ListenerModel extends PoolModel {
      * @desc Calls by pool when model get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {*...} var_args
+     * @param {...*} var_args
      */
     reuse(var_args) {
         this._event = arguments[0];

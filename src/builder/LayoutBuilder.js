@@ -14,6 +14,7 @@ export default {
     /**
      * @desc Align elements in layout if it not grid and some dimensions can be set by items size.
      * @function
+     * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.component.ui.ComLayout} component
      */
 
@@ -134,6 +135,7 @@ export default {
      * @desc Align children in infinite layout,
      * @function
      * @private
+     * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.component.ui.ComLayout} component
      * @param {PIXI.Point | Point} offset
      * @param {PIXI.Point | Point | PIXI.ObservablePoint} padding
@@ -190,6 +192,7 @@ export default {
      * @desc Update static dimension in infinite layout,
      * @function
      * @private
+     * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.ui.Widget} owner
      * @param {string} link
      * @param {int} minDim
@@ -223,6 +226,7 @@ export default {
      * @desc Calculate align coef for dimension.
      * @function
      * @private
+     * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} align
      * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} minAlign
      * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} middleAlign
@@ -243,6 +247,7 @@ export default {
      * @desc Returns anchor point of child
      * @function
      * @private
+     * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.view.ComponentSprite | MANTICORE.view.ComponentContainer} child
      * @param {PIXI.Point | Point} zeroPoint
      * @param {PIXI.Point | Point} outPoint
@@ -256,6 +261,7 @@ export default {
      * @desc Returns max children dimensions.
      * @function
      * @private
+     * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.component.ui.ComLayout} component
      * @param {PIXI.Point | Point} outPoint
      */

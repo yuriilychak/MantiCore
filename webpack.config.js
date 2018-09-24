@@ -1,5 +1,7 @@
+const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const JsDocPlugin = require('jsdoc-webpack-plugin-v2');
 
 module.exports = {
     entry: './src/index.js',
@@ -21,17 +23,23 @@ module.exports = {
     },
     output: {
         filename: 'MantiCore.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        library: 'MANTICORE'
     },
+    plugins: [
+        new JsDocPlugin({
+            conf: path.join(__dirname, 'jsdoc.json'),
+        })
+    ],
     optimization: {
         minimizer: [new UglifyJsPlugin({
+            sourceMap: true,
             uglifyOptions: {
-                mangle: {
-                    properties: {
-                        regex: /^_/
-                    }
-                }
+                compress: true,
+                ie8: false
             }
         })]
-    }
+    },
+
+    devtool: "source-map"
 };

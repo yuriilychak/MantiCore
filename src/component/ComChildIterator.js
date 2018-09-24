@@ -114,7 +114,7 @@ class ComChildIterator extends Component {
      * @desc Calls by pool when component get from pool (Can be only override). DON'T USE IT MANUALLY!!!
      * @method
      * @public
-     * @param {*...} var_args
+     * @param {...*} var_args
      */
 
     reuse(var_args) {

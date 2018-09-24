@@ -229,7 +229,7 @@ class ComponentContainer extends PIXI.Container {
      * @method
      * @public
      * @override
-     * @param {PIXI.DisplayObject...} var_args
+     * @param {...PIXI.DisplayObject} var_args
      * @returns {PIXI.DisplayObject | PIXI.DisplayObject[]}
      */
 
@@ -262,7 +262,7 @@ class ComponentContainer extends PIXI.Container {
      * @method
      * @public
      * @override
-     * @param {PIXI.DisplayObject...} var_args
+     * @param {...PIXI.DisplayObject} var_args
      * @returns {?PIXI.DisplayObject | ?PIXI.DisplayObject[]}
      */
 

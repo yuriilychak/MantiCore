@@ -4,12 +4,15 @@
  * @memberOf MANTICORE
  */
 
-export default {
+const constant = {
     /**
      * @desc Name of collider sprite
      * @type {string}
      * @public
      * @readonly
+     * @memberOf MANTICORE.constant
      */
     COLLIDER_NAME: "imgCollider"
-}
+};
+
+export default constant;

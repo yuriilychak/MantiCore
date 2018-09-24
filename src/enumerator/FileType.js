@@ -1,6 +1,6 @@
 /**
  * @desc Enum with file types that use application.
- * @enum {string}
+ * @enumerator {string}
  * @memberOf MANTICORE.enumerator
  */
 

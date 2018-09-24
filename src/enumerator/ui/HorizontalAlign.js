@@ -1,6 +1,6 @@
 /**
  * @desc Enumerator with horizontal alignment.
- * @enum {int}
+ * @enumerator {int}
  * @memberOf MANTICORE.enumerator.ui
  */
 

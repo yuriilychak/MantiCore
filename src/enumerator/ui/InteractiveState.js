@@ -1,6 +1,6 @@
 /**
  * @desc enum with ui element interactive states.
- * @enum {int}
+ * @enumerator {int}
  * @readonly
  * @memberOf MANTICORE.enumerator.ui
  */

@@ -4,7 +4,7 @@
  * @memberOf MANTICORE.util
  */
 
-export default {
+const format = {
     /**
      * @type {int}
      * @private
@@ -15,6 +15,7 @@ export default {
      * @desc Add file type to string.
      * @public
      * @function
+     * @memberOf MANTICORE.util.format
      * @param {string} value
      * @param {MANTICORE.enumerator.FILE_TYPE} type
      * @returns {string}
@@ -26,10 +27,11 @@ export default {
 
     /**
      * @desc Format number value with numCount of zeros
+     * @function
+     * @memberOf MANTICORE.util.format
      * @param {number | string}  value
      * @param {int}  numCount
      * @returns {string}
-     * @function
      */
 
     formatNumber: function (value, numCount) {
@@ -39,8 +41,8 @@ export default {
 
     /**
      * @desc Replace char at string and return it
-     * @method
-     * @public
+     * @function
+     * @memberOf MANTICORE.util.format
      * @param {string} targetString - string to replace
      * @param {int}    index        - index of char
      * @param {string} char         - char to replace
@@ -56,8 +58,8 @@ export default {
 
     /**
      * @desc Generate unique event name.
-     * @public
      * @function
+     * @memberOf MANTICORE.util.format
      * @param {Object} target
      * @param {string} event
      * @return {string}
@@ -70,8 +72,8 @@ export default {
     /**
      * @desc Extract file name from path
      * @example "dir1/dir2/dir3/image.png" => "image";
-     * @public
      * @function
+     * @memberOf MANTICORE.util.format
      * @param {string} path
      * @returns {string}
      */
@@ -84,9 +86,10 @@ export default {
     /**
      * @desc Replace values at string
      * @example "{0} is {1}", "1", "number" -> "1 is number"
-     * @method
-     * @public
-     * @param {string...} var_args
+     * @function
+     * @memberOf MANTICORE.util.format
+     * @param {...string} var_args
+     * @returns {string}
      */
 
     replace: function (var_args) {
@@ -101,3 +104,5 @@ export default {
         return stringPattern;
     }
 };
+
+export default format;

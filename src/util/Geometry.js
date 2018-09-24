@@ -7,11 +7,12 @@ import Type from "./Type";
  * @memberOf MANTICORE.util
  */
 
-export default {
+const geometry = {
 
     /**
      * @desc Convert size to point
      * @function
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Container | Object} size - Size to convert
      * @param {number} size.width - Size to convert
      * @param {number} size.height - Size to convert
@@ -27,6 +28,7 @@ export default {
     /**
      * @desc Subtract two sizes and return result as point.
      * @function
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Container | Object} size1
      * @param {PIXI.Container | Object} size2
      * @param {number} size1.width - Size to convert
@@ -44,6 +46,7 @@ export default {
 
     /**
      * @desc Subtract points.
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
@@ -58,6 +61,7 @@ export default {
 
     /**
      * @desc Add points.
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
@@ -72,6 +76,7 @@ export default {
 
     /**
      * @desc Multiply point to number.
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
      * @param {number} multiplier
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
@@ -86,6 +91,7 @@ export default {
 
     /**
      * @desc Multiply two points.
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
@@ -100,6 +106,7 @@ export default {
 
     /**
      * @desc Return two maximum values from points.
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
@@ -114,6 +121,7 @@ export default {
 
     /**
      * @desc Return two minimum values from points.
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
@@ -128,6 +136,7 @@ export default {
 
     /**
      * @function
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
      * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
@@ -142,6 +151,7 @@ export default {
     /**
      * @function
      * @public
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
      * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
@@ -157,6 +167,7 @@ export default {
      * @desc Change point arguments
      * @function
      * @public
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} pLeft
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} pRight
@@ -174,6 +185,7 @@ export default {
      * @desc Returns is points equal.
      * @function
      * @public
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
      * @returns {boolean}
@@ -186,6 +198,7 @@ export default {
     /**
      * @desc Generate result for point transformation.
      * @private
+     * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
      * @param {number} x
      * @param {number} y
@@ -201,3 +214,5 @@ export default {
         return new PIXI.Point(x, y);
     }
 };
+
+export default geometry;

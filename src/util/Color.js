@@ -6,11 +6,12 @@ import Math from "./Math";
  * @memberOf MANTICORE.util
  */
 
-export default {
+const color = {
 
     /**
      * @desc Enum with colors.
      * @public
+     * @memberOf MANTICORE.util.color
      * @enum {int}
      * @readonly
      */
@@ -25,6 +26,7 @@ export default {
 
     /**
      * @desc Returns lightness of color.
+     * @memberOf MANTICORE.util.color
      * @param {int} color
      * @returns {int}
      */
@@ -35,6 +37,7 @@ export default {
 
     /**
      * @desc Set lightness of color and return new color.
+     * @memberOf MANTICORE.util.color
      * @param {int} color - Color for change
      * @param {int} lightness - New lightness
      * @returns {int}
@@ -48,6 +51,7 @@ export default {
 
     /**
      * @desc Returns hue of color.
+     * @memberOf MANTICORE.util.color
      * @param {int} color
      * @returns {int}
      */
@@ -58,6 +62,7 @@ export default {
 
     /**
      * @desc Set hue of color and return new color.
+     * @memberOf MANTICORE.util.color
      * @param {int} color - Color for change
      * @param {int} hue - New lightness
      * @returns {int}
@@ -71,6 +76,7 @@ export default {
 
     /**
      * @desc Returns saturation of color.
+     * @memberOf MANTICORE.util.color
      * @param {int} color
      * @returns {int}
      */
@@ -81,6 +87,7 @@ export default {
 
     /**
      * @desc Set saturation of color and return new color.
+     * @memberOf MANTICORE.util.color
      * @param {int} color - Color for change
      * @param {int} saturation - New lightness
      * @returns {int}
@@ -94,6 +101,7 @@ export default {
 
     /**
      * @desc Method for manipulate with hue
+     * @memberOf MANTICORE.util.color
      * @param {number} p
      * @param {number} q
      * @param {number} t
@@ -112,6 +120,7 @@ export default {
     /**
      * @desc Convert int to RGB values.
      * @param {int} value
+     * @memberOf MANTICORE.util.color
      * @returns {int[]}
      */
 
@@ -130,6 +139,7 @@ export default {
     /**s
      * @desc Convert int to Hls values.
      * @param {int} value
+     * @memberOf MANTICORE.util.color
      * @returns {number[]}
      */
 
@@ -142,6 +152,7 @@ export default {
      * @desc Convert HSL to int color.
      * @function
      * @public
+     * @memberOf MANTICORE.util.color
      * @param {number} hue
      * @param {number} saturation
      * @param {number} lightness
@@ -155,6 +166,7 @@ export default {
 
     /**
      * @desc Convert rgb to int
+     * @memberOf MANTICORE.util.color
      * @param {int} red
      * @param {int} green
      * @param {int} blue
@@ -167,6 +179,7 @@ export default {
 
     /**
      * @desc Convert RGB to HSL. Need for change brightness, saturation and lightness of color.
+     * @memberOf MANTICORE.util.color
      * @param {int} red
      * @param {int} green
      * @param {int} blue
@@ -218,6 +231,7 @@ export default {
      * @desc Convert HSL to RGB.
      * @function
      * @public
+     * @memberOf MANTICORE.util.color
      * @param {number} hue
      * @param {number} saturation
      * @param {number} lightness
@@ -248,4 +262,6 @@ export default {
             Math.floor(blue * Math.MAX_BYTE)
         ];
     }
-}
+};
+
+export default color;

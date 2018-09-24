@@ -1,6 +1,6 @@
 /**
  * @desc Enumerator for directions.
- * @enum {int}
+ * @enumerator {int}
  * @memberOf MANTICORE.enumerator
  */
 

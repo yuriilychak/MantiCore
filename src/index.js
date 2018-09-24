@@ -16,7 +16,7 @@ import view from "./view/index";
  * @namespace MANTICORE
  */
 
-export default {
+export {
     builder,
     component,
     constant,

@@ -8,33 +8,25 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
 
 /**
  * @type {?HTMLInputElement}
+ * @ignore
  */
 let input = null;
 /**
  * @type {string}
+ * @ignore
  */
 const defaultAttributes = "position:fixed; left:-10px; top:-10px; width:0px; height: 0px;";
 /**
  * @type {string}
+ * @ignore
  */
 const styleTemplate = "position:fixed; left:{0}px; top:{1}px; height:{2}px; width:{3}px; opacity: 0.4;";
 
 /**
  * @type {int}
+ * @ignore
  */
 const MAX_CHAR_COUNT = 1024000;
-
-/**
- * @desc Update input string
- * @function
- * @param {string} [styleString]
- * @private
- * @memberOf MANTICORE.ui.TextField
- */
-
-function _updateInputStyle(styleString = defaultAttributes) {
-    input.setAttribute("style", styleString);
-}
 
 /**
  * @desc Class for text input.
@@ -58,7 +50,7 @@ class TextField extends Label {
             input = document.createElement("input");
             input.setAttribute("type", "text");
             input.setAttribute("id", "MANTICORE.Input");
-            _updateInputStyle();
+            TextField._updateInputStyle();
             document.body.appendChild(input);
         }
 
@@ -377,13 +369,13 @@ class TextField extends Label {
         const y = this.worldTransform.ty;
         const globalSize = this.toGlobal(Geometry.pFromSize(this));
 
-        _updateInputStyle(Format.replace(styleTemplate, x, y, globalSize.y, globalSize.x));
+        TextField._updateInputStyle(Format.replace(styleTemplate, x, y, globalSize.y, globalSize.x));
         input.value = this.text;
         input.maxLength = this._maxLength === -1 ? MAX_CHAR_COUNT : this._maxLength;
         input.onblur = this._onInputBlurHandler.bind(this);
         input.oninput = this._onInputChangeHandler.bind(this);
         input.focus();
-        _updateInputStyle();
+        TextField._updateInputStyle();
         this._updateTextTransform();
         return true;
     }
@@ -392,6 +384,17 @@ class TextField extends Label {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Update input string
+     * @method
+     * @private
+     * @param {string} [styleString]
+     */
+
+    static _updateInputStyle(styleString = defaultAttributes) {
+        input.setAttribute("style", styleString);
+    }
 
     /**
      * @function

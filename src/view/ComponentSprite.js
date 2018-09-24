@@ -231,7 +231,7 @@ class ComponentSprite extends PIXI.Sprite {
      * @method
      * @public
      * @override
-     * @param {PIXI.DisplayObject...} var_args
+     * @param {...PIXI.DisplayObject} var_args
      * @returns {PIXI.DisplayObject | PIXI.DisplayObject[]}
      */
 
@@ -264,7 +264,7 @@ class ComponentSprite extends PIXI.Sprite {
      * @method
      * @public
      * @override
-     * @param {PIXI.DisplayObject...} var_args
+     * @param {...PIXI.DisplayObject} var_args
      * @returns {?PIXI.DisplayObject | ?PIXI.DisplayObject[]}
      */
 

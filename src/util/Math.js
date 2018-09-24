@@ -4,12 +4,13 @@
  * @memberOf MANTICORE.util
  */
 
-export default {
+const math = {
 
     /**
      * @desc Return sign of value
      * @param {number} value
      * @return {int}
+     * @memberOf MANTICORE.util.math
      */
 
     sign: function(value) {
@@ -21,6 +22,7 @@ export default {
      * @function
      * @private
      * @param {number} angle
+     * @memberOf MANTICORE.util.math
      * @return {number}
      */
 
@@ -32,7 +34,8 @@ export default {
      * @desc Performs a binary search on the host array.
      * @function
      * @param {*} element - The item to search for within the array.
-     * @param {*[]} array - Array for search.
+     * @param {Array} array - Array for search.
+     * @memberOf MANTICORE.util.math
      * @return {int} The index of the element which defaults to -1 when not found.
      */
     binaryIndexOf: function (element, array) {
@@ -61,6 +64,7 @@ export default {
      * @desc Floor number.
      * @function
      * @param {number} value
+     * @memberOf MANTICORE.util.math
      * @return {int}
      */
 
@@ -72,6 +76,7 @@ export default {
      * @desc Round number.
      * @function
      * @param {number} value
+     * @memberOf MANTICORE.util.math
      * @return {int}
      */
 
@@ -83,6 +88,7 @@ export default {
      * @desc Ceil number.
      * @function
      * @param {number} value
+     * @memberOf MANTICORE.util.math
      * @return {int}
      */
 
@@ -97,6 +103,7 @@ export default {
      * @function
      * @param {number} value
      * @param {int} [rank = 1]
+     * @memberOf MANTICORE.util.math
      * @returns {int}
      */
 
@@ -109,6 +116,7 @@ export default {
      * @function
      * @param {number} value
      * @param {int} [rank = 1]
+     * @memberOf MANTICORE.util.math
      * @returns {int}
      */
 
@@ -121,6 +129,8 @@ export default {
      * @function
      * @param {number} value - Value to round.
      * @param {int} [numCount = 2] - Num count after dot to round.
+     * @memberOf MANTICORE.util.math
+     * @returns {number}
      */
 
     toFixed(value, numCount = 2) {
@@ -145,6 +155,7 @@ export default {
      * @public
      * @readonly
      * @const
+     * @memberOf MANTICORE.util.math
      */
 
     PI: 3.14159265,
@@ -155,6 +166,7 @@ export default {
      * @public
      * @readonly
      * @const
+     * @memberOf MANTICORE.util.math
      */
 
     HALF_CIRCLE: 180,
@@ -165,6 +177,7 @@ export default {
      * @public
      * @readonly
      * @const
+     * @memberOf MANTICORE.util.math
      */
 
     MAX_BYTE: 255,
@@ -173,6 +186,8 @@ export default {
      * @desc Calculate fast sin with low precision.
      * @function
      * @param {number} angle
+     * @memberOf MANTICORE.util.math
+     * @returns {number}
      */
 
     sin: function (angle) {
@@ -187,6 +202,8 @@ export default {
      * @desc Calculate fast sin with low precision.
      * @function
      * @param {number} angle
+     * @memberOf MANTICORE.util.math
+     * @returns {number}
      */
 
     cos: function (angle) {
@@ -201,8 +218,9 @@ export default {
 
     /**
      * @desc Returns max value of arguments.
-     * @param {number..} var_args
+     * @param {...number} var_args
      * @returns {number}
+     * @memberOf MANTICORE.util.math
      */
 
     max: function(var_args) {
@@ -221,7 +239,8 @@ export default {
 
     /**
      * @desc Returns min value of arguments.
-     * @param {number..} var_args
+     * @param {...number} var_args
+     * @memberOf MANTICORE.util.math
      * @returns {number}
      */
 
@@ -243,6 +262,7 @@ export default {
      * @desc Convert degrees to radians
      * @function
      * @param {number} degrees
+     * @memberOf MANTICORE.util.math
      * @return {number}
      */
 
@@ -256,6 +276,7 @@ export default {
      * @param {number} value
      * @param {number} leftBound
      * @param {number} rightBound
+     * @memberOf MANTICORE.util.math
      * @returns {number}
      */
 
@@ -267,6 +288,7 @@ export default {
      * @desc Convert radians to degrees
      * @function
      * @param {number} radians
+     * @memberOf MANTICORE.util.math
      * @return {number}
      */
 
@@ -279,6 +301,7 @@ export default {
      * @function
      * @param {number} value - Value to convert.
      * @param {boolean} [isRound = false] - Is need to round value.
+     * @memberOf MANTICORE.util.math
      * @returns {number}
      */
 
@@ -291,6 +314,7 @@ export default {
      * @desc Convert percent to float
      * @function
      * @param {number} value
+     * @memberOf MANTICORE.util.math
      * @returns {number}
      */
 
@@ -298,3 +322,5 @@ export default {
         return value * 0.01;
     }
 };
+
+export default math;

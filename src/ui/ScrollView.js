@@ -320,7 +320,7 @@ class ScrollView extends Panel {
      * @method
      * @public
      * @override
-     * @param {PIXI.DisplayObject...} var_args
+     * @param {...PIXI.DisplayObject} var_args
      * @returns {PIXI.DisplayObject | PIXI.DisplayObject[]}
      */
 
@@ -350,7 +350,7 @@ class ScrollView extends Panel {
      * @method
      * @public
      * @override
-     * @param {PIXI.DisplayObject...} var_args
+     * @param {...PIXI.DisplayObject} var_args
      * @returns {?PIXI.DisplayObject | ?PIXI.DisplayObject[]}
      */
 

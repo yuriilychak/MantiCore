@@ -121,3 +121,12 @@
  * @param {PIXI.DisplayObject} child
  * @memberOf MANTICORE.view.callback
  */
+
+/**
+ * @desc Object for store event data
+ * @name EventData
+ * @memberOf MANTICORE.eventDispatcher.
+ * @typedef {Object}
+ * @param {string} type - Name of event.
+ * @param {?Object} data - Data for dispatch
+ */

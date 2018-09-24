@@ -710,6 +710,7 @@ export default {
      * @function
      * @param {string} name
      * @param {string} link
+     * @memberOf MANTICORE.ui.parser
      * @returns {MANTICORE.ui.Widget}
      */
     parseElement: function (name, link) {

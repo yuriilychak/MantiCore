@@ -4,11 +4,12 @@
  * @memberOf MANTICORE.util
  */
 
-export default {
+const type = {
 
     /**
      * @desc Check the obj whether is undefined or not.
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -20,6 +21,7 @@ export default {
     /**
      * @desc Check is obj null.
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -31,6 +33,7 @@ export default {
     /**
      * @desc Check is obj null or undefined.
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -42,6 +45,7 @@ export default {
     /**
      * @desc Check prototype.
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {Object} obj
      * @param {string} link
      * @returns {boolean}
@@ -55,6 +59,7 @@ export default {
     /**
      * @desc Check the obj whether is function or not
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -65,6 +70,7 @@ export default {
     /**
      * @desc Check the obj whether is number or not
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -75,6 +81,7 @@ export default {
     /**
      * @desc Check the obj whether is string or not
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -86,6 +93,7 @@ export default {
     /**
      * @desc Init value if ite empty returns default value;
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} value
      * @param [defaultValue = null]
      * @returns {*}
@@ -98,6 +106,7 @@ export default {
     /**
      * @desc Check the obj whether is array or not
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -109,6 +118,7 @@ export default {
     /**
      * @desc Check the obj whether is object or not
      * @function
+     * @memberOf MANTICORE.util.type
      * @param {*} obj
      * @returns {boolean}
      */
@@ -117,3 +127,5 @@ export default {
         return typeof obj === "object" && this._isProtoEqual(obj, "Object");
     }
 };
+
+export default type;

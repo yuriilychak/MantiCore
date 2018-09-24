@@ -20,7 +20,7 @@ class Repository {
         this._keys = [];
         /**
          * @desc Array with values;
-         * @type {*[]}
+         * @type {Array}
          * @private
          */
         this._values = [];
@@ -164,7 +164,7 @@ class Repository {
 
     /**
      * @desc Returns copy of array with values;
-     * @returns {*[]}
+     * @returns {Array}
      */
 
     get values() {

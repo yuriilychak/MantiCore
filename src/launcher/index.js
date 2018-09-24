@@ -13,6 +13,7 @@ export default {
     /**
      * @desc create application with parameters.
      * @function
+     * @memberOf MANTICORE.launcher
      * @param {MANTICORE.enumerator.RESOLUTION} resolution
      * @param {int} [bgColor = 0x000000]
      */
@@ -47,6 +48,7 @@ export default {
     /**
      * @desc return linkage to application object.
      * @function
+     * @memberOf MANTICORE.launcher
      * @returns {PIXI.Application}
      */
     getApp() {
@@ -56,6 +58,7 @@ export default {
     /**
      * @desc Run new scene with replacing old.
      * @function
+     * @memberOf MANTICORE.launcher
      * @param {MANTICORE.view.Scene} scene
      */
 

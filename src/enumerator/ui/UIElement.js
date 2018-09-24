@@ -1,6 +1,6 @@
 /**
  * @desc enum with UI elements that support. Need for parsing.
- * @enum {int}
+ * @enumerator {int}
  * @readonly
  * @memberOf MANTICORE.enumerator.ui
  */

@@ -1,6 +1,6 @@
 /**
  * @desc Enumerator for progress bar type.
- * @enum {int}
+ * @enumerator {int}
  * @memberOf MANTICORE.enumerator.ui
  */
 

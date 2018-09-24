@@ -1,6 +1,6 @@
 /**
  * @desc Enum that contains panel graphic types.
- * @enum {int}
+ * @enumerator {int}
  * @readonly
  * @memberOf MANTICORE.enumerator.ui
  */

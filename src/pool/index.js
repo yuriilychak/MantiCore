@@ -7,11 +7,12 @@ import Repository from "repository/Repository";
  * @memberOf MANTICORE
  */
 
-export default {
+const pool = {
 
     /**
      * @desc Pool repository
      * @type {MANTICORE.repository.Repository}
+     * @memberOf MANTICORE.pool
      * @private
      */
 
@@ -20,6 +21,7 @@ export default {
     /**
      * @desc Variable for generate pool id's.
      * @type {int}
+     * @memberOf MANTICORE.pool
      * @private
      */
     _id: 0,
@@ -27,6 +29,7 @@ export default {
     /**
      * @desc Returns PID of object
      * @function
+     * @memberOf MANTICORE.pool
      * @private
      * @param {Object} objectClass
      * @returns {int}
@@ -56,6 +59,7 @@ export default {
     /**
      * @desc Destroy all elements by key.
      * @function
+     * @memberOf MANTICORE.pool
      * @private
      * @param {int} id
      */
@@ -74,6 +78,7 @@ export default {
     /**
      * @desc Put object in pool.
      * @function
+     * @memberOf MANTICORE.pool
      * @param {Object} object
      */
 
@@ -103,6 +108,7 @@ export default {
     /**
      * @desc Check if this kind of object has already in pool.
      * @function
+     * @memberOf MANTICORE.pool
      * @param {Object} objectClass
      * @returns {boolean} if this kind of obj is already in pool return true,else return false;
      */
@@ -119,6 +125,7 @@ export default {
     /**
      * @desc Remove the obj if you want to delete it.
      * @function
+     * @memberOf MANTICORE.pool
      * @param {Object} object
      */
     removeObject: function (object) {
@@ -130,6 +137,7 @@ export default {
     /**
      * @desc Get object from pool.
      * @function
+     * @memberOf MANTICORE.pool
      * @param {...*} var_args
      */
     getObject: function (var_args) {
@@ -153,6 +161,7 @@ export default {
     /**
      * @desc Remove all objects from pool and reset it.
      * @function
+     * @memberOf MANTICORE.pool
      */
 
     drain: function () {
@@ -166,3 +175,5 @@ export default {
         this._pool.clear();
     }
 };
+
+export default pool;

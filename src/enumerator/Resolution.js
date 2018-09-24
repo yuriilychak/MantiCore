@@ -1,10 +1,8 @@
 /**
  * @desc Enum with game resolutions;
- * @name RESOLUTION
  * @memberOf MANTICORE.enumerator
- * @enum {int}
+ * @enumerator {int}
  */
-
 const RESOLUTION = {
     R_NONE: 0,
     R_1280_720: 1,

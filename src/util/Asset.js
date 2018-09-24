@@ -7,11 +7,12 @@ import Format from "./Format";
  * @memberOf MANTICORE.util
  */
 
-export default {
+const asset = {
 
     /**
      * @desc Get sprite frame if it exist or return null.
      * @function
+     * @memberOf MANTICORE.util.asset
      * @param {string} link
      * @return {PIXI.Texture | null}
      */
@@ -35,10 +36,13 @@ export default {
      * @desc Create white sprite from default PIXI texture.
      * @function
      * @public
+     * @memberOf MANTICORE.util.asset
      * @returns {PIXI.Sprite}
      */
 
     createWhiteSprite() {
         return PIXI.Sprite.from(PIXI.Texture.WHITE);
     }
-}
+};
+
+export default asset;
