@@ -1,0 +1,145 @@
+import Type from "util/Type";
+import EventDispatcher from "eventDispatcher/index";
+import BaseManager from "./BaseManager";
+
+/**
+ * @desc Class for manipulate with event listeners of complex objects.
+ * @class
+ * @memberOf MANTICORE.manager
+ * @extends MANTICORE.manager.BaseManager
+ */
+
+class ListenerManager extends BaseManager {
+    /**
+     * @constructor
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component} owner
+     */
+    constructor(owner) {
+        super(owner);
+
+        /**
+         * @desc Flag is block event dispatching for owner.
+         * @type {boolean}
+         * @private
+         */
+
+        this._blockEvents = false;
+
+        /**
+         * @desc Array with events that listen owner.
+         * @type {string[]}
+         * @private
+         */
+
+        this._events = [];
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @returns {boolean}
+     */
+
+    get blockEvents() {
+        return this._blockEvents;
+    }
+
+    /**
+     * @public
+     * @param {boolean} value
+     */
+
+    set blockEvents(value) {
+        if (this._blockEvents === value) {
+            return;
+        }
+        this._blockEvents = value;
+    }
+
+    /**
+     * @desc Returns is owner currently listen event.
+     * @public
+     * @param {string} event
+     * @returns {boolean}
+     */
+
+    isListenEvent(event) {
+        return this._events.indexOf(event) !== -1;
+    }
+
+    /**
+     * @desc Add event listener for element.
+     * @method
+     * @public
+     * @param {string} event
+     * @param {Function} handler
+     */
+
+    addEventListener(event, handler) {
+        if (this.isListenEvent(event)) {
+            return;
+        }
+        this._events.push(event);
+        EventDispatcher.addListener(event, handler, this.owner);
+    }
+
+    /**
+     * @desc Remove event listener.
+     * @method
+     * @public
+     * @param {string} event
+     */
+
+    removeEventListener(event) {
+        if (!this.isListenEvent(event)) {
+            return;
+        }
+        const index = this._events.indexOf(event);
+        this._events.splice(index, 1);
+        EventDispatcher.removeListener(event, this.owner);
+    }
+
+    /**
+     * @desc Remove all event listeners.
+     * @method
+     * @public
+     */
+
+    removeAllEventListeners() {
+        const eventCount = this._events.length;
+        for (let i = 0; i < eventCount; ++i) {
+            EventDispatcher.removeListener(this._events[i], this.owner);
+        }
+    }
+
+    /**
+     * @desc Dispatch event.
+     * @method
+     * @public
+     * @param {string} event
+     * @param {*} [data = null]
+     */
+
+    dispatchEvent(event, data = null) {
+        if (Type.isNull(event) || this._blockEvents) {
+            return;
+        }
+        EventDispatcher.dispatch(event, this.owner, data);
+    }
+
+    /**
+     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
+     * @method
+     * @public
+     */
+
+    destroy() {
+        this.removeAllEventListeners();
+    }
+}
+
+export default ListenerManager;

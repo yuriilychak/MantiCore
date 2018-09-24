@@ -1,0 +1,30 @@
+{
+  "name": "manti-core",
+  "version": "0.0.1",
+  "description": "Game engine based on PIXI.js renderer.",
+  "private": true,
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuriilychak/MantiCore.git"
+  },
+  "keywords": [
+    "game",
+    "js",
+    "ui"
+  ],
+  "author": "Yurii Lychak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuriilychak/MantiCore/issues"
+  },
+  "homepage": "https://github.com/yuriilychak/MantiCore#readme",
+  "dependencies": {
+    "@types/pixi.js": "^4.8.1",
+    "pixi.js": "^4.8.2",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1"
+  }
+}
