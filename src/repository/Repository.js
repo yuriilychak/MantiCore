@@ -155,7 +155,7 @@ class Repository {
 
     /**
      * @desc Returns copy of array with keys;
-     * @returns {int[] | string[]}
+     * @type {int[] | string[]}
      */
 
     get keys() {
@@ -164,7 +164,7 @@ class Repository {
 
     /**
      * @desc Returns copy of array with values;
-     * @returns {Array}
+     * @type {Array}
      */
 
     get values() {

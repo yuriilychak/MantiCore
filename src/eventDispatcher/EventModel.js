@@ -46,7 +46,7 @@ class EventModel extends PoolModel {
 
     /**
      * @desc Returns data of event.
-     * @returns {*}
+     * @type {*}
      */
 
     get data() {
@@ -55,7 +55,7 @@ class EventModel extends PoolModel {
 
     /**
      * @desc Returns target of event.
-     * @returns {?Object}
+     * @type {?Object}
      */
 
     get target() {

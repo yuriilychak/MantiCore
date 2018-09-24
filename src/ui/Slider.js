@@ -99,17 +99,12 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventScroll() {
         return this._eventScroll;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventScroll(value) {
         if (this._eventScroll === value) {
@@ -120,17 +115,12 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
         return super.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set width(value) {
         super.width = value;
@@ -142,17 +132,12 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set height(value) {
         super.height = value;
@@ -164,17 +149,12 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @return {string | null}
+     * @type {string | null}
      */
 
     get progressFrameName() {
         return this.hasProgressBar() ? this._progressBar.frameName : null;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set progressFrameName(value) {
         const isEmpty = Type.isNull(value);
@@ -203,7 +183,7 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @return {MANTICORE.ui.ProgressBar | null}
+     * @type {MANTICORE.ui.ProgressBar | null}
      */
 
     get progressBar() {
@@ -223,17 +203,12 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.DIRECTION}
+     * @type {MANTICORE.enumerator.DIRECTION}
      */
 
     get direction() {
         return this._direction;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.DIRECTION} value
-     */
 
     set direction(value) {
         if (this._direction === value) {
@@ -247,17 +222,12 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @return {number}
+     * @type {number}
      */
 
     get progress() {
         return this._progress;
     }
-
-    /**
-     * @public
-     * @param {number} value
-     */
 
     set progress(value) {
         if (this._progress === value) {
@@ -271,17 +241,12 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get enabled() {
         return this._isEnabled;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set enabled(value) {
         if (this._isEnabled === value) {

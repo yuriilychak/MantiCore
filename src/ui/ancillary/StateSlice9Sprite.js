@@ -126,17 +126,12 @@ class StateSlice9Sprite extends Slice9Sprite {
 
     /**
      * @public
-     * @return {int|string}
+     * @type {int|string}
      */
 
     get state() {
         return this._currentState;
     }
-
-    /**
-     * @public
-     * @param {string | int} value
-     */
 
     set state(value) {
         if (!this._states.hasElement(value) || this._currentState === value) {

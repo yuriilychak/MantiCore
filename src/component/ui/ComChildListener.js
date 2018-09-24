@@ -48,17 +48,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get blockEvents() {
         return super.blockEvents;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set blockEvents(value) {
         super.blockEvents = value;
@@ -83,17 +78,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventUp() {
         return this._events.getElement(INTERACTIVE_EVENT.UP);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventUp(value) {
         this._updateEvent(INTERACTIVE_EVENT.UP, value);
@@ -101,17 +91,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDown() {
         return this._events.getElement(INTERACTIVE_EVENT.DOWN);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventDown(value) {
         this._updateEvent(INTERACTIVE_EVENT.DOWN, value);
@@ -119,17 +104,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventOver() {
         return this._events.getElement(INTERACTIVE_EVENT.OVER);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventOver(value) {
         this._updateEvent(INTERACTIVE_EVENT.OVER, value);
@@ -137,17 +117,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventOut() {
         return this._events.getElement(INTERACTIVE_EVENT.OUT);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventOut(value) {
         this._updateEvent(INTERACTIVE_EVENT.OUT, value);
@@ -155,17 +130,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventMove() {
         return this._events.getElement(INTERACTIVE_EVENT.MOVE);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventMove(value) {
         this._updateEvent(INTERACTIVE_EVENT.MOVE, value);
@@ -173,17 +143,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDrag() {
         return this._events.getElement(INTERACTIVE_EVENT.DRAG);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventDrag(value) {
         this._updateEvent(INTERACTIVE_EVENT.DRAG, value);
@@ -191,17 +156,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventClick() {
         return this._events.getElement(INTERACTIVE_EVENT.CLICK);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventClick(value) {
         this._updateEvent(INTERACTIVE_EVENT.CLICK, value);
@@ -209,7 +169,7 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDragFinish() {
@@ -227,17 +187,12 @@ class ComChildListener extends ComChildIterator {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDragStart() {
         return this._events.getElement(INTERACTIVE_EVENT.DRAG_START);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventDragStart(value) {
         this._updateEvent(INTERACTIVE_EVENT.DRAG_START, value);

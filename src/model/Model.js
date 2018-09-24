@@ -21,18 +21,12 @@ class Model {
 
     /**
      * @desc Returns id of model.
-     * @returns {int}
+     * @type {int}
      */
 
     get id() {
         return this._id;
     }
-
-    /**
-     * @desc Set Id of model. Use only in pool.
-     * @protected
-     * @param {int} value
-     */
 
     set id(value) {
         if (this._id === value) {

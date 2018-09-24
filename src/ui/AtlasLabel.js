@@ -112,17 +112,12 @@ class AtlasLabel extends BaseLabel {
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get text() {
         return this._text;
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set text(value) {
         if (this._text === value) {
@@ -192,17 +187,12 @@ class AtlasLabel extends BaseLabel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
         return super.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set width(value) {
         super.width = value;
@@ -211,17 +201,12 @@ class AtlasLabel extends BaseLabel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set height(value) {
         super.height = value;
@@ -230,17 +215,12 @@ class AtlasLabel extends BaseLabel {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get fontSize() {
         return this._fontSize;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set fontSize(value) {
         if (this._fontSize === value) {
@@ -266,7 +246,7 @@ class AtlasLabel extends BaseLabel {
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get fontName() {
@@ -275,7 +255,7 @@ class AtlasLabel extends BaseLabel {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get lineHeight() {

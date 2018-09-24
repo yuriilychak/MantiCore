@@ -68,17 +68,12 @@ class ComponentSprite extends PIXI.Sprite {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get reusable() {
         return this._memoryManager.reusable;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set reusable(value) {
         this._memoryManager.reusable = value;
@@ -86,17 +81,12 @@ class ComponentSprite extends PIXI.Sprite {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get blockEvents() {
         return this._listenerManager.blockEvents;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set blockEvents(value) {
         this._listenerManager.blockEvents = value;
@@ -104,18 +94,12 @@ class ComponentSprite extends PIXI.Sprite {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get inPool() {
         return this._memoryManager.inPool;
     }
-
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set inPool(value) {
         if (this._memoryManager.inPool === value) {
@@ -131,7 +115,7 @@ class ComponentSprite extends PIXI.Sprite {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.UI_ELEMENT}
+     * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
      */
 
     get uiType() {
@@ -197,17 +181,12 @@ class ComponentSprite extends PIXI.Sprite {
 
     /**
      * @desc Returns is container marked for update.
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get isUpdate() {
         return this._isUpdate;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set isUpdate(value) {
         if (this._isUpdate === value) {
@@ -381,11 +360,6 @@ class ComponentSprite extends PIXI.Sprite {
     dispatchEvent(event, data = null) {
         this._listenerManager.dispatchEvent(event, data);
     }
-
-    /**
-     * @protected
-     * @param {MANTICORE.enumerator.ui.UI_ELEMENT} value
-     */
 
     set uiType(value) {
         if (this._uiType === value) {

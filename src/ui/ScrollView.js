@@ -131,17 +131,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
         return super.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set width(value) {
         super.width = value;
@@ -150,17 +145,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set height(value) {
         super.height = value;
@@ -169,17 +159,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get interactive() {
         return this._innerContainer.interactive;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set interactive(value) {
         if (this._innerContainer.interactive === value) {
@@ -190,17 +175,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
      */
 
     get scrollDirection() {
         return this._scrollDirection;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} value
-     */
 
     set scrollDirection(value) {
         if (this._scrollDirection === value) {
@@ -227,17 +207,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?MANTICORE.ui.Slider}
+     * @type {?MANTICORE.ui.Slider}
      */
 
     get horizontalSlider() {
         return this._horizontalSlider;
     }
-
-    /**
-     * @public
-     * @param {?MANTICORE.ui.Slider} value
-     */
 
     set horizontalSlider(value) {
         if (this._horizontalSlider === value || this.isVertical()) {
@@ -249,17 +224,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?MANTICORE.ui.Slider}
+     * @type {?MANTICORE.ui.Slider}
      */
 
     get verticalSlider() {
         return this._verticalSlider;
     }
-
-    /**
-     * @public
-     * @param {?MANTICORE.ui.Slider} value
-     */
 
     set verticalSlider(value) {
         if (this._verticalSlider === value || this.isHorizontal()) {
@@ -271,7 +241,7 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {MANTICORE.ui.Widget}
+     * @type {MANTICORE.ui.Widget}
      */
 
     get innerContainer() {
@@ -280,17 +250,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get innerWidth() {
         return this._innerContainer.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set innerWidth(value) {
         this._innerContainer.width = value;
@@ -299,17 +264,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get innerHeight() {
         return this._innerContainer.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set innerHeight(value) {
         this._innerContainer.height = value;
@@ -568,17 +528,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventUp() {
         return this._innerContainer.eventUp;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventUp(value) {
         this._innerContainer.eventUp = value;
@@ -586,17 +541,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventDown() {
         return this._eventDown;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventDown(value) {
         if (this._eventDown === value) {
@@ -607,17 +557,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventOver() {
         return this._innerContainer.eventOver;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventOver(value) {
         this._innerContainer.eventOver = value;
@@ -625,17 +570,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventOut() {
         return this._innerContainer.eventOut;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventOut(value) {
         this._innerContainer.eventOut = value;
@@ -643,17 +583,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventMove() {
         return this._innerContainer.eventMove;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventMove(value) {
         this._innerContainer.eventMove = value;
@@ -661,17 +596,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventDrag() {
         return this._eventDrag;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventDrag(value) {
         if (this._eventDrag === value) {
@@ -682,17 +612,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventClick() {
         return this._innerContainer.eventClick;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventClick(value) {
         this._innerContainer.eventClick = value;
@@ -700,17 +625,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventDragFinish() {
         return this._innerContainer.eventDragFinish;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventDragFinish(value) {
         this._innerContainer.eventDragFinish = value;
@@ -718,17 +638,12 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @returns {?string}
+     * @type {?string}
      */
 
     get eventDragStart() {
         return this._innerContainer.eventDragStart;
     }
-
-    /**
-     * @public
-     * @param {?string} value
-     */
 
     set eventDragStart(value) {
         this._innerContainer.eventDragStart = value;

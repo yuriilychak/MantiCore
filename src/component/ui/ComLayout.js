@@ -77,17 +77,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get resizeItems() {
         return this._resizeItems;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set resizeItems(value) {
         if (this._resizeItems === value) {
@@ -100,17 +95,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get staticWidth() {
         return this._layoutSizeManager.staticWidth;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set staticWidth(value) {
         this._layoutSizeManager.staticWidth = value;
@@ -118,17 +108,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get staticHeight() {
         return this._layoutSizeManager.staticHeight;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set staticHeight(value) {
         this._layoutSizeManager.staticHeight = value;
@@ -136,17 +121,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get minWidth() {
        return this._layoutSizeManager.minWidth;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set minWidth(value) {
         this._changeSizeValue(value, "minWidth");
@@ -154,17 +134,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get maxWidth() {
         return this._layoutSizeManager.maxWidth;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set maxWidth(value) {
         this._changeSizeValue(value, "maxWidth");
@@ -172,17 +147,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get minHeight() {
         return this._layoutSizeManager.minHeight;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set minHeight(value) {
         this._changeSizeValue(value, "minHeight");
@@ -190,17 +160,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get maxHeight() {
         return this._layoutSizeManager.maxHeight;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set maxHeight(value) {
         this._changeSizeValue(value, "maxHeight");
@@ -208,7 +173,7 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get contentWidth() {
@@ -217,7 +182,7 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get contentHeight() {
@@ -226,17 +191,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {PIXI.ObservablePoint}
+     * @type {PIXI.ObservablePoint}
      */
 
     get innerPadding() {
         return this._innerPadding;
     }
-
-    /**
-     * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} value
-     */
 
     set innerPadding(value) {
         if (Geometry.pEqual(this._innerPadding, value)) {
@@ -247,17 +207,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {PIXI.ObservablePoint}
+     * @type {PIXI.ObservablePoint}
      */
 
     get outerPadding() {
         return this._outerPadding;
     }
-
-    /**
-     * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} value
-     */
 
     set outerPadding(value) {
         if (Geometry.pEqual(this._outerPadding, value)) {
@@ -268,17 +223,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {
         return this._verticalAlign;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
-     */
 
     set verticalAlign(value) {
         if (this._verticalAlign === value) {
@@ -290,17 +240,12 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {
         return this._horizontalAlign;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
-     */
 
     set horizontalAlign(value) {
         if (this._horizontalAlign === value) {

@@ -56,7 +56,7 @@ class CheckBox extends Button {
     /**
      * @desc Returns width of slice 9 sprite
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
@@ -66,29 +66,17 @@ class CheckBox extends Button {
     /**
      * @desc Returns height of slice 9 sprite
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
 
-    /**
-     * @desc Set width of slice 9 sprite
-     * @public
-     * @param {number} value
-     */
-
     set width(value) {
         super.width = value;
         this._icon.x = Math.divPowTwo(this.width);
     }
-
-    /**
-     * @desc Set height of slice 9 sprite
-     * @public
-     * @param {number} value
-     */
 
     set height(value) {
         super.height = value;
@@ -98,7 +86,7 @@ class CheckBox extends Button {
 
     /**
      * @public
-     * @return {MANTICORE.ui.ancillary.StateSlice9Sprite}
+     * @type {MANTICORE.ui.ancillary.StateSlice9Sprite}
      */
 
     get icon() {
@@ -107,17 +95,12 @@ class CheckBox extends Button {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get selected() {
         return this._isSelected;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set selected(value) {
         if (this._isSelected === value) {

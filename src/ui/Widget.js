@@ -122,17 +122,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get clipping() {
         return this._isClipped();
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set clipping(value) {
         if (this._isClipped() === value) {
@@ -166,17 +161,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
         return this._collider.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set width(value) {
         value = Math.round(value);
@@ -192,17 +182,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return this._collider.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set height(value) {
         value = Math.round(value);
@@ -219,17 +204,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get tint() {
         return this._collider.tint;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set tint(value) {
         if (this._collider.tint === value) {
@@ -253,17 +233,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @return {PIXI.ObservablePoint}
+     * @type {PIXI.ObservablePoint}
      */
 
     get anchor() {
         return this._anchor;
     }
-
-    /**
-     * @public
-     * @param {PIXI.ObservablePoint | PIXI.Point} value
-     */
 
     set anchor(value) {
         this._anchor.copy(value);
@@ -288,17 +263,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get flipX() {
         return this.scale.x < 0;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set flipX(value) {
         if (this.flipX === value) {
@@ -310,17 +280,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get flipY() {
         return this.scale.y < 0;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set flipY(value) {
         if (this.flipY === value) {
@@ -332,7 +297,7 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get isDrag() {
@@ -341,17 +306,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventUp() {
         return this._events.getElement(INTERACTIVE_EVENT.UP);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventUp(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.UP, value);
@@ -359,17 +319,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDown() {
         return this._events.getElement(INTERACTIVE_EVENT.DOWN);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventDown(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.DOWN, value);
@@ -377,17 +332,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventOver() {
         return this._events.getElement(INTERACTIVE_EVENT.OVER);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventOver(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.OVER, value);
@@ -395,17 +345,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventOut() {
         return this._events.getElement(INTERACTIVE_EVENT.OUT);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventOut(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.OUT, value);
@@ -413,17 +358,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventMove() {
         return this._events.getElement(INTERACTIVE_EVENT.MOVE);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventMove(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.MOVE, value);
@@ -431,17 +371,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDrag() {
         return this._events.getElement(INTERACTIVE_EVENT.DRAG);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventDrag(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG, value);
@@ -449,17 +384,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventClick() {
         return this._events.getElement(INTERACTIVE_EVENT.CLICK);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventClick(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.CLICK, value);
@@ -467,17 +397,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDragFinish() {
         return this._events.getElement(INTERACTIVE_EVENT.DRAG_FINIS);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventDragFinish(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, value);
@@ -485,17 +410,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventDragStart() {
         return this._events.getElement(INTERACTIVE_EVENT.DRAG_START);
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventDragStart(value) {
         this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, value);
@@ -503,17 +423,12 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get propagateChildrenEvents() {
         return this._propagateChildrenEvent;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set propagateChildrenEvents(value) {
         if (this._propagateChildrenEvent === value) {
@@ -568,17 +483,12 @@ class Widget extends ComponentContainer {
     /**
      * @desc Returns collider.
      * @protected
-     * @return {PIXI.Sprite|MANTICORE.view.Slice9Sprite|MANTICORE.ui.ancillary.StateSlice9Sprite}
+     * @type {PIXI.Sprite|MANTICORE.view.Slice9Sprite|MANTICORE.ui.ancillary.StateSlice9Sprite}
      */
 
     get collider() {
         return this._collider;
     }
-
-    /**
-     * @protected
-     * @param {PIXI.Sprite|MANTICORE.view.Slice9Sprite} value
-     */
 
     set collider(value) {
         if (this._collider === value) {

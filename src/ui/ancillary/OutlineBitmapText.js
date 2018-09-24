@@ -113,7 +113,7 @@ class OutlineBitmapText extends PIXI.Container {
     }
 
     /**
-     * @return {Point}
+     * @type {PIXI.Point | Point}
      */
 
     get anchor() {
@@ -122,17 +122,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {number}
+     * @type {number}
      */
 
     get maxWidth() {
         return this._label.maxWidth;
     }
-
-    /**
-     * @public
-     * @param {number} value
-     */
 
     set maxWidth(value) {
         if (this._label.maxWidth === value) {
@@ -144,17 +139,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {string}
+     * @type {string}
      */
 
     get fontName() {
         return this._label.font.name;
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set fontName(value) {
         if (this._label.font.name === value) {
@@ -166,17 +156,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get fontSize() {
         return this._label.font.size;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set fontSize(value) {
         if (this._label.font.size === value) {
@@ -188,17 +173,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get outlineEnabled() {
         return this._isOutlineEnabled;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set outlineEnabled(value) {
         if (this._isOutlineEnabled === value) {
@@ -226,17 +206,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {number}
+     * @type {number}
      */
 
     get outlineSize() {
         return this._outlineSize;
     }
-
-    /**
-     * @public
-     * @param {number} value
-     */
 
     set outlineSize(value) {
         if (!this._isOutlineEnabled || this._outlineSize === value) {
@@ -274,17 +249,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get color() {
         return this._color;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set color(value) {
         if (this._color === value) {
@@ -296,17 +266,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get outlineColor() {
         return this._outlineColor;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set outlineColor(value) {
         if (this._outlineColor === value) {
@@ -319,18 +284,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {
         return this._horizontalAlign;
     }
-
-    /**
-     * @desc set horizontal align of label.
-     * @public
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
-     */
 
     set horizontalAlign(value) {
         if (this._label.align === value) {
@@ -366,17 +325,12 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {
         return this._verticalAlign;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
-     */
 
     set verticalAlign(value) {
         if (this._verticalAlign === value) {
@@ -405,7 +359,7 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get lineHeight() {
@@ -415,18 +369,12 @@ class OutlineBitmapText extends PIXI.Container {
     /**
      * @desc Returns text of label
      * @public
-     * @return {string}
+     * @type {string}
      */
 
     get text() {
         return this._label.text;
     }
-
-    /**
-     * @desc Set text of label
-     * @public
-     * @param {string} value
-     */
 
     set text(value) {
         if (this._label.text === value) {

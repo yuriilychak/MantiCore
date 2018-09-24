@@ -38,7 +38,7 @@ class BaseManager {
 
     /**
      * @protected
-     * @returns {MANTICORE.view.ComponentContainer|MANTICORE.view.ComponentSprite|MANTICORE.component.Component}
+     * @type {MANTICORE.view.ComponentContainer|MANTICORE.view.ComponentSprite|MANTICORE.component.Component}
      */
 
     get owner() {

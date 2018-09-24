@@ -102,17 +102,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get color() {
         return this._label.color;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set color(value) {
         this._label.color = value;
@@ -120,17 +115,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get shadowColor() {
         return this._isShadowEnabled ? this._shadow.color : super.shadowColor;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set shadowColor(value) {
         if (!this._isShadowEnabled) {
@@ -142,17 +132,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get outlineEnabled() {
         return this._label.outlineEnabled;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set outlineEnabled(value) {
         this._label.outlineEnabled = value;
@@ -167,17 +152,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {number}
+     * @type {number}
      */
 
     get outlineSize() {
         return this._label.outlineSize;
     }
-
-    /**
-     * @public
-     * @param {number} value
-     */
 
     set outlineSize(value) {
         this._label.outlineSize = value;
@@ -189,17 +169,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get outlineColor() {
         return this._label.outlineColor;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set outlineColor(value) {
         this._label.outlineColor = value;
@@ -208,18 +183,12 @@ class Label extends BaseLabel {
     /**
      * @desc Returns text of label
      * @public
-     * @return {string}
+     * @type {string}
      */
 
     get text() {
         return this._label.text;
     }
-
-    /**
-     * @desc Set text of label
-     * @public
-     * @param {string} value
-     */
 
     set text(value) {
         this._label.text = value;
@@ -227,17 +196,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
         return super.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set width(value) {
         super.width = value;
@@ -252,17 +216,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set height(value) {
         super.height = value;
@@ -275,17 +234,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get shadowEnabled() {
         return this._isShadowEnabled;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set shadowEnabled(value) {
         if (this._isShadowEnabled === value) {
@@ -311,17 +265,12 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get fontSize() {
         return this._label.fontSize;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set fontSize(value) {
         if (this._label.fontSize === value) {
@@ -338,7 +287,7 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get fontName() {
@@ -347,7 +296,7 @@ class Label extends BaseLabel {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get lineHeight() {

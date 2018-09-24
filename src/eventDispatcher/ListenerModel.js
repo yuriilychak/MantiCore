@@ -69,7 +69,7 @@ class ListenerModel extends PoolModel {
 
     /**
      * @desc Returns name of event.
-     * @returns {?string}
+     * @type {?string}
      */
 
     get event() {
@@ -78,7 +78,7 @@ class ListenerModel extends PoolModel {
 
     /**
      * @desc Returns target of listener.
-     * @returns {?Object}
+     * @type {?Object}
      */
 
     get target() {

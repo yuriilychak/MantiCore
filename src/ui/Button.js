@@ -36,17 +36,12 @@ class Button extends BaseButton {
 
     /**
      * @public
-     * @return {string | null}
+     * @type {string | null}
      */
 
     get upFrame() {
         return this.collider.getFrameByState(INTERACTIVE_STATE.UP);
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set upFrame(value) {
         this.collider.setFrameByState(value, INTERACTIVE_STATE.UP);
@@ -54,17 +49,12 @@ class Button extends BaseButton {
 
     /**
      * @public
-     * @return {string | null}
+     * @type {string | null}
      */
 
     get downFrame() {
         return this.collider.getFrameByState(INTERACTIVE_STATE.DOWN);
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set downFrame(value) {
         this.collider.setFrameByState(value, INTERACTIVE_STATE.DOWN);
@@ -72,17 +62,12 @@ class Button extends BaseButton {
 
     /**
      * @public
-     * @return {string | null}
+     * @type {string | null}
      */
 
     get overFrame() {
         return this.collider.getFrameByState(INTERACTIVE_STATE.OVER);
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set overFrame(value) {
         this.collider.setFrameByState(value, INTERACTIVE_STATE.OVER);
@@ -90,17 +75,12 @@ class Button extends BaseButton {
 
     /**
      * @public
-     * @return {string | null}
+     * @type {string | null}
      */
 
     get disabledFrame() {
         return this.collider.getFrameByState(INTERACTIVE_STATE.DISABLED);
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set disabledFrame(value) {
         this.collider.setFrameByState(value, INTERACTIVE_STATE.DISABLED);

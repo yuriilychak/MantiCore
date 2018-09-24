@@ -38,17 +38,12 @@ class BaseButton extends Widget {
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get enabled() {
         return this._isEnabled;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set enabled(value) {
         if (this._isEnabled === value) {
@@ -62,17 +57,12 @@ class BaseButton extends Widget {
 
     /**
      * @public
-     * @return {?MANTICORE.ui.ancillary.BaseLabel}
+     * @type {?MANTICORE.ui.ancillary.BaseLabel}
      */
 
     get title() {
         return this._title;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.ui.ancillary.BaseLabel | null} value
-     */
 
     set title(value) {
         if (this._title === value) {
@@ -93,17 +83,12 @@ class BaseButton extends Widget {
 
     /**
      * @public
-     * @return {string}
+     * @type {string}
      */
 
     get titleText() {
         return this.hasTitle() ? this._title.text : "";
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set titleText(value) {
         if (!this.hasTitle()) {

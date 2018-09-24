@@ -1,6 +1,7 @@
 import Widget from "ui/Widget";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
+import Color from "util/Color";
 
 /**
  * @desc Base class for labels.
@@ -40,23 +41,18 @@ class BaseLabel extends Widget {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get fontSize() {
         return 0;
     }
 
-    /**
-     * @public
-     * @param {int} value
-     */
-
     set fontSize(value) {}
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get fontName() {
@@ -84,113 +80,78 @@ class BaseLabel extends Widget {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get shadowColor() {
-        return 0xFFFFFF;
+        return Color.COLORS.WHITE;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set shadowColor(value) {}
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get outlineEnabled() {
         return false;
     }
 
-    /**
-     * @public
-     * @param {boolean} value
-     */
-
     set outlineEnabled(value) {}
 
     /**
      * @public
-     * @return {number}
+     * @type {number}
      */
 
     get outlineSize() {
         return 0;
     }
 
-    /**
-     * @public
-     * @param {number} value
-     */
-
     set outlineSize(value) {}
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get outlineColor() {
-        return 0xFFFFFF;
+        return Color.COLORS.WHITE;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set outlineColor(value) {}
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get shadowEnabled() {
         return false;
     }
 
-    /**
-     * @public
-     * @param {boolean} value
-     */
-
     set shadowEnabled(value) {}
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get text() {
         return "Empty";
     }
 
-    /**
-     * @public
-     * @param {string} value
-     */
-
     set text(value) {}
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get color() {
         return this.tint;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set color(value) {
         this.tint = value;
@@ -198,18 +159,12 @@ class BaseLabel extends Widget {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {
         return this._horizontalAlign;
     }
-
-    /**
-     * @desc set horizontal align of label.
-     * @public
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
-     */
 
     set horizontalAlign(value) {
         if (this._horizontalAlign === value) {
@@ -221,17 +176,12 @@ class BaseLabel extends Widget {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {
         return this._verticalAlign;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
-     */
 
     set verticalAlign(value) {
         if (this._verticalAlign === value) {
@@ -243,7 +193,7 @@ class BaseLabel extends Widget {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get lineHeight() {

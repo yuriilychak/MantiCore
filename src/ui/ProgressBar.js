@@ -78,17 +78,12 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
         return super.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set width(value) {
         super.width = value;
@@ -98,17 +93,12 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set height(value) {
         super.height = value;
@@ -118,17 +108,12 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.DIRECTION}
+     * @type {MANTICORE.enumerator.DIRECTION}
      */
 
     get direction() {
         return this._direction;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.DIRECTION} value
-     */
 
     set direction(value) {
         if (this._direction === value) {
@@ -142,17 +127,12 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @returns {number}
+     * @type {number}
      */
 
     get progress() {
         return this._progress;
     }
-
-    /**
-     * @public
-     * @param {number} value - Number between 0 and 1
-     */
 
     set progress(value) {
         if (this._progress === value) {
@@ -167,17 +147,12 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.PROGRESS_TYPE}
+     * @type {MANTICORE.enumerator.ui.PROGRESS_TYPE}
      */
 
     get type() {
         return this._type;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.PROGRESS_TYPE} value
-     */
 
     set type(value) {
         if (this._type === value) {
@@ -202,17 +177,12 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @return {?string}
+     * @type {?string}
      */
 
     get frameName() {
         return this.collider.frameName;
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set frameName(value) {
         this.collider.frameName = value;

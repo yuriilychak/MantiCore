@@ -57,7 +57,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {MANTICORE.component.ui.ComLayout}
+     * @type {MANTICORE.component.ui.ComLayout}
      */
 
     get layout() {
@@ -66,17 +66,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {
         return this._layout.verticalAlign;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
-     */
 
     set verticalAlign(value) {
         this._layout.verticalAlign = value;
@@ -84,17 +79,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {
         return this._layout.horizontalAlign;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
-     */
 
     set horizontalAlign(value) {
         this._layout.horizontalAlign = value;
@@ -102,17 +92,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemUp() {
         return this._childListener.eventUp;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemUp(value) {
         this._childListener.eventUp = value;
@@ -120,17 +105,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemDown() {
         return this._childListener.eventDown;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemDown(value) {
         this._childListener.eventDown = value;
@@ -138,17 +118,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemOver() {
         return this._childListener.eventOver;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemOver(value) {
         this._childListener.eventOver = value;
@@ -156,17 +131,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemOut() {
         return this._childListener.eventOut;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemOut(value) {
         this._childListener.eventOut = value;
@@ -174,17 +144,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemMove() {
         return this._childListener.eventMove;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemMove(value) {
         this._childListener.eventMove = value;
@@ -192,17 +157,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemDrag() {
         return this._childListener.eventDrag;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemDrag(value) {
         this._childListener.eventDrag = value;
@@ -210,17 +170,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemClick() {
         return this._childListener.eventClick;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemClick(value) {
         this._childListener.eventClick = value;
@@ -228,17 +183,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemDragFinish() {
         return this._childListener.eventDragFinish;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemDragFinish(value) {
         this._childListener.eventDragFinish = value;
@@ -246,17 +196,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {string | null}
+     * @type {string | null}
      */
 
     get eventItemDragStart() {
         return this._childListener.eventDragStart;
     }
-
-    /**
-     * @public
-     * @param {string | null} value
-     */
 
     set eventItemDragStart(value) {
         this._childListener.eventDragStart = value;
@@ -264,17 +209,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
         return super.width;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set width(value) {
         super.width = value;
@@ -287,17 +227,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set height(value) {
         super.height = value;
@@ -311,17 +246,12 @@ class ListView extends ScrollView {
     /**
      * @desc Return slider depend of direction.
      * @public
-     * @returns {?MANTICORE.ui.Slider}
+     * @type {?MANTICORE.ui.Slider}
      */
 
     get slider() {
         return this.isHorizontal() ? super.horizontalSlider : super.verticalSlider;
     }
-
-    /**
-     * @public
-     * @param {?MANTICORE.ui.Slider} value
-     */
 
     set slider(value) {
         if (this.isHorizontal()) {
@@ -333,17 +263,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
      */
 
     get scrollDirection() {
         return super.scrollDirection;
     }
-
-    /**
-     * @public
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} value
-     */
 
     set scrollDirection(value) {
         if (
@@ -373,49 +298,34 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get innerWidth() {
         return super.width;
     }
 
-    /**
-     * @public
-     * @param {int} value
-     */
-
     set innerWidth(value) {}
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get innerHeight() {
         return super.height;
     }
 
-    /**
-     * @public
-     * @param {int} value
-     */
-
     set innerHeight(value) {}
 
     /**
      * @public
-     * @returns {PIXI.ObservablePoint}
+     * @type {PIXI.ObservablePoint}
      */
 
     get innerPadding() {
         return this._layout.innerPadding;
     }
-
-    /**
-     * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} value
-     */
 
     set innerPadding(value) {
         this._layout.outerPadding = value;
@@ -423,17 +333,12 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @returns {PIXI.ObservablePoint}
+     * @type {PIXI.ObservablePoint}
      */
 
     get outerPadding() {
         return this._layout.outerPadding;
     }
-
-    /**
-     * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} value
-     */
 
     set outerPadding(value) {
         this._layout.outerPadding = value;

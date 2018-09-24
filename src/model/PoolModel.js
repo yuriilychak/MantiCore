@@ -34,18 +34,12 @@ class PoolModel extends Model {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get inPool() {
         return this._inPool;
     }
-
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set inPool(value) {
         if (this._inPool === value) {

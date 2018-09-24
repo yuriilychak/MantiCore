@@ -63,7 +63,7 @@ class ComChildIterator extends Component {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get childCount() {

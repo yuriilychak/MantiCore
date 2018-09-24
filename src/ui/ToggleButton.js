@@ -60,18 +60,13 @@ class ToggleButton extends BaseButton {
      */
 
     /**
-     * @public
-     * @returns {boolean}
+     * this.dispatch(
+     * @type {boolean}
      */
 
     get selected() {
         return this._isSelected;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set selected(value) {
         if (this._isSelected === value) {

@@ -35,17 +35,12 @@ class Panel extends Widget {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get backgroundColor() {
         return this.collider.tint;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set backgroundColor(value) {
         if (this.collider.tint === value) {
@@ -56,17 +51,12 @@ class Panel extends Widget {
 
     /**
      * @public
-     * @returns {number}
+     * @type {number}
      */
 
     get backgroundAlpha() {
         return this.collider.alpha;
     }
-
-    /**
-     * @public
-     * @param {number} value
-     */
 
     set backgroundAlpha(value) {
         if (this.collider.alpha === value) {

@@ -72,17 +72,12 @@ class LayoutSizeManager extends BaseManager {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get staticWidth() {
         return this._isStaticWidth || !this.owner.hasOwner();
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set staticWidth(value) {
         if (this._isStaticWidth === value) {
@@ -98,17 +93,12 @@ class LayoutSizeManager extends BaseManager {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get staticHeight() {
         return this._isStaticHeight || !this.owner.hasOwner();
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set staticHeight(value) {
         if (this._isStaticHeight === value) {
@@ -124,17 +114,12 @@ class LayoutSizeManager extends BaseManager {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get minWidth() {
         return this._getSizeValue(this._isStaticWidth, this._minWidth, "width");
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set minWidth(value) {
         if (this.staticWidth) {
@@ -152,17 +137,12 @@ class LayoutSizeManager extends BaseManager {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get maxWidth() {
         return this._getSizeValue(this._isStaticWidth, this._maxWidth, "width");
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set maxWidth(value) {
         if (this.staticWidth) {
@@ -180,17 +160,12 @@ class LayoutSizeManager extends BaseManager {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get minHeight() {
         return this._getSizeValue(this._isStaticHeight, this._minHeight, "height");
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set minHeight(value) {
         if (this.staticHeight) {
@@ -208,17 +183,12 @@ class LayoutSizeManager extends BaseManager {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get maxHeight() {
         return this._getSizeValue(this._isStaticHeight, this._maxHeight, "height");
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set maxHeight(value) {
         if (this.staticHeight) {
@@ -237,7 +207,7 @@ class LayoutSizeManager extends BaseManager {
     /**
      * @desc Returns content width for align values.
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get contentWidth() {
@@ -247,7 +217,7 @@ class LayoutSizeManager extends BaseManager {
     /**
      * @desc Returns content height for align values.
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get contentHeight() {

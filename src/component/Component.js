@@ -69,17 +69,12 @@ class Component {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get reusable() {
         return this._memoryManager.reusable;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set reusable(value) {
         this._memoryManager.reusable = value;
@@ -87,17 +82,12 @@ class Component {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get blockEvents() {
         return this._listenerManager.blockEvents;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set blockEvents(value) {
         this._listenerManager.blockEvents = value;
@@ -105,18 +95,12 @@ class Component {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get inPool() {
         return this._memoryManager.inPool;
     }
-
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set inPool(value) {
         this._memoryManager.inPool = value;
@@ -124,7 +108,7 @@ class Component {
 
     /**
      * @desc Returns name of component
-     * @returns {string}
+     * @type {string}
      */
 
     get name () {
@@ -133,7 +117,7 @@ class Component {
 
     /**
      * @desc Return owner of component if it exist;
-     * @returns {MANTICORE.view.ComponentContainer | null}
+     * @type {MANTICORE.view.ComponentContainer | null}
      */
 
     get owner () {
@@ -142,17 +126,12 @@ class Component {
 
     /**
      * @public
-     * @return {boolean}
+     * @type {boolean}
      */
 
     get active () {
         return this._isActive;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set active (value) {
         if (this._isActive === value) {
@@ -163,17 +142,12 @@ class Component {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get listenChildren() {
         return this._listenChildren;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set listenChildren(value) {
         if (this._listenChildren === value) {

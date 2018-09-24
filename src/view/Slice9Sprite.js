@@ -123,17 +123,13 @@ class Slice9Sprite extends PIXI.Container {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get tint() {
         return this._tint;
     }
 
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set tint(value) {
         if (this._tint === value) {
@@ -151,17 +147,12 @@ class Slice9Sprite extends PIXI.Container {
 
     /**
      * @public
-     * @return {PIXI.ObservablePoint}
+     * @type {PIXI.ObservablePoint}
      */
 
     get anchor() {
         return this._anchor;
     }
-
-    /**
-     * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} value
-     */
 
     set anchor (value) {
         this._anchor.copy(value);
@@ -170,18 +161,12 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc Returns left slice of sprite;
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get leftSlice() {
         return this._leftSlice;
     }
-
-    /**
-     * @desc set left slice of sprite, and update transformations.
-     * @public
-     * @param {int} value
-     */
 
     set leftSlice(value) {
         value = Math.round(value);
@@ -195,18 +180,12 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc Returns left slice of sprite;
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get rightSlice() {
         return this._rightSlice;
     }
-
-    /**
-     * @desc set left slice of sprite, and update transformations.
-     * @public
-     * @param {int} value
-     */
 
     set rightSlice(value) {
         value = Math.round(value);
@@ -220,18 +199,12 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc Returns left slice of sprite;
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get topSlice() {
         return this._topSlice;
     }
-
-    /**
-     * @desc set left slice of sprite, and update transformations.
-     * @public
-     * @param {int} value
-     */
 
     set topSlice(value) {
         value = Math.round(value);
@@ -245,18 +218,12 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc Returns left slice of sprite;
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get bottomSlice() {
         return this._bottomSlice;
     }
-
-    /**
-     * @desc set left slice of sprite, and update transformations.
-     * @public
-     * @param {int} value
-     */
 
     set bottomSlice(value) {
         value = Math.round(value);
@@ -270,7 +237,7 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc return Array of slice
      * @public
-     * @return {int[]}
+     * @returns {int[]}
      */
 
     getSlice() {
@@ -298,17 +265,12 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc Returns frame name of texture
      * @public
-     * @return {?string}
+     * @type {?string}
      */
 
     get frameName() {
         return this._frameName;
     }
-
-    /**
-     * @desc Set frame name of texture
-     * @param {string} value
-     */
 
     set frameName(value) {
         if (this._frameName === value) {
@@ -322,7 +284,7 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc Returns width of slice 9 sprite
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get width() {
@@ -332,29 +294,17 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @desc Returns height of slice 9 sprite
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get height() {
         return super.height;
     }
 
-    /**
-     * @desc Set width of slice 9 sprite
-     * @public
-     * @param {number} value
-     */
-
     set width(value) {
         const sliceSum = this._leftSlice + this._rightSlice;
         this._setDimension(value < sliceSum ? sliceSum : value, "width");
     }
-
-    /**
-     * @desc Set height of slice 9 sprite
-     * @public
-     * @param {number} value
-     */
 
     set height(value) {
         const sliceSum = this._topSlice + this._bottomSlice;

@@ -144,18 +144,12 @@ class TextField extends Label {
     /**
      * @desc Returns text of text field
      * @public
-     * @return {string}
+     * @type {string}
      */
 
     get text() {
         return this._realText;
     }
-
-    /**
-     * @desc Set text of label
-     * @public
-     * @param {string} value
-     */
 
     set text(value) {
         if (this._realText === value) {
@@ -167,17 +161,12 @@ class TextField extends Label {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get maxLength() {
         return this._maxLength;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set maxLength(value) {
         if (this._maxLength === value || this._maxLength < -1) {
@@ -195,17 +184,12 @@ class TextField extends Label {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get passwordMode() {
         return this._passwordMode;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set passwordMode(value) {
         if (this._passwordMode === value) {
@@ -217,17 +201,12 @@ class TextField extends Label {
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get passwordChar() {
         return this._passwordChar;
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set passwordChar(value) {
         if (this._passwordChar === value) {
@@ -244,17 +223,12 @@ class TextField extends Label {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get cursorEnabled() {
         return this._cursorEnabled;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set cursorEnabled(value) {
         if (this._cursorEnabled === value) {
@@ -265,17 +239,12 @@ class TextField extends Label {
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get cursorChar() {
         return this._cursorChar;
     }
-
-    /**
-     * @public
-     * @param {string} value
-     */
 
     set cursorChar(value) {
         if (this._cursorChar === value) {
@@ -293,7 +262,7 @@ class TextField extends Label {
 
     /**
      * @public
-     * @returns {int}
+     * @type {int}
      */
 
     get placeholderColor() {
@@ -302,7 +271,7 @@ class TextField extends Label {
 
     /**
      * @public
-     * @returns {string}
+     * @type {string}
      */
 
     get placeholderText() {
@@ -325,17 +294,12 @@ class TextField extends Label {
 
     /**
      * @public
-     * @return {int}
+     * @type {int}
      */
 
     get color() {
         return this._color;
     }
-
-    /**
-     * @public
-     * @param {int} value
-     */
 
     set color(value) {
         if (this._color === value) {

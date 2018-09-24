@@ -41,17 +41,12 @@ class ListenerManager extends BaseManager {
 
     /**
      * @public
-     * @returns {boolean}
+     * @type {boolean}
      */
 
     get blockEvents() {
         return this._blockEvents;
     }
-
-    /**
-     * @public
-     * @param {boolean} value
-     */
 
     set blockEvents(value) {
         if (this._blockEvents === value) {
