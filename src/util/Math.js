@@ -1,6 +1,6 @@
 /**
  * @desc Namespace that contain some math function for fast calculations.
- * @namespace math
+ * @namespace MANTICORE.util.math
  * @memberOf MANTICORE.util
  */
 

@@ -4,13 +4,15 @@ import Scene from "./Scene";
 import Slice9Sprite from "./Slice9Sprite";
 
 /**
- * @namespace view
+ * @namespace MANTICORE.view
  * @memberOf MANTICORE
  */
 
-export default {
+const view = {
     ComponentContainer,
     ComponentSprite,
     Scene,
     Slice9Sprite
-}
+};
+
+export default view;

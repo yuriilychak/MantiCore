@@ -1,6 +1,6 @@
 /**
  * @desc Namespace that contains function to manipulate with strings.
- * @namespace format
+ * @namespace MANTICORE.util.format
  * @memberOf MANTICORE.util
  */
 

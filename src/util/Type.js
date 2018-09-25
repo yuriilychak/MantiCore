@@ -1,6 +1,6 @@
 /**
  * @desc Contains function for manipulate with types.
- * @namespace type
+ * @namespace MANTICORE.util.type
  * @memberOf MANTICORE.util
  */
 

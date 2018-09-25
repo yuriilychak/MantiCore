@@ -5,7 +5,7 @@ let application = null;
 
 /**
  * @desc Contains all basic functional for manipulate with application
- * @namespace launcher
+ * @namespace MANTICORE.launcher
  * @memberOf MANTICORE
  */
 

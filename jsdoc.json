@@ -18,7 +18,6 @@
   "opts": {
     "encoding": "utf8",
     "destination": "doc/",
-    "template": "./node_modules/@otris/jsdoc-tsd",
     "recurse": true
   }
 }

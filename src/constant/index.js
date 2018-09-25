@@ -1,6 +1,6 @@
 /**
  * @desc Namespace that contain core constants.
- * @namespace constant
+ * @namespace MANTICORE.constant
  * @memberOf MANTICORE
  */
 

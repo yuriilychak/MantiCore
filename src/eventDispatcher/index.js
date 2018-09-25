@@ -5,7 +5,7 @@ import ListenerModel from "./ListenerModel";
 
 /**
  * @desc Simply event dispatcher.
- * @namespace eventDispatcher
+ * @namespace MANTICORE.eventDispatcher
  * @memberOf MANTICORE
  */
 
@@ -60,10 +60,6 @@ const eventDispatcher = {
             return false;
         }
 
-        /**
-         * @type {MANTICORE.repository.Repository}
-         */
-
         let listenerRepo;
 
         if (!this._listenerRepo.hasElement(type)) {
@@ -95,14 +91,7 @@ const eventDispatcher = {
             return false;
         }
 
-        /**
-         * @type {MANTICORE.repository.Repository}
-         */
         let listenerRepo = this._listenerRepo.getElement(type);
-
-        /**
-         * @type {MANTICORE.eventDispatcher.ListenerModel[]}
-         */
         const listeners = listenerRepo.values;
         const listenerCount = listeners.length;
 
@@ -125,13 +114,7 @@ const eventDispatcher = {
             return false;
         }
 
-        /**
-         * @type {MANTICORE.repository.Repository}
-         */
         let listenerRepo = this._listenerRepo.getElement(type);
-        /**
-         * @type {MANTICORE.eventDispatcher.ListenerModel[]}
-         */
         const listeners = listenerRepo.values;
         const listenerCount = listeners.length;
         let model, i;
@@ -198,13 +181,7 @@ const eventDispatcher = {
             return;
         }
 
-        /**
-         * @type {MANTICORE.repository.Repository}
-         */
         const listenerRepo = this._listenerRepo.getElement(type);
-        /**
-         * @type {MANTICORE.eventDispatcher.ListenerModel[]}
-         */
         const listeners = listenerRepo.values;
         const listenerCount = listeners.length;
 

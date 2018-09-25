@@ -6,7 +6,7 @@ import MemoryManager from "./MemoryManager";
 
 /**
  * @desc Contains containers for some types. Need to decompose some big classes.
- * @namespace manager
+ * @namespace MANTICORE.manager
  * @memberOf MANTICORE
  */
 

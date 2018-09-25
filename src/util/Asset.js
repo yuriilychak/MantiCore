@@ -3,7 +3,7 @@ import Format from "./Format";
 
 /**
  * @desc Namespace that contain functions for manipulate with assets
- * @namespace asset
+ * @namespace MANTICORE.util.asset
  * @memberOf MANTICORE.util
  */
 

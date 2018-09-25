@@ -2,7 +2,7 @@ import Model from "./Model";
 import PoolModel from "./PoolModel";
 
 /**
- * @namespace model
+ * @namespace MANTICORE.model
  * @memberOf MANTICORE
  */
 

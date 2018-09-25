@@ -1,6 +1,18 @@
 /**
+ * @typedef {number}
+ * @name int
+ */
+
+/**
+ * @typedef {Object}
+ * @name Point
+ * @property {number} x
+ * @property {number} y
+ */
+
+/**
  * @desc Contains type definitions for some data objects.
- * @namespace type
+ * @namespace MANTICORE.type
  * @memberOf MANTICORE
  */
 
@@ -84,13 +96,13 @@
 
 /**
  * @desc Namespace with callbacks for view
- * @namespace callback
+ * @namespace MANTICORE.view.callback
  * @memberOf MANTICORE.view
  */
 
 /**
  * @desc Namespace with callbacks for components
- * @namespace callback
+ * @namespace MANTICORE.component.callback
  * @memberOf MANTICORE.component
  */
 

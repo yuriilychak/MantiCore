@@ -7,7 +7,7 @@ import type from "./Type";
 import ui from "./UI";
 
 /**
- * @namespace util
+ * @namespace MANTICORE.util
  * @memberOf MANTICORE
  */
 

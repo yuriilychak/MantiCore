@@ -5,13 +5,16 @@ import StateSlice9Sprite from "./StateSlice9Sprite";
 
 /**
  * @desc Namespace that contain some ancillary classes for create ui.
- * @namespace ancillary
+ * @namespace
+ * @name MANTICORE.ui.ancillary
  * @memberOf MANTICORE.ui
  */
 
-export default {
+const ancillary = {
     BaseButton,
     BaseLabel,
     OutlineBitmapText,
     StateSlice9Sprite
-}
+};
+
+export default ancillary;

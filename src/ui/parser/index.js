@@ -701,7 +701,7 @@ function _extractValue(index, bundle, link, defaultValue) {
 
 /**
  * @desc Namespace that contain methods for parse UI from Json.
- * @namespace parser
+ * @namespace MANTICORE.ui.parser
  * @memberOf MANTICORE.ui
  */
 
@@ -714,9 +714,6 @@ export default {
      * @returns {MANTICORE.ui.Widget}
      */
     parseElement: function (name, link) {
-        /**
-         * @type {MANTICORE.type.AssetBundle}
-         */
         const bundle = PIXI.loader.resources[link].data;
 
         const index = bundle.componentNames.indexOf(name);

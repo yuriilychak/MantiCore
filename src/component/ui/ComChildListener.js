@@ -176,11 +176,6 @@ class ComChildListener extends ComChildIterator {
         return this._events.getElement(INTERACTIVE_EVENT.DRAG_FINIS);
     }
 
-    /**
-     * @public
-     * @param {string | null} value
-     */
-
     set eventDragFinish(value) {
         this._updateEvent(INTERACTIVE_EVENT.DRAG_FINIS, value);
     }

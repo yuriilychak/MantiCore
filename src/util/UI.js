@@ -6,7 +6,7 @@ import Button from "ui/Button";
 
 /**
  * @desc Contains some methods to manipulate with ui.
- * @namespace ui
+ * @namespace MANTICORE.util.ui
  * @memberOf MANTICORE.util
  */
 

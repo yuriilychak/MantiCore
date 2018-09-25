@@ -2,7 +2,7 @@ import Math from "./Math";
 
 /**
  * @desc Namespace that contain function to manipulate with colors.
- * @namespace color
+ * @namespace MANTICORE.util.color
  * @memberOf MANTICORE.util
  */
 

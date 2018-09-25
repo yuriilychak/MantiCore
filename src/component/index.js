@@ -1,14 +1,17 @@
+import sceneTransition from "./sceneTransition";
 import ui from "./ui/index";
 import ComChildIterator from "./ComChildIterator";
 import Component from "./Component";
 
 /**
- * @namespace component
+ * @namespace MANTICORE.component
  * @memberOf MANTICORE
  */
 
-export default {
+const component = {
     ui,
     ComChildIterator,
     Component
-}
+};
+
+export default component;

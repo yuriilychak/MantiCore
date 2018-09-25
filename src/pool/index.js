@@ -3,7 +3,7 @@ import Repository from "repository/Repository";
 /**
  * @desc Singleton object serves as an object cache pool.<br>
  *     It can helps you to improve your game performance for objects which need frequent release and recreate operations.
- * @namespace pool
+ * @namespace MANTICORE.pool
  * @memberOf MANTICORE
  */
 

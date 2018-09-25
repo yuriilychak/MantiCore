@@ -2,7 +2,7 @@ import Repository from "./Repository";
 
 /**
  * @desc Contains base implementation of repositories
- * @namespace repository
+ * @namespace MANTICORE.repository
  * @memberOf MANTICORE
  */
 

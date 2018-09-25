@@ -5,7 +5,7 @@ import ComUIElement from "./ComUIElement";
 
 /**
  * @desc Namespace that contains all ui components.
- * @namespace ui
+ * @namespace MANTICORE.component.ui
  * @memberOf MANTICORE.component
  */
 

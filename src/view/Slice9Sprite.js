@@ -3,10 +3,13 @@ import Type from "util/Type";
 import Math from "util/Math";
 import Constant from "constant/index";
 
+/** @namespace MANTICORE.view */
+
 /**
  * @desc Slice 9 sprite to avoid breaking batch.
  * @class
  * @memberOf MANTICORE.view
+ * @toc MANTICORE.view.Slice9Sprite
  */
 
 class Slice9Sprite extends PIXI.Container {

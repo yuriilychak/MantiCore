@@ -266,6 +266,11 @@ class Slider extends Widget {
      * -----------------------------------------------------------------------------------------------------------------
      */
 
+    /**
+     * @method
+     * @private
+     */
+
     _updateSliderTransform() {
 
         if (this.hasProgressBar()) {

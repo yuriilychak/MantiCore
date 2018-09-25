@@ -3,8 +3,8 @@ import Type from "./Type";
 
 /**
  * @desc Namespace for manipulate with geometry objects.
- * @namespace geometry
- * @memberOf MANTICORE.util
+ * @namespace MANTICORE.util.geometry
+ * @memberOf MANTICORE.util!
  */
 
 const geometry = {

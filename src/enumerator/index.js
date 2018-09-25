@@ -5,7 +5,7 @@ import SCENE_TRANSITION from "./SceneTransition";
 import ui from "./ui/index";
 
 /**
- * @namespace enumerator
+ * @namespace MANTICORE.enumerator
  * @memberOf MANTICORE
  */
 

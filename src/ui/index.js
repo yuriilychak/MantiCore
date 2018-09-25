@@ -16,11 +16,11 @@ import Widget from "./Widget";
 
 /**
  * @desc Namespace with UI components.
- * @namespace ui
+ * @namespace MANTICORE.ui
  * @memberOf MANTICORE
  */
 
-export default {
+const ui = {
     ancillary,
     parser,
     AtlasLabel,
@@ -37,3 +37,5 @@ export default {
     ToggleButton,
     Widget
 };
+
+export default ui;

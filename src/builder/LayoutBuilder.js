@@ -6,7 +6,7 @@ import Geometry from "../util/Geometry";
 
 /**
  * @desc Namespace that contain builders for layout.
- * @namespace layoutBuilder
+ * @namespace MANTICORE.builder.layoutBuilder
  * @memberOf MANTICORE.builder
  */
 
