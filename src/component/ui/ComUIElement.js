@@ -14,7 +14,7 @@ class ComUIElement extends ComUI {
     /**
      * @constructor
      * @param {string} elementName - Link to ui element in bundle
-     * @param {?string} [bundleName = null] - Name of bundle. If not set serch in all bundles.
+     * @param {?string} [bundleName = null] - Name of bundle. If not set search in all bundles.
      */
     constructor(elementName, bundleName = null) {
         super("ComUIElement");

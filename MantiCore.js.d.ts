@@ -59,8 +59,8 @@ declare namespace MANTICORE {
                 constructor(elementName: string, bundleName?: string);
 
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-                getChildView(path: string, widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): PIXI.Container | null;
-                addComponentToChild(component: MANTICORE.component.Component, path: string, widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): MANTICORE.component.Component
+                getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
+                addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T
             }
         }
 
