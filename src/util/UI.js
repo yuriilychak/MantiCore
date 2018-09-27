@@ -145,20 +145,17 @@ const ui = {
      * @public
      * @memberOf MANTICORE.util.ui
      * @param {string} path
-     * @param {PIXI.Container} firstElement
+     * @param {PIXI.Container} parent
      * @returns {PIXI.DisplayObject | null}
      */
 
-    getChildView: function(path, firstElement) {
+    getChildView: function(path, parent) {
         const pathSplit = path.split("=>");
-        if (firstElement.name !== pathSplit[0]) {
-            return null;
-        }
 
         const elementCount = pathSplit.length;
         let element, i;
 
-        element = firstElement;
+        element = parent;
 
         for (i = 0; i < elementCount; ++i) {
             element = element.getChildByName(pathSplit[i]);
