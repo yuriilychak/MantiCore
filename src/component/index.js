@@ -9,6 +9,7 @@ import Component from "./Component";
  */
 
 const component = {
+    sceneTransition,
     ui,
     ComChildIterator,
     Component

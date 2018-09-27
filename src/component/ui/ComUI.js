@@ -27,11 +27,6 @@ class ComUI extends Component {
     }
 
     /**
-     * PUBLIC METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
      * @desc Log hierarchy for owner or custom widget.
      * @method
      * @public

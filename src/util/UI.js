@@ -1,8 +1,6 @@
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Type from "./Type";
 import Format from "./Format";
-import ScrollView from "ui/ScrollView";
-import Button from "ui/Button";
 
 /**
  * @desc Contains some methods to manipulate with ui.
@@ -124,8 +122,9 @@ const ui = {
 
         console.log(Format.replace(this.LOG_TEMPLATE, tab, type, path));
 
-        const isButton = widget instanceof Button;
-        const children = widget instanceof  ScrollView ? widget.innerContainer.children : widget.children;
+        const isButton = widget.uiType && widget.uiType === UI_ELEMENT.BUTTON;
+        const children = widget.uiType && (widget.uiType === UI_ELEMENT.SCROLL_VIEW  || widget.uiType === UI_ELEMENT.LIST_VIEW) ?
+            widget.innerContainer.children : widget.children;
         const childCount = children.length;
 
         for (let i = 0; i < childCount; ++i) {
