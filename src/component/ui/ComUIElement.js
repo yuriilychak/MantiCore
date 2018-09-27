@@ -2,6 +2,8 @@ import ComUI from "./ComUI";
 import Parser from "ui/parser/index";
 import UI from "util/UI";
 import Type from "util/Type";
+import ComponentContainerrfrom "view/ComponentContainer";
+import ComponentSprite from "view/ComponentSprite";
 
 /**
  * @desc Base Class for create components from bundle.
@@ -44,6 +46,26 @@ class ComUIElement extends ComUI {
 
     getChildView(path, widget = null) {
         return UI.getChildView(path, Type.isNull(widget) ? this.owner : widget);
+    }
+
+    /**
+     * @desc Add Component to child.
+     * @method
+     * @public
+     * @param {MANTICORE.component.Component} component - Component for add to children.
+     * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @returns {MANTICORE.component.Component}
+     */
+
+    addComponentToChild(component, path, widget = null) {
+        const child = this.getChildView(path, widget);
+
+        if (!Type.isNull(child) && child.uiType) {
+            child.addComponent(component);
+        }
+
+        return component;
     }
 }
 

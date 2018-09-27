@@ -51,7 +51,7 @@ declare namespace MANTICORE {
                 refreshLayot(): void;
             }
 
-            export class ComUI {
+            export class ComUI extends MANTICORE.component.Component {
                 constructor(name?: string);
             }
 
@@ -59,7 +59,8 @@ declare namespace MANTICORE {
                 constructor(elementName: string, bundleName?: string);
 
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-                getChildView(path: string, widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): PIXI.Container | any;
+                getChildView(path: string, widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): PIXI.Container | null;
+                addComponentToChild(component: MANTICORE.component.Component, path: string, widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): MANTICORE.component.Component
             }
         }
 
