@@ -2,8 +2,6 @@ import ComUI from "./ComUI";
 import Parser from "ui/parser/index";
 import UI from "util/UI";
 import Type from "util/Type";
-import ComponentContainerrfrom "view/ComponentContainer";
-import ComponentSprite from "view/ComponentSprite";
 
 /**
  * @desc Base Class for create components from bundle.
