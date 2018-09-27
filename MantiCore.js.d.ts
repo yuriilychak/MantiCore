@@ -83,6 +83,7 @@ declare namespace MANTICORE {
             owner: MANTICORE.view.ComponentContainer | null;
             active: boolean;
             listenChildren: boolean;
+            listenVisible: boolean;
 
             hasOwner(): boolean;
             onAdd(owner: MANTICORE.view.ComponentContainer): void;
@@ -90,6 +91,7 @@ declare namespace MANTICORE {
             onUpdate(dt: number): void;
             onAddChild(child: PIXI.DisplayObject): void;
             onRemoveChild(child: PIXI.DisplayObject): void;
+            onVisibleChange(visible: boolean): void;
             reuse(...var_args: any[]): void;
             disuse(): void;
             destroy(): void;

@@ -66,6 +66,29 @@ class ComponentContainer extends PIXI.Container {
 
     /**
      * @public
+     * @returns {boolean}
+     */
+
+    get visible() {
+        return super.visible;
+    }
+
+    set visible(value) {
+        if (super.visible === value) {
+            return;
+        }
+        super.visible = value;
+
+        this._componentManager.iterateComponents(component => {
+            if (!component.listenVisible) {
+                return;
+            }
+            component.onVisibleChange(this.visible);
+        })
+    }
+
+    /**
+     * @public
      * @type {boolean}
      */
 

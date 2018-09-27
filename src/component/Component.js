@@ -46,6 +46,14 @@ class Component {
         this._listenChildren = false;
 
         /**
+         * @desc Flag is need to call callback when owner change visible;
+         * @type {boolean}
+         * @private
+         */
+
+        this._listenVisible = false;
+
+        /**
          * @desc Storage of listeners.
          * @type {MANTICORE.manager.ListenerManager}
          * @private
@@ -141,6 +149,7 @@ class Component {
     }
 
     /**
+     * @desc Flag is need to call callbacks for add child and remove child.
      * @public
      * @type {boolean}
      */
@@ -154,6 +163,23 @@ class Component {
             return;
         }
         this._listenChildren = value;
+    }
+
+    /**
+     * @desc Flag is need to call callback when owner change visible.
+     * @public
+     * @type {boolean}
+     */
+
+    get listenVisible() {
+        return this._listenVisible;
+    }
+
+    set listenVisible(value) {
+        if (this._listenVisible === value) {
+            return;
+        }
+        this._listenVisible = value;
     }
 
     /**
@@ -215,6 +241,15 @@ class Component {
      */
 
     onRemoveChild(child) {}
+
+    /**
+     * @desc Calls when owner change visible.
+     * @method
+     * @public
+     * @param {boolean} visible
+     */
+
+    onVisibleChange(visible) {}
 
     /**
      * @desc Calls by pool when component get from pool (Can be only override). DON'T USE IT MANUALLY!!!
