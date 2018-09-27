@@ -79,6 +79,9 @@ class ComponentContainer extends PIXI.Container {
         }
         super.visible = value;
 
+        if (Type.isEmpty(this._componentManager)) {
+            return;
+        }
         this._componentManager.iterateComponents(component => {
             if (!component.listenVisible) {
                 return;

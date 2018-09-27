@@ -68,6 +68,32 @@ class ComponentSprite extends PIXI.Sprite {
 
     /**
      * @public
+     * @returns {boolean}
+     */
+
+    get visible() {
+        return super.visible;
+    }
+
+    set visible(value) {
+        if (super.visible === value) {
+            return;
+        }
+        super.visible = value;
+
+        if (Type.isEmpty(this._componentManager)) {
+            return;
+        }
+        this._componentManager.iterateComponents(component => {
+            if (!component.listenVisible) {
+                return;
+            }
+            component.onVisibleChange(this.visible);
+        })
+    }
+
+    /**
+     * @public
      * @type {boolean}
      */
 
