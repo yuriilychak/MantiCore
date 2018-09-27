@@ -1,4 +1,6 @@
 import ComChildListener from "./ComChildListener";
+import ComItem from "./ComItem";
+import ComItemBox from "./ComItemBox";
 import ComLayout from "./ComLayout";
 import ComUI from "./ComUI";
 import ComUIElement from "./ComUIElement";
@@ -11,6 +13,8 @@ import ComUIElement from "./ComUIElement";
 
 export default {
     ComChildListener,
+    ComItem,
+    ComItemBox,
     ComLayout,
     ComUI,
     ComUIElement

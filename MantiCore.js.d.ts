@@ -51,6 +51,26 @@ declare namespace MANTICORE {
                 refreshLayot(): void;
             }
 
+            export class ComItem extends MANTICORE.component.ui.ComUI {
+                constructor();
+
+                updateData(data: any): void;
+            }
+
+            class ComItemBox extends MANTICORE.component.Component {
+                constructor(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , isNumFromZero?: boolean);
+                readonly numFromZero: number;
+                readonly templateName: string;
+                readonly templateNumCount: number;
+                readonly componentTemplate: MANTICORE.component.ui.ComItem;
+
+                updateData(data: any[]): void;
+                getElement(index: number): MANTICORE.component.ui.ComItem | null;
+                updateElementData(index: number, data: any): boolean;
+                addItem<T extends MANTICORE.view.ComponentContainer>(child: T): void;
+            }
+
+
             export class ComUI extends MANTICORE.component.Component {
                 constructor(name?: string);
 
