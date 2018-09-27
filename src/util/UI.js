@@ -120,7 +120,11 @@ const ui = {
             }
         }
 
-        console.log(Format.replace(this.LOG_TEMPLATE, tab, type, path));
+        const pathSplit = path.split("=>");
+        if (pathSplit.length !== 1) {
+            pathSplit.splice(0, 1);
+        }
+        console.log(Format.replace(this.LOG_TEMPLATE, tab, type, pathSplit.join("=>")));
 
         const isButton = widget.uiType && widget.uiType === UI_ELEMENT.BUTTON;
         const children = widget.uiType && (widget.uiType === UI_ELEMENT.SCROLL_VIEW  || widget.uiType === UI_ELEMENT.LIST_VIEW) ?
@@ -156,7 +160,7 @@ const ui = {
 
         element = firstElement;
 
-        for (i = 1; i < elementCount; ++i) {
+        for (i = 0; i < elementCount; ++i) {
             element = element.getChildByName(pathSplit[i]);
             if (element === null) {
                 return null;
