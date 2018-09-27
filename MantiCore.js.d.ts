@@ -53,7 +53,19 @@ declare namespace MANTICORE {
 
             export class ComUI extends MANTICORE.component.Component {
                 constructor(name?: string);
+
+                listenInteractions: boolean;
+
+                onOwnerUp(event: object): void;
+                onOwnerDown(event: object): void;
+                onOwnerOver(event: object): void;
+                onOwnerOut(event: object): void;
+                onOwnerMove(event: object): void;
+                onOwnerDragStart(event: object): void;
+                onOwnerDragFinish(event: object): void;
+                onOwnerDrag(event: object): void;
             }
+
 
             export class ComUIElement extends MANTICORE.component.ui.ComUI {
                 constructor(elementName: string, bundleName?: string);

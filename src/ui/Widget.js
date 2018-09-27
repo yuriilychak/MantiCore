@@ -8,6 +8,7 @@ import Asset from "util/Asset";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Constant from "constant/index";
 import Geometry from "util/Geometry";
+import ComUI from "component/ui/ComUI"
 
 /**
  * @desc Base component for all UI elements.
@@ -63,6 +64,14 @@ class Widget extends ComponentContainer {
          */
 
         this._isInteractiveOver = false;
+
+        /**
+         * @desc Array with ui components. Need to dispatch interactions for components without events.
+         * @type {MANTICORE.component.ui.ComUI[]}
+         * @private
+         */
+
+        this._uiComponents = [];
 
         /**
          * @type {MANTICORE.repository.Repository}
@@ -476,6 +485,69 @@ class Widget extends ComponentContainer {
     }
 
     /**
+     * @desc Add component to container, returns falls if component already add.
+     * @method
+     * @public
+     * @param {MANTICORE.component.Component} component
+     * @returns {boolean}
+     */
+
+    addComponent(component) {
+        const result =  super.addComponent(component);
+
+        if (result && component instanceof ComUI) {
+            this._uiComponents.push(component);
+        }
+    }
+
+    /**
+     * @desc Add components to container.
+     * @method
+     * @public
+     * @param {MANTICORE.component.Component[]} components
+     */
+
+    addComponents(components) {
+        const componentCount = components.length;
+        for (let i = 0; i < componentCount; ++i) {
+            if (components[i] instanceof ComUI) {
+                this._uiComponents.push(components[i]);
+            }
+        }
+        return super.addComponents(components);
+    }
+
+    /**
+     * @desc Remove component from container;
+     * @method
+     * @public
+     * @param {string} name
+     * @returns {boolean}
+     */
+
+    removeComponent(name) {
+        const uiComponentCount = this._uiComponents.length;
+        for (let i = 0; i < uiComponentCount; ++i) {
+            if (this._uiComponents[i].name === name) {
+                this._uiComponents.splice(i, 1);
+                break;
+            }
+        }
+        return super.removeComponent(name);
+    }
+
+    /**
+     * @desc Remove all components from target;
+     * @method
+     * @public
+     */
+
+    removeAllComponents() {
+        this._uiComponents.length = 0;
+        return super.removeAllComponents();
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -522,6 +594,7 @@ class Widget extends ComponentContainer {
         if (!this._isInteractiveDown) {
             return false;
         }
+        this._iterateUIComponents(component => component.onOwnerUp(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
         if (this._isInteractiveDrag) {
             this.onActionDragFinishHandler(event);
@@ -546,6 +619,7 @@ class Widget extends ComponentContainer {
             return false;
         }
         this._isInteractiveDown = true;
+        this._iterateUIComponents(component => component.onOwnerDown(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DOWN, event);
         return true;
     }
@@ -558,6 +632,7 @@ class Widget extends ComponentContainer {
 
     onActionOverHandler(event) {
         this._isInteractiveOver = true;
+        this._iterateUIComponents(component => component.onOwnerOver(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.OVER, event);
     }
 
@@ -569,6 +644,7 @@ class Widget extends ComponentContainer {
 
     onActionOutHandler(event) {
         this._isInteractiveOver = false;
+        this._iterateUIComponents(component => component.onOwnerOut(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.OUT, event);
     }
 
@@ -583,6 +659,7 @@ class Widget extends ComponentContainer {
         if (!this._isInteractiveDown) {
             return false;
         }
+        this._iterateUIComponents(component => component.onOwnerUp(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
         if (this._isInteractiveDrag) {
             this.onActionDragFinishHandler(event);
@@ -611,8 +688,15 @@ class Widget extends ComponentContainer {
                 this.onActionDragStartHandler(event);
         }
 
-        const eventId = this._isInteractiveDown ? INTERACTIVE_EVENT.DRAG : INTERACTIVE_EVENT.MOVE;
-        this._dispatchInteractiveEvent(eventId, event);
+        if (this._isInteractiveDown) {
+            this._iterateUIComponents(component => component.onOwnerDrag(event));
+            this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DRAG, event);
+        }
+        else {
+            this._iterateUIComponents(component => component.onOwnerMove(event));
+            this._dispatchInteractiveEvent(INTERACTIVE_EVENT.MOVE, event);
+        }
+
         return true;
     }
 
@@ -623,7 +707,9 @@ class Widget extends ComponentContainer {
      */
 
     onActionClickHandler(event) {
+        this._iterateUIComponents(component => component.onOwnerClick(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
+
     }
 
     /**
@@ -633,6 +719,7 @@ class Widget extends ComponentContainer {
      */
 
     onActionDragStartHandler(event) {
+        this._iterateUIComponents(component => component.onOwnerDragStart(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, event);
     }
 
@@ -643,6 +730,7 @@ class Widget extends ComponentContainer {
      */
 
     onActionDragFinishHandler(event) {
+        this._iterateUIComponents(component => component.onOwnerDragFinish(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, event);
     }
 
@@ -650,6 +738,26 @@ class Widget extends ComponentContainer {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Function for iterate ui components.
+     * @method
+     * @param {MANTICORE.view.callback.IterateComponent} callback
+     * @private
+     */
+
+    _iterateUIComponents(callback) {
+        const componentCount = this._uiComponents.length;
+        let i, component;
+
+        for (i = 0; i < componentCount; ++i) {
+            component = this._uiComponents[i];
+            if (!component.listenInteractions) {
+                continue;
+            }
+            callback.call(component);
+        }
+    }
 
     /**
      * @desc Is currently widget clipped.
