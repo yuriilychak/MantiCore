@@ -498,6 +498,8 @@ class Widget extends ComponentContainer {
         if (result && component instanceof ComUI) {
             this._uiComponents.push(component);
         }
+
+        return result;
     }
 
     /**

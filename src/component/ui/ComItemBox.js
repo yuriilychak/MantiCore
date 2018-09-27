@@ -103,7 +103,7 @@ class ComItemBox extends Component {
      * @desc Update item data
      * @method
      * @public
-     * @param {*[]} data - Array with data to update.
+     * @param {any[]} data - Array with data to update.
      */
 
     updateData(data) {
