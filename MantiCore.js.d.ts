@@ -84,15 +84,14 @@ declare namespace MANTICORE {
                 onOwnerDragStart(event: object): void;
                 onOwnerDragFinish(event: object): void;
                 onOwnerDrag(event: object): void;
+                logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+                getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
+                addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T;
             }
 
 
             export class ComUIElement extends MANTICORE.component.ui.ComUI {
                 constructor(elementName: string, bundleName?: string);
-
-                logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-                getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
-                addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T
             }
         }
 

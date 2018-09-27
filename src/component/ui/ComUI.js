@@ -1,4 +1,6 @@
 import Component from "component/Component";
+import UI from "util/UI";
+import Type from "util/Type";
 
 /**
  * @desc Base Class for ui components.
@@ -22,6 +24,55 @@ class ComUI extends Component {
          */
 
         this._listenInteractions = false;
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Log hierarchy for owner or custom widget.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     */
+
+    logHierarchy(widget = null) {
+        UI.logHierarchy(Type.isNull(widget) ? this.owner : widget);
+    }
+
+    /**
+     * @desc Get child widget from parent or some custom widget.
+     * @public
+     * @method
+     * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @returns {?PIXI.Container | * }
+     */
+
+    getChildView(path, widget = null) {
+        return UI.getChildView(path, Type.isNull(widget) ? this.owner : widget);
+    }
+
+    /**
+     * @desc Add Component to child.
+     * @method
+     * @public
+     * @param {MANTICORE.component.Component} component - Component for add to children.
+     * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @returns {MANTICORE.component.Component}
+     */
+
+    addComponentToChild(component, path, widget = null) {
+        const child = this.getChildView(path, widget);
+
+        if (!Type.isNull(child) && child.uiType) {
+            child.addComponent(component);
+        }
+
+        return component;
     }
 
     /**
