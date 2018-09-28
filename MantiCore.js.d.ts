@@ -76,14 +76,15 @@ declare namespace MANTICORE {
 
                 listenInteractions: boolean;
 
-                onOwnerUp(event: object): void;
-                onOwnerDown(event: object): void;
-                onOwnerOver(event: object): void;
-                onOwnerOut(event: object): void;
-                onOwnerMove(event: object): void;
-                onOwnerDragStart(event: object): void;
-                onOwnerDragFinish(event: object): void;
-                onOwnerDrag(event: object): void;
+                onOwnerUp(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerDown(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerOver(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerOut(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerMove(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerDragStart(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerDragFinish(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerDrag(event: MANTICORE.eventDispatcher.EventModel): void;
+                onOwnerClick(event: MANTICORE.eventDispatcher.EventModel): void;
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
                 getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
                 addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T;
@@ -131,7 +132,7 @@ declare namespace MANTICORE {
             destroy(): void;
             kill(): void;
 
-            protected addEventListener(event: string, handler: Function): void;
+            protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.EventModel): void;
             protected removeEventListener(event: string): void;
             protected dispatchEvent(event: string, data?: any): void;
         }
@@ -254,7 +255,7 @@ declare namespace MANTICORE {
     }
 
     export namespace eventDispatcher {
-        export function addListener(type: string, listener: Function, target: Object): void;
+        export function addListener(type: string, listener: MANTICORE.eventDispatcher.InteractiveCallback, target: Object): void;
         export function hasListener(type: string, target: Object): boolean;
         export function removeListener(type: string, target: Object): boolean;
         export function dispatch(type: string, targetOrEvent?: Object, data?: Object): void;
@@ -269,7 +270,7 @@ declare namespace MANTICORE {
         }
 
         export class ListenerModel extends MANTICORE.model.PoolModel {
-            constructor(event: string, listener: Function, target: Object);
+            constructor(event: string, listener: MANTICORE.eventDispatcher.InteractiveCallback, target: Object);
 
             event: string;
             target: Object;
@@ -328,7 +329,7 @@ declare namespace MANTICORE {
 
             isListenEvent(event: string): boolean;
 
-            addEventListener(event: string, handler: Function): void;
+            addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
             removeEventListener(event: string): void;
             removeAllEventListeners(): void;
             dispatchEvent(event: string, data?: any): void;
@@ -818,14 +819,14 @@ declare namespace MANTICORE {
 
             public addComponent(component: MANTICORE.component.Component): boolean;
             public addComponents(components: any[]): void;
-            public getComponent(name: string): MANTICORE.component.Component | null;
+            public getComponent<T extends MANTICORE.component.Component>(name: string): T | null;
             public removeComponent(name: string): boolean;
             public removeAllComponents(): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
 
-            protected addEventListener(event: string, handler: Function): void;
+            protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
             protected removeEventListener(event: string): void;
             protected dispatchEvent(event: string, data?: any): void;
             protected onUpdate(dt: number): void;
@@ -849,7 +850,7 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
 
-            protected addEventListener(event: string, handler: Function): void;
+            protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
             protected removeEventListener(event: string): void;
             protected dispatchEvent(event: string, data?: any): void;
             protected onUpdate(dt: number): void;
