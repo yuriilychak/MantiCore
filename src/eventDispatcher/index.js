@@ -2,7 +2,6 @@ import Repository from "repository/Repository";
 import EventModel from "./EventModel";
 import Pool from "pool";
 import ListenerModel from "./ListenerModel";
-import Type from "util/Type";
 
 /**
  * @desc Simply event dispatcher.
