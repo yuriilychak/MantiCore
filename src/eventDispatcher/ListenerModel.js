@@ -1,13 +1,5 @@
 import PoolModel from "model/PoolModel";
-
-/**
- * @desc Generator of id
- * @static
- * @type {int}
- * @memberOf MANTICORE.eventDispatcher.ListenerModel
- * @private
- */
-let _idIterator = 0;
+import Math from "util/Math";
 
 /**
  * @desc Model for store event listener data.
@@ -26,7 +18,7 @@ class ListenerModel extends PoolModel {
      */
 
     constructor (event, listener, target) {
-        super(++_idIterator);
+        super(Math.getUniqueId());
 
         /**
          * @desc Name of event that dispatch. Need to remove without errors.

@@ -7,6 +7,14 @@
 const math = {
 
     /**
+     * @desc Variable for generate unique id's for objects.
+     * @type {int}
+     * @private
+     */
+
+    _id: 0,
+
+    /**
      * @desc Return sign of value
      * @param {number} value
      * @return {int}
@@ -320,6 +328,16 @@ const math = {
 
     percentToFloat: function (value) {
         return value * 0.01;
+    },
+
+    /**
+     * @desc Generate unique id.
+     * @function
+     * @return {int}
+     */
+
+    getUniqueId: function () {
+        return ++this._id;
     }
 };
 

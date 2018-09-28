@@ -1,13 +1,5 @@
 import PoolModel from "model/PoolModel";
-
-/**
- * @desc Generator of id
- * @static
- * @type {int}
- * @memberOf MANTICORE.eventDispatcher.EventModel
- * @private
- */
-let _idIterator = 0;
+import Math from "util/Math";
 
 /**
  * @desc Model for store event data.
@@ -25,7 +17,7 @@ class EventModel extends PoolModel {
      */
 
     constructor (target, data) {
-        super(++_idIterator);
+        super(Math.getUniqueId());
 
         /**
          * @desc Data of event.

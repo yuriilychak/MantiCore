@@ -87,6 +87,9 @@ declare namespace MANTICORE {
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
                 getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
                 addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T;
+                addChildListener<T extends PIXI.Container>(listener: MANTICORE.eventDispatcher.InteractiveCallback, eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
+                removeChildListener<T extends PIXI.Container>(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string,  widget?: T): boolean;
+                removeAllChildListeners() : void;
             }
 
 
@@ -255,6 +258,8 @@ declare namespace MANTICORE {
         export function hasListener(type: string, target: Object): boolean;
         export function removeListener(type: string, target: Object): boolean;
         export function dispatch(type: string, targetOrEvent?: Object, data?: Object): void;
+
+        type InteractiveCallback = (event: MANTICORE.eventDispatcher.EventModel) => void;
 
         export class EventModel extends MANTICORE.model.PoolModel {
             constructor(target: Object, data: any);
@@ -442,23 +447,6 @@ declare namespace MANTICORE {
             passwordMode: boolean;
             passwordChar: number;
         }
-    }
-
-    export namespace callback {
-        /**
-         * 
-         * @param component
-         * @param index
-         */
-        type IterateComponent = (component: MANTICORE.component.Component, index?: number)=>void;
-
-        /**
-         * 
-         * @param component
-         * @param child
-         */
-        type ChildAction = (component: MANTICORE.component.Component, child: PIXI.DisplayObject)=>void;
-
     }
 
     export namespace ui {
@@ -793,7 +781,7 @@ declare namespace MANTICORE {
             export function toDegreees(radians: number): number;
             export function floatToPercent(value: number, isRound?: boolean): number;
             export function percentToFloat(value: number): number;
-
+            export function getUniqueId(): number;
         }
 
         export namespace type {
@@ -816,11 +804,6 @@ declare namespace MANTICORE {
 
     export namespace view {
         namespace callback {
-            /**
-             *
-             * @param component
-             * @param index
-             */
             type IterateComponent = (component: MANTICORE.component.Component, index?: number)=>void;
         }
 
@@ -898,5 +881,4 @@ declare namespace MANTICORE {
             public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
         }
     }
-
 }
