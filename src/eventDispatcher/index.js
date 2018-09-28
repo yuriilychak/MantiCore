@@ -1,7 +1,8 @@
 import Repository from "repository/Repository";
 import EventModel from "./EventModel";
-import pool from "pool/index";
+import Pool from "pool";
 import ListenerModel from "./ListenerModel";
+import Type from "util/Type";
 
 /**
  * @desc Simply event dispatcher.
@@ -70,7 +71,7 @@ const eventDispatcher = {
             listenerRepo = this._listenerRepo.getElement(type);
         }
 
-        const model = pool.getObject(ListenerModel, type, listener, target);
+        const model = Pool.getObject(ListenerModel, type, listener, target);
 
         listenerRepo.addElement(model);
 
@@ -144,7 +145,7 @@ const eventDispatcher = {
             eventModel = targetOrEvent;
         }
         else {
-            eventModel = pool.getObject(EventModel, targetOrEvent, data);
+            eventModel = Pool.getObject(EventModel, targetOrEvent, data);
         }
 
         if (this._isEventProcessing) {
@@ -177,16 +178,13 @@ const eventDispatcher = {
             this._markForDelete.length = 0;
         }
 
-        if (!this._listenerRepo.hasElement(type)) {
-            return;
-        }
-
-        const listenerRepo = this._listenerRepo.getElement(type);
-        const listeners = listenerRepo.values;
-        const listenerCount = listeners.length;
-
-        for (i = 0; i < listenerCount; ++i) {
-            listeners[i].dispatch(eventModel);
+        if (this._listenerRepo.hasElement(type)) {
+            const listenerRepo = this._listenerRepo.getElement(type);
+            const listeners = listenerRepo.values;
+            const listenerCount = listeners.length;
+            for (i = 0; i < listenerCount; ++i) {
+                listeners[i].dispatch(eventModel);
+            }
         }
 
         eventModel.kill();
