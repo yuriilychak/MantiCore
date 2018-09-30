@@ -1,15 +1,16 @@
-import builder from "./builder/index";
-import component from "./component/index";
-import constant from "./constant/index";
-import enumerator from "./enumerator/index";
-import eventDispatcher from "./eventDispatcher/index";
-import model from "./model/index";
-import pool from "./pool/index";
-import repository from "./repository/index";
-import manager from "./manager/index";
-import ui from "./ui/index";
-import util from "./util/index";
-import view from "./view/index";
+import builder from "./builder";
+import bundle from "./bundle";
+import component from "./component";
+import constant from "./constant";
+import enumerator from "./enumerator";
+import eventDispatcher from "./eventDispatcher";
+import model from "./model";
+import pool from "./pool";
+import repository from "./repository";
+import manager from "./manager";
+import ui from "./ui";
+import util from "./util";
+import view from "./view";
 
 /**
  * @desc Namespace that contain all core functional for all games.
@@ -18,6 +19,7 @@ import view from "./view/index";
 
 export {
     builder,
+    bundle,
     component,
     constant,
     enumerator,

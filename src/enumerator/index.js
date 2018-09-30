@@ -1,3 +1,4 @@
+import BUNDLE_TYPE from "./BundleType";
 import DIRECTION from "./Direction";
 import FILE_TYPE from "./FileType";
 import RESOLUTION from "./Resolution";
@@ -11,6 +12,7 @@ import ui from "./ui/index";
 
 export default {
     ui,
+    BUNDLE_TYPE,
     DIRECTION,
     FILE_TYPE,
     RESOLUTION,

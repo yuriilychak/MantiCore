@@ -5,6 +5,17 @@ declare namespace MANTICORE {
         }
     }
 
+    export namespace bundle {
+        export namespace bundle {
+            export class BaseBundle {
+                constructor();
+            }
+        }
+        export namespace middleware {
+            export function bundleParser(): void;
+        }
+    }
+
     export namespace component {
         namespace callback {
             export type IterateChildren = (child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, index?: number, realIndex?: number)=>void;
@@ -143,6 +154,11 @@ declare namespace MANTICORE {
     }
 
     export namespace enumerator {
+        export enum BUNDLE_TYPE {
+            NONE = 0,
+            ASSET = 1,
+            LOCALE = 2
+        }
         export enum DIRECTION {
             NONE = 0,
             LEFT = 1,
@@ -799,7 +815,7 @@ declare namespace MANTICORE {
 
         export namespace ui {
             export function logHierarchy(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-            export function getChildView(path: string, firstElement: PIXI.Container): PIXI.DisplayObject | null;
+            export function getChildView<T extends PIXI.Container>(path: string, firstElement: T): T| null;
         }
     }
 
