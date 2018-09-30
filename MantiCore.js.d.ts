@@ -6,10 +6,35 @@ declare namespace MANTICORE {
     }
 
     export namespace bundle {
+        export namespace ancillary {
+            class TextureAtlas {
+                constructor(baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo, bundle: MANTICORE.type.AssetBundle);
+            }
+        }
         export namespace bundle {
+            class AssetBundle extends MANTICORE.bundle.bundle.BaseBundle {
+                constructor (data: MANTICORE.type.AssetBundle);
+
+
+                readonly linkedTextures: MANTICORE.bundle.bundle.LinkedTexture[];
+
+                generateTextureAtlas(baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo): void;
+
+            }
             export class BaseBundle {
                 constructor();
             }
+
+            export interface LinkedTexture {
+                link: string;
+                name: string;
+                isLoaded: boolean;
+                atlas: MANTICORE.type.AtlasInfo;
+            }
+        }
+
+        export namespace bundleCache {
+            export function addAssetBundle(data: MANTICORE.type.AssetBundle): MANTICORE.bundle.bundle.AssetBundle | null;
         }
         export namespace middleware {
             export function bundleParser(resource: MANTICORE.loader.LoaderResource, next: MANTICORE.loader.LoaderCallback): void;
@@ -420,18 +445,61 @@ declare namespace MANTICORE {
 
     export namespace type {
         export interface AssetBundle {
-            ui: MANTICORE.type.ElementData[];
-            textures: number[];
-            textureParts: string[];
-            componentNames: string[];
-            elementNames: string[];
-            texts: string[];
-            fonts: string[];
-            fontStyles: MANTICORE.type.FontStyle[];
+            anchors: number[];
+            bundleType: MANTICORE.enumerator.BUNDLE_TYPE;
+            atlases: MANTICORE.type.AtlasInfo[];
             atlasFonts: MANTICORE.type.AtlasFont[];
             colors: number[];
-            anchors: number[];
+            componentNames: string[];
+            elementNames: string[];
+            fontData: MANTICORE.type.FontData[];
+            fonts: string[];
+            fontStyles: MANTICORE.type.FontStyle[];
+            name: string;
+            texts: string[];
+            textures: number[];
+            textureParts: string[];
             textFieldStyles: MANTICORE.type.TextFieldStyle[];
+            ui: MANTICORE.type.ElementData[];
+        }
+
+        export interface AtlasInfo {
+            frames: MANTICORE.type.AtlasFrame[];
+            name: string;
+            images: string[];
+            scale: number;
+        }
+
+        export interface AtlasFont {
+            texture: number;
+            dotWidth: number;
+            size: number[];
+        }
+
+        export interface AtlasFrame {
+            dimensions: number[];
+            spriteDimensions: number[];
+            sourceSize: number[];
+            id: number;
+            rotated: boolean;
+            trimmed: boolean;
+        }
+
+        export interface CharData {
+            id: number;
+            page: number;
+            dimensions: number[];
+            offset: number;
+            ax: number;
+        }
+
+        export interface FontData {
+            chars: MANTICORE.type.CharData[];
+            size: number;
+            spacing: number;
+            kerning: number[][];
+            offsets: number[][];
+            lineHeight: number
         }
 
         export interface FontStyle {
@@ -443,12 +511,6 @@ declare namespace MANTICORE {
             outlineColor: number;
             shadowColor: number;
             shadowOffset: number[];
-        }
-
-        export interface AtlasFont {
-            texture: number;
-            dotWidth: number;
-            size: number[];
         }
 
         export interface ElementData {

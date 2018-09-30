@@ -73,6 +73,68 @@ class AssetBundle extends BaseBundle {
 
     generateTextureAtlas(baseTexture, atlas) {
         this._textureAtlases.push(new TextureAtas(baseTexture, atlas, this.data));
+        if (atlas.name !== "main") {
+            return;
+        }
+        const fonts = this.data.fontData;
+        const fontCount = fonts.length;
+        const resolution = 1;
+
+        let font, i, j, letterCount, fontData, res, kernings, kerningCount,
+            kerning, pagesTextures, letters, letter, offset, first, second, amount;
+
+
+        for (i = 0; i < fontCount; ++i) {
+            font = fonts[i];
+            fontData = {};
+            res = PIXI.utils.getResolutionOfUrl(baseTexture.imageUrl, resolution);
+            pagesTextures = {};
+
+            fontData.font = this.data.fonts[i];
+            fontData.size = font.size;
+            fontData.lineHeight = font.lineHeight / res;
+            fontData.chars = {};
+
+
+            // parse letters
+            letters = font.chars;
+            letterCount =  letters.length;
+
+            for (j = 0; j < letterCount; ++j) {
+                letter = letters[j];
+
+                offset = font.offsets[letter.offset];
+
+                fontData.chars[letter.id] = {
+                    xOffset: offset[0] / res,
+                    yOffset: offset[1] / res,
+                    xAdvance: letter.ax / res,
+                    kerning: {},
+                    texture: new PIXI.Texture(baseTexture, new PIXI.Rectangle(
+                        letter.dimensions[0] / res,
+                        letter.dimensions[1] / res,
+                        letter.dimensions[2] / res,
+                        letter.dimensions[3] / res
+                    )),
+                    page: letter.page
+                };
+            }
+
+            kernings = font.kerning;
+            kerningCount = kernings.length;
+
+            for (j = 0; j < kerningCount; ++j) {
+                kerning = kernings[j];
+                first = kerning[0] / res;
+                second = kerning[1] / res;
+                amount = kerning[2] / res;
+
+                if (fontData.chars[second]) {
+                    fontData.chars[second].kerning[first] = amount;
+                }
+            }
+            PIXI.extras.BitmapText.fonts[fontData.font] = fontData;
+        }
     }
 }
 

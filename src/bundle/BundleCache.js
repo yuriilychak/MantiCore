@@ -22,10 +22,11 @@ export default {
     _localeBundles: new Repository(),
 
     /**
+     * @desc Add asset bundle to cache
      * @function
      * @public
-     * @param {Object} data
-     * @return {*}
+     * @param {MANTICORE.type.AssetBundle} data
+     * @return {MANTICORE.bundle.bundle.AssetBundle | null}
      */
 
     addAssetBundle: function(data) {

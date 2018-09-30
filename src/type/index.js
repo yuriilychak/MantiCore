@@ -36,6 +36,7 @@
  * @property {MANTICORE.type.TextFieldStyle[]} textFieldStyles - Array with textField styles.
  * @property {string} name - Name of bundle.
  * @property {MANTICORE.enumerator.BUNDLE_TYPE} bundleType - Type of  bundle that load.
+ * @property {MANTICORE.type.FontData[]} fontData - Array with information about fonts.
  */
 
 /**
@@ -61,6 +62,31 @@
  * @property {int} texture - Index of texture that use atlas font.
  * @property {int} dotWidth - Width of dot symbol (Apply to dot and point symbols).
  * @property {int[]} size - Size of letter in atlas font.
+ */
+
+/**
+ * @desc Container that store information about font.
+ * @typedef {Object}
+ * @name FontData
+ * @memberOf MANTICORE.type
+ * @property {MANTICORE.type.CharData[]} chars - Chars that use font.
+ * @property {int} size - Size of font.
+ * @property {int} spacing - Spacing of char  in font.
+ * @property {int[][]} kerning - Array with kernings of firs and second elements id's third is offset.
+ * @property {int[][]} offsets - Array ith char offsets.
+ * @property {int} lineHeight  - Line height of font.
+ */
+
+/**
+ * @desc Data that contain information about atlas fonts.
+ * @typedef {Object}
+ * @name CharData
+ * @memberOf MANTICORE.type
+ * @property {int} id - Id of char.
+ * @property {int} page - Page of texture where stored char.
+ * @property {int[]} dimensions - Dimensions of char in texture.
+ * @property {int} offset - index of char offset to baseline.
+ * @property {int} ax - horizontal offset of char.
  */
 
 /**
