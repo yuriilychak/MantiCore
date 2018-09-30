@@ -1,8 +1,8 @@
 /**
  * @desc Enumerator for define bundle type.
- * @enumerator {int}
+ * @enum {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.BUNDLE_TYPE
+ * @memberOf MANTICORE.enumerator
  */
 
 const BUNDLE_TYPE = {

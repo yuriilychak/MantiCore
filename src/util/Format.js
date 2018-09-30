@@ -102,6 +102,222 @@ const format = {
             stringPattern = stringPattern.replace(pattern, arguments[i]);
         }
         return stringPattern;
+    },
+
+    /**
+     * @desc Join strings to be a path.
+     * @function
+     * @public
+     * @example
+     * // returns "a/b.png"
+     * MANTICORE.util.format.join("a", "b.png");
+     * // returns "a/b/c.png"
+     * MANTICORE.util.format.join("a", "b", "c.png");
+     * // returns "a/b"
+     * MANTICORE.util.format.join("a", "b");
+     * // returns "a/b/"
+     * MANTICORE.util.format.join("a", "b", "/");
+     * // returns "a/b/"
+     * MANTICORE.util.format.join("a", "b/", "/");
+     * @param {...string} var_args
+     * @returns {string}
+     */
+
+    join: function (var_args) {
+        const count = arguments.length;
+        const emptyStr = "";
+        const regExp = /(\/|\\\\)$/;
+
+        let result = emptyStr;
+        let prefix, i;
+
+        for (i = 0; i < count; ++i) {
+            prefix = result === emptyStr ? emptyStr : "/";
+            result = (result + prefix + arguments[i]).replace(regExp, emptyStr);
+        }
+        return result;
+    },
+
+    /**
+     * @desc Get the ext name of a path.
+     * @function
+     * @public
+     * @example
+     * // returns ".png"
+     * MANTICORE.util.format.extName("a/b.png");
+     * // returns ".png"
+     * MANTICORE.util.format.extName("a/b.png?a=1&b=2");
+     * // returns ""
+     * MANTICORE.util.format.extName("a/b");
+     * // returns ""
+     * MANTICORE.util.format.extName("a/b?a=1&b=2");
+     * @param {string} pathStr
+     * @returns {string}
+     */
+
+    extName: function (pathStr) {
+        let temp = /(\.[^\.\/\?\\]*)(\?.*)?$/.exec(pathStr);
+        return temp ? temp[1] : "";
+    },
+
+    /**
+     * @desc Get the main name of a file name.
+     * @function
+     * @public
+     * @param {string} fileName
+     * @returns {string}
+     */
+
+    mainFileName: function (fileName) {
+        if (fileName) {
+            const index = fileName.lastIndexOf(".");
+            if (index !== -1) {
+                return fileName.substring(0, index);
+            }
+        }
+        return fileName;
+    },
+
+    /**
+     * @desc Get the file name of a file path.
+     * @function
+     * @public
+     * @example
+     * // returns "b.png"
+     * MANTICORE.util.format.baseName("a/b.png");
+     * // returns "b.png"
+     * MANTICORE.util.format.baseName("a/b.png?a=1&b=2");
+     * // returns "b"
+     * MANTICORE.util.format.baseName("a/b.png", ".png");
+     * // returns "b"
+     * MANTICORE.util.format.baseName("a/b.png?a=1&b=2", ".png");
+     * // returns "b.png"
+     * MANTICORE.util.format.baseName("a/b.png", ".txt");
+     * @param {string} pathStr
+     * @param {string} [extName]
+     * @returns {string}
+     */
+
+    baseName: function (pathStr, extName) {
+        const index = pathStr.indexOf("?");
+
+        if (index > 0) {
+            pathStr = pathStr.substring(0, index);
+        }
+
+        const reg = /(\/|\\\\)([^(\/|\\\\)]+)$/g;
+        const result = reg.exec(pathStr.replace(/(\/|\\\\)$/, ""));
+
+        if (!result) {
+            return "";
+        }
+
+        const baseName = result[2];
+
+        if (extName && pathStr.substring(pathStr.length - extName.length).toLowerCase() === extName.toLowerCase()) {
+            return baseName.substring(0, baseName.length - extName.length);
+        }
+
+        return baseName;
+    },
+
+    /**
+     * @desc Get dir-name of a file path.
+     * @function
+     * @public
+     * @example
+     * unix
+     * // returns "a/b"
+     * MANTICORE.util.format.dirName("a/b/c.png");
+     * // returns "a/b"
+     * MANTICORE.util.format.dirName("a/b/c.png?a=1&b=2");
+     * // returns "a/b"
+     * MANTICORE.util.format.dirName("a/b/");
+     * // returns ""
+     * MANTICORE.util.format.dirName("c.png");
+     * windows
+     * // returns "a\b"
+     * MANTICORE.util.format.dirName("a\\b\\c.png");
+     * // returns "a\b"
+     * MANTICORE.util.format.dirName("a\\b\\c.png?a=1&b=2");
+     * @param {string} pathStr
+     * @returns {string}
+     */
+
+    dirName: function (pathStr) {
+        return pathStr.replace(/((.*)(\/|\\|\\\\))?(.*?\..*$)?/, '$2');
+    },
+
+    /**
+     * @desc Change ext-name of a file path.
+     * @function
+     * @public
+     * @example
+     * // returns "a\b"
+     * MANTICORE.util.format.changeExtName("a/b.png", ".plist");//-->"a/b.plist"
+     * // returns "a\b"
+     * MANTICORE.util.format.changeExtName("a/b.png?a=1&b=2", ".plist");//-->"a/b.plist?a=1&b=2"
+     * @param {string} pathStr
+     * @param {string} [extName = ""]
+     * @returns {string}
+     */
+
+    changeExtName: function (pathStr, extName) {
+        extName = cc.setValue(extName, "");
+        let index = pathStr.indexOf("?");
+        let tempStr = "";
+
+        if (index > 0) {
+            tempStr = pathStr.substring(index);
+            pathStr = pathStr.substring(0, index);
+        }
+
+        index = pathStr.lastIndexOf(".");
+
+        if (index < 0) {
+            return pathStr + extName + tempStr;
+        }
+        return pathStr.substring(0, index) + extName + tempStr;
+    },
+
+    /**
+     * @desc Change file name of a file path.
+     * @function
+     * @public
+     * @example
+     * // returns "a/b/b.plist"
+     * MANTICORE.util.format.changeBaseName("a/b/c.plist", "b.plist");
+     * // returns "a/b/b.plist?a=1&b=2"
+     * MANTICORE.util.format.changeBaseName("a/b/c.plist?a=1&b=2", "b.plist");
+     * // returns "a/b/c.png"
+     * MANTICORE.util.format.changeBaseName("a/b/c.plist", ".png");
+     * // returns "a/b/b"
+     * MANTICORE.util.format.changeBaseName("a/b/c.plist", "b");
+     * // returns "a/b/b.plist"
+     * MANTICORE.util.format.changeBaseName("a/b/c.plist", "b", true);
+     * @param {string} pathStr
+     * @param {string} baseName
+     * @param {boolean} [isSameExt = false]
+     * @returns {string}
+     */
+
+    changeBaseName: function (pathStr, baseName, isSameExt = false) {
+        if (baseName.indexOf(".") === 0) {
+            return this.changeExtname(pathStr, baseName);
+        }
+
+        let index = pathStr.indexOf("?");
+        let tempStr = "";
+        const ext = isSameExt ? this.extname(pathStr) : "";
+
+        if (index > 0) {
+            tempStr = pathStr.substring(index);
+            pathStr = pathStr.substring(0, index);
+        }
+
+        index = pathStr.lastIndexOf("/");
+        index = index <= 0 ? 0 : index + 1;
+        return pathStr.substring(0, index) + baseName + ext + tempStr;
     }
 };
 

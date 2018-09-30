@@ -12,7 +12,7 @@ declare namespace MANTICORE {
             }
         }
         export namespace middleware {
-            export function bundleParser(): void;
+            export function bundleParser(resource: MANTICORE.loader.LoaderResource, next: MANTICORE.loader.LoaderCallback): void;
         }
     }
 
@@ -300,6 +300,18 @@ declare namespace MANTICORE {
         export function getApp(): PIXI.Application;
         export function runScene(scene: MANTICORE.view.Scene): void;
 
+    }
+
+    export namespace loader {
+        export interface LoaderResource {
+            extension: string;
+            error: string;
+            name: string;
+            url: string;
+            data: any;
+        }
+
+        type LoaderCallback = () => void;
     }
 
     export namespace manager {
@@ -760,6 +772,13 @@ declare namespace MANTICORE {
             export function generateEventName(target: Object, event: string): string;
             export function getFileName(path: string): string;
             export function replace(...var_args: string[]): string;
+            export function join(...var_args:string[]): string;
+            export function extName(pathStr: string): string;
+            export function mainFileName(fileName: string): string;
+            export function baseName(pathStr: string, extName?: string): string;
+            export function dirName(pathStr: string): string;
+            export function changeExtName(pathStr: string, extName?: string): string;
+            export function changeBaseName(pathStr: string, baseName: string, isSameExt?: boolean): string;
 
         }
         export namespace geometry {

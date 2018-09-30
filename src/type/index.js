@@ -22,6 +22,7 @@
  * @name AssetBundle
  * @memberOf MANTICORE.type
  * @property {MANTICORE.type.ElementData[]} ui - Data that contain information about UI elements.
+ * @property {MANTICORE.type.AtlasInfo[]} atlases - atlases that use bundle;
  * @property {int[][]} textures - Array with decomposed textures that use elements.
  * @property {string[]} textureParts - Parts of decomposed textures.
  * @property {string[]} componentNames - Array with UI component name (windows, scenes etc.) that contain source.
@@ -32,7 +33,9 @@
  * @property {MANTICORE.type.AtlasFont[]} atlasFonts - Array with atlas font information.
  * @property {int[]} colors - Array of colors that use bundle.
  * @property {int[]} anchors - Array with anchor points.
- * @property {MANTICORE.type.TextFieldStyle[]} textFieldStyles - Array with textField styles.s
+ * @property {MANTICORE.type.TextFieldStyle[]} textFieldStyles - Array with textField styles.
+ * @property {string} name - Name of bundle.
+ * @property {MANTICORE.enumerator.BUNDLE_TYPE} bundleType - Type of  bundle that load.
  */
 
 /**
@@ -58,6 +61,30 @@
  * @property {int} texture - Index of texture that use atlas font.
  * @property {int} dotWidth - Width of dot symbol (Apply to dot and point symbols).
  * @property {int[]} size - Size of letter in atlas font.
+ */
+
+/**
+ * @desc Data that contain information about atlas.
+ * @typedef {Object}
+ * @name AtlasInfo
+ * @memberOf MANTICORE.type
+ * @property {MANTICORE.type.AtlasFrame[]} frames - Array with frames of atlas.
+ * @property {string} name - Name of atlas.
+ * @property {string[]} images - name of textures that use atlas.
+ * @property {number} scale - Scale of atlas (Need for multi resolution support).
+ */
+
+/**
+ * @desc Data that contain information about atlas frame.
+ * @typedef {Object}
+ * @name AtlasFrame
+ * @memberOf MANTICORE.type
+ * @property {int[]} dimensions - Dimensions of sprite in texture.
+ * @property {int[]} spriteDimensions - Dimensions of sprite.
+ * @property {int[]} sourceSize - Source size of frame.
+ * @property {int} id - Id of sprite frame.
+ * @property {boolean} rotated - Is frame rotated.
+ * @property {boolean} trimmed - Is frame trimmed.
  */
 
 /**
@@ -141,4 +168,27 @@
  * @typedef {Object}
  * @param {string} type - Name of event.
  * @param {?Object} data - Data for dispatch
+ */
+
+/**
+ * @desc Object for store event data
+ * @name LoaderResource
+ * @memberOf MANTICORE.loader
+ * @typedef {Object}
+ * @param {string} extension - Extension of resource.
+ * @param {string} error - error message if something was wrong.
+ * @param {string} name - Name of resource.
+ * @param {string} url - Url of resource.
+ * @param {*} data - Data that load.
+ */
+
+/**
+ * @desc Object for store linked textures
+ * @name LinkedTexture
+ * @memberOf MANTICORE.bundle.bundle
+ * @typedef {Object}
+ * @param {string} link - Link of texture contains name and bundle name as prefix.
+ * @param {string} name - Real name of texture.
+ * @param {boolean} isLoaded - Flag is texture loaded.
+ * @param {MANTICORE.type.AtlasInfo} atlas - Atlas that use texture.
  */

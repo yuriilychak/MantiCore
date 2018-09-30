@@ -1,3 +1,4 @@
+import AssetBundle from "./AssetBundle";
 import BaseBundle from "./BaseBundle";
 
 /**
@@ -7,6 +8,7 @@ import BaseBundle from "./BaseBundle";
  */
 
 const bundle = {
+    AssetBundle,
     BaseBundle
 };
 

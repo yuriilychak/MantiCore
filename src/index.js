@@ -4,6 +4,8 @@ import component from "./component";
 import constant from "./constant";
 import enumerator from "./enumerator";
 import eventDispatcher from "./eventDispatcher";
+import loader from "./loader";
+import launcher from "./launcher";
 import model from "./model";
 import pool from "./pool";
 import repository from "./repository";
@@ -24,6 +26,8 @@ export {
     constant,
     enumerator,
     eventDispatcher,
+    loader,
+    launcher,
     manager,
     model,
     pool,

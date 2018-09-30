@@ -1,5 +1,7 @@
+import ancillary from "./ancillary";
 import bundle from "./bundle";
 import middleware from  "./middleware";
+import bundleCache from "./BundleCache";
 
 /**
  * @desc Namespace that manipulate with file bundles.
@@ -8,6 +10,8 @@ import middleware from  "./middleware";
  */
 
 export default {
+    ancillary,
     bundle,
+    bundleCache,
     middleware
 };
