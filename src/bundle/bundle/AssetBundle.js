@@ -1,6 +1,7 @@
 import BaseBundle from "./BaseBundle";
-import BUNDLE_TYPE from "../../enumerator/BundleType";
+import BUNDLE_TYPE from "enumerator/BundleType";
 import TextureAtas from "bundle/ancillary/TextureAtlas";
+import FontCache from "ui/fontCache";
 
 /**
  * @desc Class for store asset bundles
@@ -80,7 +81,7 @@ class AssetBundle extends BaseBundle {
         const fontCount = fonts.length;
         const resolution = 1;
 
-        let font, i, j, letterCount, fontData, res, kernings, kerningCount,
+        let font, i, j, letterCount, fontData, res, kernings, kerningCount, nameSplit,
             kerning, pagesTextures, letters, letter, offset, first, second, amount;
 
 
@@ -134,6 +135,11 @@ class AssetBundle extends BaseBundle {
                 }
             }
             PIXI.extras.BitmapText.fonts[fontData.font] = fontData;
+            nameSplit = fontData.font.split("_");
+
+            if (nameSplit.length === 2) {
+                FontCache.addFontSize(nameSplit[0], parseInt(nameSplit[1], 10));
+            }
         }
     }
 }

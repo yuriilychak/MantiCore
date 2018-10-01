@@ -610,6 +610,11 @@ declare namespace MANTICORE {
             }
         }
 
+        export namespace fontCache{
+            export function addFontSize(fontName: string, size: number): void;
+            export function getFontName(fontName: string, size: number): string;
+        }
+
         export namespace parser {
             export function parseElement(name: string, link: string): MANTICORE.ui.Widget;
         }

@@ -1,6 +1,7 @@
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
-import math from "util/Math";
+import Math from "util/Math";
+import FontCache from "ui/fontCache";
 
 /**
  * @desc Bitmap text with outline.
@@ -17,6 +18,15 @@ class OutlineBitmapText extends PIXI.Container {
      */
     constructor (fontName, size) {
         super();
+
+        /**
+         * @type {string}
+         * @private
+         */
+
+        this._fontName = fontName;
+
+        fontName = FontCache.getFontName(this._fontName, size);
 
         /**
          * @desc Label that contain text.
@@ -143,15 +153,16 @@ class OutlineBitmapText extends PIXI.Container {
      */
 
     get fontName() {
-        return this._label.font.name;
+        return this._fontName;
     }
 
     set fontName(value) {
         if (this._label.font.name === value) {
             return;
         }
-        this._label.font.name = value;
-        this._iterateOutlines(element => element.font.name = value);
+        const fontName = FontCache.getFontName(value, this._label.font.size);
+        this._label.font.name = fontName;
+        this._iterateOutlines(element => element.font.name = fontName);
     }
 
     /**
@@ -167,8 +178,13 @@ class OutlineBitmapText extends PIXI.Container {
         if (this._label.font.size === value) {
             return;
         }
+        const fontName = FontCache.getFontName(this._fontName, size);
+        this._label.font.name = fontName;
         this._label.font.size = value;
-        this._iterateOutlines(element => element.font.size = value);
+        this._iterateOutlines(element => {
+            element.font.name = fontName;
+            element.font.size = value
+        });
     }
 
     /**
@@ -235,14 +251,14 @@ class OutlineBitmapText extends PIXI.Container {
 
         this.setChildIndex(this._label, outlineCount);
 
-        const step = math.PI * 2 / outlineCount;
+        const step = Math.PI * 2 / outlineCount;
         const offset = this._outlineSize + 1;
 
         this._iterateOutlines((element, index) => {
             const angle = step * index;
             element.position.set(
-                this._label.x + math.round(offset * math.cos(angle)),
-                this._label.y + math.round(offset * math.sin(angle))
+                this._label.x + Math.round(offset * Math.cos(angle)),
+                this._label.y + Math.round(offset * Math.sin(angle))
             );
         });
     }
