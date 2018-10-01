@@ -36,5 +36,17 @@ export default {
         const result = new AssetBundle(data);
         this._assetBundles.addElement(result, data.name);
         return result;
+    },
+
+    /**
+     * @desc returns asset bundle by name.
+     * @function
+     * @public
+     * @param {string} name
+     * @return {MANTICORE.bundle.bundle.AssetBundle | null}
+     */
+
+    getAssetBundle: function(name) {
+        return this._assetBundles.getElement(name);
     }
 };

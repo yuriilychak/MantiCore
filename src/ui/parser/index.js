@@ -2,6 +2,8 @@ import Type from "util/Type";
 import Math from "util/Math";
 import Color from "util/Color";
 
+import BundleCache from "bundle/BundleCache";
+
 import AtlasLabel from "ui/AtlasLabel";
 import Button from "ui/Button";
 import CheckBox from "ui/CheckBox";
@@ -714,7 +716,7 @@ export default {
      * @returns {MANTICORE.ui.Widget}
      */
     parseElement: function (name, link) {
-        const bundle = PIXI.loader.resources[link].data;
+        const bundle = BundleCache.getAssetBundle(link).data;
 
         const index = bundle.componentNames.indexOf(name);
         const data = bundle.ui[index];

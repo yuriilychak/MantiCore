@@ -35,6 +35,7 @@ declare namespace MANTICORE {
 
         export namespace bundleCache {
             export function addAssetBundle(data: MANTICORE.type.AssetBundle): MANTICORE.bundle.bundle.AssetBundle | null;
+            export function getAssetBundle(name: string): MANTICORE.bundle.bundle.AssetBundle | null;
         }
         export namespace middleware {
             export function bundleParser(resource: MANTICORE.loader.LoaderResource, next: MANTICORE.loader.LoaderCallback): void;
