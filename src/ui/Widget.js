@@ -493,7 +493,7 @@ class Widget extends ComponentContainer {
      */
 
     addComponent(component) {
-        const result =  super.addComponent(component);
+        const result = super.addComponent(component);
 
         if (result && component instanceof ComUI) {
             this._uiComponents.push(component);
@@ -757,7 +757,7 @@ class Widget extends ComponentContainer {
             if (!component.listenInteractions) {
                 continue;
             }
-            callback.call(component);
+            callback(component);
         }
     }
 

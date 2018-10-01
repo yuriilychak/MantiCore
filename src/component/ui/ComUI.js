@@ -101,7 +101,7 @@ class ComUI extends Component {
         if (this._listenInteractions === value) {
             return;
         }
-        this._listenInteractions = true;
+        this._listenInteractions = value;
     }
 
     /**
