@@ -82,14 +82,13 @@ class AssetBundle extends BaseBundle {
         const resolution = 1;
 
         let font, i, j, letterCount, fontData, res, kernings, kerningCount, nameSplit,
-            kerning, pagesTextures, letters, letter, offset, first, second, amount;
+            kerning, letters, letter, offset, first, second, amount;
 
 
         for (i = 0; i < fontCount; ++i) {
             font = fonts[i];
             fontData = {};
             res = PIXI.utils.getResolutionOfUrl(baseTexture.imageUrl, resolution);
-            pagesTextures = {};
 
             fontData.font = this.data.fonts[i];
             fontData.size = font.size;
@@ -108,7 +107,7 @@ class AssetBundle extends BaseBundle {
 
                 fontData.chars[letter.id] = {
                     xOffset: offset[0] / res,
-                    yOffset: offset[1] / res,
+                    yOffset: (offset[1] + (font.base / 4)) / res,//Workaround fix later
                     xAdvance: letter.ax / res,
                     kerning: {},
                     texture: new PIXI.Texture(baseTexture, new PIXI.Rectangle(

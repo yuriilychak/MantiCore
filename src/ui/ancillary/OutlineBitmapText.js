@@ -95,6 +95,8 @@ class OutlineBitmapText extends PIXI.Container {
 
         this._color = 0xFFFFFF;
 
+        console.log(this._label);
+
         this.addChild(this._label);
     }
 
@@ -106,7 +108,7 @@ class OutlineBitmapText extends PIXI.Container {
     /**
      * @method
      * @public
-     * @return {MANTICORE.ui.OutlineBitmapText}
+     * @return {MANTICORE.ui.ancillary.OutlineBitmapText}
      */
 
     clone() {
