@@ -5,6 +5,7 @@ import PoolModel from "model/PoolModel";
 import Math from "util/Math";
 import Format from "util/Format";
 import Pool from "pool";
+import UI_ELEMENT from "enumerator/ui/UIElement";
 
 /**
  * @desc Base Class for ui components.
@@ -65,6 +66,43 @@ class ComUI extends Component {
 
     getChildView(path, widget = null) {
         return UI.getChildView(path, Type.isNull(widget) ? this.owner : widget);
+    }
+
+    /**
+     * @desc Set text of label or button.
+     * @public
+     * @param {string} text
+     * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @returns {boolean}
+     */
+
+    setChildText(text, path, widget = null) {
+        const child = this.getChildView(path, widget);
+        if (Type.isNull(child) || !child.uiType) {
+            return false
+        }
+
+        switch (child.uiType) {
+            case UI_ELEMENT.LABEL:
+            case UI_ELEMENT.ATLAS_LABEL:
+            case UI_ELEMENT.TEXT_FIELD: {
+                child.text = text;
+                return true;
+            }
+            case UI_ELEMENT.BUTTON:
+            case UI_ELEMENT.TOGGLE_BUTTON:
+            case UI_ELEMENT.CHECK_BOX: {
+                if (!child.hasTitle()) {
+                    return false;
+                }
+                child.titleText = text;
+                return true;
+            }
+            default: {
+                return false;
+            }
+        }
     }
 
     /**
