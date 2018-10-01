@@ -71,13 +71,21 @@ class ComUI extends Component {
     /**
      * @desc Set text of label or button.
      * @public
-     * @param {string} text
+     * @param {*} text - Text to set.
      * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
      * @returns {boolean}
      */
 
     setChildText(text, path, widget = null) {
+        if (Type.isEmpty(text)) {
+            return false;
+        }
+
+        if (!Type.isString(text)) {
+            text = text.toString();
+        }
+
         const child = this.getChildView(path, widget);
         if (Type.isNull(child) || !child.uiType) {
             return false
