@@ -23,13 +23,6 @@ class ComponentSprite extends PIXI.Sprite {
         super(Asset.getSpriteFrame(frameName));
 
         /**
-         * @desc anchor point of widget.
-         * @type {PIXI.ObservablePoint}
-         * @private
-         */
-        this._overrideAnchor = new PIXI.ObservablePoint(this._onAnchorPointUpdate, this);
-
-        /**
          * @desc Manager of components.
          * @type {MANTICORE.manager.ComponentManager}
          * @private
@@ -73,19 +66,6 @@ class ComponentSprite extends PIXI.Sprite {
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @public
-     * @type {PIXI.ObservablePoint}
-     */
-
-    get anchor() {
-        return this._overrideAnchor;
-    }
-
-    set anchor(value) {
-        this._overrideAnchor.copy(value);
-    }
 
     /**
      * @public
@@ -264,7 +244,11 @@ class ComponentSprite extends PIXI.Sprite {
     addChild(var_args) {
         const argumentCount = arguments.length;
         const result = [];
+        const offset = Geometry.pCompMult(Geometry.pFromSize(this), this.anchor);
+        const scale = Geometry.pInvert(this.scale);
         for (let i = 0; i < argumentCount; ++i) {
+            Geometry.pSub(arguments[i].position, offset, true);
+            arguments[i].scale.copy(scale);
             result.push(super.addChild(arguments[i]));
         }
         this._onChildAction(result, (component, child) => component.onAddChild(child));
@@ -282,6 +266,8 @@ class ComponentSprite extends PIXI.Sprite {
 
     addChildAt(child, index) {
         const result = super.addChildAt(child, index);
+        Geometry.pSub(child.position, Geometry.pCompMult(Geometry.pFromSize(this), this.anchor), true);
+        child.scale.copy(Geometry.pInvert(this.scale));
         this._onChildAction([result], (component, child) => component.onAddChild(child));
         return result;
     }
@@ -436,20 +422,6 @@ class ComponentSprite extends PIXI.Sprite {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Calls when anchor point change.
-     * @method
-     * @private
-     */
-
-    _onAnchorPointUpdate() {
-        this.pivot.copy(Geometry.pCompMult(
-            Geometry.pFromSize(this),
-            this._overrideAnchor,
-            true
-        ));
-    }
 
     /**
      * @desc Update components when some children remove.

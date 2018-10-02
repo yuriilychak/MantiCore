@@ -175,7 +175,7 @@ const geometry = {
      * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
      */
 
-    pRange: function(p, pLeft, pRight, isIn) {
+    pRange: function(p, pLeft, pRight, isIn = false) {
         const x = Math.range(p.x, pLeft.x, pRight.x);
         const y = Math.range(p.y, pLeft.y, pRight.y);
         return this._pGenResult(p, x, y, isIn);
@@ -193,6 +193,21 @@ const geometry = {
 
     pEqual: function(p1, p2) {
         return p1.x === p2.x && p1.y === p2.y;
+    },
+
+    /**
+     * @desc Invert point.
+     * @function
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
+     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     */
+
+    pInvert: function(p, isIn = false) {
+        const x = 1 / p.x;
+        const y = 1 / p.y;
+        return this._pGenResult(p, x, y, isIn);
     },
 
     /**
