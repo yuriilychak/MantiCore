@@ -515,7 +515,7 @@ function _createUIElement(data, bundle) {
 
 function _createImageView(data, bundle) {
     const texture = _getTextureLinkFromData(data, 0, bundle);
-    const result = new ImageView(texture);
+    const result = Type.isNull(data.slice9) ? new ComponentSprite(texture) : new ImageView(texture);
 
     _parseSlice9(result, data);
 
