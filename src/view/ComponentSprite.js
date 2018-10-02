@@ -5,6 +5,7 @@ import Type from "util/Type";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
+import Geometry from "../util/Geometry";
 
 /**
  * @desc Class that implements composite pattern for sprite;
@@ -20,6 +21,13 @@ class ComponentSprite extends PIXI.Sprite {
      */
     constructor(frameName) {
         super(Asset.getSpriteFrame(frameName));
+
+        /**
+         * @desc anchor point of widget.
+         * @type {PIXI.ObservablePoint}
+         * @private
+         */
+        this._overrideAnchor = new PIXI.ObservablePoint(this._onAnchorPointUpdate, this);
 
         /**
          * @desc Manager of components.
@@ -65,6 +73,19 @@ class ComponentSprite extends PIXI.Sprite {
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @public
+     * @type {PIXI.ObservablePoint}
+     */
+
+    get anchor() {
+        return this._overrideAnchor;
+    }
+
+    set anchor(value) {
+        this._overrideAnchor.copy(value);
+    }
 
     /**
      * @public
@@ -415,6 +436,20 @@ class ComponentSprite extends PIXI.Sprite {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Calls when anchor point change.
+     * @method
+     * @private
+     */
+
+    _onAnchorPointUpdate() {
+        this.pivot.copy(Geometry.pCompMult(
+            Geometry.pFromSize(this),
+            this._overrideAnchor,
+            true
+        ));
+    }
 
     /**
      * @desc Update components when some children remove.
