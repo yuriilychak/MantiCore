@@ -1,4 +1,136 @@
 declare namespace MANTICORE {
+    export namespace animation {
+        export namespace easing {
+            class EaseBackIn extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseBackIn;
+            }
+            class EaseBackInOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseBackInOut;
+            }
+            class EaseBackOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseBackOut;
+            }
+            class EaseBase {
+                constructor();
+                easing(time: number): void;
+                reverse(): EaseBase;
+            }
+            class EaseBezier extends MANTICORE.animation.easing.EaseBase {
+                constructor(first: number, second: number, third: number, fourth: number);
+                reverse(): EaseBezier;
+            }
+            class EaseBounceIn extends MANTICORE.animation.easing.EaseBounceTime {
+                reverse(): EaseBounceIn;
+            }
+            class EaseBounceInOut extends MANTICORE.animation.easing.EaseBounceTime {
+                reverse(): EaseBounceInOut;
+            }
+            class EaseBounceOut extends MANTICORE.animation.easing.EaseBounceTime {
+                reverse(): EaseBounceOut;
+            }
+            class EaseBounceTime  extends EaseBase {
+                protected bounceTime (time: number): number;
+                reverse(): EaseBounceTime;
+            }
+            class EaseCircleIn extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseCircleIn;
+            }
+            class EaseCircleInOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseCircleInOut;
+            }
+            class EaseCircleOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseCircleOut;
+            }
+            class EaseCubicIn extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseCubicIn;
+            }
+            class EaseCubicInOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseCubicInOut;
+            }
+            class EaseCubicOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseCubicOut;
+            }
+            class EaseElasticIn  extends MANTICORE.animation.easing.EasePeriod {
+                reverse(): EaseElasticIn;
+            }
+            class EaseElasticInOut  extends MANTICORE.animation.easing.EasePeriod {
+                reverse(): EaseElasticInOut;
+            }
+            class EaseElasticOut  extends MANTICORE.animation.easing.EasePeriod {
+                reverse(): EaseElasticOut;
+            }
+            class EaseExponentialIn extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseExponentialIn;
+            }
+            class EaseExponentialInOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseExponentialInOut;
+            }
+            class EaseExponentialOut extends MANTICORE.animation.easing.EaseBase {
+                reverse(): EaseExponentialOut;
+            }
+            class EaseIn extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseIn;
+            }
+            class EaseInOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseInOut;
+            }
+            class EaseOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseOut;
+            }
+            class EasePeriod extends MANTICORE.animation.easing.EaseBase {
+                constructor(period?: number);
+
+                public period: number;
+
+                reverse(): EasePeriod;
+
+                protected calculateTime(time: number, period: number): number;
+                protected easingPeriod(time: number);
+                protected easingDefault(time: number): number;
+            }
+
+            class EaseQuadraticIn extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuadraticIn;
+            }
+            class EaseQuadraticInOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuadraticInOut;
+            }
+            class EaseQuadraticOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuadraticOut;
+            }
+            class EaseQuarticIn extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuarticIn;
+            }
+            class EaseQuarticInOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuarticInOut;
+            }
+            class EaseQuarticOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuarticOut;
+            }
+            class EaseQuinticIn extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuinticIn;
+            }
+            class EaseQuinticInOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuinticInOut;
+            }
+            class EaseQuinticOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseQuinticOut;
+            }
+            class EaseRate extends MANTICORE.animation.easing.EaseBase {
+                constructor(rate?: number);
+                public rate;
+            }
+            class EaseSineIn extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseSineIn;
+            }
+            class EaseSineInOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseSineInOut;
+            }
+            class EaseSineOut extends MANTICORE.animation.easing.EaseRate {
+                reverse(): EaseSineOut;
+            }
+        }
+    }
     export namespace builder {
         export namespace layoutBuilder {
             export function infiniteLayout(component: MANTICORE.component.ui.ComLayout): void;

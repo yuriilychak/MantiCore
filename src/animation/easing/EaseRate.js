@@ -9,9 +9,9 @@ import EaseBase from "./EaseBase";
 class EaseRate extends EaseBase {
     /**
      * @constructor
-     * @param {number} rate
+     * @param {number} [rate = 1]
      */
-    constructor(rate) {
+    constructor(rate = 1) {
         super();
         /**
          * @type {number}
