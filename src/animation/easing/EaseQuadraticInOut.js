@@ -1,4 +1,6 @@
 import EaseBase from "./EaseBase";
+import Math from "util/Math";
+
 
 /**
  * @class
@@ -17,7 +19,7 @@ class EaseQuadraticInOut extends EaseBase {
     easing(time) {
         time *= 2;
         if (time < 1){
-            return time * time * 0.5;
+            return Math.intPow(time, 2) * 0.5;
         }
         else {
             --time;

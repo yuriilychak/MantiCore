@@ -37,16 +37,7 @@ class EaseElasticInOut extends EasePeriod {
      */
 
     easingPeriod(time) {
-        if (time === 0 || time === 1) {
-            return time;
-        }
-        time = time * 2;
-        const s = this.period / 4;
-        time = time - 1;
-        if (time < 0)
-            return -0.5 * Math.pow(2, 10 * time) * Math.sin((time - s) * Math.PI * 2 / this.period);
-        else
-            return Math.pow(2, -10 * time) * Math.sin((time - s) * Math.PI * 2 / this.period) * 0.5 + 1;
+        return this.calculateTime(time, this.period);
     }
 
     /**
@@ -58,11 +49,22 @@ class EaseElasticInOut extends EasePeriod {
      */
 
     easingDefault(time) {
+        return this.calculateTime(time, 0.3 * 1.5);
+    }
+
+    /**
+     * @method
+     * @param {number} time
+     * @param {number} period
+     * @return {number}
+     * @protected
+     */
+
+    calculateTime(time, period) {
         if (time === 0 || time === 1) {
             return time;
         }
         time = time * 2;
-        const period = 0.3 * 1.5;
         const s = period / 4;
         time = time - 1;
         if (time < 0)

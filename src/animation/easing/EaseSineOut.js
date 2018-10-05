@@ -1,4 +1,5 @@
 import EaseBase from "./EaseBase";
+import Math from "util/Math";
 
 /**
  * @class

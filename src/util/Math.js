@@ -334,10 +334,34 @@ const math = {
      * @desc Generate unique id.
      * @function
      * @return {int}
+     * @memberOf MANTICORE.util.math
      */
 
     getUniqueId: function () {
         return ++this._id;
+    },
+
+    /**
+     * @desc Fast calculate integer power
+     * @function
+     * @param {number} value
+     * @param {int} power
+     * @memberOf MANTICORE.util.math
+     */
+
+    intPow: function(value, power) {
+        let result = 1;
+        if (power === 0) {
+            return 1;
+        }
+        else if (power < 0) {
+            value = 1 / value;
+            power = -power;
+        }
+        for(let i = 0; i < power; ++i) {
+            result *= value;
+        }
+        return result;
     }
 };
 

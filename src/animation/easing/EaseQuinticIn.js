@@ -8,7 +8,7 @@ import Math from "util/Math";
  * @memberOf MANTICORE.animation.easing
  */
 
-class EaseQuadraticIn extends EaseBase {
+class EaseQuinticIn extends EaseBase {
     /**
      * @desc calculate easing.
      * @method
@@ -17,18 +17,18 @@ class EaseQuadraticIn extends EaseBase {
      * @returns {number}
      */
     easing(time) {
-        return Math.intPow(time, 2);
+        return Math.intPow(time, 5);
     }
 
     /**
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseQuadraticIn}
+     * @returns {MANTICORE.animation.easing.EaseQuinticIn}
      */
     reverse() {
-        return new EaseQuadraticIn();
+        return new EaseQuinticIn();
     }
 }
 
-export default EaseQuadraticIn;
+export default EaseQuinticIn;

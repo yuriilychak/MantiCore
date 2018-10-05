@@ -889,6 +889,7 @@ declare namespace MANTICORE {
             export function floatToPercent(value: number, isRound?: boolean): number;
             export function percentToFloat(value: number): number;
             export function getUniqueId(): number;
+            export function intPow(value: number, power: number): number;
         }
 
         export namespace type {

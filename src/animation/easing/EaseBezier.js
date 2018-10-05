@@ -6,7 +6,7 @@ import EaseBase from "./EaseBase";
  * @memberOf MANTICORE.animation.easing
  */
 
-class EaseBezierAction extends EaseBase {
+class EaseBezier extends EaseBase {
     /**
      * @constructor
      * @param {number} first
@@ -46,11 +46,11 @@ class EaseBezierAction extends EaseBase {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBezierAction}
+     * @returns {MANTICORE.animation.easing.EaseBezier}
      */
     reverse() {
-        return new EaseBezierAction(this._coefs[3], this._coefs[2], this._coefs[1], this._coefs[0]);
+        return new EaseBezier(this._coefs[3], this._coefs[2], this._coefs[1], this._coefs[0]);
     }
 }
 
-export default EaseBezierAction;
+export default EaseBezier;

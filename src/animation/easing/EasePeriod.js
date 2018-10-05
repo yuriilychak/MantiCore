@@ -70,6 +70,18 @@ class EasePeriod extends EaseBase {
      */
 
     /**
+     * @method
+     * @param {number} time
+     * @param {number} period
+     * @return {number}
+     * @protected
+     */
+
+    calculateTime(time, period) {
+        return time;
+    }
+
+    /**
      * @desc Calculate easing if period set.
      * @method
      * @public

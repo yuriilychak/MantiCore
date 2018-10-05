@@ -1,14 +1,13 @@
 import EaseBase from "./EaseBase";
 import Math from "util/Math";
 
-
 /**
  * @class
  * @extends MANTICORE.animation.easing.EaseBase
  * @memberOf MANTICORE.animation.easing
  */
 
-class EaseQuadraticIn extends EaseBase {
+class EaseCubicIn extends EaseBase {
     /**
      * @desc calculate easing.
      * @method
@@ -17,18 +16,18 @@ class EaseQuadraticIn extends EaseBase {
      * @returns {number}
      */
     easing(time) {
-        return Math.intPow(time, 2);
+        return Math.intPow(time, 3);
     }
 
     /**
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseQuadraticIn}
+     * @returns {MANTICORE.animation.easing.EaseCubicIn}
      */
     reverse() {
-        return new EaseQuadraticIn();
+        return new EaseCubicIn();
     }
 }
 
-export default EaseQuadraticIn;
+export default EaseCubicIn;
