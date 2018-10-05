@@ -12,7 +12,15 @@ const constant = {
      * @readonly
      * @memberOf MANTICORE.constant
      */
-    COLLIDER_NAME: "imgCollider"
+    COLLIDER_NAME: "imgCollider",
+
+    /**
+     * @desc Min duration of animation.
+     * @public
+     * @readonly
+     * @type {number}
+     */
+    FLT_EPSILON: 0.0000001192092896
 };
 
 export default constant;

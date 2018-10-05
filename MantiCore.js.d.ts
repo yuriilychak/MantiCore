@@ -852,6 +852,7 @@ declare namespace MANTICORE {
         }
         export namespace geometry {
             export function pFromSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: PIXI.Point | PIXI.ObservablePoint): PIXI.Point | PIXI.ObservablePoint;
+            export function pHalfSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: PIXI.Point | PIXI.ObservablePoint): PIXI.Point | PIXI.ObservablePoint;
             export function sSub(size1: PIXI.Container | PIXI.Rectangle, size2: PIXI.Container | PIXI.Rectangle, inPoint?: PIXI.Point | PIXI.ObservablePoint): PIXI.Point | PIXI.ObservablePoint;
             export function pSub(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pAdd(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;

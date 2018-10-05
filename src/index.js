@@ -1,3 +1,4 @@
+import animation from "./animation";
 import builder from "./builder";
 import bundle from "./bundle";
 import component from "./component";
@@ -20,6 +21,7 @@ import view from "./view";
  */
 
 export {
+    animation,
     builder,
     bundle,
     component,

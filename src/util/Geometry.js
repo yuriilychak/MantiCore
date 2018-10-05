@@ -26,6 +26,25 @@ const geometry = {
     },
 
     /**
+     * @desc Convert half size to point
+     * @function
+     * @memberOf MANTICORE.util.geometry
+     * @param {PIXI.Container | Object} size - Size to convert
+     * @param {number} size.width - Size to convert
+     * @param {number} size.height - Size to convert
+     * @param {PIXI.Point | PIXI.ObservablePoint | Point} [inPoint] - Point for store result.
+     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     */
+
+    pHalfSize: function(size, inPoint = new PIXI.Point(0, 0)) {
+        inPoint.set(
+            Math.divPowTwo(Type.setValue(size.width, 0)),
+            Math.divPowTwo(Type.setValue(size.height, 0))
+        );
+        return inPoint;
+    },
+
+    /**
      * @desc Subtract two sizes and return result as point.
      * @function
      * @memberOf MANTICORE.util.geometry
