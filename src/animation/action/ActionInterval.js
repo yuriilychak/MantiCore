@@ -260,7 +260,7 @@ class ActionInterval extends FiniteTimeAction {
      * @param {number} speed
      */
 
-    changeSpeed: function(speed){
+    changeSpeed(speed){
         if(speed <= 0){
             return;
         }
