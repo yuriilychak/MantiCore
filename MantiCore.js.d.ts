@@ -1,5 +1,8 @@
 declare namespace MANTICORE {
     export namespace animation {
+        export namespace callback {
+            type CallFuncExecute = (target: PIXI.DisplayObject, data?: any)=>void;
+        }
         export namespace easing {
             class EaseBackIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackIn;

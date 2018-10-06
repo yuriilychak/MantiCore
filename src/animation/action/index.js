@@ -2,6 +2,11 @@ import Action from "./Action";
 import ActionInstant from "./ActionInstant";
 import ActionInterval from "./ActionInterval";
 import CallFunc from "./CallFunc";
+import CardinalSpline from "./CardinalSpline";
+import CardinalSplineBy from "./CardinalSplineBy";
+import CardinalSplineTo from "./CardinalSplineTo";
+import CatmullRomBy from "./CatmullRomBy";
+import CatmullRomTo from "./CatmullRomTo";
 import FiniteTimeAction from "./FiniteTimeAction";
 import FlipX from "./FlipX";
 import FlipY from "./FlipY";
@@ -32,6 +37,11 @@ export default {
     ActionInstant,
     ActionInterval,
     CallFunc,
+    CardinalSpline,
+    CardinalSplineBy,
+    CardinalSplineTo,
+    CatmullRomBy,
+    CatmullRomTo,
     FiniteTimeAction,
     FlipX,
     FlipY,

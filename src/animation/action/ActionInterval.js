@@ -300,11 +300,19 @@ class ActionInterval extends FiniteTimeAction {
     }
 
     /**
-     * PRIVATE METHODS
+     * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
 
-    _computeEaseTime(dt) {
+    /**
+     * @desc Calculate time with easing.
+     * @method
+     * @protected
+     * @param {number} dt
+     * @returns {number}
+     */
+
+    computeEaseTime(dt) {
         if (this._eases.length === 0) {
             return dt;
         }
@@ -314,6 +322,11 @@ class ActionInterval extends FiniteTimeAction {
         }
         return dt;
     }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @method

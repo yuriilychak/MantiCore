@@ -20,7 +20,14 @@ const constant = {
      * @readonly
      * @type {number}
      */
-    FLT_EPSILON: 0.0000001192092896
+    FLT_EPSILON: 0.0000001192092896,
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+
+    ENABLE_STACK_ACTIONS: false,
 };
 
 export default constant;
