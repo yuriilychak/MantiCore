@@ -160,6 +160,12 @@
  */
 
 /**
+ * @desc Namespace with callbacks for components
+ * @namespace callback
+ * @memberOf MANTICORE.animation
+ */
+
+/**
  * @desc Callback for iterate children.
  * @callback IterateChildren
  * @typedef {Function}
@@ -176,6 +182,15 @@
  * @param {MANTICORE.component.Component} component
  * @param {int} [index]
  * @memberOf MANTICORE.view.callback
+ */
+
+/**
+ * @desc Callback for animation CallFunc.
+ * @callback CallFuncExecute
+ * @typedef {Function}
+ * @param {PIXI.DisplayObject} target
+ * @param {*} data
+ * @memberOf MANTICORE.animation.callback
  */
 
 /**
