@@ -18,9 +18,24 @@ class FlipY extends ActionInstant {
         this.target.scale.y = -this.target.scale.y;
     }
 
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.FlipY}
+     */
+
     clone(){
         return new FlipY();
     }
+
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.FlipY}
+     */
+
     reverse () {
         return new FlipY();
     }

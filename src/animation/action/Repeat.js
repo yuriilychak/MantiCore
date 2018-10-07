@@ -19,12 +19,13 @@ class Repeat extends ActionInterval {
      * @param {int} [times]
      */
     constructor(action = null, times = 1) {
-        super();
+        const duration = action.duration * times;
+        super(duration);
         /**
          * @type {int}
          * @private
          */
-        this._times = 0;
+        this._times = times;
         /**
          * @type {int}
          * @private
@@ -45,41 +46,23 @@ class Repeat extends ActionInterval {
          * @type {?MANTICORE.animation.action.FiniteTimeAction}
          * @private
          */
-        this._innerAction = null;
-        this.initWithAction(action, times);
-    }
-
-    /**
-     * @method
-     * @public
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action
-     * @param {int} times
-     * @return {boolean}
-     */
-    initWithAction(action, times) {
-        if (action === null) {
-            return false;
-        }
-        const duration = action._duration * times;
-
-        if (!this.initWithDuration(duration)) {
-            return false;
-        }
-        this._times = times;
         this._innerAction = action;
-        if (action instanceof ActionInstant){
+
+        if (this._innerAction instanceof ActionInstant){
             this._actionInstant = true;
             this._times -= 1;
         }
-        this._total = 0;
-        return true;
     }
 
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.Repeat}
+     */
+
     clone() {
-        const action = new Repeat();
-        this.cloneDecoration(action);
-        action.initWithAction(this._innerAction.clone(), this._times);
-        return action;
+        return this.doClone(new Repeat(this._innerAction.clone(), this._times));
     }
 
     startWithTarget(target) {
@@ -132,11 +115,15 @@ class Repeat extends ActionInterval {
         return this._total === this._times;
     }
 
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.Repeat}
+     */
+
     reverse() {
-        const action = new Repeat(this._innerAction.reverse(), this._times);
-        this.cloneDecoration(action);
-        this.reverseEases(action);
-        return action;
+        return this.doReverse(new Repeat(this._innerAction.reverse(), this._times));
     }
 
     /**

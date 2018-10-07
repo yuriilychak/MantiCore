@@ -81,16 +81,14 @@ class Spawn extends ActionInterval {
     }
 
     /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @returns {MANTICORE.animation.action.Spawn}
+     * @return {MANTICORE.animation.action.Spawn}
      */
 
     clone() {
-        const action = new Spawn();
-        this.cloneDecoration(action);
-        action.initWithTwoActions(this._firstAction.clone(), this._secondAction.clone());
-        return action;
+        return this.doClone(new Spawn(this._firstAction.clone(), this._secondAction.clone()));
     }
 
     startWithTarget(target) {
@@ -116,11 +114,15 @@ class Spawn extends ActionInterval {
         }
     }
 
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.Spawn}
+     */
+
     reverse() {
-        const action = Spawn.actionOneTwo(this._firstAction.reverse(), this._secondAction.reverse());
-        this.cloneDecoration(action);
-        this.reverseEases(action);
-        return action;
+        return this.doReverse( Spawn.actionOneTwo(this._firstAction.reverse(), this._secondAction.reverse()));
     }
 
     static actionOneTwo(action1, action2) {

@@ -34,7 +34,7 @@ class FiniteTimeAction extends Action {
     /**
      * @desc Get duration of the action. (seconds).
      * @public
-     * @return {Number}
+     * @return {number}
      */
     get duration () {
         return this._duration * this._repeatCount;
@@ -83,19 +83,19 @@ class FiniteTimeAction extends Action {
      * - Will be rewritten
      * @method
      * @public
-     * @return {null}
+     * @return {*}
      */
     reverse() {
         return null;
     }
 
     /**
-     * Need to copy object with deep copy.
-     * returns a clone of action.
+     * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
      * @return {MANTICORE.animation.action.FiniteTimeAction}
      */
+
     clone() {
         return new FiniteTimeAction();
     }

@@ -1,3 +1,5 @@
+import Type from "util/Type";
+
 /**
  * @desc Base class for all animation actions.
  * @class
@@ -37,8 +39,19 @@ class Action {
     }
 
     /**
+     * @desc Returns is action has target.
+     * @method
+     * @public
+     * @returns {boolean}
+     */
+
+    hasTarget() {
+        return !Type.isNull(this._target);
+    }
+
+    /**
      * @desc Returns true if the action has finished.
-     * @return {Boolean}
+     * @return {boolean}
      */
     get isDone() {
         return true;
@@ -99,7 +112,7 @@ class Action {
     /**
      * @desc Set the original target, since target can be nil.<br>
      *     Is the target that were used to run the action.
-     *     Unless you are doing something complex, like cc.ActionManager, you should NOT call this method.
+     *     Unless you are doing something complex, like ActionManager, you should NOT call this method.
      * @public
      * @return {?PIXI.DisplayObject}
      */

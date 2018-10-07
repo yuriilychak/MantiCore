@@ -124,7 +124,7 @@ const color = {
      * @returns {int[]}
      */
 
-    intToRgb: function (value) {
+    intToRgb: function (value = 0) {
         const redCoef = 16;
         const greenCoef = 8;
         const red = Math.divPowTwo(value, redCoef);

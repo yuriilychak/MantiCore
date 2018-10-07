@@ -13,6 +13,13 @@ class Hide extends ActionInstant {
         this.target.visible = false;
     }
 
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.Hide}
+     */
+
     clone(){
         return new Hide();
     }

@@ -8,20 +8,28 @@ import ActionInterval from "./ActionInterval";
  */
 
 class DelayTime extends ActionInterval{
-    update(dt) {},
+    update(dt) {}
+
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.DelayTime}
+     */
 
     reverse() {
-        const action = new DelayTime(this.duration);
-        this.cloneDecoration(action);
-        this.reverseEases(action);
-        return action;
+        return this.doReverse(new DelayTime(this.duration));
     }
 
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.DelayTime}
+     */
+
     clone() {
-        var action = new DelayTime();
-        this.cloneDecoration(action);
-        action.initWithDuration(this.duration);
-        return action;
+        return this.doClone(new DelayTime(this.duration));
     }
 }
 

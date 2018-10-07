@@ -1,5 +1,4 @@
 import CardinalSplineTo from "./CardinalSplineTo";
-import Constant from "constant";
 import Geometry from "util/Geometry";
 
 /**
@@ -42,6 +41,13 @@ class CardinalSplineBy extends CardinalSplineTo {
         this._startPosition.x = target.x;
         this._startPosition.y = target.y;
     }
+
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.CardinalSplineBy}
+     */
 
     reverse() {
         const copyConfig = this.points.slice();

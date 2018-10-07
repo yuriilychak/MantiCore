@@ -9,10 +9,10 @@ import Type from "util/Type";
  * @param {Array|FiniteTimeAction} tempArray
  * @example
  * // create sequence with actions
- * var seq = new Sequence(act1, act2);
+ * const seq = new Sequence(act1, act2);
  *
  * // create sequence with array
- * var seq = new Sequence(actArray);
+ * const seq = new Sequence(actArray);
  */
 
 class Sequence extends ActionInterval {
@@ -110,16 +110,14 @@ class Sequence extends ActionInterval {
     }
 
     /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @returns {MANTICORE.animation.action.Sequence}
+     * @return {MANTICORE.animation.action.Sequence}
      */
 
     clone() {
-        const action = new Sequence();
-        this.cloneDecoration(action);
-        action.initWithTwoActions(this._actions[0].clone(), this._actions[1].clone());
-        return action;
+        return this.doClone(new Sequence(this._actions[0].clone(), this._actions[1].clone()));
     }
 
     startWithTarget(target) {
@@ -179,10 +177,15 @@ class Sequence extends ActionInterval {
         this._last = found;
     }
 
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.Sequence}
+     */
+
     reverse() {
-        const action = Sequence.actionOneTwo(this._actions[1].reverse(), this._actions[0].reverse());
-        this.cloneDecoration(action);
-        this.reverseEases(action);
+        const action = this.doReverse(Sequence.actionOneTwo(this._actions[1].reverse(), this._actions[0].reverse()));
         action.reversed = true;
         return action;
     }

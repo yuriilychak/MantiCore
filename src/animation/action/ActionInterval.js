@@ -191,13 +191,11 @@ class ActionInterval extends FiniteTimeAction {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @returns {MANTICORE.animation.action.ActionInterval}
+     * @return {MANTICORE.animation.action.ActionInterval}
      */
 
     clone() {
-        const action = new ActionInterval(this._duration);
-        this.cloneDecoration(action);
-        return action;
+        return this.doClone(new ActionInterval(this._duration));
     }
 
     /**
@@ -205,7 +203,7 @@ class ActionInterval extends FiniteTimeAction {
      * @method easing
      * @param {...MANTICORE.animation.easing.EaseBase} var_args
      * @example
-     * action.easing(cc.easeIn(3.0));
+     * action.easing(easeIn(3.0));
      */
     easing(var_args) {
         this._eases.length = 0;
@@ -233,6 +231,13 @@ class ActionInterval extends FiniteTimeAction {
             this.step(this._elapsed - this._duration);
         }
     }
+
+    /**
+     * @desc Called before the action start. It will also set the target.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} target
+     */
 
     startWithTarget(target) {
         super.startWithTarget(target);
@@ -305,6 +310,44 @@ class ActionInterval extends FiniteTimeAction {
      */
 
     /**
+     * @desc Clone parameters to action, and return it.
+     * @method
+     * @protected
+     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @returns {*}
+     */
+
+    doClone(action) {
+        action.repeatForever = this._repeatForever;
+        action.speed = this._speed;
+        action.repeatCount = this.repeatCount;
+        action.eases = this._eases;
+        action.speedMethod = this._speedMethod;
+        action.repeatMethod = this._repeatMethod;
+        return action;
+    }
+
+    /**
+     * @desc Clone parameters to action and revers eases.
+     * @method
+     * @protected
+     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @returns {*}
+     */
+
+    doReverse(action) {
+        this.doClone(action);
+
+        if(this._eases.length !== 0){
+            const easeCount = this._eases.length;
+            for(let i = 0; i< easeCount; ++i){
+                action.eases.push(this._eases[i].reverse());
+            }
+        }
+        return action;
+    }
+
+    /**
      * @desc Calculate time with easing.
      * @method
      * @protected
@@ -321,38 +364,6 @@ class ActionInterval extends FiniteTimeAction {
             dt = this._eases[i].easing(dt);
         }
         return dt;
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {MANTICORE.animation.action.ActionInterval} action
-     */
-
-    cloneDecoration(action){
-        action.repeatForever = this._repeatForever;
-        action.speed = this._speed;
-        action.repeatCount = this.repeatCount;
-        action.eases = this._eases;
-        action.speedMethod = this._speedMethod;
-        action.repeatMethod = this._repeatMethod;
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {MANTICORE.animation.action.ActionInterval} action
-     */
-
-    reverseEases(action){
-        if(this._eases.length === 0){
-            return;
-        }
-
-        const easeCount = this._eases.length;
-        for(let i = 0; i< easeCount; ++i){
-            action.eases.push(this._eases[i].reverse());
-        }
     }
 }
 

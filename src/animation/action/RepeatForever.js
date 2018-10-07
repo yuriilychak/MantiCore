@@ -1,5 +1,4 @@
 import ActionInterval from "./ActionInterval";
-import Type from "util/Type";
 
 /**
  * @desc Repeats an action for ever.To repeat the an action for a limited number of times use the Repeat action. <br/>
@@ -22,37 +21,18 @@ class RepeatForever extends ActionInterval{
          * @type {?MANTICORE.animation.action.ActionInterval}
          * @private
          */
-        this._innerAction = null;
-
-        this.initWithAction(action);
-    }
-
-    /**
-     * @method
-     * @public
-     * @param {MANTICORE.animation.action.ActionInterval} action
-     * @return {boolean}
-     */
-    initWithAction(action) {
-        if (Type.isNull(action)) {
-            return false;
-        }
-
         this._innerAction = action;
-        return true;
     }
 
     /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @returns {MANTICORE.animation.action.RepeatForever}
+     * @return {MANTICORE.animation.action.RepeatForever}
      */
 
     clone() {
-        const action = new RepeatForever();
-        this.cloneDecoration(action);
-        action.initWithAction(this._innerAction.clone());
-        return action;
+        return this.doClone(new RepeatForever(this._innerAction.clone()));
     }
 
     startWithTarget(target) {
@@ -73,16 +53,14 @@ class RepeatForever extends ActionInterval{
     }
 
     /**
+     * @desc Returns a reversed action.
      * @method
      * @public
-     * @returns {MANTICORE.animation.action.RepeatForever}
+     * @return {MANTICORE.animation.action.RepeatForever}
      */
 
     reverse() {
-        const action = new RepeatForever(this._innerAction.reverse());
-        this.cloneDecoration(action);
-        this.reverseEases(action);
-        return action;
+        return this.doReverse(new RepeatForever(this._innerAction.reverse()));
     }
 
     /**

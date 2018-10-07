@@ -126,6 +126,13 @@ class CardinalSplineTo extends CardinalSpline {
         this.updatePosition(result);
     }
 
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.CardinalSplineTo}
+     */
+
     reverse() {
         const reversePoints = CardinalSplineTo.reverseControlPoints(this._points);
         return new CardinalSplineTo(this.duration, reversePoints, this._tension);
@@ -138,7 +145,7 @@ class CardinalSplineTo extends CardinalSpline {
      * @param {PIXI.Point | PIXI.ObservablePoint} newPos
      */
     updatePosition(newPos) {
-        this.target.setPosition(newPos);
+        this.target.position.set(newPos);
         this._previousPosition.copy(newPos);
     }
 

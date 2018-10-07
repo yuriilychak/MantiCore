@@ -67,6 +67,13 @@ class CallFunc extends ActionInstant {
         this._context = value;
     }
 
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.CallFunc}
+     */
+
     clone() {
         return new CallFunc(this._callback, this._context, this._data);
     }

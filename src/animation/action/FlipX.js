@@ -18,9 +18,24 @@ class FlipX extends ActionInstant {
         this.target.scale.x = -this.target.scale.x;
     }
 
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.FlipX}
+     */
+
     clone(){
         return new FlipX();
     }
+
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.FlipX}
+     */
+
     reverse () {
         return new FlipX();
     }

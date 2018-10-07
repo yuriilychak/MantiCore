@@ -87,6 +87,13 @@ class Follow extends Action {
         this.initWithTarget(followedDisplayObject, rect)
     }
 
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.Follow}
+     */
+
     clone() {
         const rect = new PIXI.Rectangle(this._worldRect.x, this._worldRect.y, this._worldRect.width, this._worldRect.height);
         return new Follow(this._followedDisplayObject, rect);
@@ -160,10 +167,10 @@ class Follow extends Action {
                 return;
             }
 
-            this.target.setPosition(Math.range(nextPos.x, this._leftBoundary, this._rightBoundary), Math.range(nextPos.y, this._bottomBoundary, this._topBoundary));
+            this.target.position.set(Math.range(nextPos.x, this._leftBoundary, this._rightBoundary), Math.range(nextPos.y, this._bottomBoundary, this._topBoundary));
             return;
         }
-        this.target.setPosition(nextPos.x, nextPos.y);
+        this.target.position.set(nextPos.x, nextPos.y);
     }
 
     get isDone() {

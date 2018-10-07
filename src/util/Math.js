@@ -300,7 +300,7 @@ const math = {
      * @return {number}
      */
 
-    toDegreees: function (radians) {
+    toDegrees: function (radians) {
         return radians * this.HALF_CIRCLE / this.PI;
     },
 

@@ -1,12 +1,11 @@
 import Action from "./Action";
-import Type from "util/Type";
 
 /**
  * Changes the speed of an action, making it take longer (speed > 1)
  * or less (speed < 1) time. <br/>
  * Useful to simulate 'slow motion' or 'fast forward' effect.
  *
- * @warning This action can't be Sequenceable because it is not an cc.IntervalAction
+ * @warning This action can't be Sequenceable because it is not an IntervalAction
  * @class
  * @extends MANTICORE.animation.action.Action
  * @memberOf MANTICORE.animation.action
@@ -24,14 +23,12 @@ class Speed extends Action{
          * @type {number}
          * @private
          */
-        this._speed = 0;
+        this._speed = speed;
         /**
          * @type {MANTICORE.animation.action.ActionInterval}
          * @private
          */
-        this._innerAction = null;
-
-        this.initWithAction(action, speed);
+        this._innerAction = action;
     }
 
     /**
@@ -49,24 +46,6 @@ class Speed extends Action{
     }
 
     /**
-     * @desc Initializes the action.
-     * @method
-     * @public
-     * @param {MANTICORE.animation.action.ActionInterval} action
-     * @param {number} speed
-     * @return {boolean}
-     */
-    initWithAction(action, speed) {
-        if (Type.isEmpty(action)) {
-            return false;
-        }
-
-        this._innerAction = action;
-        this._speed = speed;
-        return true;
-    }
-
-    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -74,9 +53,7 @@ class Speed extends Action{
      */
 
     clone() {
-        const action = new Speed();
-        action.initWithAction(this._innerAction.clone(), this._speed);
-        return action;
+        return new Speed(this._innerAction.clone(), this._speed);
     }
 
     startWithTarget(target) {
@@ -97,6 +74,13 @@ class Speed extends Action{
     get isDone () {
         return this._innerAction.isDone();
     }
+
+    /**
+     * @desc Returns a reversed action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.Speed}
+     */
 
     reverse () {
         return new Speed(this._innerAction.reverse(), this._speed);

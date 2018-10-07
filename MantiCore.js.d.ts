@@ -1020,7 +1020,7 @@ declare namespace MANTICORE {
             export function min(...var_args: number[]): number;
             export function toRadians(degrees: number): number;
             export function range(value: number, leftBound: number, rightBound: number): number;
-            export function toDegreees(radians: number): number;
+            export function toDegrees(radians: number): number;
             export function floatToPercent(value: number, isRound?: boolean): number;
             export function percentToFloat(value: number): number;
             export function getUniqueId(): number;

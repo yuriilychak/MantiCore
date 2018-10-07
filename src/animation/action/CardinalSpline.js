@@ -20,8 +20,8 @@ class CardinalSpline extends ActionInterval {
      * @param {PIXI.Point} p1
      * @param {PIXI.Point} p2
      * @param {PIXI.Point} p3
-     * @param {Number} tension
-     * @param {Number} t
+     * @param {number} tension
+     * @param {number} t
      * @return {PIXI.Point | Point}
      */
     static cardinalSplineAt(p0, p1, p2, p3, tension, t) {

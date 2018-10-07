@@ -46,6 +46,7 @@ class ActionInstant extends FiniteTimeAction{
     reverse(){}
 
     /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
      * @return {MANTICORE.animation.action.ActionInstant}
