@@ -196,7 +196,7 @@ class ActionInterval extends FiniteTimeAction {
 
     clone() {
         const action = new ActionInterval(this._duration);
-        this._cloneDecoration(action);
+        this.cloneDecoration(action);
         return action;
     }
 
@@ -324,17 +324,12 @@ class ActionInterval extends FiniteTimeAction {
     }
 
     /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
      * @method
-     * @private
+     * @protected
      * @param {MANTICORE.animation.action.ActionInterval} action
      */
 
-    _cloneDecoration(action){
+    cloneDecoration(action){
         action.repeatForever = this._repeatForever;
         action.speed = this._speed;
         action.repeatCount = this.repeatCount;
@@ -343,13 +338,20 @@ class ActionInterval extends FiniteTimeAction {
         action.repeatMethod = this._repeatMethod;
     }
 
-    _reverseEases(action){
-        if(this._eases){
-            action._easeList = [];
-            const easeCount = this._eases.length;
-            for(let i = 0; i< easeCount; ++i){
-                action._easeList.push(this._eases[i].reverse());
-            }
+    /**
+     * @method
+     * @protected
+     * @param {MANTICORE.animation.action.ActionInterval} action
+     */
+
+    reverseEases(action){
+        if(this._eases.length === 0){
+            return;
+        }
+
+        const easeCount = this._eases.length;
+        for(let i = 0; i< easeCount; ++i){
+            action.eases.push(this._eases[i].reverse());
         }
     }
 }

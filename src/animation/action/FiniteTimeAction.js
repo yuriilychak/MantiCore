@@ -12,7 +12,7 @@ import Action from "./Action";
  * @extends MANTICORE.animation.action.Action
  */
 
-class FiniteTimeAction extends Action{
+class FiniteTimeAction extends Action {
     /**
      * @constructor
      */
@@ -63,6 +63,17 @@ class FiniteTimeAction extends Action{
         }
         this._repeatCount = value;
     }
+
+    /**
+     * @public
+     * @returns {boolean}
+     */
+
+    get repeatMethod() {
+        return false;
+    }
+
+    set repeatMethod(value) {}
 
     /**
      * Returns a reversed action. <br />
