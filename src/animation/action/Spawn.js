@@ -18,18 +18,6 @@ class Spawn extends ActionInterval {
      * @param {MANTICORE.animation.action.FiniteTimeAction[] | ...MANTICORE.animation.action.FiniteTimeAction} [var_args]
      */
     constructor(var_args) {
-        super();
-        /**
-         * @type {?MANTICORE.animation.action.FiniteTimeAction}
-         * @private
-         */
-        this._firstAction = null;
-        /**
-         * @type {?MANTICORE.animation.action.FiniteTimeAction}
-         * @private
-         */
-        this._secondAction = null;
-
         const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
 
         if (paramArray.length <= 1) {
@@ -44,40 +32,33 @@ class Spawn extends ActionInterval {
         for (i = 1; i < last; ++i) {
             if (paramArray[i]) {
                 action = prev;
-                prev = Spawn.actionOneTwo(action, paramArray[i]);
+                prev = new Spawn(action, paramArray[i]);
             }
         }
-        this.initWithTwoActions(prev, paramArray[last]);
-    }
 
-    /**
-     * @desc Initializes the Spawn action with the 2 actions to spawn
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action1
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action2
-     * @return {boolean}
-     */
-    initWithTwoActions(action1 = null, action2 = null) {
-        if (Type.isNull(action1) || Type.isNull(action2)) {
-            return false;
-        }
-
+        const action1 = prev;
+        const action2 = paramArray[last];
         const duration1 = action1.duration;
         const duration2 = action2.duration;
         const dif = duration1 - duration2;
 
-        if (this.initWithDuration(Math.max(duration1, duration2))) {
-            this._firstAction = action1;
-            this._secondAction = action2;
+        super(Math.max(duration1, duration2));
+        /**
+         * @type {?MANTICORE.animation.action.FiniteTimeAction}
+         * @private
+         */
+        this._firstAction = action1;
+        /**
+         * @type {?MANTICORE.animation.action.FiniteTimeAction}
+         * @private
+         */
+        this._secondAction = action2;
 
-            if (dif > 0) {
-                this._secondAction = Sequence.actionOneTwo(action2, new DelayTime(dif));
-            } else if (dif < 0) {
-                this._firstAction = Sequence.actionOneTwo(action1, new DelayTime(-dif));
-            }
-
-            return true;
+        if (dif > 0) {
+            this._secondAction = new Sequence(action2, new DelayTime(dif));
+        } else if (dif < 0) {
+            this._firstAction = new Sequence(action1, new DelayTime(-dif));
         }
-        return false;
     }
 
     /**
@@ -122,13 +103,7 @@ class Spawn extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse( Spawn.actionOneTwo(this._firstAction.reverse(), this._secondAction.reverse()));
-    }
-
-    static actionOneTwo(action1, action2) {
-        const result = new Spawn();
-        result.initWithTwoActions(action1, action2);
-        return result;
+        return this.doReverse(new Spawn(this._firstAction.reverse(), this._secondAction.reverse()));
     }
 }
 

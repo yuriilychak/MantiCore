@@ -21,19 +21,6 @@ class CatmullRomBy extends CardinalSplineBy {
     }
 
     /**
-     * @method
-     * @public
-     * @override
-     * @param {number} duration
-     * @param {PIXI.Point[]} points
-     * @returns {boolean}
-     */
-
-    initWithDuration(duration, points = []) {
-        return super.initWithDuration.call(duration, points, 0.5);
-    }
-
-    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public

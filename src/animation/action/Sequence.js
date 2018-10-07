@@ -21,7 +21,33 @@ class Sequence extends ActionInterval {
      * @param {MANTICORE.animation.action.FiniteTimeAction[] | ...MANTICORE.animation.action.FiniteTimeAction[]} [var_args]
      */
     constructor(var_args) {
-        super();
+
+        const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
+        if (paramArray.length <= 1) {
+            return;
+        }
+        const last = paramArray.length - 1;
+
+        let prev = paramArray[0];
+        let action, i;
+        for (i = 1; i < last; ++i) {
+            if (Type.isEmpty(paramArray[i])) {
+                continue;
+            }
+            action = prev;
+            prev = new Sequence(action, paramArray[i]);
+        }
+
+        const actionOne = prev;
+        const actionTwo = paramArray[last];
+
+        let durationOne = actionOne.duration, durationTwo = actionTwo.duration;
+        durationOne *= actionOne.repeatMethod ? actionOne.repeatCount : 1;
+        durationTwo *= actionTwo.repeatMethod ? actionTwo.repeatCount : 1;
+        const duration = durationOne + durationTwo;
+
+        super(duration);
+
         /**
          * @type {MANTICORE.animation.action.FiniteTimeAction[]}
          * @private
@@ -46,52 +72,14 @@ class Sequence extends ActionInterval {
          */
         this._reversed = false;
 
-
-        const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
-        if (paramArray.length <= 1) {
-            return;
-        }
-        const last = paramArray.length - 1;
-
-        let prev = paramArray[0];
-        let action, i;
-        for (i = 1; i < last; ++i) {
-            if (Type.isEmpty(paramArray[i])) {
-                continue;
-            }
-            action = prev;
-            prev = Sequence.actionOneTwo(action, paramArray[i]);
-        }
-        this.initWithTwoActions(prev, paramArray[last]);
-
+        this._actions[0] = actionOne;
+        this._actions[1] = actionTwo;
     }
 
     /**
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Initializes the action <br/>
-     * @param {MANTICORE.animation.action.FiniteTimeAction} actionOne
-     * @param {MANTICORE.animation.action.FiniteTimeAction} actionTwo
-     * @return {boolean}
-     */
-    initWithTwoActions(actionOne, actionTwo) {
-        if (Type.isEmpty(actionOne) || Type.isEmpty(actionTwo)) {
-            return false;
-        }
-
-        let durationOne = actionOne.duration, durationTwo = actionTwo.duration;
-        durationOne *= actionOne.repeatMethod ? actionOne.repeatCount : 1;
-        durationTwo *= actionTwo.repeatMethod ? actionTwo.repeatCount : 1;
-        const duration = durationOne + durationTwo;
-        this.initWithDuration(duration);
-
-        this._actions[0] = actionOne;
-        this._actions[1] = actionTwo;
-        return true;
-    }
 
     /**
      * @public
@@ -185,22 +173,9 @@ class Sequence extends ActionInterval {
      */
 
     reverse() {
-        const action = this.doReverse(Sequence.actionOneTwo(this._actions[1].reverse(), this._actions[0].reverse()));
+        const action = this.doReverse(new Sequence(this._actions[1].reverse(), this._actions[0].reverse()));
         action.reversed = true;
         return action;
-    }
-
-    /**
-     * @method
-     * @static
-     * @public
-     * @param {MANTICORE.animation.action.FiniteTimeAction} actionOne
-     * @param {MANTICORE.animation.action.FiniteTimeAction} actionTwo
-     * @returns {MANTICORE.animation.action.Sequence}
-     */
-
-    static actionOneTwo(actionOne, actionTwo) {
-        return new Sequence([actionOne, actionTwo]);
     }
 
     /**

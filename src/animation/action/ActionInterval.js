@@ -27,9 +27,6 @@ class ActionInterval extends FiniteTimeAction {
      */
     constructor (duration = null) {
         super();
-        if (!Type.isNull(duration))  {
-            this.duration = duration;
-        }
 
         /**
          * @type {number}
@@ -47,7 +44,7 @@ class ActionInterval extends FiniteTimeAction {
          * @type {boolean}
          * @private
          */
-        this._firstTick = false;
+        this._firstTick = true;
 
         /**
          * @type {MANTICORE.animation.easing.EaseBase[]}
@@ -79,6 +76,10 @@ class ActionInterval extends FiniteTimeAction {
         this._speedMethod = false;//Compatible with repeat class, Discard after can be deleted
 
         this.repeatCount = 1;
+
+        if (!Type.isNull(duration))  {
+            this.duration = duration;
+        }
     }
 
     /**
@@ -171,20 +172,8 @@ class ActionInterval extends FiniteTimeAction {
         return this._elapsed;
     }
 
-    /**
-     * @desc Initializes the action.
-     * @param {number} duration
-     * @return {boolean}
-     */
-    initWithDuration(duration) {
-        this._duration = (duration === 0) ? Constant.FLT_EPSILON : duration;
-        this._elapsed = 0;
-        this._firstTick = true;
-        return true;
-    }
-
     get isDone() {
-        return this._elapsed >= this._duration;
+        return this._elapsed >= this.duration;
     }
 
     /**
@@ -195,7 +184,7 @@ class ActionInterval extends FiniteTimeAction {
      */
 
     clone() {
-        return this.doClone(new ActionInterval(this._duration));
+        return this.doClone(new ActionInterval(this.duration));
     }
 
     /**
@@ -220,7 +209,7 @@ class ActionInterval extends FiniteTimeAction {
         } else
             this._elapsed += dt;
 
-        let time = this._elapsed / (this._duration > Constant.FLT_EPSILON ? this._duration : Constant.FLT_EPSILON);
+        let time = this._elapsed / (this.duration > Constant.FLT_EPSILON ? this.duration : Constant.FLT_EPSILON);
         this.update(Math.range(time, 0, 1));
 
         if(this._repeatMethod && this.repeatCount > 1 && this.isDone){
@@ -228,7 +217,7 @@ class ActionInterval extends FiniteTimeAction {
                 --this.repeatCount;
             }
             this.startWithTarget(this.target);
-            this.step(this._elapsed - this._duration);
+            this.step(this._elapsed - this.duration);
         }
     }
 
@@ -255,7 +244,7 @@ class ActionInterval extends FiniteTimeAction {
         return 0;
     }
 
-    set AmplitudeRate(value) {
+    set amplitudeRate(value) {
     }
 
     /**

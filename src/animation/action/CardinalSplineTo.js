@@ -17,13 +17,13 @@ class CardinalSplineTo extends CardinalSpline {
      * @param {number} [tension = 0]
      */
     constructor(duration, points, tension = 0) {
-        super();
+        super(duration);
         /**
          * @desc Array of control points.
          * @type {PIXI.Point[]}
          * @private
          */
-        this._points = [];
+        this._points = points.slice(0);
         /**
          * @type {number}
          * @private
@@ -33,7 +33,7 @@ class CardinalSplineTo extends CardinalSpline {
          * @type {number}
          * @private
          */
-        this._tension = 0;
+        this._tension = tension;
         /**
          * @type {PIXI.Point | Point}
          * @private
@@ -53,27 +53,6 @@ class CardinalSplineTo extends CardinalSpline {
 
         this._stackPoint = new PIXI.Point();
 
-        this.initWithDuration(duration, points, tension);
-    }
-
-    /**
-     * @method
-     * @public
-     * @override
-     * @param {number} duration
-     * @param {PIXI.Point[]} points
-     * @param {number} tension
-     * @returns {boolean}
-     */
-
-    initWithDuration(duration, points = [], tension) {
-        if (!super.initWithDuration(duration) || points.length === 0) {
-            return false;
-        }
-
-        this.points = points;
-        this._tension = tension;
-        return true;
     }
 
     /**

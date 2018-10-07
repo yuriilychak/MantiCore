@@ -20,30 +20,8 @@ class ReverseTime extends ActionInterval {
      */
 
     constructor(action) {
-        super();
-        this._other = null;
-        action && this.initWithAction(action);
-    }
-
-    /**
-     * @method
-     * @public
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action
-     * @return {boolean}
-     */
-    initWithAction(action) {
-        if (!action) {
-            return false;
-        }
-        if (action === this._other) {
-            return false;
-        }
-
-        if (!super.initWithDuration(action.duration)) {
-            return false;
-        }
+        super(action.duration);
         this._other = action;
-        return true;
     }
 
     /**
