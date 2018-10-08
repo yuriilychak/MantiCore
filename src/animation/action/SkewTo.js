@@ -25,14 +25,14 @@ class SkewTo extends ActionInterval{
          * @private
          */
 
-        this._startSkew = new PIXI.Point(0, 0);
+        this._startPoint = new PIXI.Point(0, 0);
 
         /**
          * @type {PIXI.Point | Point}
          * @private
          */
 
-        this._endSkew = new PIXI.Point(sx, sy);
+        this._endPoint = new PIXI.Point(sx, sy);
 
         /**
          * @type {PIXI.Point | Point}
@@ -65,8 +65,8 @@ class SkewTo extends ActionInterval{
 
         const fullCircle = Math.multPowTwo(Math.HALF_CIRCLE);
 
-        this._startSkew.x = Math.toDegrees(target.skew.x) % fullCircle;
-        this._delta.x = this._endSkew.x - this._startSkew.x;
+        this._startPoint.x = Math.toDegrees(target.skew.x) % fullCircle;
+        this._delta.x = this._endPoint.x - this._startPoint.x;
         if (this._delta.x > Math.HALF_CIRCLE) {
             this._delta.x -= fullCircle;
         }
@@ -74,8 +74,8 @@ class SkewTo extends ActionInterval{
             this._delta.x += fullCircle;
         }
 
-        this._startSkew.y = Math.toDegrees(target.skew.y) % fullCircle;
-        this._delta.y = this._endSkew.y - this._startSkew.y;
+        this._startPoint.y = Math.toDegrees(target.skew.y) % fullCircle;
+        this._delta.y = this._endPoint.y - this._startPoint.y;
         if (this._delta.y > Math.HALF_CIRCLE) {
             this._delta.y -= fullCircle;
         }
@@ -88,8 +88,8 @@ class SkewTo extends ActionInterval{
     update(dt) {
         dt = this.computeEaseTime(dt);
         this.target.skew.set(
-            Math.toRadians(this._startSkew.x + this._delta.x * dt),
-            Math.toRadians(this._startSkew.y + this._delta.y * dt)
+            Math.toRadians(this._startPoint.x + this._delta.x * dt),
+            Math.toRadians(this._startPoint.y + this._delta.y * dt)
         );
     }
 
@@ -99,7 +99,7 @@ class SkewTo extends ActionInterval{
      */
 
     get startSkew() {
-        return this._startSkew;
+        return this._startPoint;
     }
 
     /**
@@ -108,7 +108,7 @@ class SkewTo extends ActionInterval{
      */
 
     get endSkew() {
-        return this._endSkew;
+        return this._endPoint;
     }
 
     /**

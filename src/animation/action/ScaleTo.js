@@ -30,7 +30,7 @@ class ScaleTo extends ActionInterval{
          * @type {PIXI.Point | Point}
          * @private
          */
-        this._startScale = new PIXI.Point(1, 1);
+        this._startPoint = new PIXI.Point(1, 1);
 
         /**
          * @type {PIXI.Point | Point}
@@ -42,7 +42,7 @@ class ScaleTo extends ActionInterval{
          * @type {PIXI.Point | Point}
          * @private
          */
-        this._endScale = new PIXI.Point(sx, !Type.isNull(sy) ? sy : sx);
+        this._endPoint = new PIXI.Point(sx, !Type.isNull(sy) ? sy : sx);
     }
 
 
@@ -54,7 +54,7 @@ class ScaleTo extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new ScaleTo(this.duration, this._endScale.x, this._endScale.y));
+        return this.doClone(new ScaleTo(this.duration, this._endPoint.x, this._endPoint.y));
     }
 
     /**
@@ -66,9 +66,9 @@ class ScaleTo extends ActionInterval{
 
     startWithTarget(target) {
         super.startWithTarget(target);
-        this._startScale.copy(target.scale);
-        this._delta.copy(this._endScale);
-        Geometry.pSub(this._delta, this._startScale, true);
+        this._startPoint.copy(target.scale);
+        this._delta.copy(this._endPoint);
+        Geometry.pSub(this._delta, this._startPoint, true);
     }
 
     update(dt) {
@@ -77,8 +77,8 @@ class ScaleTo extends ActionInterval{
         }
         dt = this.computeEaseTime(dt);
         this.target.scale.set(
-            this._startScale.x + this._delta.x * dt,
-            this._startScale.y + this._delta.y * dt
+            this._startPoint.x + this._delta.x * dt,
+            this._startPoint.y + this._delta.y * dt
         );
     }
 
@@ -88,7 +88,7 @@ class ScaleTo extends ActionInterval{
      */
 
     get startScale() {
-        return this._startScale;
+        return this._startPoint;
     }
 
     /**
@@ -97,7 +97,7 @@ class ScaleTo extends ActionInterval{
      */
 
     get endScale() {
-        return this._endScale;
+        return this._endPoint;
     }
 
     /**
