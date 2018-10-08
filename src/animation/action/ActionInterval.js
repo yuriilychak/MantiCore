@@ -94,7 +94,7 @@ class ActionInterval extends FiniteTimeAction {
      * @returns {boolean}
      */
 
-    get repeateForever() {
+    get repeatForever() {
         return this._repeatForever;
     }
 

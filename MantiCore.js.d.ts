@@ -26,7 +26,7 @@ declare namespace MANTICORE {
 
                 readonly elapsed: number;
                 eases: MANTICORE.animation.easing.EaseBase[];
-                repeateForever: boolean;
+                repeatForever: boolean;
                 speedMethod: boolean;
                 repeatMethod: boolean;
                 amplitudeRate: number;
