@@ -130,7 +130,7 @@ class CardinalSplineTo extends CardinalSpline {
 
     /**
      * @desc Points getter
-     * @returns {Array}
+     * @returns {PIXI.Point[]}
      */
     get points() {
         return this._points;

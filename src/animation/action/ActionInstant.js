@@ -43,7 +43,9 @@ class ActionInstant extends FiniteTimeAction{
      * - The reversed action will be x of 100 move to 0.
      */
 
-    reverse(){}
+    reverse(){
+        return null;
+    }
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.

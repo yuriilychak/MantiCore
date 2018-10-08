@@ -1,5 +1,345 @@
 declare namespace MANTICORE {
     export namespace animation {
+        export namespace action {
+            class Action {
+                constructor ();
+
+                readonly isDone: boolean;
+                target: PIXI.DisplayObject;
+                originalTarget: PIXI.DisplayObject;
+
+                clone(): MANTICORE.animation.action.Action;
+                hasTarget(): boolean;
+                startWithTarget(target: PIXI.DisplayObject): void;
+                stop(): void;
+                step(dt: number): void;
+                update (dt: number):void;
+            }
+
+            class ActionInstant extends MANTICORE.animation.action.FiniteTimeAction{
+                reverse(): any;
+                clone(): MANTICORE.animation.action.ActionInstant;
+            }
+
+            class ActionInterval extends MANTICORE.animation.action.FiniteTimeAction {
+                constructor(duration?: number);
+
+                readonly elapsed: number;
+                eases: MANTICORE.animation.easing.EaseBase[];
+                repeateForever: boolean;
+                speedMethod: boolean;
+                repeatMethod: boolean;
+                amplitudeRate: number;
+                speed: number;
+
+                clone(): MANTICORE.animation.action.ActionInterval;
+                easing(...var_args: MANTICORE.animation.easing.EaseBase[]): void;
+                changeSpeed(speed: number): number;
+                repeat(times: number): void;
+
+                protected doClone<T extends MANTICORE.animation.action.ActionInterval>(action: T): T;
+                protected doReverse<T extends MANTICORE.animation.action.ActionInterval>(action: T): T;
+                protected computeEaseTime(dt: number): number;
+            }
+
+            class BezierBy extends MANTICORE.animation.action.ActionInterval{
+                constructor(duration: number, controlPoints: PIXI.Point[]);
+
+                protected readonly startPoint: PIXI.Point;
+                protected readonly config: PIXI.Point[];
+
+                clone(): MANTICORE.animation.action.BezierBy;
+                reverse(): MANTICORE.animation.action.BezierBy;
+            }
+
+            class BezierTo extends MANTICORE.animation.action.BezierBy {
+                clone(): MANTICORE.animation.action.BezierTo;
+            }
+
+            class Blink extends ActionInterval {
+                constructor(duration: number, blinks: number);
+
+                clone(): MANTICORE.animation.action.Blink;
+                reverse(): MANTICORE.animation.action.Blink;
+            }
+
+            class CallFunc extends MANTICORE.animation.action.ActionInstant {
+                constructor(callback: MANTICORE.animation.callback.CallFuncExecute, context?: Object, data?: any);
+
+                context: Object | null;
+
+                execute(): void;
+                clone(): MANTICORE.animation.action.CallFunc;
+            }
+
+            class CardinalSpline extends MANTICORE.animation.action.ActionInterval {
+                protected static cardinalSplineAt(p0: PIXI.Point, p1: PIXI.Point, p2: PIXI.Point, p3: PIXI.Point, tension: number, t: number): PIXI.Point;
+                protected static getControlPointAt(controlPoints: PIXI.Point[], pos: number): PIXI.Point;
+                protected static reverseControlPoints(controlPoints: PIXI.Point[]): PIXI.Point[];
+                protected static cloneControlPoints(controlPoints: PIXI.Point[]): PIXI.Point[];
+            }
+
+            class CardinalSplineBy extends MANTICORE.animation.action.CardinalSplineTo {
+                constructor(duration: number, points: PIXI.Point[], tension?: number);
+
+                clone(): MANTICORE.animation.action.CardinalSplineBy;
+                reverse(): MANTICORE.animation.action.CardinalSplineBy;
+                updatePosition(newPos: PIXI.Point): void;
+            }
+
+            class CardinalSplineTo extends MANTICORE.animation.action.CardinalSpline {
+                constructor(duration: number, points: PIXI.Point[], tension?: number);
+
+                points: PIXI.Point[];
+                protected readonly tension: number;
+                protected previousPosition: PIXI.Point;
+
+                clone(): MANTICORE.animation.action.CardinalSplineTo;
+                reverse(): MANTICORE.animation.action.CardinalSplineTo;
+                updatePosition(newPos: PIXI.Point | PIXI.ObservablePoint): void;
+            }
+
+            class CatmullRomBy extends MANTICORE.animation.action.CardinalSplineBy {
+                constructor(duration: number, points: PIXI.Point[]);
+
+                clone(): MANTICORE.animation.action.CatmullRomBy;
+            }
+
+            class CatmullRomTo extends MANTICORE.animation.action.CardinalSplineTo {
+                constructor(duration: number, points: PIXI.Point[]);
+
+                clone(): MANTICORE.animation.action.CatmullRomTo;
+            }
+
+            class DelayTime extends MANTICORE.animation.action.ActionInterval{
+                reverse(): MANTICORE.animation.action.DelayTime;
+                clone(): MANTICORE.animation.action.DelayTime;
+            }
+
+            class FadeIn extends MANTICORE.animation.action.FadeTo {
+                constructor(duration: number);
+                reverse(): MANTICORE.animation.action.FadeTo;
+                clone(): MANTICORE.animation.action.FadeIn;
+            }
+
+            class FadeOut extends MANTICORE.animation.action.FadeTo {
+                constructor(duration: number);
+
+                reverse(): MANTICORE.animation.action.FadeTo;
+                clone(): MANTICORE.animation.action.FadeOut;
+            }
+
+            class FadeTo extends MANTICORE.animation.action.ActionInterval{
+                constructor(duration: number, alpha: number);
+
+                clone(): MANTICORE.animation.action.FadeTo;
+            }
+
+            class FiniteTimeAction extends MANTICORE.animation.action.Action {
+                duration: number;
+                repeatCount: number;
+                repeatMethod: boolean;
+
+                reverse(): MANTICORE.animation.action.FiniteTimeAction;
+                clone(): MANTICORE.animation.action.FiniteTimeAction;
+            }
+
+            class FlipX extends MANTICORE.animation.action.ActionInstant {
+                clone(): MANTICORE.animation.action.FlipX;
+                reverse(): MANTICORE.animation.action.FlipX;
+            }
+
+            class FlipY extends MANTICORE.animation.action.ActionInstant {
+                reverse(): MANTICORE.animation.action.FlipY;
+                clone(): MANTICORE.animation.action.FlipY;
+            }
+
+            class Follow extends MANTICORE.animation.action.Action {
+                constructor(followedDisplayObject: PIXI.DisplayObject, rect: PIXI.Rectangle);
+
+                boundarySet: boolean;
+
+                clone(): MANTICORE.animation.action.Follow;
+            }
+
+            class Hide extends MANTICORE.animation.action.ActionInstant {
+                clone(): MANTICORE.animation.action.Hide;
+                reverse(): MANTICORE.animation.action.Show;
+            }
+
+            class JumpBy extends MANTICORE.animation.action.ActionInterval {
+                constructor(duration: number, position: PIXI.Point | number, y: number, height: number, jumps?: number);
+
+                clone(): MANTICORE.animation.action.JumpBy;
+                reverse(): MANTICORE.animation.action.JumpBy;
+
+                protected readonly height: number;
+                protected readonly jumps: number;
+                protected readonly delta: PIXI.Point;
+                protected readonly startPoint: PIXI.Point;
+            }
+
+            class JumpTo extends MANTICORE.animation.action.JumpBy {
+                constructor(duration: number, position: PIXI.Point | number, y: number, height: number, jumps?: number);
+
+                clone(): MANTICORE.animation.action.JumpTo;
+            }
+
+            class MoveBy extends MANTICORE.animation.action.ActionInterval {
+                constructor(duration: number, deltaPos: PIXI.Point | number, deltaY?: number);
+
+                protected readonly delta: PIXI.Point;
+
+                clone(): MANTICORE.animation.action.MoveBy;
+                reverse(): MANTICORE.animation.action.MoveBy;
+            }
+
+            class MoveTo extends MANTICORE.animation.action.MoveBy {
+                constructor(duration: number, position: PIXI.Point | number, y: number);
+
+                clone(): MANTICORE.animation.action.MoveTo;
+            }
+
+            class Place extends MANTICORE.animation.action.ActionInstant {
+                constructor(x: PIXI.Point | number, y?: number);
+
+                clone(): MANTICORE.animation.action.Place;
+                reverse(): MANTICORE.animation.action.Place;
+            }
+
+            class RemoveSelf extends MANTICORE.animation.action.ActionInstant {
+                constructor(isKill?: boolean);
+                clone(): MANTICORE.animation.action.RemoveSelf;
+            }
+
+            class Repeat extends ActionInterval {
+                constructor(action: MANTICORE.animation.action.FiniteTimeAction, times?: number);
+
+                clone(): MANTICORE.animation.action.Repeat;
+                reverse(): MANTICORE.animation.action.Repeat;
+
+                innerAction: MANTICORE.animation.action.FiniteTimeAction;
+            }
+
+            class RepeatForever extends MANTICORE.animation.action.ActionInterval{
+                constructor(action: MANTICORE.animation.action.ActionInterval);
+
+                innerAction: MANTICORE.animation.action.ActionInterval;
+
+                clone(): MANTICORE.animation.action.RepeatForever;
+                reverse(): MANTICORE.animation.action.RepeatForever;
+            }
+
+            class ReverseTime extends MANTICORE.animation.action.ActionInterval {
+                constructor(action: MANTICORE.animation.action.FiniteTimeAction);
+
+                clone(): MANTICORE.animation.action.ReverseTime;
+                reverse(): MANTICORE.animation.action.ReverseTime;
+            }
+
+            class RotateBy extends MANTICORE.animation.action.ActionInterval {
+                constructor(duration: number, deltaAngle: number);
+
+                clone(): MANTICORE.animation.action.RotateBy;
+                reverse(): MANTICORE.animation.action.RotateBy;
+            }
+
+            class RotateTo extends MANTICORE.animation.action.ActionInterval{
+                constructor(duration: number, deltaAngle: number);
+
+                clone(): MANTICORE.animation.action.RotateTo;
+                reverse(): null;
+            }
+
+            class ScaleBy extends MANTICORE.animation.action.ScaleTo {
+                reverse(): MANTICORE.animation.action.ScaleBy;
+                clone(): MANTICORE.animation.action.ScaleBy;
+            }
+
+            class ScaleTo extends MANTICORE.animation.action.ActionInterval{
+                constructor(duration: number, sx: number, sy?:number);
+
+                protected readonly startScale: PIXI.Point;
+                protected readonly endScale: PIXI.Point;
+                protected readonly delta: PIXI.Point;
+
+                clone(): MANTICORE.animation.action.ScaleTo;
+            }
+
+            class Sequence extends MANTICORE.animation.action.ActionInterval {
+                constructor(...var_args: MANTICORE.animation.action.FiniteTimeAction[]);
+
+                reversed: boolean;
+
+                clone(): MANTICORE.animation.action.Sequence;
+                reverse(): MANTICORE.animation.action.Sequence;
+            }
+
+            class Show extends MANTICORE.animation.action.ActionInstant {
+                clone(): MANTICORE.animation.action.Show;
+                reverse(): MANTICORE.animation.action.Hide;
+            }
+
+            class SkewBy extends MANTICORE.animation.action.SkewTo{
+                constructor(t: number, sx: number, sy: number);
+
+                clone(): MANTICORE.animation.action.SkewBy;
+                reverse(): MANTICORE.animation.action.SkewBy;
+            }
+
+            class SkewTo extends MANTICORE.animation.action.ActionInterval{
+                constructor(t: number, sx: number, sy: number);
+
+                protected readonly startSkew: PIXI.Point;
+                protected readonly endSkew: PIXI.Point;
+                protected readonly delta: PIXI.Point;
+
+                clone(): MANTICORE.animation.action.SkewTo;
+            }
+
+            class Spawn extends ActionInterval {
+                constructor(...var_args: MANTICORE.animation.action.FiniteTimeAction[]);
+
+                clone(): MANTICORE.animation.action.Spawn;
+                reverse(): MANTICORE.animation.action.Spawn;
+            }
+
+            class Speed extends Action{
+                constructor (action: MANTICORE.animation.action.ActionInterval, speed: number);
+
+                speed: number;
+                innerAction: MANTICORE.animation.action.ActionInterval;
+
+                clone(): MANTICORE.animation.action.Speed;
+                reverse(): MANTICORE.animation.action.Speed;
+            }
+
+            class TargetedAction extends MANTICORE.animation.action.ActionInterval {
+                constructor(target: PIXI.DisplayObject, action: MANTICORE.animation.action.FiniteTimeAction);
+
+                forcedTarget: PIXI.DisplayObject;
+
+                clone(): MANTICORE.animation.action.TargetedAction;
+            }
+
+            class TintBy extends MANTICORE.animation.action.ActionInterval{
+                constructor(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number);
+
+                clone(): MANTICORE.animation.action.TintBy;
+                reverse(): MANTICORE.animation.action.TintBy;
+            }
+
+            class TintTo extends MANTICORE.animation.action.ActionInterval {
+                constructor(duration: number, red: number, green: number, blue: number);
+
+                clone(): MANTICORE.animation.action.TintTo;
+            }
+
+            class ToggleVisibility extends MANTICORE.animation.action.ActionInstant {
+                clone(): MANTICORE.animation.action.ToggleVisibility;
+                reverse(): MANTICORE.animation.action.ToggleVisibility;
+            }
+        }
         export namespace callback {
             type CallFuncExecute = (target: PIXI.DisplayObject, data?: any)=>void;
         }
