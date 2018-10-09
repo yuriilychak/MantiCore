@@ -1,6 +1,12 @@
 import Type from "util/Type";
 import Macro from "macro";
 
+/**
+ * @desc Class for manipulate with animated actions and listen their event.
+ * @class
+ * @memberOf MANTICORE.animation
+ */
+
 class ActionTimeLine {
     /**
      * @constructor

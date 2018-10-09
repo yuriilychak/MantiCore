@@ -1,5 +1,6 @@
 import action from "./action";
 import easing from "./easing";
+import ActionTimeLine from "./ActionTimeLine";
 
 /**
  * @desc Namespace that contains classes for manipulate with animated tweens.
@@ -9,5 +10,6 @@ import easing from "./easing";
 
 export default {
     action,
-    easing
+    easing,
+    ActionTimeLine
 }
