@@ -1,3 +1,4 @@
+import AnimationManager from "./AnimationManager";
 import BaseManager from "./BaseManager";
 import ComponentManager from "./ComponentManager";
 import LayoutSizeManager from "./LayoutSizeManager";
@@ -11,6 +12,7 @@ import MemoryManager from "./MemoryManager";
  */
 
 export default {
+    AnimationManager,
     BaseManager,
     ComponentManager,
     LayoutSizeManager,

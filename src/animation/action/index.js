@@ -42,6 +42,7 @@ import TargetedAction from "./TargetedAction";
 import TintBy from "./TintBy";
 import TintTo from "./TintTo";
 import ToggleVisibility from "./ToggleVisibility";
+import Tween from "./Tween";
 
 Show.prototype.reverse = function () {
     return new Hide();
@@ -101,5 +102,6 @@ export default {
     TargetedAction,
     TintBy,
     TintTo,
-    ToggleVisibility
+    ToggleVisibility,
+    Tween
 }

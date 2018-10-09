@@ -339,6 +339,12 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.ToggleVisibility;
                 reverse(): MANTICORE.animation.action.ToggleVisibility;
             }
+
+            class Tween extends MANTICORE.animation.action.ActionInterval {
+                constructor(duration: number, key: string, from:  number, to: number);
+                reverse(): MANTICORE.animation.action.Tween;
+                clone(): MANTICORE.animation.action.Tween;
+            }
         }
         export namespace callback {
             type CallFuncExecute = (target: PIXI.DisplayObject, data?: any)=>void;
