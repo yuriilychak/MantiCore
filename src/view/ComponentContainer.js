@@ -4,6 +4,7 @@ import Type from "util/Type";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
+import AnimationManager from "manager/AnimationManager";
 
 /**
  * @desc Class that implements composite pattern;
@@ -42,6 +43,14 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._memoryManager = new MemoryManager(this);
+
+        /**
+         * @desc Class for manipulate with animations.
+         * @type {MANTICORE.manager.AnimationManager}
+         * @private
+         */
+
+        this._animationManager = new AnimationManager(this);
 
         /**
          * @desc Flag is container marked for update;
@@ -231,6 +240,17 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
+     * @desc Run tween action for container.
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.Action} action
+     */
+
+    runAction(action) {
+        this._animationManager.runAction(action);
+    }
+
+    /**
      * @method
      * @public
      * @override
@@ -402,6 +422,7 @@ class ComponentContainer extends PIXI.Container {
      */
 
     onUpdate(dt) {
+        this._animationManager.update(dt);
         this._componentManager.iterateComponents(component => {
             if (!component.active) {
                 return;

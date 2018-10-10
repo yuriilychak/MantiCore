@@ -210,6 +210,10 @@ class ActionTimeLine {
             return;
         }
         this._action.step(dt * this._fpsCoef);
+        if (this._action.isDone) {
+            this._isPlaying = false;
+            this._isRunning = false;
+        }
     }
 }
 

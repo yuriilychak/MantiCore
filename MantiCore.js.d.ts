@@ -1410,6 +1410,7 @@ declare namespace MANTICORE {
             public getComponent<T extends MANTICORE.component.Component>(name: string): T | null;
             public removeComponent(name: string): boolean;
             public removeAllComponents(): void;
+            public runAction(action: MANTICORE.animation.action.Action): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
@@ -1434,6 +1435,7 @@ declare namespace MANTICORE {
             public getComponent(name: string): MANTICORE.component.Component | null;
             public removeComponent(name: string): boolean;
             public removeAllComponents(): void;
+            public runAction(action: MANTICORE.animation.action.Action): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;

@@ -1,11 +1,17 @@
 import launcher from "launcher/index";
+
 import Asset from "util/Asset";
-import UI_ELEMENT from "enumerator/ui/UIElement";
 import Type from "util/Type";
+import Geometry from "util/Geometry";
+
+import UI_ELEMENT from "enumerator/ui/UIElement";
+
+import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
-import Geometry from "../util/Geometry";
+
+
 
 /**
  * @desc Class that implements composite pattern for sprite;
@@ -45,6 +51,14 @@ class ComponentSprite extends PIXI.Sprite {
          */
 
         this._memoryManager = new MemoryManager(this);
+
+        /**
+         * @desc Class for manipulate with animations.
+         * @type {MANTICORE.manager.AnimationManager}
+         * @private
+         */
+
+        this._animationManager = new AnimationManager(this);
 
         /**
          * @desc Flag is container marked for update;
@@ -231,6 +245,17 @@ class ComponentSprite extends PIXI.Sprite {
         }
 
         ticker.remove(this.onUpdate, this);
+    }
+
+    /**
+     * @desc Run tween action for container.
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.Action} action
+     */
+
+    runAction(action) {
+        this._animationManager.runAction(action);
     }
 
     /**
