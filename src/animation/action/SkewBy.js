@@ -46,7 +46,7 @@ class SkewBy extends SkewTo{
     startWithTarget(target) {
         super.startWithTarget(target);
         this.delta.copy(this._skew);
-        this.endSkew.copy(Geometry.pAdd(this.startSkew, this.delta));
+        this.endPoint.copy(Geometry.pAdd(this.startPoint, this.delta));
     }
 
     /**

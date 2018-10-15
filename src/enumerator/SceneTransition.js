@@ -2,11 +2,10 @@
  * @desc Enumerator for scene transitions.
  * @enumerator {string}
  * @memberOf MANTICORE.enumerator
+ * @name SCENE_TRANSITION
  */
 
-const SCENE_TRANSITION = {
+export default {
     SHOW: "TransitionShow",
     HIDE: "TransitionHide"
 };
-
-export default SCENE_TRANSITION;

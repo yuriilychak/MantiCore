@@ -81,7 +81,7 @@ class MoveBy extends ActionInterval {
     }
 
     update(dt) {
-        if (!Type.isNull(this.target)) {
+        if (Type.isNull(this.target)) {
             return;
         }
         dt = this.computeEaseTime(dt);

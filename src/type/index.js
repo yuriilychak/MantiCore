@@ -37,6 +37,7 @@
  * @property {string} name - Name of bundle.
  * @property {MANTICORE.enumerator.BUNDLE_TYPE} bundleType - Type of  bundle that load.
  * @property {MANTICORE.type.FontData[]} fontData - Array with information about fonts.
+ * @property {string[]} animationNames - Name of animations that use bundle.
  */
 
 /**
@@ -114,6 +115,37 @@
  */
 
 /**
+ * @desc Data that contain information about animation frame.
+ * @typedef {Object}
+ * @name AnimationFrame
+ * @memberOf MANTICORE.type
+ * @property {MANTICORE.enumerator.ACTION_TYPE} type - type of frame.
+ * @property {int} index - Index of frame.
+ * @property {int[] | null} data - Data for animation.
+ * @property {MANTICORE.type.AnimationEase | null} ease - Id of sprite frame.
+ */
+
+/**
+ * @desc Data that contain information about ease of animation frame.
+ * @typedef {Object}
+ * @name AnimationEase
+ * @memberOf MANTICORE.type
+ * @property {int} id - Id of easing.
+ * @property {int[] | null} points - Points if use custom easing.
+ */
+
+/**
+ * @desc Data that contain information about animation of element.
+ * @typedef {Object}
+ * @name AnimationData
+ * @memberOf MANTICORE.type
+ * @property {int} name - Index of name in array.
+ * @property {int} fps - Frame rate of animation.
+ * @property {int} length - Length of animation;
+ * @property {MANTICORE.type.AnimationFrame[]} frames - Frames of animation.
+ */
+
+/**
  * @desc Data that contain information about ui element.
  * @typedef {Object}
  * @name ElementData
@@ -134,6 +166,7 @@
  * @property {boolean} interactive - Is element interactive.
  * @property {boolean} visible - Is element visible.
  * @property {int} alpha - Alpha channel of element.
+ * @property {MANTICORE.type.AnimationData[] | null} animations - Animations that use element.
  */
 
 /**

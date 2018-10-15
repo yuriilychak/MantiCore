@@ -207,6 +207,14 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.Place;
             }
 
+            class PointAction extends MANTICORE.animation.action.ActionInterval{
+                constructor(duration: number, x: number, y?:number);
+
+                protected readonly startPoint: PIXI.Point;
+                protected readonly endPoint: PIXI.Point;
+                protected readonly delta: PIXI.Point;
+            }
+
             class RemoveSelf extends MANTICORE.animation.action.ActionInstant {
                 constructor(isKill?: boolean);
                 clone(): MANTICORE.animation.action.RemoveSelf;
@@ -256,12 +264,8 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.ScaleBy;
             }
 
-            class ScaleTo extends MANTICORE.animation.action.ActionInterval{
+            class ScaleTo extends MANTICORE.animation.action.PointAction{
                 constructor(duration: number, sx: number, sy?:number);
-
-                protected readonly startScale: PIXI.Point;
-                protected readonly endScale: PIXI.Point;
-                protected readonly delta: PIXI.Point;
 
                 clone(): MANTICORE.animation.action.ScaleTo;
             }
@@ -287,12 +291,8 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.SkewBy;
             }
 
-            class SkewTo extends MANTICORE.animation.action.ActionInterval{
+            class SkewTo extends MANTICORE.animation.action.PointAction{
                 constructor(t: number, sx: number, sy: number);
-
-                protected readonly startSkew: PIXI.Point;
-                protected readonly endSkew: PIXI.Point;
-                protected readonly delta: PIXI.Point;
 
                 clone(): MANTICORE.animation.action.SkewTo;
             }
@@ -662,6 +662,20 @@ declare namespace MANTICORE {
     }
 
     export namespace enumerator {
+
+        export enum ACTION_TYPE {
+            NONE = 0,
+            POSITION = 1,
+            SCALE = 2,
+            ROTATION = 3,
+            SKEW = 4,
+            TINT = 5,
+            ALPHA = 6,
+            VISIBLE = 7,
+            FRAME = 8,
+            DELAY = 9
+        }
+
         export enum BUNDLE_TYPE {
             NONE = 0,
             ASSET = 1,
@@ -927,8 +941,29 @@ declare namespace MANTICORE {
     }
 
     export namespace type {
+
+        export interface AnimationData {
+            name: number;
+            fps: number;
+            length: number;
+            frames: MANTICORE.type.AnimationFrame[];
+        }
+
+        export interface AnimationFrame {
+            type: MANTICORE.enumerator.ACTION_TYPE;
+            index: number;
+            data: number[] | null;
+            ease: MANTICORE.type.AnimationEase[] | null;
+        }
+
+        export interface AnimationEase {
+            id: number;
+            points: number[] | null;
+        }
+
         export interface AssetBundle {
             anchors: number[];
+            animationNames: string[];
             bundleType: MANTICORE.enumerator.BUNDLE_TYPE;
             atlases: MANTICORE.type.AtlasInfo[];
             atlasFonts: MANTICORE.type.AtlasFont[];
@@ -997,22 +1032,23 @@ declare namespace MANTICORE {
         }
 
         export interface ElementData {
-            name: number;
-            scale: number[];
-            anchor: number;
-            rotation: number[];
-            flip: boolean[];
-            type: MANTICORE.enumerator.ui.UI_ELEMENT;
-            dimensions: number[];
-            slice9: number[];
-            tint: number;
-            children: MANTICORE.type.ElementData[];
-            content: MANTICORE.type.ElementData;
-            fileData: number[];
-            clipped: boolean;
-            interactive: boolean;
-            visible: boolean;
             alpha: number;
+            anchor: number;
+            animations: MANTICORE.type.AnimationData[] | null;
+            children: MANTICORE.type.ElementData[];
+            clipped: boolean;
+            content: MANTICORE.type.ElementData;
+            dimensions: number[];
+            fileData: number[];
+            flip: boolean[];
+            interactive: boolean;
+            name: number;
+            rotation: number[];
+            scale: number[];
+            slice9: number[];
+            type: MANTICORE.enumerator.ui.UI_ELEMENT;
+            tint: number;
+            visible: boolean;
         }
 
         export interface TextFieldStyle {

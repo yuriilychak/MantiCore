@@ -67,6 +67,7 @@ class AnimationManager extends BaseManager {
         timeLine.play();
         this._activeTimeLines.push(timeLine);
         this._activeTimeLineCount = 1;
+        this._isActive = true;
     }
 
     /**
@@ -84,6 +85,7 @@ class AnimationManager extends BaseManager {
         while (i < this._activeTimeLineCount) {
             timeLine = this._activeTimeLines[i];
             timeLine.update(dt);
+
 
             if (!timeLine.isDone) {
                 ++i;

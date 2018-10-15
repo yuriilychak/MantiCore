@@ -24,6 +24,7 @@ import JumpTo from "./JumpTo";
 import MoveBy from "./MoveBy";
 import MoveTo from "./MoveTo";
 import Place from "./Place";
+import PointAction from "./PointAction";
 import RemoveSelf from "./RemoveSelf";
 import Repeat from "./Repeat";
 import RepeatForever from "./RepeatForever";
@@ -85,6 +86,7 @@ export default {
     MoveBy,
     MoveTo,
     Place,
+    PointAction,
     RemoveSelf,
     Repeat,
     RepeatForever,

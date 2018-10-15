@@ -1,14 +1,13 @@
 /**
  * @desc Enumerator for define bundle type.
  * @enum {int}
+ * @name BUNDLE_TYPE
  * @readonly
  * @memberOf MANTICORE.enumerator
  */
 
-const BUNDLE_TYPE = {
+export default  {
     NONE: 0,
     ASSET: 1,
     LOCALE: 2
 };
-
-export default  BUNDLE_TYPE;

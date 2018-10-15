@@ -95,27 +95,24 @@ class JumpBy extends ActionInterval {
 
     update(dt) {
         dt = this.computeEaseTime(dt);
-        if (this.target) {
+        if (this.hasTarget()) {
             const frac = dt * this._jumps % 1.0;
             let y = this._height * 4 * frac * (1 - frac);
             y += this._delta.y * dt;
 
             let x = this._delta.x * dt;
-            const locStartPosition = this._startPoint;
             if (Constant.ENABLE_STACK_ACTIONS) {
-                const targetX = this.target.x;
-                const targetY = this.target.y;
                 const locPreviousPosition = this._previousPosition;
 
-                locStartPosition.x = locStartPosition.x + targetX - locPreviousPosition.x;
-                locStartPosition.y = locStartPosition.y + targetY - locPreviousPosition.y;
-                x = x + locStartPosition.x;
-                y = y + locStartPosition.y;
-                locPreviousPosition.x = x;
-                locPreviousPosition.y = y;
+                this._startPoint.x = this._startPoint.x + this.target.x - this._previousPosition.x;
+                this._startPoint.y = this._startPoint.y + this.target.y - this._previousPosition.y;
+                x = x + this._startPoint.x;
+                y = y + this._startPoint.y;
+                this._previousPosition.x = x;
+                this._previousPosition.y = y;
                 this.target.position.set(x, y);
             } else {
-                this.target.position.set(locStartPosition.x + x, locStartPosition.y + y);
+                this.target.position.set(this._startPoint.x + x, this._startPoint.y + y);
             }
         }
     }

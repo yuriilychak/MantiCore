@@ -1,4 +1,4 @@
-import ActionInterval from "./ActionInterval";
+import PointAction from "./PointAction";
 import Type from "util/Type";
 import Geometry from "util/Geometry";
 
@@ -16,7 +16,7 @@ import Geometry from "util/Geometry";
  * const actionTo = new ScaleTo(2, 0.5, 2);
  */
 
-class ScaleTo extends ActionInterval{
+class ScaleTo extends PointAction{
     /**
      * @constructor
      * @param {number} duration
@@ -24,25 +24,7 @@ class ScaleTo extends ActionInterval{
      * @param {?number} [sy] scale parameter in Y, if Null equal to sx
      */
     constructor(duration, sx, sy = null) {
-        super(duration);
-
-        /**
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-        this._startPoint = new PIXI.Point(1, 1);
-
-        /**
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-        this._delta = new PIXI.Point(0, 0);
-
-        /**
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-        this._endPoint = new PIXI.Point(sx, !Type.isNull(sy) ? sy : sx);
+        super(duration, sx, !Type.isNull(sy) ? sy : sx);
     }
 
 
@@ -54,7 +36,7 @@ class ScaleTo extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new ScaleTo(this.duration, this._endPoint.x, this._endPoint.y));
+        return this.doClone(new ScaleTo(this.duration, this.endPoint.x, this.endPoint.y));
     }
 
     /**
@@ -66,9 +48,9 @@ class ScaleTo extends ActionInterval{
 
     startWithTarget(target) {
         super.startWithTarget(target);
-        this._startPoint.copy(target.scale);
-        this._delta.copy(this._endPoint);
-        Geometry.pSub(this._delta, this._startPoint, true);
+        this.startPoint.copy(target.scale);
+        this.delta.copy(this.endPoint);
+        Geometry.pSub(this.delta, this.startPoint, true);
     }
 
     update(dt) {
@@ -77,36 +59,9 @@ class ScaleTo extends ActionInterval{
         }
         dt = this.computeEaseTime(dt);
         this.target.scale.set(
-            this._startPoint.x + this._delta.x * dt,
-            this._startPoint.y + this._delta.y * dt
+            this.startPoint.x + this.delta.x * dt,
+            this.startPoint.y + this.delta.y * dt
         );
-    }
-
-    /**
-     * @protected
-     * @returns {PIXI.Point|Point}
-     */
-
-    get startScale() {
-        return this._startPoint;
-    }
-
-    /**
-     * @protected
-     * @returns {PIXI.Point|Point}
-     */
-
-    get endScale() {
-        return this._endPoint;
-    }
-
-    /**
-     * @protected
-     * @returns {PIXI.Point|Point}
-     */
-
-    get delta() {
-        return this._delta;
     }
 }
 

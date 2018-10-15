@@ -206,8 +206,10 @@ class ActionInterval extends FiniteTimeAction {
         if (this._firstTick) {
             this._firstTick = false;
             this._elapsed = 0;
-        } else
+        } else {
             this._elapsed += dt;
+        }
+
 
         let time = this._elapsed / (this.duration > Constant.FLT_EPSILON ? this.duration : Constant.FLT_EPSILON);
         this.update(Math.range(time, 0, 1));

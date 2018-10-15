@@ -5,6 +5,7 @@ import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
 import AnimationManager from "manager/AnimationManager";
+import Macro from "macro";
 
 /**
  * @desc Class that implements composite pattern;
@@ -248,6 +249,7 @@ class ComponentContainer extends PIXI.Container {
 
     runAction(action) {
         this._animationManager.runAction(action);
+        this.isUpdate = true;
     }
 
     /**
@@ -422,12 +424,12 @@ class ComponentContainer extends PIXI.Container {
      */
 
     onUpdate(dt) {
-        this._animationManager.update(dt);
+        this._animationManager.update(dt / Macro.FPS);
         this._componentManager.iterateComponents(component => {
             if (!component.active) {
                 return;
             }
-            component.onUpdate(dt);
+            component.onUpdate(dt / Macro.FPS);
         });
     }
 

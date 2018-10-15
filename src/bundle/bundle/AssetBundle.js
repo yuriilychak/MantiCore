@@ -107,7 +107,7 @@ class AssetBundle extends BaseBundle {
 
                 fontData.chars[letter.id] = {
                     xOffset: offset[0] / res,
-                    yOffset: (offset[1] + (font.base / 3)) / res,//TODO Workaround fix later (Vertical align wrong, add base line)
+                    yOffset: offset[1] / res,
                     xAdvance: letter.ax / res,
                     kerning: {},
                     texture: new PIXI.Texture(baseTexture, new PIXI.Rectangle(

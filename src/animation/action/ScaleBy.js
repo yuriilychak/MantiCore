@@ -19,8 +19,8 @@ class ScaleBy extends ScaleTo {
     startWithTarget(target) {
         super.startWithTarget(target);
         this.delta.set(
-            this.startScale.x * this.endScale.x - this.startScale.x,
-            this.startScale.y * this.endScale.y - this.startScale.y
+            this.startPoint.x * this.endPoint.x - this.startPoint.x,
+            this.startPoint.y * this.endPoint.y - this.startPoint.y
         );
     }
 
@@ -32,7 +32,7 @@ class ScaleBy extends ScaleTo {
      */
 
     reverse() {
-        return this.doReverse(new ScaleBy(this.duration, 1 / this.endScale.x, 1 / this.endScale.y));
+        return this.doReverse(new ScaleBy(this.duration, 1 / this.endPoint.x, 1 / this.endPoint.y));
     }
 
     /**
@@ -43,7 +43,7 @@ class ScaleBy extends ScaleTo {
      */
 
     clone() {
-        return this.doClone(new ScaleBy(this.duration, this.endScale.x, this.endScale.y));
+        return this.doClone(new ScaleBy(this.duration, this.endPoint.x, this.endPoint.y));
     }
 }
 

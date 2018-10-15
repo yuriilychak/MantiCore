@@ -1,46 +1,16 @@
-import ActionInterval from "./ActionInterval";
+import PointAction from "./PointAction";
 import Math from "util/Math";
 
 /**
  * @desc Skews a Node object to given angles by modifying its skewX and skewY properties
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
+ * @extends MANTICORE.animation.action.PointAction
  * @memberOf MANTICORE.animation.action
  * @example
  * const actionTo = new SkewTo(2, 37.2, -37.2);
  */
 
-class SkewTo extends ActionInterval{
-    /**
-     * @constructor
-     * @param {number} t time in seconds
-     * @param {number} sx
-     * @param {number} sy
-     */
-    constructor(t, sx, sy) {
-        super(t);
-
-        /**
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-
-        this._startPoint = new PIXI.Point(0, 0);
-
-        /**
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-
-        this._endPoint = new PIXI.Point(sx, sy);
-
-        /**
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-
-        this._delta = new PIXI.Point(0, 0);
-    }
+class SkewTo extends PointAction {
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -50,7 +20,7 @@ class SkewTo extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new SkewTo(this.duration, this._endSkewX, this._endSkewY));
+        return this.doClone(new SkewTo(this.duration, this.endPoint.x, this.endPoint.y));
     }
 
     /**
@@ -65,22 +35,22 @@ class SkewTo extends ActionInterval{
 
         const fullCircle = Math.multPowTwo(Math.HALF_CIRCLE);
 
-        this._startPoint.x = Math.toDegrees(target.skew.x) % fullCircle;
-        this._delta.x = this._endPoint.x - this._startPoint.x;
-        if (this._delta.x > Math.HALF_CIRCLE) {
-            this._delta.x -= fullCircle;
+        this.startPoint.x = Math.toDegrees(target.skew.x) % fullCircle;
+        this.delta.x = this.endPoint.x - this.startPoint.x;
+        if (this.delta.x > Math.HALF_CIRCLE) {
+            this.delta.x -= fullCircle;
         }
-        else if (this._delta.x < -Math.HALF_CIRCLE) {
-            this._delta.x += fullCircle;
+        else if (this.delta.x < -Math.HALF_CIRCLE) {
+            this.delta.x += fullCircle;
         }
 
-        this._startPoint.y = Math.toDegrees(target.skew.y) % fullCircle;
-        this._delta.y = this._endPoint.y - this._startPoint.y;
-        if (this._delta.y > Math.HALF_CIRCLE) {
-            this._delta.y -= fullCircle;
+        this.startPoint.y = Math.toDegrees(target.skew.y) % fullCircle;
+        this.delta.y = this.endPoint.y - this.startPoint.y;
+        if (this.delta.y > Math.HALF_CIRCLE) {
+            this.delta.y -= fullCircle;
         }
-        else if (this._delta.y < -Math.HALF_CIRCLE) {
-            this._delta.y += fullCircle;
+        else if (this.delta.y < -Math.HALF_CIRCLE) {
+            this.delta.y += fullCircle;
         }
 
     }
@@ -88,36 +58,9 @@ class SkewTo extends ActionInterval{
     update(dt) {
         dt = this.computeEaseTime(dt);
         this.target.skew.set(
-            Math.toRadians(this._startPoint.x + this._delta.x * dt),
-            Math.toRadians(this._startPoint.y + this._delta.y * dt)
+            Math.toRadians(this.startPoint.x + this.delta.x * dt),
+            Math.toRadians(this.startPoint.y + this.delta.y * dt)
         );
-    }
-
-    /**
-     * @protected
-     * @returns {PIXI.Point|Point}
-     */
-
-    get startSkew() {
-        return this._startPoint;
-    }
-
-    /**
-     * @protected
-     * @returns {PIXI.Point|Point}
-     */
-
-    get endSkew() {
-        return this._endPoint;
-    }
-
-    /**
-     * @protected
-     * @returns {PIXI.Point|Point}
-     */
-
-    get delta() {
-        return this._delta;
     }
 }
 

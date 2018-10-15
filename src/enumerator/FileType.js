@@ -1,11 +1,10 @@
 /**
  * @desc Enum with file types that use application.
  * @enumerator {string}
+ * @name FILE_TYPE
  * @memberOf MANTICORE.enumerator
  */
 
-const FILE_TYPE = {
+export default {
     PNG: "png"
 };
-
-export default FILE_TYPE;

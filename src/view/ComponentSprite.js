@@ -256,6 +256,7 @@ class ComponentSprite extends PIXI.Sprite {
 
     runAction(action) {
         this._animationManager.runAction(action);
+        this.isUpdate = true;
     }
 
     /**
