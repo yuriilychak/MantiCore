@@ -1,6 +1,8 @@
 import Type from "util/Type";
 import Format from "util/Format";
+import Macro from "macro";
 import BUNDLE_TYPE from "enumerator/BundleType";
+import FILE_TYPE from "enumerator/FileType";
 import BundleCache from "bundle/BundleCache";
 
 /**
@@ -18,7 +20,7 @@ const middleware = {
      * @memberOf MANTICORE.bundle.middleware
      */
     bundleParser: function (resource, next) {
-        if (resource.extension !== "json" || Type.isEmpty(resource.data) || Type.isEmpty(resource.data["bundleType"])) {
+        if (resource.extension !== FILE_TYPE.JSON || Type.isEmpty(resource.data) || Type.isEmpty(resource.data["bundleType"])) {
             next();
             return;
         }
@@ -58,8 +60,9 @@ const middleware = {
             parentResource: resource,
         };
 
+        const textureFormat = Macro.USE_WEB_P_FALLBACK ? FILE_TYPE.WEB_P : FILE_TYPE.PNG;
         let index = 0;
-        let loadPath = Format.changeBaseName(url, textures[index].name + ".png");
+        let loadPath = Format.changeBaseName(url, Format.addFileType(textures[index].name, textureFormat));
 
         const onTextureLoad = (imageRes) =>
         {
@@ -78,7 +81,7 @@ const middleware = {
                 return;
             }
 
-            loadPath = Format.changeBaseName(url, textures[index].name + ".png");
+            loadPath = Format.changeBaseName(url, Format.addFileType(textures[index].name, textureFormat));
             this.add(textures[index].link, loadPath, loadOptions, onTextureLoad);
         };
         this.add(textures[index].link, loadPath, loadOptions, onTextureLoad);

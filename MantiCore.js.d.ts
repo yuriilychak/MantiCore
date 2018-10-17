@@ -690,7 +690,9 @@ declare namespace MANTICORE {
         }
 
         export enum FILE_TYPE {
-            PNG = "png"
+            JSON = "json",
+            PNG = "png",
+            WEB_P = "webp"
         }
 
         export enum RESOLUTION {
@@ -834,6 +836,11 @@ declare namespace MANTICORE {
         }
 
         type LoaderCallback = () => void;
+    }
+
+    export namespace macro {
+        export let FPS: number;
+        export let USE_WEB_P_FALLBACK: boolean;
     }
 
     export namespace manager {

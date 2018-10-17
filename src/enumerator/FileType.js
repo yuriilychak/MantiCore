@@ -6,5 +6,7 @@
  */
 
 export default {
-    PNG: "png"
+    JSON: "json",
+    PNG: "png",
+    WEB_P: "webp"
 };

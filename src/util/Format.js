@@ -22,7 +22,8 @@ const format = {
      */
     addFileType: function (value, type) {
         const suffix = "." + type;
-        return value.indexOf(suffix) !== -1 ? value : value + suffix;
+        const index = value.lastIndexOf(suffix);
+        return value.indexOf(suffix) !== -1 || index + suffix.length !== value.length ? value : value + suffix;
     },
 
     /**
