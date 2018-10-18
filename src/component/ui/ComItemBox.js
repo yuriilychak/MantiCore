@@ -15,9 +15,9 @@ class ComItemBox extends Component {
      * @param {string} templateName - Name template for child names. For example for "item_0001" it's "item_";
      * @param {int} [numCount = 2] - Num count in template name. For example for "item_0001" it's 4;
      * @param {MANTICORE.component.ui.ComItem} templateComponent - Component that add to new elements of ItemBox;
-     * @param {boolean} [isNumFromZero = false] - Is numeration of items start from 1 or 0;
+     * @param {int} [startIndex = 1] - Number for start numeration;
      */
-    constructor(templateComponent, templateName, numCount = 2, isNumFromZero = false) {
+    constructor(templateComponent, templateName, numCount = 2, startIndex = 1) {
         super("ComItemBox");
 
         this.listenChildren = true;
@@ -47,11 +47,11 @@ class ComItemBox extends Component {
 
         /**
          * @desc Flag is numeration of items start from 1 or 0;
-         * @type {boolean}
+         * @type {int}
          * @private
          */
 
-        this._isNumFromZero = isNumFromZero;
+        this._startIndex = startIndex;
     }
 
     /**
@@ -60,13 +60,13 @@ class ComItemBox extends Component {
      */
 
     /**
-     * @desc Flag is numeration of items start from 1 or 0;
+     * @desc Number for start numeration;
      * @public
-     * @returns {boolean}
+     * @returns {int}
      */
 
-    get numFromZero() {
-        return this._isNumFromZero;
+    get startIndex() {
+        return this._startIndex;
     }
 
     /**
@@ -159,14 +159,14 @@ class ComItemBox extends Component {
             return;
         }
         this._items.push(component);
-        child.name = this._getItemName(this._items.length - (this._isNumFromZero ? 0 : 1));
+        child.name = this._getItemName(this._items.length - this._startIndex);
         this.owner.addChild(child);
     }
 
     onAdd(owner) {
         super.onAdd(owner);
 
-        let index = this._isNumFromZero ? 0 : 1;
+        let index = this._startIndex;
         /**
          * @type {MANTICORE.view.ComponentContainer}
          */
@@ -243,7 +243,7 @@ class ComItemBox extends Component {
      */
 
     clone() {
-        return ComItemBox.cloneFromPool(ComItemBox, this._componentTemplate, this._templateName, this._templateNumCount, this._isNumFromZero);
+        return ComItemBox.cloneFromPool(ComItemBox, this._componentTemplate, this._templateName, this._templateNumCount, this._startIndex);
     }
 
     /**

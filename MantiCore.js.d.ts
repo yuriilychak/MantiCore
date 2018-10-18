@@ -580,8 +580,8 @@ declare namespace MANTICORE {
             }
 
             class ComItemBox extends MANTICORE.component.Component {
-                constructor(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , isNumFromZero?: boolean);
-                readonly numFromZero: number;
+                constructor(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number);
+                readonly startIndex: number;
                 readonly templateName: string;
                 readonly templateNumCount: number;
                 readonly componentTemplate: MANTICORE.component.ui.ComItem;
