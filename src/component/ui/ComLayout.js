@@ -301,6 +301,26 @@ class ComLayout extends ComChildIterator {
     }
 
     /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.ui.ComLayout}
+     */
+
+    clone() {
+        /**
+         * @type {MANTICORE.component.ui.ComLayout}
+         */
+        const result = ComLayout.cloneFromPool(ComLayout);
+        result.verticalAlign = this._verticalAlign;
+        result.horizontalAlign = this._horizontalAlign;
+        result.resizeItems = this._resizeItems;
+        result.innerPadding = this._innerPadding;
+        result.outerPadding = this._outerPadding;
+        return result;
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

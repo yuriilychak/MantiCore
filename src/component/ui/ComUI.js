@@ -153,6 +153,7 @@ class ComUI extends Component {
     /**
      * @desc Add Listener to child. If it doesn't exist return false.
      * @method
+     * @public
      * @param {Function} listener - Function to listen child.
      * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType - Event type that need to listen children.
      * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
@@ -327,6 +328,17 @@ class ComUI extends Component {
     onRemove() {
         this.removeAllChildListeners();
         super.onRemove();
+    }
+
+    /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.ui.ComChildListener}
+     */
+
+    clone() {
+        return ComUI.cloneFromPool(ComUI, this.name);
     }
 
     /**

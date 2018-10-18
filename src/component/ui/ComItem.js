@@ -21,6 +21,17 @@ class ComItem extends ComUI {
      */
 
     /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.ui.ComItem}
+     */
+
+    clone() {
+        return ComItem.cloneFromPool(ComItem);
+    }
+
+    /**
      * @method
      * @public
      * @desc Update data for component

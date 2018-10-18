@@ -240,6 +240,17 @@ class ComChildListener extends ComChildIterator {
     }
 
     /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.ui.ComChildListener}
+     */
+
+    clone() {
+        return ComChildListener.cloneFromPool(ComChildListener);
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

@@ -236,6 +236,17 @@ class ComItemBox extends Component {
     }
 
     /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.ui.ComItemBox}
+     */
+
+    clone() {
+        return ComItemBox.cloneFromPool(ComItemBox, this._componentTemplate, this._templateName, this._templateNumCount, this._isNumFromZero);
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

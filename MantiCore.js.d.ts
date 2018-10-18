@@ -547,6 +547,8 @@ declare namespace MANTICORE {
                 eventClick: string | null;
                 eventDragStart: string | null;
                 eventDragFinish: string | null;
+
+                clone(): MANTICORE.component.ui.ComChildListener;
             }
 
             export class ComLayout extends MANTICORE.component.ComChildIterator {
@@ -567,12 +569,14 @@ declare namespace MANTICORE {
                 horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
 
                 refreshLayot(): void;
+                clone(): MANTICORE.component.ui.ComLayout;
             }
 
             export class ComItem extends MANTICORE.component.ui.ComUI {
                 constructor();
 
                 updateData(data: any): void;
+                clone(): MANTICORE.component.ui.ComItem;
             }
 
             class ComItemBox extends MANTICORE.component.Component {
@@ -586,6 +590,7 @@ declare namespace MANTICORE {
                 getElement(index: number): MANTICORE.component.ui.ComItem | null;
                 updateElementData(index: number, data: any): boolean;
                 addItem<T extends MANTICORE.view.ComponentContainer>(child: T): void;
+                clone(): MANTICORE.component.ui.ComItemBox;
             }
 
 
@@ -610,11 +615,13 @@ declare namespace MANTICORE {
                 addChildListener<T extends PIXI.Container>(listener: MANTICORE.eventDispatcher.InteractiveCallback, eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
                 removeChildListener<T extends PIXI.Container>(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string,  widget?: T): boolean;
                 removeAllChildListeners() : void;
+                clone(): MANTICORE.component.ui.ComUI;
             }
 
 
             export class ComUIElement extends MANTICORE.component.ui.ComUI {
-                constructor(elementName: string, bundleName?: string);
+                constructor(elementName: string, bundleName?: string, owner?: MANTICORE.view.ComponentContainer);
+                clone(): MANTICORE.component.ui.ComUIElement;
             }
         }
 
