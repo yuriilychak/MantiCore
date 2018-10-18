@@ -625,6 +625,7 @@ declare namespace MANTICORE {
 
             hasChildren(): void;
             iterateChildren(callback: MANTICORE.component.callback.IterateChildren): void;
+            clone(): MANTICORE.component.ComChildIterator;
         }
 
         export class Component {
@@ -650,7 +651,9 @@ declare namespace MANTICORE {
             disuse(): void;
             destroy(): void;
             kill(): void;
+            clone(): MANTICORE.component.Component;
 
+            protected static cloneFromPool<T extends MANTICORE.component.Component>(var_args: any[]): T;
             protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.EventModel): void;
             protected removeEventListener(event: string): void;
             protected dispatchEvent(event: string, data?: any): void;

@@ -1,5 +1,6 @@
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
+import Pool from "pool";
 
 /**
  * @desc Base class of all components;
@@ -292,9 +293,33 @@ class Component {
     }
 
     /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.Component}
+     */
+
+    clone() {
+        return Component.cloneFromPool(Component);
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Calls for create clone of element. Need to don't import pool in children.
+     * @method
+     * @protected
+     * @static
+     * @param {...*} var_args
+     * @return {*}
+     */
+
+    static cloneFromPool(var_args) {
+        return Pool.getObject.apply(Pool, arguments);
+    }
 
     /**
      * @desc Add event listener for element.

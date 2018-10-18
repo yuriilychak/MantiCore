@@ -136,6 +136,17 @@ class ComChildIterator extends Component {
     }
 
     /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.ComChildIterator}
+     */
+
+    clone() {
+        return ComChildIterator.cloneFromPool(ComChildIterator, this.name);
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
