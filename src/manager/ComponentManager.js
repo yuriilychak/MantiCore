@@ -149,7 +149,7 @@ class ComponentManager extends BaseManager{
 
     removeAllComponents() {
         this.iterateComponents(component => component.onRemove());
-        this._componentRepo.clear();
+        this._componentRepo.clear(true);
         this._initComponents();
     }
 

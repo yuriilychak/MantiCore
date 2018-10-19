@@ -950,7 +950,7 @@ declare namespace MANTICORE {
             removeElement(key: number | string): boolean;
             hasElement(key: number | string): boolean;
             getElement(key: number | string): any;
-            clear(): void;
+            clear(isKillValues?: boolean): void;
             keys: number[] | string[];
             values: any[];
             isEmpty(): boolean;
@@ -970,12 +970,7 @@ declare namespace MANTICORE {
             type: MANTICORE.enumerator.ACTION_TYPE;
             index: number;
             data: number[] | null;
-            ease: MANTICORE.type.AnimationEase[] | null;
-        }
-
-        export interface AnimationEase {
-            id: number;
-            points: number[] | null;
+            ease: number[] | null;
         }
 
         export interface AssetBundle {

@@ -1,5 +1,6 @@
-import Math from "util/Math";
 import Model from "model/Model";
+import Math from "util/Math";
+import Type from "util/Type";
 
 /**
  * @desc Repository for store data with fast search;
@@ -146,10 +147,21 @@ class Repository {
      * @desc Clear repository;
      * @method
      * @public
+     * @param {boolean} [isKillValues = false] - Is need to kill values.
      */
 
-    clear() {
+    clear(isKillValues = false) {
         this._keys.length = 0;
+        if (isKillValues) {
+            const valueCount = this._values.length;
+            let value, i;
+            for (i = 0; i < valueCount; ++i) {
+                value = this._values[i];
+                if (Type.isObject(value) && !Type.isUndefined(value.kill)) {
+                    value.kill();
+                }
+            }
+        }
         this._values.length = 0;
     }
 

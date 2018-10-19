@@ -222,8 +222,7 @@ class ComChildListener extends ComChildIterator {
      */
 
     disuse() {
-        this.iterateChildren(child => this._removeEvents(child));
-        this._events.clear();
+        this._clearEvents();
         super.disuse();
     }
 
@@ -234,8 +233,7 @@ class ComChildListener extends ComChildIterator {
      */
 
     destroy() {
-        this.iterateChildren(child => this._removeEvents(child));
-        this._events.clear();
+        this._clearEvents();
         super.destroy();
     }
 
@@ -254,6 +252,17 @@ class ComChildListener extends ComChildIterator {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear events in children and repository.
+     * @method
+     * @private
+     */
+
+    _clearEvents() {
+        this.iterateChildren(child => this._removeEvents(child));
+        this._events.clear();
+    }
 
     /**
      * @desc Add events to new child.

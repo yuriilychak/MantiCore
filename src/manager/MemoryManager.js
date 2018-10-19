@@ -11,7 +11,7 @@ import BaseManager from "./BaseManager";
 class MemoryManager extends BaseManager {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component} owner
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component | MANTICORE.animation.ActionAnimation} owner
      */
     constructor(owner) {
         super(owner);

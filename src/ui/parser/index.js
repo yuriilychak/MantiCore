@@ -111,6 +111,7 @@ function parseChild (parent, data, bundle) {
     }
 
     _parseWidgetData(result, data, bundle);
+    _parseAnimation(result, data, bundle);
 
     if (parent !== null) {
         parent.addChild(result);
@@ -191,6 +192,24 @@ function _parseWidgetData(element, data, bundle) {
     }
 
     element.visible = visible;
+}
+
+/**
+ * @function
+ * @private
+ * @memberOf MANTICORE.ui.parser
+ * @param {MANTICORE.ui.Widget} element
+ * @param {MANTICORE.type.ElementData} data
+ * @param {MANTICORE.type.AssetBundle} bundle
+ * @private
+ */
+
+function _parseAnimation(element, data, bundle) {
+    if (Type.isEmpty(data.animations)) {
+        return;
+    }
+
+    console.log(data.animations);
 }
 
 /**

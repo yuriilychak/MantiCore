@@ -1,5 +1,6 @@
 import action from "./action";
 import easing from "./easing";
+import ActionAnimation from "./ActionAnimation";
 import ActionTimeLine from "./ActionTimeLine";
 
 /**
@@ -11,5 +12,6 @@ import ActionTimeLine from "./ActionTimeLine";
 export default {
     action,
     easing,
+    ActionAnimation,
     ActionTimeLine
 }

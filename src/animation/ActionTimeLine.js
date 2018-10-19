@@ -1,5 +1,6 @@
 import Type from "util/Type";
 import Macro from "macro";
+import Repository from "repository/Repository";
 
 /**
  * @desc Class for manipulate with animated actions and listen their event.
@@ -14,10 +15,26 @@ class ActionTimeLine {
      */
     constructor(target) {
         /**
-         * @type {?MANTICORE.animation.action.FiniteTimeAction}
+         * @desc action that currently run
+         * @type {?MANTICORE.animation.ActionAnimation}
          * @private
          */
-        this._action = null;
+        this._runingAnimation = null;
+
+        /**
+         * @desc Name of running action.
+         * @type {?string}
+         * @private
+         */
+
+        this._runningName = null;
+
+        /**
+         * @type {MANTICORE.repository.Repository}
+         * @private
+         */
+
+        this._animations = new Repository();
 
         /**
          * @desc Flag is currently action running
@@ -78,30 +95,13 @@ class ActionTimeLine {
     }
 
     /**
-     * @desc Action that play on time line
-     * @public
-     * @returns {MANTICORE.animation.action.FiniteTimeAction}
-     */
-
-    get action() {
-        return this._action;
-    }
-
-    set action(value) {
-        if (this._action === value) {
-            return;
-        }
-        this._action = value;
-    }
-
-    /**
      * @desc Returns is time-line currently empty.
      * @public
      * @returns {boolean}
      */
 
     get isEmpty() {
-        return Type.isNull(this._action);
+        return Type.isNull(this._runingAnimation);
     }
 
     /**
@@ -121,7 +121,7 @@ class ActionTimeLine {
      */
 
     get isDone() {
-        return !Type.isNull(this._action) && this._action.isDone;
+        return !Type.isNull(this._runingAnimation) && this._runingAnimation.isDone;
     }
 
     /**
@@ -131,22 +131,60 @@ class ActionTimeLine {
      */
 
     get duration() {
-        return !this.isEmpty ? this._action.duration : 0;
+        return !this.isEmpty ? this._runingAnimation.duration : 0;
+    }
+
+    /**
+     * @desc Add animation to time-line.
+     * @method
+     * @public
+     * @param {string} name
+     * @param {MANTICORE.animation.ActionAnimation} animation
+     * @returns {boolean}
+     */
+
+    addAnimation(name, animation) {
+        return this._animations.addElement(animation, name);
+    }
+
+    /**
+     * @desc Remove animation by name.
+     * @method
+     * @public
+     * @param {string} name
+     * @returns {boolean}
+     */
+
+    removeAnimation(name) {
+        return this._animations.removeElement(name);
+    }
+
+    /**
+     * @desc Stop current animation. Remove all animations from time-line.
+     * @method
+     * @public
+     */
+
+    removeAllAnimations() {
+        this._isPlaying = false;
+        this._isRunning = false;
+        this._animations.clear(true);
     }
 
     /**
      * @desc start time line.
      * @method
      * @public
+     * @param {string} name - Play animation with name.
      * @returns {boolean}
      */
 
-    play() {
-        if (this.isEmpty) {
-            return false;
+    play(name) {
+        if (!this.isEmpty) {
+            this._runingAnimation = null;
         }
 
-        this._action.startWithTarget(this._target);
+        this._runingAnimation.play(this._target);
         this._isPlaying = true;
         this._isRunning = true;
 
@@ -167,7 +205,7 @@ class ActionTimeLine {
 
         this._isPlaying = false;
         this._isRunning = false;
-        this._action.stop();
+        this._runingAnimation.stop();
 
         return true;
     }
@@ -209,8 +247,8 @@ class ActionTimeLine {
         if (!this._isPlaying) {
             return;
         }
-        this._action.step(dt * this._fpsCoef);
-        if (this._action.isDone) {
+        this._runingAnimation.update(dt * this._fpsCoef);
+        if (this._runingAnimation.isDone) {
             this._isPlaying = false;
             this._isRunning = false;
         }

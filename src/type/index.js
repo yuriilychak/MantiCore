@@ -122,17 +122,9 @@
  * @property {MANTICORE.enumerator.ACTION_TYPE} type - type of frame.
  * @property {int} index - Index of frame.
  * @property {int[] | null} data - Data for animation.
- * @property {MANTICORE.type.AnimationEase | null} ease - Id of sprite frame.
+ * @property {int[] | null} ease - Id of sprite frame.
  */
 
-/**
- * @desc Data that contain information about ease of animation frame.
- * @typedef {Object}
- * @name AnimationEase
- * @memberOf MANTICORE.type
- * @property {int} id - Id of easing.
- * @property {int[] | null} points - Points if use custom easing.
- */
 
 /**
  * @desc Data that contain information about animation of element.
