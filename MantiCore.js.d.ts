@@ -716,6 +716,15 @@ declare namespace MANTICORE {
             HIDE = "TransitionHide"
         }
 
+        export enum TIME_LINE {
+            BUTTON = "button",
+            CHECK_BOX = "checkBox",
+            MAIN = "main",
+            SCROLL_VIEW = "scrollView",
+            SPINE = "spine",
+            UI = "ui"
+        }
+
         export namespace ui {
             export enum HORIZONTAL_ALIGN {
                 LEFT = 0,
