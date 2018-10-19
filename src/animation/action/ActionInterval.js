@@ -100,10 +100,8 @@ class ActionInterval extends FiniteTimeAction {
 
     /**
      * @desc Implementation of ease motion.
-     * @method easing
+     * @method
      * @param {...MANTICORE.animation.easing.EaseBase} var_args
-     * @example
-     * action.easing(easeIn(3.0));
      */
     easing(var_args) {
         this._eases.length = 0;
