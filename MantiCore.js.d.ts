@@ -1,7 +1,7 @@
 declare namespace MANTICORE {
     export namespace animation {
         export namespace action {
-            class Action {
+            export class Action {
                 constructor ();
 
                 readonly isDone: boolean;
@@ -16,12 +16,12 @@ declare namespace MANTICORE {
                 update (dt: number):void;
             }
 
-            class ActionInstant extends MANTICORE.animation.action.FiniteTimeAction{
+            export class ActionInstant extends MANTICORE.animation.action.FiniteTimeAction{
                 reverse(): any;
                 clone(): MANTICORE.animation.action.ActionInstant;
             }
 
-            class ActionInterval extends MANTICORE.animation.action.FiniteTimeAction {
+            export class ActionInterval extends MANTICORE.animation.action.FiniteTimeAction {
                 constructor(duration?: number);
 
                 readonly elapsed: number;
@@ -42,7 +42,7 @@ declare namespace MANTICORE {
                 protected computeEaseTime(dt: number): number;
             }
 
-            class BezierBy extends MANTICORE.animation.action.ActionInterval{
+            export class BezierBy extends MANTICORE.animation.action.ActionInterval{
                 constructor(duration: number, controlPoints: PIXI.Point[]);
 
                 protected readonly startPoint: PIXI.Point;
@@ -52,18 +52,18 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.BezierBy;
             }
 
-            class BezierTo extends MANTICORE.animation.action.BezierBy {
+            export class BezierTo extends MANTICORE.animation.action.BezierBy {
                 clone(): MANTICORE.animation.action.BezierTo;
             }
 
-            class Blink extends ActionInterval {
+            export class Blink extends ActionInterval {
                 constructor(duration: number, blinks: number);
 
                 clone(): MANTICORE.animation.action.Blink;
                 reverse(): MANTICORE.animation.action.Blink;
             }
 
-            class CallFunc extends MANTICORE.animation.action.ActionInstant {
+            export class CallFunc extends MANTICORE.animation.action.ActionInstant {
                 constructor(callback: MANTICORE.animation.callback.CallFuncExecute, context?: Object, data?: any);
 
                 context: Object | null;
@@ -72,14 +72,14 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.CallFunc;
             }
 
-            class CardinalSpline extends MANTICORE.animation.action.ActionInterval {
+            export class CardinalSpline extends MANTICORE.animation.action.ActionInterval {
                 protected static cardinalSplineAt(p0: PIXI.Point, p1: PIXI.Point, p2: PIXI.Point, p3: PIXI.Point, tension: number, t: number): PIXI.Point;
                 protected static getControlPointAt(controlPoints: PIXI.Point[], pos: number): PIXI.Point;
                 protected static reverseControlPoints(controlPoints: PIXI.Point[]): PIXI.Point[];
                 protected static cloneControlPoints(controlPoints: PIXI.Point[]): PIXI.Point[];
             }
 
-            class CardinalSplineBy extends MANTICORE.animation.action.CardinalSplineTo {
+            export class CardinalSplineBy extends MANTICORE.animation.action.CardinalSplineTo {
                 constructor(duration: number, points: PIXI.Point[], tension?: number);
 
                 clone(): MANTICORE.animation.action.CardinalSplineBy;
@@ -87,7 +87,7 @@ declare namespace MANTICORE {
                 updatePosition(newPos: PIXI.Point): void;
             }
 
-            class CardinalSplineTo extends MANTICORE.animation.action.CardinalSpline {
+            export class CardinalSplineTo extends MANTICORE.animation.action.CardinalSpline {
                 constructor(duration: number, points: PIXI.Point[], tension?: number);
 
                 points: PIXI.Point[];
@@ -99,43 +99,43 @@ declare namespace MANTICORE {
                 updatePosition(newPos: PIXI.Point | PIXI.ObservablePoint): void;
             }
 
-            class CatmullRomBy extends MANTICORE.animation.action.CardinalSplineBy {
+            export class CatmullRomBy extends MANTICORE.animation.action.CardinalSplineBy {
                 constructor(duration: number, points: PIXI.Point[]);
 
                 clone(): MANTICORE.animation.action.CatmullRomBy;
             }
 
-            class CatmullRomTo extends MANTICORE.animation.action.CardinalSplineTo {
+            export class CatmullRomTo extends MANTICORE.animation.action.CardinalSplineTo {
                 constructor(duration: number, points: PIXI.Point[]);
 
                 clone(): MANTICORE.animation.action.CatmullRomTo;
             }
 
-            class DelayTime extends MANTICORE.animation.action.ActionInterval{
+            export class DelayTime extends MANTICORE.animation.action.ActionInterval{
                 reverse(): MANTICORE.animation.action.DelayTime;
                 clone(): MANTICORE.animation.action.DelayTime;
             }
 
-            class FadeIn extends MANTICORE.animation.action.FadeTo {
+            export class FadeIn extends MANTICORE.animation.action.FadeTo {
                 constructor(duration: number);
                 reverse(): MANTICORE.animation.action.FadeTo;
                 clone(): MANTICORE.animation.action.FadeIn;
             }
 
-            class FadeOut extends MANTICORE.animation.action.FadeTo {
+            export class FadeOut extends MANTICORE.animation.action.FadeTo {
                 constructor(duration: number);
 
                 reverse(): MANTICORE.animation.action.FadeTo;
                 clone(): MANTICORE.animation.action.FadeOut;
             }
 
-            class FadeTo extends MANTICORE.animation.action.ActionInterval{
+            export class FadeTo extends MANTICORE.animation.action.ActionInterval{
                 constructor(duration: number, alpha: number);
 
                 clone(): MANTICORE.animation.action.FadeTo;
             }
 
-            class FiniteTimeAction extends MANTICORE.animation.action.Action {
+            export class FiniteTimeAction extends MANTICORE.animation.action.Action {
                 duration: number;
                 repeatCount: number;
                 repeatMethod: boolean;
@@ -144,17 +144,17 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.FiniteTimeAction;
             }
 
-            class FlipX extends MANTICORE.animation.action.ActionInstant {
+            export class FlipX extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.FlipX;
                 reverse(): MANTICORE.animation.action.FlipX;
             }
 
-            class FlipY extends MANTICORE.animation.action.ActionInstant {
+            export class FlipY extends MANTICORE.animation.action.ActionInstant {
                 reverse(): MANTICORE.animation.action.FlipY;
                 clone(): MANTICORE.animation.action.FlipY;
             }
 
-            class Follow extends MANTICORE.animation.action.Action {
+            export class Follow extends MANTICORE.animation.action.Action {
                 constructor(followedDisplayObject: PIXI.DisplayObject, rect: PIXI.Rectangle);
 
                 boundarySet: boolean;
@@ -162,12 +162,12 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.Follow;
             }
 
-            class Hide extends MANTICORE.animation.action.ActionInstant {
+            export class Hide extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.Hide;
                 reverse(): MANTICORE.animation.action.Show;
             }
 
-            class JumpBy extends MANTICORE.animation.action.ActionInterval {
+            export class JumpBy extends MANTICORE.animation.action.ActionInterval {
                 constructor(duration: number, position: PIXI.Point | number, y: number, height: number, jumps?: number);
 
                 clone(): MANTICORE.animation.action.JumpBy;
@@ -179,13 +179,13 @@ declare namespace MANTICORE {
                 protected readonly startPoint: PIXI.Point;
             }
 
-            class JumpTo extends MANTICORE.animation.action.JumpBy {
+            export class JumpTo extends MANTICORE.animation.action.JumpBy {
                 constructor(duration: number, position: PIXI.Point | number, y: number, height: number, jumps?: number);
 
                 clone(): MANTICORE.animation.action.JumpTo;
             }
 
-            class MoveBy extends MANTICORE.animation.action.ActionInterval {
+            export class MoveBy extends MANTICORE.animation.action.ActionInterval {
                 constructor(duration: number, deltaPos: PIXI.Point | number, deltaY?: number);
 
                 protected readonly delta: PIXI.Point;
@@ -194,20 +194,20 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.MoveBy;
             }
 
-            class MoveTo extends MANTICORE.animation.action.MoveBy {
+            export class MoveTo extends MANTICORE.animation.action.MoveBy {
                 constructor(duration: number, position: PIXI.Point | number, y: number);
 
                 clone(): MANTICORE.animation.action.MoveTo;
             }
 
-            class Place extends MANTICORE.animation.action.ActionInstant {
+            export class Place extends MANTICORE.animation.action.ActionInstant {
                 constructor(x: PIXI.Point | number, y?: number);
 
                 clone(): MANTICORE.animation.action.Place;
                 reverse(): MANTICORE.animation.action.Place;
             }
 
-            class PointAction extends MANTICORE.animation.action.ActionInterval{
+            export class PointAction extends MANTICORE.animation.action.ActionInterval{
                 constructor(duration: number, x: number, y?:number);
 
                 protected readonly startPoint: PIXI.Point;
@@ -215,12 +215,12 @@ declare namespace MANTICORE {
                 protected readonly delta: PIXI.Point;
             }
 
-            class RemoveSelf extends MANTICORE.animation.action.ActionInstant {
+            export class RemoveSelf extends MANTICORE.animation.action.ActionInstant {
                 constructor(isKill?: boolean);
                 clone(): MANTICORE.animation.action.RemoveSelf;
             }
 
-            class Repeat extends ActionInterval {
+            export class Repeat extends ActionInterval {
                 constructor(action: MANTICORE.animation.action.FiniteTimeAction, times?: number);
 
                 clone(): MANTICORE.animation.action.Repeat;
@@ -229,7 +229,7 @@ declare namespace MANTICORE {
                 innerAction: MANTICORE.animation.action.FiniteTimeAction;
             }
 
-            class RepeatForever extends MANTICORE.animation.action.ActionInterval{
+            export class RepeatForever extends MANTICORE.animation.action.ActionInterval{
                 constructor(action: MANTICORE.animation.action.ActionInterval);
 
                 innerAction: MANTICORE.animation.action.ActionInterval;
@@ -238,39 +238,39 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.RepeatForever;
             }
 
-            class ReverseTime extends MANTICORE.animation.action.ActionInterval {
+            export class ReverseTime extends MANTICORE.animation.action.ActionInterval {
                 constructor(action: MANTICORE.animation.action.FiniteTimeAction);
 
                 clone(): MANTICORE.animation.action.ReverseTime;
                 reverse(): MANTICORE.animation.action.ReverseTime;
             }
 
-            class RotateBy extends MANTICORE.animation.action.ActionInterval {
+            export class RotateBy extends MANTICORE.animation.action.ActionInterval {
                 constructor(duration: number, deltaAngle: number);
 
                 clone(): MANTICORE.animation.action.RotateBy;
                 reverse(): MANTICORE.animation.action.RotateBy;
             }
 
-            class RotateTo extends MANTICORE.animation.action.ActionInterval{
+            export class RotateTo extends MANTICORE.animation.action.ActionInterval{
                 constructor(duration: number, deltaAngle: number);
 
                 clone(): MANTICORE.animation.action.RotateTo;
                 reverse(): null;
             }
 
-            class ScaleBy extends MANTICORE.animation.action.ScaleTo {
+            export class ScaleBy extends MANTICORE.animation.action.ScaleTo {
                 reverse(): MANTICORE.animation.action.ScaleBy;
                 clone(): MANTICORE.animation.action.ScaleBy;
             }
 
-            class ScaleTo extends MANTICORE.animation.action.PointAction{
+            export class ScaleTo extends MANTICORE.animation.action.PointAction{
                 constructor(duration: number, sx: number, sy?:number);
 
                 clone(): MANTICORE.animation.action.ScaleTo;
             }
 
-            class Sequence extends MANTICORE.animation.action.ActionInterval {
+            export class Sequence extends MANTICORE.animation.action.ActionInterval {
                 constructor(...var_args: MANTICORE.animation.action.FiniteTimeAction[]);
 
                 reversed: boolean;
@@ -279,32 +279,32 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.Sequence;
             }
 
-            class Show extends MANTICORE.animation.action.ActionInstant {
+            export class Show extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.Show;
                 reverse(): MANTICORE.animation.action.Hide;
             }
 
-            class SkewBy extends MANTICORE.animation.action.SkewTo{
+            export class SkewBy extends MANTICORE.animation.action.SkewTo{
                 constructor(t: number, sx: number, sy: number);
 
                 clone(): MANTICORE.animation.action.SkewBy;
                 reverse(): MANTICORE.animation.action.SkewBy;
             }
 
-            class SkewTo extends MANTICORE.animation.action.PointAction{
+            export class SkewTo extends MANTICORE.animation.action.PointAction{
                 constructor(t: number, sx: number, sy: number);
 
                 clone(): MANTICORE.animation.action.SkewTo;
             }
 
-            class Spawn extends ActionInterval {
+            export class Spawn extends ActionInterval {
                 constructor(...var_args: MANTICORE.animation.action.FiniteTimeAction[]);
 
                 clone(): MANTICORE.animation.action.Spawn;
                 reverse(): MANTICORE.animation.action.Spawn;
             }
 
-            class Speed extends Action{
+            export class Speed extends Action{
                 constructor (action: MANTICORE.animation.action.ActionInterval, speed: number);
 
                 speed: number;
@@ -314,7 +314,7 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.Speed;
             }
 
-            class TargetedAction extends MANTICORE.animation.action.ActionInterval {
+            export class TargetedAction extends MANTICORE.animation.action.ActionInterval {
                 constructor(target: PIXI.DisplayObject, action: MANTICORE.animation.action.FiniteTimeAction);
 
                 forcedTarget: PIXI.DisplayObject;
@@ -322,111 +322,111 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.TargetedAction;
             }
 
-            class TintBy extends MANTICORE.animation.action.ActionInterval{
+            export class TintBy extends MANTICORE.animation.action.ActionInterval{
                 constructor(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number);
 
                 clone(): MANTICORE.animation.action.TintBy;
                 reverse(): MANTICORE.animation.action.TintBy;
             }
 
-            class TintTo extends MANTICORE.animation.action.ActionInterval {
+            export class TintTo extends MANTICORE.animation.action.ActionInterval {
                 constructor(duration: number, red: number, green: number, blue: number);
 
                 clone(): MANTICORE.animation.action.TintTo;
             }
 
-            class ToggleVisibility extends MANTICORE.animation.action.ActionInstant {
+            export class ToggleVisibility extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.ToggleVisibility;
                 reverse(): MANTICORE.animation.action.ToggleVisibility;
             }
 
-            class Tween extends MANTICORE.animation.action.ActionInterval {
+            export class Tween extends MANTICORE.animation.action.ActionInterval {
                 constructor(duration: number, key: string, from:  number, to: number);
                 reverse(): MANTICORE.animation.action.Tween;
                 clone(): MANTICORE.animation.action.Tween;
             }
         }
         export namespace callback {
-            type CallFuncExecute = (target: PIXI.DisplayObject, data?: any)=>void;
+            export type CallFuncExecute = (target: PIXI.DisplayObject, data?: any)=>void;
         }
         export namespace easing {
-            class EaseBackIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBackIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackIn;
             }
-            class EaseBackInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBackInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackInOut;
             }
-            class EaseBackOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBackOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackOut;
             }
-            class EaseBase {
+            export class EaseBase {
                 constructor();
                 easing(time: number): void;
                 reverse(): EaseBase;
             }
-            class EaseBezier extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBezier extends MANTICORE.animation.easing.EaseBase {
                 constructor(first: number, second: number, third: number, fourth: number);
                 reverse(): EaseBezier;
             }
-            class EaseBounceIn extends MANTICORE.animation.easing.EaseBounceTime {
+            export class EaseBounceIn extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceIn;
             }
-            class EaseBounceInOut extends MANTICORE.animation.easing.EaseBounceTime {
+            export class EaseBounceInOut extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceInOut;
             }
-            class EaseBounceOut extends MANTICORE.animation.easing.EaseBounceTime {
+            export class EaseBounceOut extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceOut;
             }
-            class EaseBounceTime  extends EaseBase {
+            export class EaseBounceTime  extends EaseBase {
                 protected bounceTime (time: number): number;
                 reverse(): EaseBounceTime;
             }
-            class EaseCircleIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCircleIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleIn;
             }
-            class EaseCircleInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCircleInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleInOut;
             }
-            class EaseCircleOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCircleOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleOut;
             }
-            class EaseCubicIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCubicIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicIn;
             }
-            class EaseCubicInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCubicInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicInOut;
             }
-            class EaseCubicOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCubicOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicOut;
             }
-            class EaseElasticIn  extends MANTICORE.animation.easing.EasePeriod {
+            export class EaseElasticIn  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticIn;
             }
-            class EaseElasticInOut  extends MANTICORE.animation.easing.EasePeriod {
+            export class EaseElasticInOut  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticInOut;
             }
-            class EaseElasticOut  extends MANTICORE.animation.easing.EasePeriod {
+            export class EaseElasticOut  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticOut;
             }
-            class EaseExponentialIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseExponentialIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialIn;
             }
-            class EaseExponentialInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseExponentialInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialInOut;
             }
-            class EaseExponentialOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseExponentialOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialOut;
             }
-            class EaseIn extends MANTICORE.animation.easing.EaseRate {
+            export class EaseIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseIn;
             }
-            class EaseInOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseInOut;
             }
-            class EaseOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseOut;
             }
-            class EasePeriod extends MANTICORE.animation.easing.EaseBase {
+            export class EasePeriod extends MANTICORE.animation.easing.EaseBase {
                 constructor(period?: number);
 
                 public period: number;
@@ -438,44 +438,44 @@ declare namespace MANTICORE {
                 protected easingDefault(time: number): number;
             }
 
-            class EaseQuadraticIn extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuadraticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticIn;
             }
-            class EaseQuadraticInOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuadraticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticInOut;
             }
-            class EaseQuadraticOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuadraticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticOut;
             }
-            class EaseQuarticIn extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuarticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticIn;
             }
-            class EaseQuarticInOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuarticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticInOut;
             }
-            class EaseQuarticOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuarticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticOut;
             }
-            class EaseQuinticIn extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuinticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticIn;
             }
-            class EaseQuinticInOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuinticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticInOut;
             }
-            class EaseQuinticOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseQuinticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticOut;
             }
-            class EaseRate extends MANTICORE.animation.easing.EaseBase {
+            export class EaseRate extends MANTICORE.animation.easing.EaseBase {
                 constructor(rate?: number);
                 public rate;
             }
-            class EaseSineIn extends MANTICORE.animation.easing.EaseRate {
+            export class EaseSineIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineIn;
             }
-            class EaseSineInOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseSineInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineInOut;
             }
-            class EaseSineOut extends MANTICORE.animation.easing.EaseRate {
+            export class EaseSineOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineOut;
             }
         }
