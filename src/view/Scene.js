@@ -76,7 +76,7 @@ class Scene extends ComponentContainer {
     }
 
     /**
-     * HANDLERS METHODS
+     * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
 

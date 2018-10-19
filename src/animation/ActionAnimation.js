@@ -11,12 +11,12 @@ import Geometry from "util/Geometry";
 class ActionAnimation {
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.Action} action
+     * @param {MANTICORE.animation.action.ActionInterval} action
      */
     constructor(action) {
         /**
          * @desc Action of animation.
-         * @type {MANTICORE.animation.action.Action}
+         * @type {MANTICORE.animation.action.ActionInterval}
          * @private
          */
         this._action = action;
@@ -82,7 +82,7 @@ class ActionAnimation {
     }
 
     /**
-     * PUBLIC METHODS
+     * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -229,7 +229,7 @@ class ActionAnimation {
      */
 
     get isDone() {
-        return !Type.isNull(this._action) ? this._action.isDone : true;
+        return !this._isEmpty() ? this._action.isDone : true;
     }
 
     /**
@@ -249,6 +249,21 @@ class ActionAnimation {
     }
 
     /**
+     * @desc Returns duration in seconds.
+     * @public
+     * @returns {number}
+     */
+
+    get duration() {
+        return !this._isEmpty() ? this._action.duration : 0;
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Play animation for target
      * @method
      * @public
@@ -256,7 +271,7 @@ class ActionAnimation {
      */
 
     play(target) {
-        if (Type.isNull(this._action)) {
+        if (this._isEmpty()) {
             return;
         }
         Geometry.pAdd(target.position, this._position, true);
@@ -276,6 +291,19 @@ class ActionAnimation {
     }
 
     /**
+     * @desc Stop animation.
+     * @method
+     * @public
+     */
+
+    stop() {
+        if (this._isEmpty()) {
+            return;
+        }
+        this._action.stop();
+    }
+
+    /**
      * @desc Update animation cycle.
      * @method
      * @public
@@ -283,7 +311,7 @@ class ActionAnimation {
      */
 
     update(dt) {
-        if (Type.isNull(this._action)) {
+        if (this._isEmpty()) {
             return;
         }
         this._action.step(dt);
@@ -305,10 +333,12 @@ class ActionAnimation {
      * @public
      */
     disuse() {
+        this.stop();
         this._clearData();
     }
 
     destroy() {
+        this.stop();
         this._clearData();
         this._memoryManager.destroy();
         this._memoryManager = null;
@@ -328,6 +358,17 @@ class ActionAnimation {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Check is action of animation not null.
+     * @method
+     * @private
+     * @returns {boolean}
+     */
+
+    _isEmpty() {
+        return Type.isNull(this._action);
+    }
 
     /**
      * @desc Clear inner data of animation.

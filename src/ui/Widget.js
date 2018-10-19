@@ -263,11 +263,11 @@ class Widget extends ComponentContainer {
      * @param {int} bottomSlice
      */
 
-    setSlice(leftSlice, rightSlice, topSlice, bottomSlice) {
+    setSlice(leftSlice = 0, rightSlice = 0, topSlice = 0, bottomSlice = 0) {
         if (!(this._collider instanceof  Slice9Sprite)) {
             return;
         }
-        this._collider.setSlice(leftSlice, rightSlice, topSlice, bottomSlice);
+        this._collider.slice = [leftSlice, rightSlice, topSlice, bottomSlice];
     }
 
     /**

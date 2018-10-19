@@ -1,6 +1,10 @@
+import Math from "util/Math";
 import Type from "util/Type";
 import Macro from "macro";
 import Repository from "repository/Repository";
+import Constant from "constant";
+import Pool from "pool";
+import ActionAnimation from "./ActionAnimation";
 
 /**
  * @desc Class for manipulate with animated actions and listen their event.
@@ -19,7 +23,7 @@ class ActionTimeLine {
          * @type {?MANTICORE.animation.ActionAnimation}
          * @private
          */
-        this._runingAnimation = null;
+        this._runningAnimation = null;
 
         /**
          * @desc Name of running action.
@@ -75,6 +79,11 @@ class ActionTimeLine {
     }
 
     /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Fps of time-line
      * @public
      * @returns {number}
@@ -101,7 +110,7 @@ class ActionTimeLine {
      */
 
     get isEmpty() {
-        return Type.isNull(this._runingAnimation);
+        return Type.isNull(this._runningAnimation);
     }
 
     /**
@@ -121,7 +130,7 @@ class ActionTimeLine {
      */
 
     get isDone() {
-        return !Type.isNull(this._runingAnimation) && this._runingAnimation.isDone;
+        return !Type.isNull(this._runningAnimation) && this._runningAnimation.isDone;
     }
 
     /**
@@ -131,8 +140,13 @@ class ActionTimeLine {
      */
 
     get duration() {
-        return !this.isEmpty ? this._runingAnimation.duration : 0;
+        return !this.isEmpty ? this._runningAnimation.duration : 0;
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Add animation to time-line.
@@ -180,13 +194,12 @@ class ActionTimeLine {
      */
 
     play(name) {
-        if (!this.isEmpty) {
-            this._runingAnimation = null;
+        this._clearRunningAnimation();
+        if (!this._animations.hasElement(name)) {
+            return false;
         }
 
-        this._runingAnimation.play(this._target);
-        this._isPlaying = true;
-        this._isRunning = true;
+        this._runAnimation(name, this._animations.getElement(name));
 
         return true;
     }
@@ -199,15 +212,22 @@ class ActionTimeLine {
      */
 
     stop() {
-        if (this.isEmpty) {
-            return false;
-        }
+        return this._clearRunningAnimation();
+    }
 
-        this._isPlaying = false;
-        this._isRunning = false;
-        this._runingAnimation.stop();
+    /**
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.Action} action
+     */
 
-        return true;
+    runAction(action) {
+        this._clearRunningAnimation();
+
+        this._runAnimation(
+            Constant.TEMPORARY_ANIMATION_NAME + Math.getUniqueId(),
+            Pool.getObject(ActionAnimation, action)
+        );
     }
 
     /**
@@ -247,11 +267,57 @@ class ActionTimeLine {
         if (!this._isPlaying) {
             return;
         }
-        this._runingAnimation.update(dt * this._fpsCoef);
-        if (this._runingAnimation.isDone) {
+        this._runningAnimation.update(dt * this._fpsCoef);
+        if (this._runningAnimation.isDone) {
             this._isPlaying = false;
             this._isRunning = false;
         }
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc run animation after init.
+     * @method
+     * @private
+     * @param {string} name
+     * @param {MANTICORE.animation.ActionAnimation} animation
+     */
+
+    _runAnimation(name, animation) {
+        this._runningName = name;
+        this._runningAnimation = animation;
+
+        this._runningAnimation.play(this._target);
+        this._isPlaying = true;
+        this._isRunning = true;
+    }
+
+    /**
+     * @desc Clear currently running animation if it exist.
+     * @method
+     * @private
+     * @returns {boolean}
+     */
+
+    _clearRunningAnimation() {
+        if (this.isEmpty) {
+            return false;
+        }
+
+        if (!this._animations.hasElement(this._runningName)) {
+            this._runningAnimation.kill();
+        }
+
+        this._runningName = null;
+        this._runningAnimation = null;
+        this._isPlaying = false;
+        this._isRunning = false;
+
+        return true;
     }
 }
 

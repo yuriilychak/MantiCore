@@ -199,8 +199,8 @@ class ProgressBar extends Widget {
      * @param {int} bottomSlice
      */
 
-    setSlice(leftSlice, rightSlice, topSlice, bottomSlice) {
-        this._progressSprite.setSlice(leftSlice, rightSlice, topSlice, bottomSlice);
+    setSlice(leftSlice = 0, rightSlice = 0, topSlice = 0, bottomSlice = 0) {
+        this._progressSprite.slice = [leftSlice, rightSlice, topSlice, bottomSlice];
     }
 
     /**

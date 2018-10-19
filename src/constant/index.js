@@ -28,6 +28,14 @@ const constant = {
      */
 
     ENABLE_STACK_ACTIONS: false,
+
+    /**
+     * @desc Name of temporary animation that run when call runAction.
+     * @public
+     * @type {string}
+     */
+
+    TEMPORARY_ANIMATION_NAME: "TemporaryAnimation"
 };
 
 export default constant;

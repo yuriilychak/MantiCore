@@ -3,8 +3,6 @@ import Type from "util/Type";
 import Math from "util/Math";
 import Constant from "constant/index";
 
-/** @namespace MANTICORE.view */
-
 /**
  * @desc Slice 9 sprite to avoid breaking batch.
  * @class
@@ -35,7 +33,7 @@ class Slice9Sprite extends PIXI.Container {
 
         /**
          * @desc anchor point of sprite.
-         * @type {PIXI.ObservablePoint}
+         * @type {PIXI.ObservablePoint | ObservablePoint}
          * @private
          */
 
@@ -65,44 +63,20 @@ class Slice9Sprite extends PIXI.Container {
         this._frames = [];
 
         /**
+         * @desc Sice information.
+         * @type {int[]}
+         * @private
+         */
+
+        this._slice = [leftSlice, rightSlice, topSlice, bottomSlice];
+
+        /**
          * @desc Flag is currently slice 9 sprite have dimensions. Need to calculate bounds.
          * @type {boolean}
          * @private
          */
 
         this._isInit = false;
-
-        /**
-         *
-         * @type {int}
-         * @private
-         */
-
-        this._leftSlice = leftSlice;
-
-        /**
-         *
-         * @type {int}
-         * @private
-         */
-
-        this._rightSlice = rightSlice;
-
-        /**
-         *
-         * @type {int}
-         * @private
-         */
-
-        this._topSlice = topSlice;
-
-        /**
-         *
-         * @type {int}
-         * @private
-         */
-
-        this._bottomSlice = bottomSlice;
 
         this._collider.name = Constant.COLLIDER_NAME;
         this._collider.renderable = false;
@@ -120,7 +94,7 @@ class Slice9Sprite extends PIXI.Container {
     }
 
     /**
-     * PUBLIC METHODS
+     * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -168,15 +142,15 @@ class Slice9Sprite extends PIXI.Container {
      */
 
     get leftSlice() {
-        return this._leftSlice;
+        return this._slice[0];
     }
 
     set leftSlice(value) {
         value = Math.round(value);
-        if (this._leftSlice === value) {
+        if (this._slice[0] === value) {
             return;
         }
-        this._leftSlice = value;
+        this._slice[0] = value;
         this._updateTransform();
     }
 
@@ -187,15 +161,15 @@ class Slice9Sprite extends PIXI.Container {
      */
 
     get rightSlice() {
-        return this._rightSlice;
+        return this._slice[1];
     }
 
     set rightSlice(value) {
         value = Math.round(value);
-        if (this._rightSlice === value) {
+        if (this._slice[1] === value) {
             return;
         }
-        this._rightSlice = value;
+        this._slice[1] = value;
         this._updateTransform();
     }
 
@@ -206,15 +180,15 @@ class Slice9Sprite extends PIXI.Container {
      */
 
     get topSlice() {
-        return this._topSlice;
+        return this._slice[2];
     }
 
     set topSlice(value) {
         value = Math.round(value);
-        if (this._topSlice === value) {
+        if (this._slice[2] === value) {
             return;
         }
-        this._topSlice = value;
+        this._slice[2] = value;
         this._updateTransform();
     }
 
@@ -225,43 +199,15 @@ class Slice9Sprite extends PIXI.Container {
      */
 
     get bottomSlice() {
-        return this._bottomSlice;
+        return this._slice[3];
     }
 
     set bottomSlice(value) {
         value = Math.round(value);
-        if (this._bottomSlice === value) {
+        if (this._slice[3] === value) {
             return;
         }
-        this._bottomSlice = value;
-        this._updateTransform();
-    }
-
-    /**
-     * @desc return Array of slice
-     * @public
-     * @returns {int[]}
-     */
-
-    getSlice() {
-        return [this._leftSlice, this._rightSlice, this._topSlice, this._bottomSlice];
-    }
-
-    /**
-     * @desc Set slice of sprite
-     * @method
-     * @public
-     * @param {int} leftSlice
-     * @param {int} rightSlice
-     * @param {int} topSlice
-     * @param {int} bottomSlice
-     */
-
-    setSlice(leftSlice = 0, rightSlice = 0, topSlice = 0, bottomSlice = 0) {
-        this._leftSlice = Math.round(leftSlice);
-        this._rightSlice = Math.round(rightSlice);
-        this._topSlice = Math.round(topSlice);
-        this._bottomSlice = Math.round(bottomSlice);
+        this._slice[3] = value;
         this._updateTransform();
     }
 
@@ -305,13 +251,31 @@ class Slice9Sprite extends PIXI.Container {
     }
 
     set width(value) {
-        const sliceSum = this._leftSlice + this._rightSlice;
+        const sliceSum = this._slice[0] + this._slice[1];
         this._setDimension(value < sliceSum ? sliceSum : value, "width");
     }
 
     set height(value) {
-        const sliceSum = this._topSlice + this._bottomSlice;
+        const sliceSum = this._slice[2] + this._slice[3];
         this._setDimension(value < sliceSum ? sliceSum : value, "height");
+    }
+
+    /**
+     * @desc return Array of slice
+     * @public
+     * @returns {int[]}
+     */
+
+    get slice() {
+        return this._slice.slice(0);
+    }
+
+    set slice(value) {
+        const sliceCount = this._slice.length;
+        for (let i = 0; i < sliceCount; ++i) {
+            this._slice[i] = Math.round(value[i]);
+        }
+        this._updateTransform();
     }
 
     /**
@@ -400,16 +364,16 @@ class Slice9Sprite extends PIXI.Container {
         let minBoundary, maxBoundary, indices, positionLink, useRowIndex;
 
         if (dimensionLink === "width") {
-            minBoundary = this._leftSlice;
-            maxBoundary = this._rightSlice;
+            minBoundary = this._slice[0];
+            maxBoundary = this._slice[1];
             indices = [3, 4, 5];
             positionLink = "x";
             useRowIndex = true;
             this._collider.width = value;
         }
         else {
-            minBoundary = this._topSlice;
-            maxBoundary = this._bottomSlice;
+            minBoundary = this._slice[2];
+            maxBoundary = this._slice[3];
             indices = [1, 4, 7];
             positionLink = "y";
             useRowIndex = false;
@@ -452,13 +416,13 @@ class Slice9Sprite extends PIXI.Container {
             origins: hOrigins,
             dimensions: hDimensions,
             positions: hPositions
-        } = this._generateDimensionParam(frame.x, frame.width, this._anchor.x, this._leftSlice, this._rightSlice);
+        } = this._generateDimensionParam(frame.x, frame.width, this._anchor.x, this._slice[0], this._slice[1]);
 
         const {
             origins: vOrigins,
             dimensions: vDimensions,
             positions: vPositions
-        } = this._generateDimensionParam(frame.y, frame.height, this._anchor.y, this._topSlice, this._bottomSlice);
+        } = this._generateDimensionParam(frame.y, frame.height, this._anchor.y, this._slice[2], this._slice[3]);
 
         const elementCount = Slice9Sprite.ELEMMENT_COUNT;
         let i, j, rect, sprite,
@@ -550,8 +514,8 @@ class Slice9Sprite extends PIXI.Container {
 
     _onAnchorPointUpdate() {
         this._collider.anchor.set(this._anchor.x, this._anchor.y);
-        const hPosition = this._generatePositions(this.width, this._anchor.x, this._leftSlice,  this._rightSlice);
-        const vPosition = this._generatePositions(this.height, this._anchor.y, this._topSlice,  this._bottomSlice);
+        const hPosition = this._generatePositions(this.width, this._anchor.x, this._slice[0],  this._slice[1]);
+        const vPosition = this._generatePositions(this.height, this._anchor.y, this._slice[2],  this._slice[3]);
         this._iterateFrames((frame, index, row, col) => {
             if (Type.isNull(frame)) {
                 return;
