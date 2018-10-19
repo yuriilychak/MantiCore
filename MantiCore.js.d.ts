@@ -1318,7 +1318,7 @@ declare namespace MANTICORE {
             eventDragStart: string | null;
             propagateChildrenEvents: boolean;
 
-            public setSlice(leftSlice: number, rightSlice: number, topSlice: number, bottomSlice: number): void;
+            public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
             public getInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT): string;
             public updateInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, name?: string): void;
 
@@ -1515,9 +1515,7 @@ declare namespace MANTICORE {
             topSlice: number;
             bottomSlice: number;
             frameName: string;
-
-            public getSlice(): number[];
-            public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
+            slice: number[];
         }
     }
 }
