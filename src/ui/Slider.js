@@ -98,99 +98,6 @@ class Slider extends Widget {
      */
 
     /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventScroll() {
-        return this._eventScroll;
-    }
-
-    set eventScroll(value) {
-        if (this._eventScroll === value) {
-            return;
-        }
-        this._eventScroll = value;
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get width() {
-        return super.width;
-    }
-
-    set width(value) {
-        super.width = value;
-        if (this.hasProgressBar()) {
-            this._progressBar.width = this.width;
-        }
-        this._updateSliderTransform();
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get height() {
-        return super.height;
-    }
-
-    set height(value) {
-        super.height = value;
-        if (this.hasProgressBar()) {
-            this._progressBar.height = this.height;
-        }
-        this._updateSliderTransform();
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get progressFrameName() {
-        return this.hasProgressBar() ? this._progressBar.frameName : null;
-    }
-
-    set progressFrameName(value) {
-        const isEmpty = Type.isNull(value);
-        if (this.hasProgressBar()) {
-            if (isEmpty) {
-                this.removeChild(this._progressBar);
-                this._progressBar = null;
-                return;
-            }
-            this._progressBar.frameName = value;
-            return;
-        }
-
-        if (isEmpty) {
-            return;
-        }
-
-        this._progressBar = new ProgressBar(value, this._direction);
-
-        this.addChildAt(this._progressBar, 0);
-
-        this._progressBar.width = this.width;
-        this._progressBar.height = this.height;
-        this._progressBar.progress = this._progress;
-    }
-
-    /**
-     * @public
-     * @type {MANTICORE.ui.ProgressBar | null}
-     */
-
-    get progressBar() {
-        return this._progressBar;
-    }
-
-    /**
      * @desc Returns is progress bar available.
      * @method
      * @public
@@ -199,66 +106,6 @@ class Slider extends Widget {
 
     hasProgressBar() {
         return !Type.isNull(this._progressBar);
-    }
-
-    /**
-     * @public
-     * @type {MANTICORE.enumerator.DIRECTION}
-     */
-
-    get direction() {
-        return this._direction;
-    }
-
-    set direction(value) {
-        if (this._direction === value) {
-            return;
-        }
-
-        this._direction = value;
-
-        this._updateSliderTransform();
-    }
-
-    /**
-     * @public
-     * @type {number}
-     */
-
-    get progress() {
-        return this._progress;
-    }
-
-    set progress(value) {
-        if (this._progress === value) {
-            return;
-        }
-
-        this._progress = value;
-
-        this._updateSliderTransform();
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get enabled() {
-        return this._isEnabled;
-    }
-
-    set enabled(value) {
-        if (this._isEnabled === value) {
-            return;
-        }
-
-        this._isEnabled = value;
-        this._ball.interactive = value;
-
-        if (this._ball instanceof BaseButton) {
-            this._ball.enabled = value;
-        }
     }
 
     /**
@@ -355,6 +202,167 @@ class Slider extends Widget {
     _updateProgress(position, dimension, mainDirection) {
         const progress = position > dimension ? 1: position < 0 ? 0 : position / dimension;
         this.progress = this._direction === mainDirection ? progress : 1 - progress;
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventScroll() {
+        return this._eventScroll;
+    }
+
+    set eventScroll(value) {
+        if (this._eventScroll === value) {
+            return;
+        }
+        this._eventScroll = value;
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get width() {
+        return super.width;
+    }
+
+    set width(value) {
+        super.width = value;
+        if (this.hasProgressBar()) {
+            this._progressBar.width = this.width;
+        }
+        this._updateSliderTransform();
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get height() {
+        return super.height;
+    }
+
+    set height(value) {
+        super.height = value;
+        if (this.hasProgressBar()) {
+            this._progressBar.height = this.height;
+        }
+        this._updateSliderTransform();
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get progressFrameName() {
+        return this.hasProgressBar() ? this._progressBar.frameName : null;
+    }
+
+    set progressFrameName(value) {
+        const isEmpty = Type.isNull(value);
+        if (this.hasProgressBar()) {
+            if (isEmpty) {
+                this.removeChild(this._progressBar);
+                this._progressBar = null;
+                return;
+            }
+            this._progressBar.frameName = value;
+            return;
+        }
+
+        if (isEmpty) {
+            return;
+        }
+
+        this._progressBar = new ProgressBar(value, this._direction);
+
+        this.addChildAt(this._progressBar, 0);
+
+        this._progressBar.width = this.width;
+        this._progressBar.height = this.height;
+        this._progressBar.progress = this._progress;
+    }
+
+    /**
+     * @desc Direction of slider.
+     * @public
+     * @type {MANTICORE.enumerator.DIRECTION}
+     */
+
+    get direction() {
+        return this._direction;
+    }
+
+    set direction(value) {
+        if (this._direction === value) {
+            return;
+        }
+
+        this._direction = value;
+
+        this._updateSliderTransform();
+    }
+
+    /**
+     * @desc Current progress of slider.
+     * @public
+     * @type {number}
+     */
+
+    get progress() {
+        return this._progress;
+    }
+
+    set progress(value) {
+        if (this._progress === value) {
+            return;
+        }
+
+        this._progress = value;
+
+        this._updateSliderTransform();
+    }
+
+    /**
+     * @desc Is slider enabled for interactions.
+     * @public
+     * @type {boolean}
+     */
+
+    get enabled() {
+        return this._isEnabled;
+    }
+
+    set enabled(value) {
+        if (this._isEnabled === value) {
+            return;
+        }
+
+        this._isEnabled = value;
+        this._ball.interactive = value;
+
+        if (this._ball instanceof BaseButton) {
+            this._ball.enabled = value;
+        }
+    }
+
+    /**
+     * @public
+     * @type {MANTICORE.ui.ProgressBar | null}
+     */
+
+    get progressBar() {
+        return this._progressBar;
     }
 }
 

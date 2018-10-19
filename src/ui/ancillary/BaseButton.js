@@ -37,6 +37,82 @@ class BaseButton extends Widget {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @public
+     * @return {boolean}
+     */
+
+    hasTitle() {
+        return !Type.isNull(this._title);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Change frame of button if it exist.
+     * @method
+     * @protected
+     * @param {int} state
+     */
+
+    changeState(state) {
+        this.collider.state = state;
+    }
+
+    /**
+     * @desc Change frame is button enabled.
+     * @method
+     * @param {int} state
+     * @protected
+     */
+
+    changeEnabledState(state) {
+        if (!this._isEnabled) {
+            return;
+        }
+        this.changeState(state);
+    }
+
+    /**
+     * @desc Calls when button change enable.
+     * @method
+     * @protected
+     * @param {boolean} enabled
+     */
+
+    onEnabledChange(enabled) {}
+
+    /**
+     * @method
+     * @protected
+     * @param {int} state
+     * @param {int} fallback
+     * @param {boolean} [isEnabled] - Is change enabled state.
+     */
+
+    changeStateWithFallback(state, fallback, isEnabled = true) {
+        const nextState = this.collider.hasState(state) ? state : fallback;
+        if (isEnabled) {
+            this.changeEnabledState(nextState);
+            return;
+        }
+        this.changeState(nextState);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @public
      * @type {boolean}
      */
@@ -96,73 +172,6 @@ class BaseButton extends Widget {
         }
 
         this._title.text = value;
-    }
-
-    /**
-     * @method
-     * @public
-     * @return {boolean}
-     */
-
-    hasTitle() {
-        return !Type.isNull(this._title);
-    }
-
-
-    /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Change frame of button if it exist.
-     * @method
-     * @protected
-     * @param {int} state
-     */
-
-    changeState(state) {
-        this.collider.state = state;
-    }
-
-    /**
-     * @desc Change frame is button enabled.
-     * @method
-     * @param {int} state
-     * @protected
-     */
-
-    changeEnabledState(state) {
-        if (!this._isEnabled) {
-            return;
-        }
-        this.changeState(state);
-    }
-
-    /**
-     * @desc Calls when button change enable.
-     * @method
-     * @protected
-     * @param {boolean} enabled
-     */
-
-    onEnabledChange(enabled) {}
-
-    /**
-     * @method
-     * @protected
-     * @param {int} state
-     * @param {int} fallback
-     * @param {boolean} [isEnabled] - Is change enabled state.
-     */
-
-    changeStateWithFallback(state, fallback, isEnabled = true) {
-        const nextState = this.collider.hasState(state) ? state : fallback;
-        if (isEnabled) {
-            this.changeEnabledState(nextState);
-            return;
-        }
-        this.changeState(nextState);
     }
 }
 

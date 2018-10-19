@@ -57,13 +57,9 @@ class AssetBundle extends BaseBundle {
     }
 
     /**
-     * @public
-     * @return {MANTICORE.bundle.bundle.LinkedTexture[]}
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
      */
-
-    get linkedTextures() {
-        return this._linkedTextures;
-    }
 
     /**
      * @method
@@ -140,6 +136,20 @@ class AssetBundle extends BaseBundle {
                 FontCache.addFontSize(nameSplit[0], parseInt(nameSplit[1], 10));
             }
         }
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @return {MANTICORE.bundle.bundle.LinkedTexture[]}
+     */
+
+    get linkedTextures() {
+        return this._linkedTextures;
     }
 }
 

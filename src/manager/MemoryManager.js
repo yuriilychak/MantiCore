@@ -39,6 +39,36 @@ class MemoryManager extends BaseManager {
      */
 
     /**
+     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
+     * @method
+     * @public
+     */
+
+    destroy() {
+        this._inPool = true;
+        this._reusable = false;
+    }
+
+    /**
+     * @desc Destroy or put owner to pool.
+     * @method
+     * @public
+     */
+
+    kill() {
+        if (this._reusable) {
+            Pool.putObject(this.owner);
+            return;
+        }
+        this.owner.destroy();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @public
      * @type {boolean}
      */
@@ -68,31 +98,6 @@ class MemoryManager extends BaseManager {
             return;
         }
         this._inPool = value;
-    }
-
-    /**
-     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    destroy() {
-        this._inPool = true;
-        this._reusable = false;
-    }
-
-    /**
-     * @desc Destroy or put owner to pool.
-     * @method
-     * @public
-     */
-
-    kill() {
-        if (this._reusable) {
-            Pool.putObject(this.owner);
-            return;
-        }
-        this.owner.destroy();
     }
 }
 

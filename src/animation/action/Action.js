@@ -50,14 +50,6 @@ class Action {
     }
 
     /**
-     * @desc Returns true if the action has finished.
-     * @return {boolean}
-     */
-    get isDone() {
-        return true;
-    }
-
-    /**
      * @desc Called before the action start. It will also set the target.
      * @method
      * @public
@@ -92,6 +84,19 @@ class Action {
      */
 
     update (dt) {}
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Returns true if the action has finished.
+     * @return {boolean}
+     */
+    get isDone() {
+        return true;
+    }
 
     /**
      * @desc Returns the target.

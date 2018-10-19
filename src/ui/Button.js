@@ -30,63 +30,6 @@ class Button extends BaseButton {
     }
 
     /**
-     * PUBLIC METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get upFrame() {
-        return this.collider.getFrameByState(INTERACTIVE_STATE.UP);
-    }
-
-    set upFrame(value) {
-        this.collider.setFrameByState(value, INTERACTIVE_STATE.UP);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get downFrame() {
-        return this.collider.getFrameByState(INTERACTIVE_STATE.DOWN);
-    }
-
-    set downFrame(value) {
-        this.collider.setFrameByState(value, INTERACTIVE_STATE.DOWN);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get overFrame() {
-        return this.collider.getFrameByState(INTERACTIVE_STATE.OVER);
-    }
-
-    set overFrame(value) {
-        this.collider.setFrameByState(value, INTERACTIVE_STATE.OVER);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get disabledFrame() {
-        return this.collider.getFrameByState(INTERACTIVE_STATE.DISABLED);
-    }
-
-    set disabledFrame(value) {
-        this.collider.setFrameByState(value, INTERACTIVE_STATE.DISABLED);
-    }
-
-    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -167,6 +110,63 @@ class Button extends BaseButton {
 
     onEnabledChange(enabled) {
         this.changeState(enabled ? INTERACTIVE_STATE.UP : INTERACTIVE_STATE.DISABLED);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get upFrame() {
+        return this.collider.getFrameByState(INTERACTIVE_STATE.UP);
+    }
+
+    set upFrame(value) {
+        this.collider.setFrameByState(value, INTERACTIVE_STATE.UP);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get downFrame() {
+        return this.collider.getFrameByState(INTERACTIVE_STATE.DOWN);
+    }
+
+    set downFrame(value) {
+        this.collider.setFrameByState(value, INTERACTIVE_STATE.DOWN);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get overFrame() {
+        return this.collider.getFrameByState(INTERACTIVE_STATE.OVER);
+    }
+
+    set overFrame(value) {
+        this.collider.setFrameByState(value, INTERACTIVE_STATE.OVER);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get disabledFrame() {
+        return this.collider.getFrameByState(INTERACTIVE_STATE.DISABLED);
+    }
+
+    set disabledFrame(value) {
+        this.collider.setFrameByState(value, INTERACTIVE_STATE.DISABLED);
     }
 }
 

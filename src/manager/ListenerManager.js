@@ -40,22 +40,6 @@ class ListenerManager extends BaseManager {
      */
 
     /**
-     * @public
-     * @type {boolean}
-     */
-
-    get blockEvents() {
-        return this._blockEvents;
-    }
-
-    set blockEvents(value) {
-        if (this._blockEvents === value) {
-            return;
-        }
-        this._blockEvents = value;
-    }
-
-    /**
      * @desc Returns is owner currently listen event.
      * @public
      * @param {string} event
@@ -134,6 +118,27 @@ class ListenerManager extends BaseManager {
 
     destroy() {
         this.removeAllEventListeners();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+
+    get blockEvents() {
+        return this._blockEvents;
+    }
+
+    set blockEvents(value) {
+        if (this._blockEvents === value) {
+            return;
+        }
+        this._blockEvents = value;
     }
 }
 

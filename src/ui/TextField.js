@@ -137,7 +137,110 @@ class TextField extends Label {
     }
 
     /**
-     * PUBLIC METHODS
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @protected
+     * @param {Object} event
+     * @returns {boolean}
+     */
+
+    onActionUpHandler(event) {
+        if (!super.onActionUpHandler(event)) {
+            return false;
+        }
+
+        this._isSelected = true;
+        const x = this.worldTransform.tx;
+        const y = this.worldTransform.ty;
+        const globalSize = this.toGlobal(Geometry.pFromSize(this));
+
+        TextField._updateInputStyle(Format.replace(styleTemplate, x, y, globalSize.y, globalSize.x));
+        input.value = this.text;
+        input.maxLength = this._maxLength === -1 ? MAX_CHAR_COUNT : this._maxLength;
+        input.onblur = this._onInputBlurHandler.bind(this);
+        input.oninput = this._onInputChangeHandler.bind(this);
+        input.focus();
+        TextField._updateInputStyle();
+        this._updateTextTransform();
+        return true;
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Update input string
+     * @method
+     * @private
+     * @param {string} [styleString]
+     */
+
+    static _updateInputStyle(styleString = defaultAttributes) {
+        input.setAttribute("style", styleString);
+    }
+
+    /**
+     * @function
+     * @private
+     */
+
+    _onInputBlurHandler() {
+        input.onblur = null;
+        input.oninput = null;
+        this._isSelected = false;
+        this._updateTextTransform();
+    }
+
+    /**
+     * @function
+     * @private
+     */
+
+    _onInputChangeHandler() {
+        this._realText = input.value;
+        this._updateTextTransform();
+    }
+
+    /**
+     * @desc Update text transformations.
+     * @method
+     * @private
+     */
+
+    _updateTextTransform() {
+        if (!this._isSelected && !Type.isNull(this._placeholderText) && this._realText.length === 0) {
+            super.color = this._placeholderColor;
+            super.text = this._placeholderText;
+            return;
+        }
+
+        super.color = this._color;
+
+        const cursor = this._isSelected && this._cursorEnabled ? this._cursorChar : "";
+
+        if (!this._passwordMode) {
+            super.text = this._realText + cursor;
+            return;
+        }
+
+        const charCount = this._realText.length;
+        let mask = "";
+
+        for (let i = 0; i < charCount; ++i) {
+            mask = mask + this._passwordChar;
+        }
+
+        super.text = mask + cursor;
+    }
+
+    /**
+     * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -309,109 +412,6 @@ class TextField extends Label {
         this._placeholderColor = Color.setLightness(value, Color.getLightness(value) * 0.6);
 
         this._updateTextTransform();
-    }
-
-    /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     * @returns {boolean}
-     */
-
-    onActionUpHandler(event) {
-        if (!super.onActionUpHandler(event)) {
-            return false;
-        }
-
-        this._isSelected = true;
-        const x = this.worldTransform.tx;
-        const y = this.worldTransform.ty;
-        const globalSize = this.toGlobal(Geometry.pFromSize(this));
-
-        TextField._updateInputStyle(Format.replace(styleTemplate, x, y, globalSize.y, globalSize.x));
-        input.value = this.text;
-        input.maxLength = this._maxLength === -1 ? MAX_CHAR_COUNT : this._maxLength;
-        input.onblur = this._onInputBlurHandler.bind(this);
-        input.oninput = this._onInputChangeHandler.bind(this);
-        input.focus();
-        TextField._updateInputStyle();
-        this._updateTextTransform();
-        return true;
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Update input string
-     * @method
-     * @private
-     * @param {string} [styleString]
-     */
-
-    static _updateInputStyle(styleString = defaultAttributes) {
-        input.setAttribute("style", styleString);
-    }
-
-    /**
-     * @function
-     * @private
-     */
-
-    _onInputBlurHandler() {
-        input.onblur = null;
-        input.oninput = null;
-        this._isSelected = false;
-        this._updateTextTransform();
-    }
-
-    /**
-     * @function
-     * @private
-     */
-
-    _onInputChangeHandler() {
-        this._realText = input.value;
-        this._updateTextTransform();
-    }
-
-    /**
-     * @desc Update text transformations.
-     * @method
-     * @private
-     */
-
-    _updateTextTransform() {
-        if (!this._isSelected && !Type.isNull(this._placeholderText) && this._realText.length === 0) {
-            super.color = this._placeholderColor;
-            super.text = this._placeholderText;
-            return;
-        }
-
-        super.color = this._color;
-
-        const cursor = this._isSelected && this._cursorEnabled ? this._cursorChar : "";
-
-        if (!this._passwordMode) {
-            super.text = this._realText + cursor;
-            return;
-        }
-
-        const charCount = this._realText.length;
-        let mask = "";
-
-        for (let i = 0; i < charCount; ++i) {
-            mask = mask + this._passwordChar;
-        }
-
-        super.text = mask + cursor;
     }
 }
 

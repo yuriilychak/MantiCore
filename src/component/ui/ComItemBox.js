@@ -60,46 +60,6 @@ class ComItemBox extends Component {
      */
 
     /**
-     * @desc Number for start numeration;
-     * @public
-     * @returns {int}
-     */
-
-    get startIndex() {
-        return this._startIndex;
-    }
-
-    /**
-     * @desc Name template for child names. For example for "item_0001" it's "item_"
-     * @public
-     * @returns {string}
-     */
-
-    get templateName() {
-        return this._templateName;
-    }
-
-    /**
-     * @desc Num count in template name. For example for "item_0001" it's 4;
-     * @public
-     * @returns {int}
-     */
-
-    get templateNumCount() {
-        return this._templateNumCount;
-    }
-
-    /**
-     * @desc Component that add to new elements of ItemBox;
-     * @public
-     * @returns {MANTICORE.component.ui.ComItem}
-     */
-
-    get componentTemplate() {
-        return this._componentTemplate;
-    }
-
-    /**
      * @desc Update item data
      * @method
      * @public
@@ -260,6 +220,51 @@ class ComItemBox extends Component {
 
     _getItemName(index) {
         return this._templateName + Format.formatNumber(index, this._templateNumCount);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Number for start numeration;
+     * @public
+     * @returns {int}
+     */
+
+    get startIndex() {
+        return this._startIndex;
+    }
+
+    /**
+     * @desc Name template for child names. For example for "item_0001" it's "item_"
+     * @public
+     * @returns {string}
+     */
+
+    get templateName() {
+        return this._templateName;
+    }
+
+    /**
+     * @desc Num count in template name. For example for "item_0001" it's 4;
+     * @public
+     * @returns {int}
+     */
+
+    get templateNumCount() {
+        return this._templateNumCount;
+    }
+
+    /**
+     * @desc Component that add to new elements of ItemBox;
+     * @public
+     * @returns {MANTICORE.component.ui.ComItem}
+     */
+
+    get componentTemplate() {
+        return this._componentTemplate;
     }
 }
 

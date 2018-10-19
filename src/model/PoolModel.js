@@ -33,22 +33,6 @@ class PoolModel extends Model {
      */
 
     /**
-     * @public
-     * @type {boolean}
-     */
-
-    get inPool() {
-        return this._inPool;
-    }
-
-    set inPool(value) {
-        if (this._inPool === value) {
-            return;
-        }
-        this._inPool = value;
-    }
-
-    /**
      * @desc Calls by pool when model get from pool. Don't call it only override.
      * @method
      * @public
@@ -71,6 +55,27 @@ class PoolModel extends Model {
 
     kill() {
         Pool.putObject(this);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+
+    get inPool() {
+        return this._inPool;
+    }
+
+    set inPool(value) {
+        if (this._inPool === value) {
+            return;
+        }
+        this._inPool = value;
     }
 }
 

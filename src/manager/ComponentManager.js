@@ -55,23 +55,6 @@ class ComponentManager extends BaseManager{
      */
 
     /**
-     * @public
-     * @type {boolean}
-     */
-
-    get inPool() {
-        return this._inPool;
-    }
-
-    set inPool(value) {
-        if (this._inPool === value) {
-            return;
-        }
-        this._inPool = value;
-        this.iterateComponents(component => component.inPool = value);
-    }
-
-    /**
      * @desc Add component to container, returns falls if component already add.
      * @method
      * @public
@@ -205,6 +188,28 @@ class ComponentManager extends BaseManager{
     _initComponents() {
         this._components = this._componentRepo.values;
         this._componentCount = this._components.length;
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+
+    get inPool() {
+        return this._inPool;
+    }
+
+    set inPool(value) {
+        if (this._inPool === value) {
+            return;
+        }
+        this._inPool = value;
+        this.iterateComponents(component => component.inPool = value);
     }
 }
 

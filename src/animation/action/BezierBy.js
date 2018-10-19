@@ -26,6 +26,11 @@ class BezierBy extends ActionInterval{
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -111,22 +116,9 @@ class BezierBy extends ActionInterval{
     }
 
     /**
-     * @protected
-     * @returns {PIXI.Point|Point}
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
      */
-
-    get startPoint() {
-        return this._startPoint;
-    }
-
-    /**
-     * @protected
-     * @returns {PIXI.Point[]}
-     */
-
-    get config() {
-        return this._config;
-    }
 
     /**
      * @private
@@ -143,6 +135,29 @@ class BezierBy extends ActionInterval{
             3 * t * (Math.pow(1 - t, 2)) * b +
             3 * Math.pow(t, 2) * (1 - t) * c +
             Math.pow(t, 3) * d );
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @protected
+     * @returns {PIXI.Point|Point}
+     */
+
+    get startPoint() {
+        return this._startPoint;
+    }
+
+    /**
+     * @protected
+     * @returns {PIXI.Point[]}
+     */
+
+    get config() {
+        return this._config;
     }
 }
 

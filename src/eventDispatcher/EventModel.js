@@ -37,22 +37,9 @@ class EventModel extends PoolModel {
     }
 
     /**
-     * @desc Returns data of event.
-     * @type {*}
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
      */
-
-    get data() {
-        return this._data;
-    }
-
-    /**
-     * @desc Returns target of event.
-     * @type {?Object}
-     */
-
-    get target() {
-        return this._target;
-    }
 
     /**
      * @desc Calls by pool when model get from pool. Don't call it only override.
@@ -73,6 +60,29 @@ class EventModel extends PoolModel {
     disuse() {
         this._target = null;
         this._data = null;
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Returns data of event.
+     * @type {*}
+     */
+
+    get data() {
+        return this._data;
+    }
+
+    /**
+     * @desc Returns target of event.
+     * @type {?Object}
+     */
+
+    get target() {
+        return this._target;
     }
 }
 

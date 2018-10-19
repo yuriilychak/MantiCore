@@ -101,6 +101,77 @@ class Label extends BaseLabel {
     }
 
     /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls when horizontal align change.
+     * @method
+     * @protected
+     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
+     */
+
+    horizontalAlignChange(value) {
+        this._label.horizontalAlign = value;
+        this._updateHorizontalPos(this._label);
+        if (!this._isShadowEnabled) {
+            return;
+        }
+        this._shadow.horizontalAlign = value;
+        this._updateHorizontalPos(this._shadow, this._shadowOffset.x);
+    }
+
+    /**
+     * @desc Calls when vertical align change.
+     * @method
+     * @protected
+     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
+     */
+
+    verticalAlignChange(value) {
+        this._label.verticalAlign = value;
+        this._updateVerticalPos(this._label);
+        if (!this._isShadowEnabled) {
+            return;
+        }
+        this._shadow.verticalAlign = value;
+        this._updateVerticalPos(this._shadow, this._shadowOffset.y);
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @private
+     * @param {MANTICORE.ui.ancillary.OutlineBitmapText} target
+     * @param {int} [offset = 0]
+     */
+
+    _updateHorizontalPos(target, offset = 0) {
+        target.x = Math.round((this.width + offset) * target.anchor.x);
+    }
+
+    /**
+     * @method
+     * @private
+     * @param {MANTICORE.ui.ancillary.OutlineBitmapText} target
+     * @param {int} [offset = 0]
+     */
+
+    _updateVerticalPos(target, offset = 0) {
+        target.y = Math.round((this.height + offset) * target.anchor.y);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @public
      * @type {int}
      */
@@ -301,72 +372,6 @@ class Label extends BaseLabel {
 
     get lineHeight() {
         return this._lineHeight;
-    }
-
-    /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Calls when horizontal align change.
-     * @method
-     * @protected
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
-     */
-
-    horizontalAlignChange(value) {
-        this._label.horizontalAlign = value;
-        this._updateHorizontalPos(this._label);
-        if (!this._isShadowEnabled) {
-            return;
-        }
-        this._shadow.horizontalAlign = value;
-        this._updateHorizontalPos(this._shadow, this._shadowOffset.x);
-    }
-
-    /**
-     * @desc Calls when vertical align change.
-     * @method
-     * @protected
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
-     */
-
-    verticalAlignChange(value) {
-        this._label.verticalAlign = value;
-        this._updateVerticalPos(this._label);
-        if (!this._isShadowEnabled) {
-            return;
-        }
-        this._shadow.verticalAlign = value;
-        this._updateVerticalPos(this._shadow, this._shadowOffset.y);
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @method
-     * @private
-     * @param {MANTICORE.ui.OutlineBitmapText} target
-     * @param {int} [offset = 0]
-     */
-
-    _updateHorizontalPos(target, offset = 0) {
-        target.x = Math.round((this.width + offset) * target.anchor.x);
-    }
-
-    /**
-     * @method
-     * @private
-     * @param {MANTICORE.ui.OutlineBitmapText} target
-     * @param {int} [offset = 0]
-     */
-
-    _updateVerticalPos(target, offset = 0) {
-        target.y = Math.round((this.height + offset) * target.anchor.y);
     }
 }
 

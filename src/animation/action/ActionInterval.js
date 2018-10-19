@@ -88,6 +88,166 @@ class ActionInterval extends FiniteTimeAction {
      */
 
     /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.ActionInterval}
+     */
+
+    clone() {
+        return this.doClone(new ActionInterval(this.duration));
+    }
+
+    /**
+     * @desc Implementation of ease motion.
+     * @method easing
+     * @param {...MANTICORE.animation.easing.EaseBase} var_args
+     * @example
+     * action.easing(easeIn(3.0));
+     */
+    easing(var_args) {
+        this._eases.length = 0;
+        const argumentCount = arguments.length;
+        for (let i = 0; i < argumentCount; ++i) {
+            this._eases.push(arguments[i]);
+        }
+    }
+
+    step(dt) {
+        if (this._firstTick) {
+            this._firstTick = false;
+            this._elapsed = 0;
+        } else {
+            this._elapsed += dt;
+        }
+
+
+        let time = this._elapsed / (this.duration > Constant.FLT_EPSILON ? this.duration : Constant.FLT_EPSILON);
+        this.update(Math.range(time, 0, 1));
+
+        if(this._repeatMethod && this.repeatCount > 1 && this.isDone){
+            if(!this._repeatForever){
+                --this.repeatCount;
+            }
+            this.startWithTarget(this.target);
+            this.step(this._elapsed - this.duration);
+        }
+    }
+
+    /**
+     * @desc Called before the action start. It will also set the target.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} target
+     */
+
+    startWithTarget(target) {
+        super.startWithTarget(target);
+        this._elapsed = 0;
+        this._firstTick = true;
+    }
+
+    /**
+     * Changes the speed of an action, making it take longer (speed>1)
+     * or less (speed<1) time. <br/>
+     * Useful to simulate 'slow motion' or 'fast forward' effect.
+     * @param {number} speed
+     */
+
+    changeSpeed(speed){
+        if(speed <= 0){
+            return;
+        }
+
+        this._speedMethod = true;//Compatible with repeat class, Discard after can be deleted
+        this._speed *= speed;
+    }
+
+    /**
+     * Repeats an action a number of times.
+     * To repeat an action forever use the CCRepeatForever action.
+     * @method
+     * @public
+     * @param {number} times
+     */
+
+    repeat(times){
+        times = Math.round(times);
+        if(isNaN(times) || times < 1){
+            return this;
+        }
+        this._repeatMethod = true;
+        this.repeatCount *= times;
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clone parameters to action, and return it.
+     * @method
+     * @protected
+     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @returns {*}
+     */
+
+    doClone(action) {
+        action.repeatForever = this._repeatForever;
+        action.speed = this._speed;
+        action.repeatCount = this.repeatCount;
+        action.eases = this._eases;
+        action.speedMethod = this._speedMethod;
+        action.repeatMethod = this._repeatMethod;
+        return action;
+    }
+
+    /**
+     * @desc Clone parameters to action and revers eases.
+     * @method
+     * @protected
+     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @returns {*}
+     */
+
+    doReverse(action) {
+        this.doClone(action);
+
+        if(this._eases.length !== 0){
+            const easeCount = this._eases.length;
+            for(let i = 0; i< easeCount; ++i){
+                action.eases.push(this._eases[i].reverse());
+            }
+        }
+        return action;
+    }
+
+    /**
+     * @desc Calculate time with easing.
+     * @method
+     * @protected
+     * @param {number} dt
+     * @returns {number}
+     */
+
+    computeEaseTime(dt) {
+        if (this._eases.length === 0) {
+            return dt;
+        }
+        const easingCount = this._eases.length;
+        for (let i = 0; i < easingCount; ++i) {
+            dt = this._eases[i].easing(dt);
+        }
+        return dt;
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * Repeats an action forever.
      * To repeat the an action for a limited number of times use the Repeat action. <br/>
      * @public
@@ -177,95 +337,6 @@ class ActionInterval extends FiniteTimeAction {
     }
 
     /**
-     * @desc Need to copy object with deep copy. Returns a clone of action.
-     * @method
-     * @public
-     * @return {MANTICORE.animation.action.ActionInterval}
-     */
-
-    clone() {
-        return this.doClone(new ActionInterval(this.duration));
-    }
-
-    /**
-     * @desc Implementation of ease motion.
-     * @method easing
-     * @param {...MANTICORE.animation.easing.EaseBase} var_args
-     * @example
-     * action.easing(easeIn(3.0));
-     */
-    easing(var_args) {
-        this._eases.length = 0;
-        const argumentCount = arguments.length;
-        for (let i = 0; i < argumentCount; ++i) {
-            this._eases.push(arguments[i]);
-        }
-    }
-
-    step(dt) {
-        if (this._firstTick) {
-            this._firstTick = false;
-            this._elapsed = 0;
-        } else {
-            this._elapsed += dt;
-        }
-
-
-        let time = this._elapsed / (this.duration > Constant.FLT_EPSILON ? this.duration : Constant.FLT_EPSILON);
-        this.update(Math.range(time, 0, 1));
-
-        if(this._repeatMethod && this.repeatCount > 1 && this.isDone){
-            if(!this._repeatForever){
-                --this.repeatCount;
-            }
-            this.startWithTarget(this.target);
-            this.step(this._elapsed - this.duration);
-        }
-    }
-
-    /**
-     * @desc Called before the action start. It will also set the target.
-     * @method
-     * @public
-     * @param {PIXI.DisplayObject} target
-     */
-
-    startWithTarget(target) {
-        super.startWithTarget(target);
-        this._elapsed = 0;
-        this._firstTick = true;
-    }
-
-    /**
-     * @desc Get amplitude rate.
-     * @warning It should be overridden in subclass.
-     * @public
-     * @return {number}
-     */
-    get amplitudeRate() {
-        return 0;
-    }
-
-    set amplitudeRate(value) {
-    }
-
-    /**
-     * Changes the speed of an action, making it take longer (speed>1)
-     * or less (speed<1) time. <br/>
-     * Useful to simulate 'slow motion' or 'fast forward' effect.
-     * @param {number} speed
-     */
-
-    changeSpeed(speed){
-        if(speed <= 0){
-            return;
-        }
-
-        this._speedMethod = true;//Compatible with repeat class, Discard after can be deleted
-        this._speed *= speed;
-    }
-
-    /**
      * @desc Get this action speed.
      * @public
      * @return {number}
@@ -279,82 +350,16 @@ class ActionInterval extends FiniteTimeAction {
     }
 
     /**
-     * Repeats an action a number of times.
-     * To repeat an action forever use the CCRepeatForever action.
-     * @method
+     * @desc Get amplitude rate.
+     * @warning It should be overridden in subclass.
      * @public
-     * @param {number} times
+     * @return {number}
      */
-
-    repeat(times){
-        times = Math.round(times);
-        if(isNaN(times) || times < 1){
-            return this;
-        }
-        this._repeatMethod = true;
-        this.repeatCount *= times;
+    get amplitudeRate() {
+        return 0;
     }
 
-    /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Clone parameters to action, and return it.
-     * @method
-     * @protected
-     * @param {MANTICORE.animation.action.ActionInterval} action
-     * @returns {*}
-     */
-
-    doClone(action) {
-        action.repeatForever = this._repeatForever;
-        action.speed = this._speed;
-        action.repeatCount = this.repeatCount;
-        action.eases = this._eases;
-        action.speedMethod = this._speedMethod;
-        action.repeatMethod = this._repeatMethod;
-        return action;
-    }
-
-    /**
-     * @desc Clone parameters to action and revers eases.
-     * @method
-     * @protected
-     * @param {MANTICORE.animation.action.ActionInterval} action
-     * @returns {*}
-     */
-
-    doReverse(action) {
-        this.doClone(action);
-
-        if(this._eases.length !== 0){
-            const easeCount = this._eases.length;
-            for(let i = 0; i< easeCount; ++i){
-                action.eases.push(this._eases[i].reverse());
-            }
-        }
-        return action;
-    }
-
-    /**
-     * @desc Calculate time with easing.
-     * @method
-     * @protected
-     * @param {number} dt
-     * @returns {number}
-     */
-
-    computeEaseTime(dt) {
-        if (this._eases.length === 0) {
-            return dt;
-        }
-        const easingCount = this._eases.length;
-        for (let i = 0; i < easingCount; ++i) {
-            dt = this._eases[i].easing(dt);
-        }
-        return dt;
+    set amplitudeRate(value) {
     }
 }
 

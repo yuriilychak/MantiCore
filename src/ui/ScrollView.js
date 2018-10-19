@@ -130,153 +130,6 @@ class ScrollView extends Panel {
      */
 
     /**
-     * @public
-     * @type {int}
-     */
-
-    get width() {
-        return super.width;
-    }
-
-    set width(value) {
-        super.width = value;
-        this._innerBoundary.x = this.width - this._innerContainer.width;
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get height() {
-        return super.height;
-    }
-
-    set height(value) {
-        super.height = value;
-        this._innerBoundary.y = this.height - this._innerContainer.height;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get interactive() {
-        return this._innerContainer.interactive;
-    }
-
-    set interactive(value) {
-        if (this._innerContainer.interactive === value) {
-            return;
-        }
-        this._innerContainer.interactive = value;
-    }
-
-    /**
-     * @public
-     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
-     */
-
-    get scrollDirection() {
-        return this._scrollDirection;
-    }
-
-    set scrollDirection(value) {
-        if (this._scrollDirection === value) {
-            return;
-        }
-
-        switch (value) {
-            case SCROLL_DIRECTION.VERTICAL: {
-                this.horizontalSlider = null;
-                this._innerContainer.x = 0;
-                break;
-            }
-            case SCROLL_DIRECTION.HORIZONTAL: {
-                this.verticalSlider = null;
-                this._innerContainer.y = 0;
-                break;
-            }
-            default: {
-            }
-        }
-
-        this._scrollDirection = value;
-    }
-
-    /**
-     * @public
-     * @type {?MANTICORE.ui.Slider}
-     */
-
-    get horizontalSlider() {
-        return this._horizontalSlider;
-    }
-
-    set horizontalSlider(value) {
-        if (this._horizontalSlider === value || this.isVertical()) {
-            return;
-        }
-
-        this._horizontalSlider = this._initSlider(this._horizontalSlider, value, SCROLL_DIRECTION.HORIZONTAL, this.onScrollHorizontalHandler);
-    }
-
-    /**
-     * @public
-     * @type {?MANTICORE.ui.Slider}
-     */
-
-    get verticalSlider() {
-        return this._verticalSlider;
-    }
-
-    set verticalSlider(value) {
-        if (this._verticalSlider === value || this.isHorizontal()) {
-            return;
-        }
-
-        this._verticalSlider = this._initSlider(this._verticalSlider, value, SCROLL_DIRECTION.VERTICAL, this.onScrollVerticalHandler);
-    }
-
-    /**
-     * @public
-     * @type {MANTICORE.ui.Widget}
-     */
-
-    get innerContainer() {
-        return this._innerContainer;
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get innerWidth() {
-        return this._innerContainer.width;
-    }
-
-    set innerWidth(value) {
-        this._innerContainer.width = value;
-        this._innerBoundary.x = this.width - this._innerContainer.width;
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get innerHeight() {
-        return this._innerContainer.height;
-    }
-
-    set innerHeight(value) {
-        this._innerContainer.height = value;
-        this._innerBoundary.y = this.height - this._innerContainer.height;
-    }
-
-    /**
      * @method
      * @public
      * @override
@@ -527,129 +380,6 @@ class ScrollView extends Panel {
     }
 
     /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventUp() {
-        return this._innerContainer.eventUp;
-    }
-
-    set eventUp(value) {
-        this._innerContainer.eventUp = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDown() {
-        return this._eventDown;
-    }
-
-    set eventDown(value) {
-        if (this._eventDown === value) {
-            return;
-        }
-        this._eventDown = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventOver() {
-        return this._innerContainer.eventOver;
-    }
-
-    set eventOver(value) {
-        this._innerContainer.eventOver = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventOut() {
-        return this._innerContainer.eventOut;
-    }
-
-    set eventOut(value) {
-        this._innerContainer.eventOut = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventMove() {
-        return this._innerContainer.eventMove;
-    }
-
-    set eventMove(value) {
-        this._innerContainer.eventMove = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDrag() {
-        return this._eventDrag;
-    }
-
-    set eventDrag(value) {
-        if (this._eventDrag === value) {
-            return;
-        }
-        this._eventDrag = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventClick() {
-        return this._innerContainer.eventClick;
-    }
-
-    set eventClick(value) {
-        this._innerContainer.eventClick = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDragFinish() {
-        return this._innerContainer.eventDragFinish;
-    }
-
-    set eventDragFinish(value) {
-        this._innerContainer.eventDragFinish = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDragStart() {
-        return this._innerContainer.eventDragStart;
-    }
-
-    set eventDragStart(value) {
-        this._innerContainer.eventDragStart = value;
-    }
-
-    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -838,6 +568,282 @@ class ScrollView extends Panel {
         }
         this._updateScrollDimension(percent, mainDirection);
     }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get width() {
+        return super.width;
+    }
+
+    set width(value) {
+        super.width = value;
+        this._innerBoundary.x = this.width - this._innerContainer.width;
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get height() {
+        return super.height;
+    }
+
+    set height(value) {
+        super.height = value;
+        this._innerBoundary.y = this.height - this._innerContainer.height;
+    }
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+
+    get interactive() {
+        return this._innerContainer.interactive;
+    }
+
+    set interactive(value) {
+        if (this._innerContainer.interactive === value) {
+            return;
+        }
+        this._innerContainer.interactive = value;
+    }
+
+    /**
+     * @public
+     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+     */
+
+    get scrollDirection() {
+        return this._scrollDirection;
+    }
+
+    set scrollDirection(value) {
+        if (this._scrollDirection === value) {
+            return;
+        }
+
+        switch (value) {
+            case SCROLL_DIRECTION.VERTICAL: {
+                this.horizontalSlider = null;
+                this._innerContainer.x = 0;
+                break;
+            }
+            case SCROLL_DIRECTION.HORIZONTAL: {
+                this.verticalSlider = null;
+                this._innerContainer.y = 0;
+                break;
+            }
+            default: {
+            }
+        }
+
+        this._scrollDirection = value;
+    }
+
+    /**
+     * @public
+     * @type {?MANTICORE.ui.Slider}
+     */
+
+    get horizontalSlider() {
+        return this._horizontalSlider;
+    }
+
+    set horizontalSlider(value) {
+        if (this._horizontalSlider === value || this.isVertical()) {
+            return;
+        }
+
+        this._horizontalSlider = this._initSlider(this._horizontalSlider, value, SCROLL_DIRECTION.HORIZONTAL, this.onScrollHorizontalHandler);
+    }
+
+    /**
+     * @public
+     * @type {?MANTICORE.ui.Slider}
+     */
+
+    get verticalSlider() {
+        return this._verticalSlider;
+    }
+
+    set verticalSlider(value) {
+        if (this._verticalSlider === value || this.isHorizontal()) {
+            return;
+        }
+
+        this._verticalSlider = this._initSlider(this._verticalSlider, value, SCROLL_DIRECTION.VERTICAL, this.onScrollVerticalHandler);
+    }
+
+    /**
+     * @public
+     * @type {MANTICORE.ui.Widget}
+     */
+
+    get innerContainer() {
+        return this._innerContainer;
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get innerWidth() {
+        return this._innerContainer.width;
+    }
+
+    set innerWidth(value) {
+        this._innerContainer.width = value;
+        this._innerBoundary.x = this.width - this._innerContainer.width;
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get innerHeight() {
+        return this._innerContainer.height;
+    }
+
+    set innerHeight(value) {
+        this._innerContainer.height = value;
+        this._innerBoundary.y = this.height - this._innerContainer.height;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventUp() {
+        return this._innerContainer.eventUp;
+    }
+
+    set eventUp(value) {
+        this._innerContainer.eventUp = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventDown() {
+        return this._eventDown;
+    }
+
+    set eventDown(value) {
+        if (this._eventDown === value) {
+            return;
+        }
+        this._eventDown = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventOver() {
+        return this._innerContainer.eventOver;
+    }
+
+    set eventOver(value) {
+        this._innerContainer.eventOver = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventOut() {
+        return this._innerContainer.eventOut;
+    }
+
+    set eventOut(value) {
+        this._innerContainer.eventOut = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventMove() {
+        return this._innerContainer.eventMove;
+    }
+
+    set eventMove(value) {
+        this._innerContainer.eventMove = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventDrag() {
+        return this._eventDrag;
+    }
+
+    set eventDrag(value) {
+        if (this._eventDrag === value) {
+            return;
+        }
+        this._eventDrag = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventClick() {
+        return this._innerContainer.eventClick;
+    }
+
+    set eventClick(value) {
+        this._innerContainer.eventClick = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventDragFinish() {
+        return this._innerContainer.eventDragFinish;
+    }
+
+    set eventDragFinish(value) {
+        this._innerContainer.eventDragFinish = value;
+    }
+
+    /**
+     * @public
+     * @type {?string}
+     */
+
+    get eventDragStart() {
+        return this._innerContainer.eventDragStart;
+    }
+
+    set eventDragStart(value) {
+        this._innerContainer.eventDragStart = value;
+    }
+
 }
 
 export default ScrollView;

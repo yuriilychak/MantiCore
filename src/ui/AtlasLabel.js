@@ -106,7 +106,97 @@ class AtlasLabel extends BaseLabel {
     }
 
     /**
-     * PUBLiC METHODS
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls when horizontal align change.
+     * @method
+     * @protected
+     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
+     */
+
+    horizontalAlignChange(value) {
+        this._updateAlign();
+    }
+
+    /**
+     * @desc Calls when vertical align change.
+     * @method
+     * @protected
+     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
+     */
+
+    verticalAlignChange(value) {
+        this._updateAlign();
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Update align of chars.
+     * @method
+     * @private
+     */
+
+    _updateAlign() {
+        const textLength = this._text.length;
+        const fontProportion = this._fontSize / this._letterDimensions.y;
+        const letterWidth = Math.round(this._letterDimensions.x * fontProportion);
+        let crtChar = 0;
+        let posX, posY, i, char, charIndex, charSprite;
+
+        switch (this.verticalAlign) {
+            case VERTICAL_ALIGN.TOP: {
+                posY = 0;
+                break;
+            }
+            case VERTICAL_ALIGN.MIDDLE: {
+                posY = Math.divPowTwo(this.height - this._fontSize);
+                break;
+            }
+            case VERTICAL_ALIGN.BOTTOM: {
+                posY = this.height - this._fontSize;
+                break;
+            }
+        }
+
+        switch (this.horizontalAlign) {
+            case HORIZONTAL_ALIGN.LEFT: {
+                posX = 0;
+                break;
+            }
+            case HORIZONTAL_ALIGN.CENTER: {
+                posX = Math.divPowTwo(this.width - this._lineWidth);
+                break;
+            }
+            case HORIZONTAL_ALIGN.RIGHT: {
+                posX = this.width - this._lineWidth;
+                break;
+            }
+        }
+
+        for (i = 0; i < textLength; ++i) {
+            char = this._text[i];
+            charIndex = SYMBOL_LIST.indexOf(char);
+
+            if (charIndex === -1) {
+                posX += letterWidth;
+                continue;
+            }
+            charSprite = this._chars[crtChar];
+            charSprite.position.set(posX, posY);
+            posX += charSprite.width;
+            ++crtChar;
+        }
+    }
+
+    /**
+     * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -260,96 +350,6 @@ class AtlasLabel extends BaseLabel {
 
     get lineHeight() {
         return this._fontSize;
-    }
-
-    /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Calls when horizontal align change.
-     * @method
-     * @protected
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
-     */
-
-    horizontalAlignChange(value) {
-        this._updateAlign();
-    }
-
-    /**
-     * @desc Calls when vertical align change.
-     * @method
-     * @protected
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
-     */
-
-    verticalAlignChange(value) {
-        this._updateAlign();
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Update align of chars.
-     * @method
-     * @private
-     */
-
-    _updateAlign() {
-        const textLength = this._text.length;
-        const fontProportion = this._fontSize / this._letterDimensions.y;
-        const letterWidth = Math.round(this._letterDimensions.x * fontProportion);
-        let crtChar = 0;
-        let posX, posY, i, char, charIndex, charSprite;
-
-        switch (this.verticalAlign) {
-            case VERTICAL_ALIGN.TOP: {
-                posY = 0;
-                break;
-            }
-            case VERTICAL_ALIGN.MIDDLE: {
-                posY = Math.divPowTwo(this.height - this._fontSize);
-                break;
-            }
-            case VERTICAL_ALIGN.BOTTOM: {
-                posY = this.height - this._fontSize;
-                break;
-            }
-        }
-
-        switch (this.horizontalAlign) {
-            case HORIZONTAL_ALIGN.LEFT: {
-                posX = 0;
-                break;
-            }
-            case HORIZONTAL_ALIGN.CENTER: {
-                posX = Math.divPowTwo(this.width - this._lineWidth);
-                break;
-            }
-            case HORIZONTAL_ALIGN.RIGHT: {
-                posX = this.width - this._lineWidth;
-                break;
-            }
-        }
-
-        for (i = 0; i < textLength; ++i) {
-            char = this._text[i];
-            charIndex = SYMBOL_LIST.indexOf(char);
-
-            if (charIndex === -1) {
-                posX += letterWidth;
-                continue;
-            }
-            charSprite = this._chars[crtChar];
-            charSprite.position.set(posX, posY);
-            posX += charSprite.width;
-            ++crtChar;
-        }
     }
 }
 

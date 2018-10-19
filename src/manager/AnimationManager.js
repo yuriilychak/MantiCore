@@ -51,6 +51,11 @@ class AnimationManager extends BaseManager {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @method
      * @public
      * @param {MANTICORE.animation.action.Action} action
@@ -63,8 +68,7 @@ class AnimationManager extends BaseManager {
         const timeLine = this._timeLines.getElement("main");
 
 
-        timeLine.action = action;
-        timeLine.play();
+        timeLine.runAction(action);
         this._activeTimeLines.push(timeLine);
         this._activeTimeLineCount = 1;
         this._isActive = true;

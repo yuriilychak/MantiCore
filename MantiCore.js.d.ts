@@ -1226,8 +1226,7 @@ declare namespace MANTICORE {
 
             backgroundColor: number;
             backgroundAlpha: number;
-
-            getType(): MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE;
+            readonly panelType: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE;
             setType(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): void;
         }
 

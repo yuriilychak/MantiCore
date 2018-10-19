@@ -76,6 +76,136 @@ class ComLayout extends ComChildIterator {
      */
 
     /**
+     * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentContainer} owner
+     */
+
+    onAdd (owner) {
+        super.onAdd(owner);
+    }
+
+    /**
+     * @desc Calls when owner add children.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} child
+     */
+
+    onAddChild(child) {
+        super.onAddChild(child);
+        this._refreshLayout();
+    }
+
+    /**
+     * @desc Calls when owner remove children.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} child
+     */
+
+    onRemoveChild(child) {
+        super.onRemoveChild(child);
+        this._refreshLayout();
+    }
+
+    /**
+     * @desc Force refresh layout.
+     * @method
+     * @public
+     */
+
+    refreshLayout() {
+        this._refreshLayout();
+    }
+
+    /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.ui.ComLayout}
+     */
+
+    clone() {
+        /**
+         * @type {MANTICORE.component.ui.ComLayout}
+         */
+        const result = ComLayout.cloneFromPool(ComLayout);
+        result.verticalAlign = this._verticalAlign;
+        result.horizontalAlign = this._horizontalAlign;
+        result.resizeItems = this._resizeItems;
+        result.innerPadding = this._innerPadding;
+        result.outerPadding = this._outerPadding;
+        return result;
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Refresh layout for children.
+     * @method
+     * @private
+     */
+
+    _refreshLayout() {
+        if (!this.hasChildren()) {
+            return;
+        }
+
+        const maxWidth = this._layoutSizeManager.contentWidth;
+        const maxHeight = this._layoutSizeManager.contentHeight;
+
+        if (maxWidth === -1 || maxHeight === -1) {
+            LayoutBuilder.infiniteLayout(this);
+        }
+    }
+
+    /**
+     * @desc Change size value, and refresh layout.
+     * @method
+     * @private
+     * @param {int} value
+     * @param {string} key
+     */
+
+    _changeSizeValue(value, key) {
+        if (this._layoutSizeManager[key] === value) {
+            return;
+        }
+        this._layoutSizeManager[key] = value;
+        this._refreshLayout();
+    }
+
+    /**
+     * @desc Callback when inner padding change.
+     * @method
+     * @private
+     */
+
+    _onInnerPaddingChangeHandler() {
+        this._refreshLayout();
+    }
+
+    /**
+     * @desc Callback when outer padding change.
+     * @method
+     * @private
+     */
+
+    _onOuterPaddingChangeHandler() {
+        this._refreshLayout();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @public
      * @type {boolean}
      */
@@ -125,7 +255,7 @@ class ComLayout extends ComChildIterator {
      */
 
     get minWidth() {
-       return this._layoutSizeManager.minWidth;
+        return this._layoutSizeManager.minWidth;
     }
 
     set minWidth(value) {
@@ -252,131 +382,6 @@ class ComLayout extends ComChildIterator {
             return;
         }
         this._horizontalAlign = value;
-        this._refreshLayout();
-    }
-
-    /**
-     * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
-     * @method
-     * @public
-     * @param {MANTICORE.view.ComponentContainer} owner
-     */
-
-    onAdd (owner) {
-        super.onAdd(owner);
-    }
-
-    /**
-     * @desc Calls when owner add children.
-     * @method
-     * @public
-     * @param {PIXI.DisplayObject} child
-     */
-
-    onAddChild(child) {
-        super.onAddChild(child);
-        this._refreshLayout();
-    }
-
-    /**
-     * @desc Calls when owner remove children.
-     * @method
-     * @public
-     * @param {PIXI.DisplayObject} child
-     */
-
-    onRemoveChild(child) {
-        super.onRemoveChild(child);
-        this._refreshLayout();
-    }
-
-    /**
-     * @desc Force refresh layout.
-     * @method
-     * @public
-     */
-
-    refreshLayout() {
-        this._refreshLayout();
-    }
-
-    /**
-     * @desc Clone component
-     * @method
-     * @public
-     * @return {MANTICORE.component.ui.ComLayout}
-     */
-
-    clone() {
-        /**
-         * @type {MANTICORE.component.ui.ComLayout}
-         */
-        const result = ComLayout.cloneFromPool(ComLayout);
-        result.verticalAlign = this._verticalAlign;
-        result.horizontalAlign = this._horizontalAlign;
-        result.resizeItems = this._resizeItems;
-        result.innerPadding = this._innerPadding;
-        result.outerPadding = this._outerPadding;
-        return result;
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Refresh layout for children.
-     * @method
-     * @private
-     */
-
-    _refreshLayout() {
-        if (!this.hasChildren()) {
-            return;
-        }
-
-        const maxWidth = this._layoutSizeManager.contentWidth;
-        const maxHeight = this._layoutSizeManager.contentHeight;
-
-        if (maxWidth === -1 || maxHeight === -1) {
-            LayoutBuilder.infiniteLayout(this);
-        }
-    }
-
-    /**
-     * @desc Change size value, and refresh layout.
-     * @method
-     * @private
-     * @param {int} value
-     * @param {string} key
-     */
-
-    _changeSizeValue(value, key) {
-        if (this._layoutSizeManager[key] === value) {
-            return;
-        }
-        this._layoutSizeManager[key] = value;
-        this._refreshLayout();
-    }
-
-    /**
-     * @desc Callback when inner padding change.
-     * @method
-     * @private
-     */
-
-    _onInnerPaddingChangeHandler() {
-        this._refreshLayout();
-    }
-
-    /**
-     * @desc Callback when outer padding change.
-     * @method
-     * @private
-     */
-
-    _onOuterPaddingChangeHandler() {
         this._refreshLayout();
     }
 }

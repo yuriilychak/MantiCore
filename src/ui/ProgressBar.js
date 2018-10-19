@@ -77,6 +77,99 @@ class ProgressBar extends Widget {
      */
 
     /**
+     * @desc Set slice of colider if it slice9 sprite.
+     * @method
+     * @public
+     * @override
+     * @param {int} leftSlice
+     * @param {int} rightSlice
+     * @param {int} topSlice
+     * @param {int} bottomSlice
+     */
+
+    setSlice(leftSlice = 0, rightSlice = 0, topSlice = 0, bottomSlice = 0) {
+        this._progressSprite.slice = [leftSlice, rightSlice, topSlice, bottomSlice];
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @private
+     */
+
+    _updateDirection() {
+        let hOffset, vOffset;
+        const target = this._type === PROGRESS_TYPE.SIZE ? this._progressSprite : this._mask;
+
+        switch(this._direction) {
+            case DIRECTION.LEFT: {
+                hOffset = 0;
+                vOffset = 0;
+                break;
+            }
+            case DIRECTION.RIGHT: {
+                hOffset = this.width - target.width;
+                vOffset = 0;
+                break;
+            }
+            case DIRECTION.UP: {
+                hOffset = 0;
+                vOffset = 0;
+                break;
+            }
+            case DIRECTION.DOWN: {
+                hOffset = 0;
+                vOffset = this.height - target.height;
+                break;
+            }
+            default: {
+                hOffset = 0;
+                vOffset = 0;
+                break;
+            }
+        }
+
+        target.position.set(hOffset, vOffset);
+    }
+
+    /**
+     * @method
+     * @private
+     */
+
+    _updateProgress() {
+        if (this._type === PROGRESS_TYPE.NONE) {
+            return;
+        }
+
+        const condition = this._direction === DIRECTION.LEFT || this._direction === DIRECTION.RIGHT;
+        const hProgress = condition ? this._progress : 1;
+        const vProgress = condition ? 1 : this._progress;
+        const width = Math.round(this.width * hProgress);
+        const height = Math.round(this.height * vProgress);
+
+        if (this._type === PROGRESS_TYPE.SIZE) {
+            this._progressSprite.width = width;
+            this._progressSprite.height = height;
+            return;
+        }
+
+        this._mask.width = width;
+        this._mask.height = height;
+        this._progressSprite.width = this.width;
+        this._progressSprite.height = this.height;
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @public
      * @type {int}
      */
@@ -186,94 +279,6 @@ class ProgressBar extends Widget {
 
     set frameName(value) {
         this.collider.frameName = value;
-    }
-
-    /**
-     * @desc Set slice of colider if it slice9 sprite.
-     * @method
-     * @public
-     * @override
-     * @param {int} leftSlice
-     * @param {int} rightSlice
-     * @param {int} topSlice
-     * @param {int} bottomSlice
-     */
-
-    setSlice(leftSlice = 0, rightSlice = 0, topSlice = 0, bottomSlice = 0) {
-        this._progressSprite.slice = [leftSlice, rightSlice, topSlice, bottomSlice];
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @method
-     * @private
-     */
-
-    _updateDirection() {
-        let hOffset, vOffset;
-        const target = this._type === PROGRESS_TYPE.SIZE ? this._progressSprite : this._mask;
-
-        switch(this._direction) {
-            case DIRECTION.LEFT: {
-                hOffset = 0;
-                vOffset = 0;
-                break;
-            }
-            case DIRECTION.RIGHT: {
-                hOffset = this.width - target.width;
-                vOffset = 0;
-                break;
-            }
-            case DIRECTION.UP: {
-                hOffset = 0;
-                vOffset = 0;
-                break;
-            }
-            case DIRECTION.DOWN: {
-                hOffset = 0;
-                vOffset = this.height - target.height;
-                break;
-            }
-            default: {
-                hOffset = 0;
-                vOffset = 0;
-                break;
-            }
-        }
-
-        target.position.set(hOffset, vOffset);
-    }
-
-    /**
-     * @method
-     * @private
-     */
-
-    _updateProgress() {
-        if (this._type === PROGRESS_TYPE.NONE) {
-            return;
-        }
-
-        const condition = this._direction === DIRECTION.LEFT || this._direction === DIRECTION.RIGHT;
-        const hProgress = condition ? this._progress : 1;
-        const vProgress = condition ? 1 : this._progress;
-        const width = Math.round(this.width * hProgress);
-        const height = Math.round(this.height * vProgress);
-
-        if (this._type === PROGRESS_TYPE.SIZE) {
-            this._progressSprite.width = width;
-            this._progressSprite.height = height;
-            return;
-        }
-
-        this._mask.width = width;
-        this._mask.height = height;
-        this._progressSprite.width = this.width;
-        this._progressSprite.height = this.height;
     }
 }
 

@@ -46,6 +46,11 @@ class ListenerModel extends PoolModel {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Dispatch event;
      * @method
      * @public
@@ -57,24 +62,6 @@ class ListenerModel extends PoolModel {
             return;
         }
         this._listener.call(this._target, data);
-    }
-
-    /**
-     * @desc Returns name of event.
-     * @type {?string}
-     */
-
-    get event() {
-        return this._event;
-    }
-
-    /**
-     * @desc Returns target of listener.
-     * @type {?Object}
-     */
-
-    get target() {
-        return this._target;
     }
 
     /**
@@ -98,6 +85,29 @@ class ListenerModel extends PoolModel {
         this._event = null;
         this._listener = null;
         this._target = null;
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Returns name of event.
+     * @type {?string}
+     */
+
+    get event() {
+        return this._event;
+    }
+
+    /**
+     * @desc Returns target of listener.
+     * @type {?Object}
+     */
+
+    get target() {
+        return this._target;
     }
 }
 

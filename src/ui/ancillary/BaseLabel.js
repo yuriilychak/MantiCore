@@ -40,26 +40,6 @@ class BaseLabel extends Widget {
      */
 
     /**
-     * @public
-     * @type {int}
-     */
-
-    get fontSize() {
-        return 0;
-    }
-
-    set fontSize(value) {}
-
-    /**
-     * @public
-     * @type {string}
-     */
-
-    get fontName() {
-        return "Empty";
-    }
-
-    /**
      * @method
      * @public
      * @return {PIXI.Point}
@@ -77,6 +57,34 @@ class BaseLabel extends Widget {
      */
 
     setShadowOffset(xOrPoint, y) {}
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls when horizontal align change.
+     * @method
+     * @protected
+     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
+     */
+
+    horizontalAlignChange(value) {}
+
+    /**
+     * @desc Calls when vertical align change.
+     * @method
+     * @protected
+     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
+     */
+
+    verticalAlignChange(value) {}
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @public
@@ -201,27 +209,24 @@ class BaseLabel extends Widget {
     }
 
     /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
+     * @public
+     * @type {int}
      */
+
+    get fontSize() {
+        return 0;
+    }
+
+    set fontSize(value) {}
 
     /**
-     * @desc Calls when horizontal align change.
-     * @method
-     * @protected
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
+     * @public
+     * @type {string}
      */
 
-    horizontalAlignChange(value) {}
-
-    /**
-     * @desc Calls when vertical align change.
-     * @method
-     * @protected
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
-     */
-
-    verticalAlignChange(value) {}
+    get fontName() {
+        return "Empty";
+    }
 }
 
 export default BaseLabel;

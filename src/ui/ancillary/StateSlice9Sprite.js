@@ -125,6 +125,26 @@ class StateSlice9Sprite extends Slice9Sprite {
     }
 
     /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Update current state.
+     * @method
+     * @private
+     */
+
+    _updateCurrentState() {
+        this.frameName = this._states.getElement(this._currentState);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @public
      * @type {int|string}
      */
@@ -140,21 +160,6 @@ class StateSlice9Sprite extends Slice9Sprite {
 
         this._currentState = value;
         this._updateCurrentState();
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Update current state.
-     * @method
-     * @private
-     */
-
-    _updateCurrentState() {
-        this.frameName = this._states.getElement(this._currentState);
     }
 }
 

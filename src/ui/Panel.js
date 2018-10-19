@@ -34,48 +34,6 @@ class Panel extends Widget {
     }
 
     /**
-     * @public
-     * @type {int}
-     */
-
-    get backgroundColor() {
-        return this.collider.tint;
-    }
-
-    set backgroundColor(value) {
-        if (this.collider.tint === value) {
-            return;
-        }
-        this.collider.tint = value;
-    }
-
-    /**
-     * @public
-     * @type {number}
-     */
-
-    get backgroundAlpha() {
-        return this.collider.alpha;
-    }
-
-    set backgroundAlpha(value) {
-        if (this.collider.alpha === value) {
-            return;
-        }
-        this.collider.alpha = value;
-    }
-
-    /**
-     * @method
-     * @public
-     * @return {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE}
-     */
-
-    getType() {
-        return this._type;
-    }
-
-    /**
      * @method
      * @public
      * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
@@ -116,6 +74,52 @@ class Panel extends Widget {
                 break;
             }
         }
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @return {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE}
+     */
+
+    get panelType() {
+        return this._type;
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get backgroundColor() {
+        return this.collider.tint;
+    }
+
+    set backgroundColor(value) {
+        if (this.collider.tint === value) {
+            return;
+        }
+        this.collider.tint = value;
+    }
+
+    /**
+     * @public
+     * @type {number}
+     */
+
+    get backgroundAlpha() {
+        return this.collider.alpha;
+    }
+
+    set backgroundAlpha(value) {
+        if (this.collider.alpha === value) {
+            return;
+        }
+        this.collider.alpha = value;
     }
 }
 

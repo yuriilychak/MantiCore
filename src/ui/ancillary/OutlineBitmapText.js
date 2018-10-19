@@ -123,6 +123,50 @@ class OutlineBitmapText extends PIXI.Container {
     }
 
     /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Create clone of label. Need to create outlines and shadows.
+     * @method
+     * @private
+     * @return {PIXI.extras.BitmapText}
+     */
+
+    _cloneLabel() {
+        const result = new PIXI.extras.BitmapText("", {
+            font: {
+                name: this._label.font.name,
+                size: this._label.font.size
+            },
+            align: this._label.align
+        });
+
+        result.text = this._label.text;
+        result.maxWidth = this._label.maxWidth;
+        result.anchor.set(this._label.anchor.x, this._label.anchor.y);
+        return result;
+    }
+
+    _iterateOutlines(callback) {
+        if (!this._isOutlineEnabled) {
+            return;
+        }
+
+        const outlineCount = this._outlines.length;
+
+        for (let i = 0; i < outlineCount; ++i) {
+            callback(this._outlines[i], i);
+        }
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @type {PIXI.Point | Point}
      */
 
@@ -218,7 +262,6 @@ class OutlineBitmapText extends PIXI.Container {
 
         this._outlines = null;
     }
-
 
     /**
      * @public
@@ -399,45 +442,6 @@ class OutlineBitmapText extends PIXI.Container {
         this._label.text = value;
 
         this._iterateOutlines(element => element.text = value);
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Create clone of label. Need to create outlines and shadows.
-     * @method
-     * @private
-     * @return {PIXI.extras.BitmapText}
-     */
-
-    _cloneLabel() {
-        const result = new PIXI.extras.BitmapText("", {
-            font: {
-                name: this._label.font.name,
-                size: this._label.font.size
-            },
-            align: this._label.align
-        });
-
-        result.text = this._label.text;
-        result.maxWidth = this._label.maxWidth;
-        result.anchor.set(this._label.anchor.x, this._label.anchor.y);
-        return result;
-    }
-
-    _iterateOutlines(callback) {
-        if (!this._isOutlineEnabled) {
-            return;
-        }
-
-        const outlineCount = this._outlines.length;
-
-        for (let i = 0; i < outlineCount; ++i) {
-            callback(this._outlines[i], i);
-        }
     }
 }
 

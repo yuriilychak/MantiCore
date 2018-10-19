@@ -130,130 +130,6 @@ class Widget extends ComponentContainer {
      */
 
     /**
-     * @public
-     * @type {boolean}
-     */
-
-    get clipping() {
-        return this._isClipped();
-    }
-
-    set clipping(value) {
-        if (this._isClipped() === value) {
-            return;
-        }
-
-        if (value) {
-            this._clippingMask = Asset.createWhiteSprite();
-            this._clippingMask.width = this._collider.width;
-            this._clippingMask.height = this._collider.height;
-        }
-        else {
-            super.removeChild(this._clippingMask);
-            this._clippingMask = null;
-        }
-
-        const childrenCount = this.children.length;
-        for (let i = 0; i < childrenCount; ++i) {
-            if (this.children[i] === this._collider) {
-                continue;
-            }
-            this.children[i].mask = this._clippingMask;
-        }
-
-        if (!this._isClipped()) {
-            return;
-        }
-
-        super.addChild(this._clippingMask);
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get width() {
-        return this._collider.width;
-    }
-
-    set width(value) {
-        value = Math.round(value);
-        if (this._collider.width === value) {
-            return;
-        }
-        this.pivot.x = Math.round(value * this._anchor.x);
-        this._collider.width = value;
-        if (this._isClipped()) {
-            this._clippingMask.width = value;
-        }
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get height() {
-        return this._collider.height;
-    }
-
-    set height(value) {
-        value = Math.round(value);
-        if (this._collider.height === value) {
-            return;
-        }
-
-        this._collider.height = value;
-        this.pivot.y = Math.round(value * this._anchor.y);
-        if (this._isClipped()) {
-            this._clippingMask.height = value;
-        }
-    }
-
-    /**
-     * @public
-     * @type {int}
-     */
-
-    get tint() {
-        return this._collider.tint;
-    }
-
-    set tint(value) {
-        if (this._collider.tint === value) {
-            return;
-        }
-
-        const children = this.children;
-        const childrenCount = children.length;
-        let child, i;
-
-        for (i = 0; i < childrenCount; ++i) {
-            child = children[i];
-
-            if (Type.isUndefined(child.tint)) {
-                continue;
-            }
-
-            child.tint = value;
-        }
-    }
-
-    /**
-     * @public
-     * @type {PIXI.ObservablePoint}
-     */
-
-    get anchor() {
-        return this._anchor;
-    }
-
-    set anchor(value) {
-        this._anchor.copy(value);
-    }
-
-    /**
      * @desc Set slice of colider if it slice9 sprite.
      * @method
      * @public
@@ -268,182 +144,6 @@ class Widget extends ComponentContainer {
             return;
         }
         this._collider.slice = [leftSlice, rightSlice, topSlice, bottomSlice];
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get flipX() {
-        return this.scale.x < 0;
-    }
-
-    set flipX(value) {
-        if (this.flipX === value) {
-            return;
-        }
-
-        this.scale.x = this.scale.x * -1;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get flipY() {
-        return this.scale.y < 0;
-    }
-
-    set flipY(value) {
-        if (this.flipY === value) {
-            return;
-        }
-
-        this.scale.y = this.scale.y * -1;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get isDrag() {
-        return this._isInteractiveDrag;
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventUp() {
-        return this._events.getElement(INTERACTIVE_EVENT.UP);
-    }
-
-    set eventUp(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.UP, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDown() {
-        return this._events.getElement(INTERACTIVE_EVENT.DOWN);
-    }
-
-    set eventDown(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DOWN, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventOver() {
-        return this._events.getElement(INTERACTIVE_EVENT.OVER);
-    }
-
-    set eventOver(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.OVER, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventOut() {
-        return this._events.getElement(INTERACTIVE_EVENT.OUT);
-    }
-
-    set eventOut(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.OUT, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventMove() {
-        return this._events.getElement(INTERACTIVE_EVENT.MOVE);
-    }
-
-    set eventMove(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.MOVE, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDrag() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG);
-    }
-
-    set eventDrag(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventClick() {
-        return this._events.getElement(INTERACTIVE_EVENT.CLICK);
-    }
-
-    set eventClick(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.CLICK, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDragFinish() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG_FINIS);
-    }
-
-    set eventDragFinish(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDragStart() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG_START);
-    }
-
-    set eventDragStart(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, value);
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get propagateChildrenEvents() {
-        return this._propagateChildrenEvent;
-    }
-
-    set propagateChildrenEvents(value) {
-        if (this._propagateChildrenEvent === value) {
-            return;
-        }
-        this._propagateChildrenEvent = value;
     }
 
     /**
@@ -551,37 +251,6 @@ class Widget extends ComponentContainer {
 
     /**
      * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Returns collider.
-     * @protected
-     * @type {PIXI.Sprite|MANTICORE.view.Slice9Sprite|MANTICORE.ui.ancillary.StateSlice9Sprite}
-     */
-
-    get collider() {
-        return this._collider;
-    }
-
-    set collider(value) {
-        if (this._collider === value) {
-            return;
-        }
-
-        if (!Type.isNull(this._collider)) {
-            value.tint = this._collider.tint;
-            super.removeChild(this._collider);
-        }
-
-        this._collider = value;
-        this._collider.name = Constant.COLLIDER_NAME;
-
-        super.addChild(this._collider);
-    }
-
-    /**
-     * HANDLER METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -830,6 +499,343 @@ class Widget extends ComponentContainer {
         const event = this._events.getElement(id);
         
         this.dispatchEvent(event, interactiveEvent);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Flag is use clipping mask for element.
+     * @public
+     * @type {boolean}
+     */
+
+    get clipping() {
+        return this._isClipped();
+    }
+
+    set clipping(value) {
+        if (this._isClipped() === value) {
+            return;
+        }
+
+        if (value) {
+            this._clippingMask = Asset.createWhiteSprite();
+            this._clippingMask.width = this._collider.width;
+            this._clippingMask.height = this._collider.height;
+        }
+        else {
+            super.removeChild(this._clippingMask);
+            this._clippingMask = null;
+        }
+
+        const childrenCount = this.children.length;
+        for (let i = 0; i < childrenCount; ++i) {
+            if (this.children[i] === this._collider) {
+                continue;
+            }
+            this.children[i].mask = this._clippingMask;
+        }
+
+        if (!this._isClipped()) {
+            return;
+        }
+
+        super.addChild(this._clippingMask);
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get width() {
+        return this._collider.width;
+    }
+
+    set width(value) {
+        value = Math.round(value);
+        if (this._collider.width === value) {
+            return;
+        }
+        this.pivot.x = Math.round(value * this._anchor.x);
+        this._collider.width = value;
+        if (this._isClipped()) {
+            this._clippingMask.width = value;
+        }
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get height() {
+        return this._collider.height;
+    }
+
+    set height(value) {
+        value = Math.round(value);
+        if (this._collider.height === value) {
+            return;
+        }
+
+        this._collider.height = value;
+        this.pivot.y = Math.round(value * this._anchor.y);
+        if (this._isClipped()) {
+            this._clippingMask.height = value;
+        }
+    }
+
+    /**
+     * @public
+     * @type {int}
+     */
+
+    get tint() {
+        return this._collider.tint;
+    }
+
+    set tint(value) {
+        if (this._collider.tint === value) {
+            return;
+        }
+
+        const children = this.children;
+        const childrenCount = children.length;
+        let child, i;
+
+        for (i = 0; i < childrenCount; ++i) {
+            child = children[i];
+
+            if (Type.isUndefined(child.tint)) {
+                continue;
+            }
+
+            child.tint = value;
+        }
+    }
+
+    /**
+     * @public
+     * @type {PIXI.ObservablePoint}
+     */
+
+    get anchor() {
+        return this._anchor;
+    }
+
+    set anchor(value) {
+        this._anchor.copy(value);
+    }
+
+    /**
+     * @desc Flag is element flip horizontal
+     * @public
+     * @type {boolean}
+     */
+
+    get flipX() {
+        return this.scale.x < 0;
+    }
+
+    set flipX(value) {
+        if (this.flipX === value) {
+            return;
+        }
+
+        this.scale.x = this.scale.x * -1;
+    }
+
+    /**
+     * @desc Flag is element flip vertical
+     * @public
+     * @type {boolean}
+     */
+
+    get flipY() {
+        return this.scale.y < 0;
+    }
+
+    set flipY(value) {
+        if (this.flipY === value) {
+            return;
+        }
+
+        this.scale.y = this.scale.y * -1;
+    }
+
+    /**
+     * @desc Flag is currently ui element in drag mode.
+     * @public
+     * @readonly
+     * @type {boolean}
+     */
+
+    get isDrag() {
+        return this._isInteractiveDrag;
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventUp() {
+        return this._events.getElement(INTERACTIVE_EVENT.UP);
+    }
+
+    set eventUp(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.UP, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDown() {
+        return this._events.getElement(INTERACTIVE_EVENT.DOWN);
+    }
+
+    set eventDown(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.DOWN, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventOver() {
+        return this._events.getElement(INTERACTIVE_EVENT.OVER);
+    }
+
+    set eventOver(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.OVER, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventOut() {
+        return this._events.getElement(INTERACTIVE_EVENT.OUT);
+    }
+
+    set eventOut(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.OUT, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventMove() {
+        return this._events.getElement(INTERACTIVE_EVENT.MOVE);
+    }
+
+    set eventMove(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.MOVE, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDrag() {
+        return this._events.getElement(INTERACTIVE_EVENT.DRAG);
+    }
+
+    set eventDrag(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventClick() {
+        return this._events.getElement(INTERACTIVE_EVENT.CLICK);
+    }
+
+    set eventClick(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.CLICK, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDragFinish() {
+        return this._events.getElement(INTERACTIVE_EVENT.DRAG_FINIS);
+    }
+
+    set eventDragFinish(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDragStart() {
+        return this._events.getElement(INTERACTIVE_EVENT.DRAG_START);
+    }
+
+    set eventDragStart(value) {
+        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, value);
+    }
+
+    /**
+     * @desc Is need to propagate child events. If true interactive events dispatch only for up child.
+     * @public
+     * @type {boolean}
+     */
+
+    get propagateChildrenEvents() {
+        return this._propagateChildrenEvent;
+    }
+
+    set propagateChildrenEvents(value) {
+        if (this._propagateChildrenEvent === value) {
+            return;
+        }
+        this._propagateChildrenEvent = value;
+    }
+
+    /**
+     * @desc Returns collider.
+     * @protected
+     * @type {PIXI.Sprite|MANTICORE.view.Slice9Sprite|MANTICORE.ui.ancillary.StateSlice9Sprite}
+     */
+
+    get collider() {
+        return this._collider;
+    }
+
+    set collider(value) {
+        if (this._collider === value) {
+            return;
+        }
+
+        if (!Type.isNull(this._collider)) {
+            value.tint = this._collider.tint;
+            super.removeChild(this._collider);
+        }
+
+        this._collider = value;
+        this._collider.name = Constant.COLLIDER_NAME;
+
+        super.addChild(this._collider);
     }
 }
 

@@ -55,68 +55,6 @@ class ToggleButton extends BaseButton {
     }
 
     /**
-     * PUBLIC METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * this.dispatch(
-     * @type {boolean}
-     */
-
-    get selected() {
-        return this._isSelected;
-    }
-
-    set selected(value) {
-        if (this._isSelected === value) {
-            return;
-        }
-        this._isSelected = value;
-
-        let nextState;
-
-        switch (this.collider.state)  {
-            case TOGGLE_INTERACTIVE_STATE.DESELECTED_UP: {
-                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_UP;
-                break;
-            }
-            case TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN: {
-                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN;
-                break;
-            }
-            case TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER: {
-                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_OVER;
-                break;
-            }
-            case TOGGLE_INTERACTIVE_STATE.DESELECTED_DISABLED: {
-                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_DISABLED;
-                break;
-            }
-            case TOGGLE_INTERACTIVE_STATE.SELECTED_UP: {
-                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_UP;
-                break;
-            }
-            case TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN: {
-                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN;
-                break;
-            }
-            case TOGGLE_INTERACTIVE_STATE.SELECTED_OVER: {
-                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER;
-                break;
-            }
-            case TOGGLE_INTERACTIVE_STATE.SELECTED_DISABLED: {
-                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_DISABLED;
-                break;
-            }
-            default: {
-                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_UP;
-            }
-        }
-        this.changeState(nextState);
-    }
-
-    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -238,6 +176,69 @@ class ToggleButton extends BaseButton {
     _changeEnabledState(selected, deselected) {
         const state = this._isSelected ? selected : deselected;
         this.changeEnabledState(state);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Flag is toggle button selected.
+     * @public
+     * @type {boolean}
+     */
+
+    get selected() {
+        return this._isSelected;
+    }
+
+    set selected(value) {
+        if (this._isSelected === value) {
+            return;
+        }
+        this._isSelected = value;
+
+        let nextState;
+
+        switch (this.collider.state)  {
+            case TOGGLE_INTERACTIVE_STATE.DESELECTED_UP: {
+                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_UP;
+                break;
+            }
+            case TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN: {
+                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN;
+                break;
+            }
+            case TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER: {
+                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_OVER;
+                break;
+            }
+            case TOGGLE_INTERACTIVE_STATE.DESELECTED_DISABLED: {
+                nextState = TOGGLE_INTERACTIVE_STATE.SELECTED_DISABLED;
+                break;
+            }
+            case TOGGLE_INTERACTIVE_STATE.SELECTED_UP: {
+                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_UP;
+                break;
+            }
+            case TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN: {
+                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN;
+                break;
+            }
+            case TOGGLE_INTERACTIVE_STATE.SELECTED_OVER: {
+                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER;
+                break;
+            }
+            case TOGGLE_INTERACTIVE_STATE.SELECTED_DISABLED: {
+                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_DISABLED;
+                break;
+            }
+            default: {
+                nextState = TOGGLE_INTERACTIVE_STATE.DESELECTED_UP;
+            }
+        }
+        this.changeState(nextState);
     }
 }
 

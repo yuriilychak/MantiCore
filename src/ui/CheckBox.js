@@ -49,7 +49,36 @@ class CheckBox extends Button {
     }
 
     /**
-     * PUBLIC METHODS
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @protected
+     * @param {Object} event
+     */
+
+    onActionClickHandler(event) {
+        this.selected = !this.selected;
+        super.onActionClickHandler(event);
+    }
+
+    /**
+     * @desc Change frame of button if it exist.
+     * @method
+     * @protected
+     * @override
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_STATE} state
+     */
+
+    changeState(state) {
+        super.changeState(state);
+        this._icon.state = state;
+    }
+
+    /**
+     * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -108,35 +137,6 @@ class CheckBox extends Button {
         }
         this._isSelected = value;
         this._icon.visible = value;
-    }
-
-    /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionClickHandler(event) {
-        this.selected = !this.selected;
-        super.onActionClickHandler(event);
-    }
-
-    /**
-     * @desc Change frame of button if it exist.
-     * @method
-     * @protected
-     * @override
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_STATE} state
-     */
-
-    changeState(state) {
-        super.changeState(state);
-        this._icon.state = state;
     }
 }
 

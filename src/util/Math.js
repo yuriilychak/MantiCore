@@ -350,16 +350,14 @@ const math = {
      */
 
     intPow: function(value, power) {
-        let result = 1;
-        if (power === 0) {
-            return 1;
-        }
-        else if (power < 0) {
-            value = 1 / value;
-            power = -power;
-        }
-        for(let i = 0; i < power; ++i) {
-            result *= value;
+        if (power < 0) return 1 / this.intPow(value, -power);
+        let b = value, result = 1;
+        while (power > 0) {
+            if ((power & 1) !== 0) {
+                result *= b;
+            }
+            power >>= 1;
+            b *= b;
         }
         return result;
     }

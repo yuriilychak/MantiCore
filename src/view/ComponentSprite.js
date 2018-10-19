@@ -82,88 +82,6 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     /**
-     * @public
-     * @returns {boolean}
-     */
-
-    get visible() {
-        return super.visible;
-    }
-
-    set visible(value) {
-        if (super.visible === value) {
-            return;
-        }
-        super.visible = value;
-
-        if (Type.isEmpty(this._componentManager)) {
-            return;
-        }
-        this._componentManager.iterateComponents(component => {
-            if (!component.listenVisible) {
-                return;
-            }
-            component.onVisibleChange(this.visible);
-        })
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get reusable() {
-        return this._memoryManager.reusable;
-    }
-
-    set reusable(value) {
-        this._memoryManager.reusable = value;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get blockEvents() {
-        return this._listenerManager.blockEvents;
-    }
-
-    set blockEvents(value) {
-        this._listenerManager.blockEvents = value;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get inPool() {
-        return this._memoryManager.inPool;
-    }
-
-    set inPool(value) {
-        if (this._memoryManager.inPool === value) {
-            return;
-        }
-        this._memoryManager.inPool = value;
-        this._componentManager.inPool = value;
-        const childCount = this.children;
-        for (let i = 0; i < childCount; ++i) {
-            this.children[i].inPool = value;
-        }
-    }
-
-    /**
-     * @public
-     * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
-     */
-
-    get uiType() {
-        return this._uiType;
-    }
-
-    /**
      * @desc Add component to container, returns falls if component already add.
      * @method
      * @public
@@ -218,33 +136,6 @@ class ComponentSprite extends PIXI.Sprite {
 
     removeAllComponents() {
         return this._componentManager.removeAllComponents();
-    }
-
-    /**
-     * @desc Returns is container marked for update.
-     * @type {boolean}
-     */
-
-    get isUpdate() {
-        return this._isUpdate;
-    }
-
-    set isUpdate(value) {
-        if (this._isUpdate === value) {
-            return;
-        }
-
-        this._isUpdate = value;
-
-        const app = launcher.getApp();
-        const ticker = app.ticker;
-
-        if (this._isUpdate) {
-            ticker.add(this.onUpdate, this);
-            return;
-        }
-
-        ticker.remove(this.onUpdate, this);
     }
 
     /**
@@ -420,13 +311,6 @@ class ComponentSprite extends PIXI.Sprite {
         this._listenerManager.dispatchEvent(event, data);
     }
 
-    set uiType(value) {
-        if (this._uiType === value) {
-            return;
-        }
-        this._uiType = value;
-    }
-
     /**
      * @desc Handler that calls if container mark for update.
      * @method
@@ -472,6 +356,132 @@ class ComponentSprite extends PIXI.Sprite {
             }
         });
     }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @returns {boolean}
+     */
+
+    get visible() {
+        return super.visible;
+    }
+
+    set visible(value) {
+        if (super.visible === value) {
+            return;
+        }
+        super.visible = value;
+
+        if (Type.isEmpty(this._componentManager)) {
+            return;
+        }
+        this._componentManager.iterateComponents(component => {
+            if (!component.listenVisible) {
+                return;
+            }
+            component.onVisibleChange(this.visible);
+        })
+    }
+
+    /**
+     * @desc Flag is element destroy or put in pool after kill.
+     * @public
+     * @type {boolean}
+     */
+
+    get reusable() {
+        return this._memoryManager.reusable;
+    }
+
+    set reusable(value) {
+        this._memoryManager.reusable = value;
+    }
+
+    /**
+     * @desc Flag is need to block events dispatching for view.
+     * @public
+     * @type {boolean}
+     */
+
+    get blockEvents() {
+        return this._listenerManager.blockEvents;
+    }
+
+    set blockEvents(value) {
+        this._listenerManager.blockEvents = value;
+    }
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+
+    get inPool() {
+        return this._memoryManager.inPool;
+    }
+
+    set inPool(value) {
+        if (this._memoryManager.inPool === value) {
+            return;
+        }
+        this._memoryManager.inPool = value;
+        this._componentManager.inPool = value;
+        const childCount = this.children;
+        for (let i = 0; i < childCount; ++i) {
+            this.children[i].inPool = value;
+        }
+    }
+
+    /**
+     * @public
+     * @readonly
+     * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
+     */
+
+    get uiType() {
+        return this._uiType;
+    }
+
+
+    set uiType(value) {
+        if (this._uiType === value) {
+            return;
+        }
+        this._uiType = value;
+    }
+
+    /**
+     * @desc Returns is container marked for update.
+     * @type {boolean}
+     */
+
+    get isUpdate() {
+        return this._isUpdate;
+    }
+
+    set isUpdate(value) {
+        if (this._isUpdate === value) {
+            return;
+        }
+
+        this._isUpdate = value;
+
+        const app = launcher.getApp();
+        const ticker = app.ticker;
+
+        if (this._isUpdate) {
+            ticker.add(this.onUpdate, this);
+            return;
+        }
+
+        ticker.remove(this.onUpdate, this);
+    }
+
 }
 
 export default ComponentSprite;

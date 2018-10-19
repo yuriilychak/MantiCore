@@ -66,7 +66,76 @@ class LayoutSizeManager extends BaseManager {
     }
 
     /**
-     * PUBLIC METHODS
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @private
+     * @param {int} value - Height value min or max width.
+     * @param {int} multiplier - Number 1 or -1. Need to don't move condition to arguments.
+     * @returns {boolean}
+     */
+
+    _updateWidth(value, multiplier) {
+        const owner = this.owner.owner;
+        if (value === -1 || (owner.width - value) * multiplier <= 0) {
+            return false;
+        }
+        owner.width = value;
+        return true;
+    }
+
+    /**
+     * @method
+     * @private
+     * @param {int} value - Height value min or max height.
+     * @param {int} multiplier - Number 1 or -1. Need to don't move condition to arguments.
+     * @returns {boolean}
+     */
+
+    _updateHeight(value, multiplier) {
+        const owner = this.owner.owner;
+        if (value === -1 || (owner.height - value) * multiplier <= 0) {
+            return false;
+        }
+        owner.height = value;
+        return true;
+    }
+
+    /**
+     * @desc Returns size value.
+     * @function
+     * @private
+     * @param {boolean} isStatic
+     * @param {int} value
+     * @param {string} key
+     * @returns {int}
+     */
+
+    _getSizeValue(isStatic, value, key) {
+        const owner = this.owner;
+        return !owner.hasOwner() || value === -1 ? -1 : isStatic ? owner.owner[key] : value;
+    }
+
+    /**
+     * @desc Returns size for align value.
+     * @function
+     * @private
+     * @param {boolean} isStatic
+     * @param {int} value
+     * @param {string} key
+     * @returns {int}
+     */
+
+    _getContentValue(isStatic, value, key) {
+        const owner = this.owner;
+        return !owner.hasOwner() ? -1 : isStatic ? owner.owner[key] : value;
+    }
+
+    /**
+     * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -222,75 +291,6 @@ class LayoutSizeManager extends BaseManager {
 
     get contentHeight() {
         return this._getContentValue(this._isStaticHeight, this._maxHeight, "height");
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @method
-     * @private
-     * @param {int} value - Height value min or max width.
-     * @param {int} multiplier - Number 1 or -1. Need to don't move condition to arguments.
-     * @returns {boolean}
-     */
-
-    _updateWidth(value, multiplier) {
-        const owner = this.owner.owner;
-        if (value === -1 || (owner.width - value) * multiplier <= 0) {
-            return false;
-        }
-        owner.width = value;
-        return true;
-    }
-
-    /**
-     * @method
-     * @private
-     * @param {int} value - Height value min or max height.
-     * @param {int} multiplier - Number 1 or -1. Need to don't move condition to arguments.
-     * @returns {boolean}
-     */
-
-    _updateHeight(value, multiplier) {
-        const owner = this.owner.owner;
-        if (value === -1 || (owner.height - value) * multiplier <= 0) {
-            return false;
-        }
-        owner.height = value;
-        return true;
-    }
-
-    /**
-     * @desc Returns size value.
-     * @function
-     * @private
-     * @param {boolean} isStatic
-     * @param {int} value
-     * @param {string} key
-     * @returns {int}
-     */
-
-    _getSizeValue(isStatic, value, key) {
-        const owner = this.owner;
-        return !owner.hasOwner() || value === -1 ? -1 : isStatic ? owner.owner[key] : value;
-    }
-
-    /**
-     * @desc Returns size for align value.
-     * @function
-     * @private
-     * @param {boolean} isStatic
-     * @param {int} value
-     * @param {string} key
-     * @returns {int}
-     */
-
-    _getContentValue(isStatic, value, key) {
-        const owner = this.owner;
-        return !owner.hasOwner() ? -1 : isStatic ? owner.owner[key] : value;
     }
 }
 

@@ -82,6 +82,135 @@ class ActionAnimation {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Play animation for target
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject | PIXI.Sprite} target
+     */
+
+    play(target) {
+        if (this._isEmpty()) {
+            return;
+        }
+        Geometry.pAdd(target.position, this._position, true);
+        Geometry.pCompMult(target.scale, this._scale, true);
+        Geometry.pAdd(target.skew, this._skew, true);
+        target.rotation += this._rotation;
+        if (this._tint !== -1 && !Type.isUndefined(target.tint)) {
+            target.tint = this._tint;
+        }
+        if (this._alpha !== -1) {
+            target.alpha = this._alpha;
+        }
+        if (!Type.isNull(this._visible)) {
+            target.visible = this._visible;
+        }
+        this._action.startWithTarget(target);
+    }
+
+    /**
+     * @desc Stop animation.
+     * @method
+     * @public
+     */
+
+    stop() {
+        if (this._isEmpty()) {
+            return;
+        }
+        this._action.stop();
+    }
+
+    /**
+     * @desc Update animation cycle.
+     * @method
+     * @public
+     * @param {number} dt
+     */
+
+    update(dt) {
+        if (this._isEmpty()) {
+            return;
+        }
+        this._action.step(dt);
+    }
+
+    /**
+     * @desc Calls by pool when model get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.Action} action
+     */
+    reuse(action) {
+        this._action = action;
+    }
+
+    /**
+     * @desc Calls by pool when model put in to pool. Don't call it only override.
+     * @method
+     * @public
+     */
+    disuse() {
+        this.stop();
+        this._clearData();
+    }
+
+    destroy() {
+        this.stop();
+        this._clearData();
+        this._memoryManager.destroy();
+        this._memoryManager = null;
+    }
+
+    /**
+     * @desc Call for destroy object. If it reusable put in pool.
+     * @method
+     * @public
+     */
+
+    kill() {
+        this._memoryManager.kill();
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Check is action of animation not null.
+     * @method
+     * @private
+     * @returns {boolean}
+     */
+
+    _isEmpty() {
+        return Type.isNull(this._action);
+    }
+
+    /**
+     * @desc Clear inner data of animation.
+     * @method
+     * @private
+     */
+
+    _clearData() {
+        this._action = null;
+        this._position.set(0, 0);
+        this._scale.set(1, 1);
+        this._skew.set(0, 0);
+        this._rotation = 0;
+        this._tint = -1;
+        this._alpha = -1;
+        this._visible = null;
+    }
+
+    /**
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -258,134 +387,6 @@ class ActionAnimation {
         return !this._isEmpty() ? this._action.duration : 0;
     }
 
-    /**
-     * PUBLIC METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Play animation for target
-     * @method
-     * @public
-     * @param {PIXI.DisplayObject | PIXI.Sprite} target
-     */
-
-    play(target) {
-        if (this._isEmpty()) {
-            return;
-        }
-        Geometry.pAdd(target.position, this._position, true);
-        Geometry.pCompMult(target.scale, this._scale, true);
-        Geometry.pAdd(target.skew, this._skew, true);
-        target.rotation += this._rotation;
-        if (this._tint !== -1 && !Type.isUndefined(target.tint)) {
-            target.tint = this._tint;
-        }
-        if (this._alpha !== -1) {
-            target.alpha = this._alpha;
-        }
-        if (!Type.isNull(this._visible)) {
-            target.visible = this._visible;
-        }
-        this._action.startWithTarget(target);
-    }
-
-    /**
-     * @desc Stop animation.
-     * @method
-     * @public
-     */
-
-    stop() {
-        if (this._isEmpty()) {
-            return;
-        }
-        this._action.stop();
-    }
-
-    /**
-     * @desc Update animation cycle.
-     * @method
-     * @public
-     * @param {number} dt
-     */
-
-    update(dt) {
-        if (this._isEmpty()) {
-            return;
-        }
-        this._action.step(dt);
-    }
-
-    /**
-     * @desc Calls by pool when model get from pool. Don't call it only override.
-     * @method
-     * @public
-     * @param {MANTICORE.animation.action.Action} action
-     */
-    reuse(action) {
-        this._action = action;
-    }
-
-    /**
-     * @desc Calls by pool when model put in to pool. Don't call it only override.
-     * @method
-     * @public
-     */
-    disuse() {
-        this.stop();
-        this._clearData();
-    }
-
-    destroy() {
-        this.stop();
-        this._clearData();
-        this._memoryManager.destroy();
-        this._memoryManager = null;
-    }
-
-    /**
-     * @desc Call for destroy object. If it reusable put in pool.
-     * @method
-     * @public
-     */
-
-    kill() {
-        this._memoryManager.kill();
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Check is action of animation not null.
-     * @method
-     * @private
-     * @returns {boolean}
-     */
-
-    _isEmpty() {
-        return Type.isNull(this._action);
-    }
-
-    /**
-     * @desc Clear inner data of animation.
-     * @method
-     * @private
-     */
-
-    _clearData() {
-        this._action = null;
-        this._position.set(0, 0);
-        this._scale.set(1, 1);
-        this._skew.set(0, 0);
-        this._rotation = 0;
-        this._tint = -1;
-        this._alpha = -1;
-        this._visible = null;
-    }
 }
 
 export default ActionAnimation;

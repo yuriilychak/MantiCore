@@ -134,23 +134,6 @@ class ComUI extends Component {
     }
 
     /**
-     * @desc Flag is component listen interactions.
-     * @public
-     * @returns {boolean}
-     */
-
-    get listenInteractions() {
-        return this._listenInteractions;
-    }
-
-    set listenInteractions(value) {
-        if (this._listenInteractions === value) {
-            return;
-        }
-        this._listenInteractions = value;
-    }
-
-    /**
      * @desc Add Listener to child. If it doesn't exist return false.
      * @method
      * @public
@@ -359,6 +342,28 @@ class ComUI extends Component {
         for (let i = 0; i < eventCount; ++i) {
             callback(this._childEvents[i], i);
         }
+    }
+
+    /**
+     * PROTECTED
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Flag is component listen interactions.
+     * @public
+     * @returns {boolean}
+     */
+
+    get listenInteractions() {
+        return this._listenInteractions;
+    }
+
+    set listenInteractions(value) {
+        if (this._listenInteractions === value) {
+            return;
+        }
+        this._listenInteractions = value;
     }
 }
 

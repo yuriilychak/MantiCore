@@ -7,16 +7,11 @@ import FiniteTimeAction from "./FiniteTimeAction";
  * @memberOf MANTICORE.animation.action
  */
 
-class ActionInstant extends FiniteTimeAction{
-
+class ActionInstant extends FiniteTimeAction {
     /**
-     * @public
-     * @return {boolean}
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
      */
-
-    get isDone () {
-        return true;
-    }
 
     /**
      * @method
@@ -56,6 +51,20 @@ class ActionInstant extends FiniteTimeAction{
 
     clone(){
         return new ActionInstant();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @return {boolean}
+     */
+
+    get isDone () {
+        return true;
     }
 }
 

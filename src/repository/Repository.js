@@ -166,24 +166,6 @@ class Repository {
     }
 
     /**
-     * @desc Returns copy of array with keys;
-     * @type {int[] | string[]}
-     */
-
-    get keys() {
-        return this._keys.slice(0);
-    }
-
-    /**
-     * @desc Returns copy of array with values;
-     * @type {Array}
-     */
-
-    get values() {
-        return this._values.slice(0);
-    }
-
-    /**
      * @desc Returns is repository empty;
      * @method
      * @public
@@ -193,7 +175,6 @@ class Repository {
     isEmpty() {
         return this._keys.length === 0;
     }
-
 
     /**
      * PRIVATE METHODS
@@ -210,6 +191,29 @@ class Repository {
 
     _getKeyIndex(key) {
         return Math.binaryIndexOf(key, this._keys);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Returns copy of array with keys;
+     * @type {int[] | string[]}
+     */
+
+    get keys() {
+        return this._keys.slice(0);
+    }
+
+    /**
+     * @desc Returns copy of array with values;
+     * @type {Array}
+     */
+
+    get values() {
+        return this._values.slice(0);
     }
 }
 

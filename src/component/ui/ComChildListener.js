@@ -47,22 +47,6 @@ class ComChildListener extends ComChildIterator {
      */
 
     /**
-     * @public
-     * @type {boolean}
-     */
-
-    get blockEvents() {
-        return super.blockEvents;
-    }
-
-    set blockEvents(value) {
-        super.blockEvents = value;
-        this.iterateChildren(child => {
-            child.blockEvents = value;
-        })
-    }
-
-    /**
      * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
      * @method
      * @public
@@ -73,124 +57,6 @@ class ComChildListener extends ComChildIterator {
         super.onAdd(owner);
 
         this.iterateChildren(child => this._addEvents(child));
-    }
-
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventUp() {
-        return this._events.getElement(INTERACTIVE_EVENT.UP);
-    }
-
-    set eventUp(value) {
-        this._updateEvent(INTERACTIVE_EVENT.UP, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDown() {
-        return this._events.getElement(INTERACTIVE_EVENT.DOWN);
-    }
-
-    set eventDown(value) {
-        this._updateEvent(INTERACTIVE_EVENT.DOWN, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventOver() {
-        return this._events.getElement(INTERACTIVE_EVENT.OVER);
-    }
-
-    set eventOver(value) {
-        this._updateEvent(INTERACTIVE_EVENT.OVER, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventOut() {
-        return this._events.getElement(INTERACTIVE_EVENT.OUT);
-    }
-
-    set eventOut(value) {
-        this._updateEvent(INTERACTIVE_EVENT.OUT, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventMove() {
-        return this._events.getElement(INTERACTIVE_EVENT.MOVE);
-    }
-
-    set eventMove(value) {
-        this._updateEvent(INTERACTIVE_EVENT.MOVE, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDrag() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG);
-    }
-
-    set eventDrag(value) {
-        this._updateEvent(INTERACTIVE_EVENT.DRAG, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventClick() {
-        return this._events.getElement(INTERACTIVE_EVENT.CLICK);
-    }
-
-    set eventClick(value) {
-        this._updateEvent(INTERACTIVE_EVENT.CLICK, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDragFinish() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG_FINIS);
-    }
-
-    set eventDragFinish(value) {
-        this._updateEvent(INTERACTIVE_EVENT.DRAG_FINIS, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDragStart() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG_START);
-    }
-
-    set eventDragStart(value) {
-        this._updateEvent(INTERACTIVE_EVENT.DRAG_START, value);
     }
 
     /**
@@ -336,6 +202,144 @@ class ComChildListener extends ComChildIterator {
         }
 
         this._events.addElement(name, id);
+    }
+
+    /**
+     * PROPERTIES METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+
+    get blockEvents() {
+        return super.blockEvents;
+    }
+
+    set blockEvents(value) {
+        super.blockEvents = value;
+        this.iterateChildren(child => {
+            child.blockEvents = value;
+        })
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventUp() {
+        return this._events.getElement(INTERACTIVE_EVENT.UP);
+    }
+
+    set eventUp(value) {
+        this._updateEvent(INTERACTIVE_EVENT.UP, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDown() {
+        return this._events.getElement(INTERACTIVE_EVENT.DOWN);
+    }
+
+    set eventDown(value) {
+        this._updateEvent(INTERACTIVE_EVENT.DOWN, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventOver() {
+        return this._events.getElement(INTERACTIVE_EVENT.OVER);
+    }
+
+    set eventOver(value) {
+        this._updateEvent(INTERACTIVE_EVENT.OVER, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventOut() {
+        return this._events.getElement(INTERACTIVE_EVENT.OUT);
+    }
+
+    set eventOut(value) {
+        this._updateEvent(INTERACTIVE_EVENT.OUT, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventMove() {
+        return this._events.getElement(INTERACTIVE_EVENT.MOVE);
+    }
+
+    set eventMove(value) {
+        this._updateEvent(INTERACTIVE_EVENT.MOVE, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDrag() {
+        return this._events.getElement(INTERACTIVE_EVENT.DRAG);
+    }
+
+    set eventDrag(value) {
+        this._updateEvent(INTERACTIVE_EVENT.DRAG, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventClick() {
+        return this._events.getElement(INTERACTIVE_EVENT.CLICK);
+    }
+
+    set eventClick(value) {
+        this._updateEvent(INTERACTIVE_EVENT.CLICK, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDragFinish() {
+        return this._events.getElement(INTERACTIVE_EVENT.DRAG_FINIS);
+    }
+
+    set eventDragFinish(value) {
+        this._updateEvent(INTERACTIVE_EVENT.DRAG_FINIS, value);
+    }
+
+    /**
+     * @public
+     * @type {string | null}
+     */
+
+    get eventDragStart() {
+        return this._events.getElement(INTERACTIVE_EVENT.DRAG_START);
+    }
+
+    set eventDragStart(value) {
+        this._updateEvent(INTERACTIVE_EVENT.DRAG_START, value);
     }
 }
 

@@ -79,71 +79,6 @@ class ActionTimeLine {
     }
 
     /**
-     * PROPERTIES
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Fps of time-line
-     * @public
-     * @returns {number}
-     */
-
-    get fps() {
-        return this._fps;
-    }
-
-    set fps(value) {
-        if (this._fps === value) {
-            return;
-        }
-
-        this._fps = value;
-
-        this._fpsCoef = this._fps / Macro.FPS;
-    }
-
-    /**
-     * @desc Returns is time-line currently empty.
-     * @public
-     * @returns {boolean}
-     */
-
-    get isEmpty() {
-        return Type.isNull(this._runningAnimation);
-    }
-
-    /**
-     * @desc Returns is action play on time-line.
-     * @public
-     * @returns {boolean}
-     */
-
-    get isPlaying() {
-        return this._isPlaying;
-    }
-
-    /**
-     * @desc Returns is action that use time-line complete.
-     * @public
-     * @returns {boolean}
-     */
-
-    get isDone() {
-        return !Type.isNull(this._runningAnimation) && this._runningAnimation.isDone;
-    }
-
-    /**
-     * @desc Returns duration of playing animation.
-     * @public
-     * @returns {number}
-     */
-
-    get duration() {
-        return !this.isEmpty ? this._runningAnimation.duration : 0;
-    }
-
-    /**
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -318,6 +253,71 @@ class ActionTimeLine {
         this._isRunning = false;
 
         return true;
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Fps of time-line
+     * @public
+     * @returns {number}
+     */
+
+    get fps() {
+        return this._fps;
+    }
+
+    set fps(value) {
+        if (this._fps === value) {
+            return;
+        }
+
+        this._fps = value;
+
+        this._fpsCoef = this._fps / Macro.FPS;
+    }
+
+    /**
+     * @desc Returns is time-line currently empty.
+     * @public
+     * @returns {boolean}
+     */
+
+    get isEmpty() {
+        return Type.isNull(this._runningAnimation);
+    }
+
+    /**
+     * @desc Returns is action play on time-line.
+     * @public
+     * @returns {boolean}
+     */
+
+    get isPlaying() {
+        return this._isPlaying;
+    }
+
+    /**
+     * @desc Returns is action that use time-line complete.
+     * @public
+     * @returns {boolean}
+     */
+
+    get isDone() {
+        return !Type.isNull(this._runningAnimation) && this._runningAnimation.isDone;
+    }
+
+    /**
+     * @desc Returns duration of playing animation.
+     * @public
+     * @returns {number}
+     */
+
+    get duration() {
+        return !this.isEmpty ? this._runningAnimation.duration : 0;
     }
 }
 
