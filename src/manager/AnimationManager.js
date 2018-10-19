@@ -1,6 +1,8 @@
 import BaseManager from "./BaseManager";
 import Repository from "repository/Repository";
 import ActionTimeLine from "animation/ActionTimeLine";
+import TIME_LINE from "enumerator/TimeLine";
+import Type from "util/Type";
 
 /**
  * @desc Class for manipulate with animations
@@ -23,7 +25,6 @@ class AnimationManager extends BaseManager {
          * @private
          */
         this._timeLines = new Repository();
-        this._timeLines.addElement(new ActionTimeLine(owner), "main");
 
         /**
          * @desc Array with active time-lines to update.
@@ -48,6 +49,8 @@ class AnimationManager extends BaseManager {
          */
 
         this._activeTimeLineCount = 0;
+
+        this._timeLines.addElement(new ActionTimeLine(owner), TIME_LINE.MAIN);
     }
 
     /**
@@ -56,22 +59,127 @@ class AnimationManager extends BaseManager {
      */
 
     /**
+     * @desc Add time line to manager.
      * @method
      * @public
-     * @param {MANTICORE.animation.action.Action} action
+     * @param {MANTICORE.animation.ActionTimeLine} timeLine
+     * @param {string} name
+     * @return {boolean}
      */
 
-    runAction(action) {
+    addTimeLine(timeLine, name) {
+        if (this._timeLines.hasElement(name)) {
+            return false;
+        }
+        this._timeLines.addElement(timeLine, name);
+        return true;
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {string | MANTICORE.enumerator.TIME_LINE} name
+     * @return {boolean}
+     */
+
+    removeTimeLine(name) {
+        if (!this._timeLines.hasElement(name)) {
+            return false;
+        }
+        const element = this._timeLines.getElement(name);
+
+        const index = this._activeTimeLines.indexOf(element);
+        if (index === -1) {
+            return this._timeLines.removeElement(name, true);
+        }
+
+        this._activeTimeLines.splice(index, 1);
+        --this._activeTimeLineCount;
+
+        if (this._activeTimeLineCount === 0) {
+            this._isActive = false;
+        }
+
+        return this._timeLines.removeElement(name, true);
+    }
+
+    /**
+     * @desc Remove all time lines.
+     * @method
+     * @public
+     */
+
+    removeAllTimeLines() {
+        this._isActive = false;
+        this._activeTimeLineCount = 0;
+        this._activeTimeLines.length = 0;
+
+        this._timeLines.clear(true);
+    }
+
+    /**
+     * @method
+     * @param {string} name - Name of animation to play.
+     * @param {boolean} [loop = false] - Is need to loop animation.
+     * @param {int} frame [frame = 0] - Start frame of animation.
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
+     * @returns {boolean}
+     */
+
+    play(name, loop = false, frame = 0, timeLine = null) {
         /**
          * @type {MANTICORE.animation.ActionTimeLine}
          */
-        const timeLine = this._timeLines.getElement("main");
+        let actionTimeLine = null;
 
+        if (Type.isNull(timeLine)) {
+            const timeLines = this._timeLines.values;
+            const timeLineCount = timeLines.length;
+            let i, element;
 
-        timeLine.runAction(action);
-        this._activeTimeLines.push(timeLine);
-        this._activeTimeLineCount = 1;
-        this._isActive = true;
+            for (i = 0; i < timeLineCount; ++i) {
+                element = timeLines[i];
+                if (element.hasAnimation(name)) {
+                    actionTimeLine = element;
+                    break;
+                }
+            }
+        }
+        else if (this._timeLines.hasElement(timeLine)) {
+            actionTimeLine = this._timeLines.getElement(timeLine);
+        }
+
+        if (Type.isNull(actionTimeLine)) {
+            return false;
+        }
+
+        actionTimeLine.play(name);
+
+        this._updateActivity(actionTimeLine);
+
+        return true;
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.Action} action
+     * @param {boolean} [loop = false] - Is need to loop animation.
+     * @param {int} frame [frame = 0] - Start frame of animation.
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
+     */
+
+    runAction(action, loop = false, frame = 0, timeLine = null) {
+        timeLine = !Type.isNull(timeLine) && this._timeLines.hasElement(timeLine) ? timeLine : TIME_LINE.MAIN;
+
+        /**
+         * @type {MANTICORE.animation.ActionTimeLine}
+         */
+        const actionTimeLine = this._timeLines.getElement(timeLine);
+
+        actionTimeLine.runAction(action);
+
+        this._updateActivity(actionTimeLine);
     }
 
     /**
@@ -103,6 +211,34 @@ class AnimationManager extends BaseManager {
         if (this._activeTimeLineCount === 0) {
             this._isActive = false;
         }
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Update activity of time-line
+     * @method
+     * @private
+     * @param {MANTICORE.animation.ActionTimeLine} timeLine
+     * @private
+     */
+
+    _updateActivity(timeLine) {
+        if (this._activeTimeLines.indexOf(timeLine) !== -1) {
+            return;
+        }
+
+        this._activeTimeLines.push(timeLine);
+        ++this._activeTimeLineCount;
+
+        if (this._isActive) {
+            return;
+        }
+
+        this._isActive = true;
     }
 }
 

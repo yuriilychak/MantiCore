@@ -4,6 +4,7 @@ import DIRECTION from "./Direction";
 import FILE_TYPE from "./FileType";
 import RESOLUTION from "./Resolution";
 import SCENE_TRANSITION from "./SceneTransition";
+import TIME_LINE from "./TimeLine";
 import ui from "./ui/index";
 
 /**
@@ -18,5 +19,6 @@ export default {
     DIRECTION,
     FILE_TYPE,
     RESOLUTION,
-    SCENE_TRANSITION
+    SCENE_TRANSITION,
+    TIME_LINE
 }

@@ -1,19 +1,21 @@
 import Type from "util/Type";
-import MemoryManager from "manager/MemoryManager";
 import Geometry from "util/Geometry";
+import ReusableObject from "memory/ReusableObject";
 
 /**
  * @desc Class for manipulate with action animation.
  * @class
  * @memberOf MANTICORE.animation
+ * @extends MANTICORE.memory.ReusableObject
  */
 
-class ActionAnimation {
+class ActionAnimation extends ReusableObject{
     /**
      * @constructor
      * @param {MANTICORE.animation.action.ActionInterval} action
      */
     constructor(action) {
+        super();
         /**
          * @desc Action of animation.
          * @type {MANTICORE.animation.action.ActionInterval}
@@ -70,15 +72,7 @@ class ActionAnimation {
 
         this._visible = null;
 
-        /**
-         * @desc Manager for manipulate with pool and destruction.
-         * @type {MANTICORE.manager.MemoryManager}
-         * @private
-         */
-
-        this._memoryManager = new MemoryManager(this);
-
-        this._memoryManager.reusable = true;
+        this.reusable = true;
     }
 
     /**
@@ -144,9 +138,10 @@ class ActionAnimation {
      * @desc Calls by pool when model get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.animation.action.Action} action
+     * @param {MANTICORE.animation.action.ActionInterval} action
      */
     reuse(action) {
+        super.reuse(action);
         this._action = action;
     }
 
@@ -158,23 +153,24 @@ class ActionAnimation {
     disuse() {
         this.stop();
         this._clearData();
+        super.disuse();
     }
 
     destroy() {
         this.stop();
         this._clearData();
-        this._memoryManager.destroy();
-        this._memoryManager = null;
+        super.destroy();
     }
 
     /**
-     * @desc Call for destroy object. If it reusable put in pool.
+     * @desc Clone object
      * @method
      * @public
+     * @return {MANTICORE.animation.ActionAnimation}
      */
 
-    kill() {
-        this._memoryManager.kill();
+    clone() {
+        return ActionAnimation.cloneFromPool(ActionAnimation, this._action.clone());
     }
 
     /**
@@ -362,22 +358,6 @@ class ActionAnimation {
     }
 
     /**
-     * @public
-     * @type {boolean}
-     */
-
-    get inPool() {
-        return this._memoryManager.inPool;
-    }
-
-    set inPool(value) {
-        if (this._memoryManager.inPool === value) {
-            return;
-        }
-        this._memoryManager.inPool = value;
-    }
-
-    /**
      * @desc Returns duration in seconds.
      * @public
      * @returns {number}
@@ -386,7 +366,6 @@ class ActionAnimation {
     get duration() {
         return !this._isEmpty() ? this._action.duration : 0;
     }
-
 }
 
 export default ActionAnimation;

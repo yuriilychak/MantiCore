@@ -635,7 +635,7 @@ declare namespace MANTICORE {
             clone(): MANTICORE.component.ComChildIterator;
         }
 
-        export class Component {
+        export class Component extends MANTICORE.memory.ReusableObject {
             constructor(name?: string);
 
             reusable: boolean;
@@ -660,7 +660,6 @@ declare namespace MANTICORE {
             kill(): void;
             clone(): MANTICORE.component.Component;
 
-            protected static cloneFromPool<T extends MANTICORE.component.Component>(var_args: any[]): T;
             protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.EventModel): void;
             protected removeEventListener(event: string): void;
             protected dispatchEvent(event: string, data?: any): void;
@@ -913,7 +912,22 @@ declare namespace MANTICORE {
         }
     }
 
+    export namespace memory {
 
+        export class ReusableObject {
+            constructor();
+
+            reusable: boolean;
+            inPool: boolean;
+
+            reuse(...var_args: any[]): void;
+            disuse(): void
+            destroy(): void;
+            kill(): void;
+
+            protected static cloneFromPool<T extends MANTICORE.memory.ReusableObject>(...var_args: any[]): T;
+        }
+    }
 
     export namespace model {
         export class Model {

@@ -103,10 +103,11 @@ class Repository {
      * @method
      * @public
      * @param {int | string} key
+     * @param {boolean} [isKill = false] - Is need to kill element if it has function.
      * @returns {boolean}
      */
 
-    removeElement(key) {
+    removeElement(key, isKill = false) {
         const index = this._getKeyIndex(key);
 
         if (index === -1) {
@@ -114,7 +115,11 @@ class Repository {
         }
 
         this._keys.splice(index, 1);
-        this._values.splice(index, 1);
+        const element = this._values.splice(index, 1);
+
+        if (isKill) {
+            this._killElement(element);
+        }
 
         return true;
     }
@@ -154,12 +159,8 @@ class Repository {
         this._keys.length = 0;
         if (isKillValues) {
             const valueCount = this._values.length;
-            let value, i;
-            for (i = 0; i < valueCount; ++i) {
-                value = this._values[i];
-                if (Type.isObject(value) && !Type.isUndefined(value.kill)) {
-                    value.kill();
-                }
+            for (let i = 0; i < valueCount; ++i) {
+                this._killElement(this._values[i]);
             }
         }
         this._values.length = 0;
@@ -180,6 +181,20 @@ class Repository {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Try kill element.
+     * @method
+     * @private
+     * @param {*} element
+     */
+
+    _killElement(element) {
+        if (!Type.isObject(element) || Type.isUndefined(element.kill)) {
+            return;
+        }
+        element.kill();
+    }
 
     /**
      * @desc Returns index of key;

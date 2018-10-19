@@ -5,19 +5,23 @@ import Repository from "repository/Repository";
 import Constant from "constant";
 import Pool from "pool";
 import ActionAnimation from "./ActionAnimation";
+import ReusableObject from "memory/ReusableObject";
 
 /**
  * @desc Class for manipulate with animated actions and listen their event.
  * @class
  * @memberOf MANTICORE.animation
+ * @extends MANTICORE.memory.ReusableObject
  */
 
-class ActionTimeLine {
+class ActionTimeLine extends ReusableObject{
     /**
      * @constructor
      * @param {PIXI.DisplayObject} target
      */
     constructor(target) {
+        super();
+
         /**
          * @desc action that currently run
          * @type {?MANTICORE.animation.ActionAnimation}
@@ -76,6 +80,8 @@ class ActionTimeLine {
          */
 
         this._fpsCoef = 1;
+
+        this.reusable = true;
     }
 
     /**
@@ -105,7 +111,7 @@ class ActionTimeLine {
      */
 
     removeAnimation(name) {
-        return this._animations.removeElement(name);
+        return this._animations.removeElement(name, true);
     }
 
     /**
@@ -118,6 +124,18 @@ class ActionTimeLine {
         this._isPlaying = false;
         this._isRunning = false;
         this._animations.clear(true);
+    }
+
+    /**
+     * @desc Returns is time line has animation.
+     * @method
+     * @public
+     * @param {string} name
+     * @return {boolean}
+     */
+
+    hasAnimation(name) {
+        return this._animations.hasElement(name);
     }
 
     /**
@@ -210,9 +228,49 @@ class ActionTimeLine {
     }
 
     /**
+     * @desc Calls by pool when model get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} target
+     */
+    reuse(target) {
+        super.reuse(target);
+        this._target = target;
+    }
+
+    /**
+     * @desc Calls by pool when model put in to pool. Don't call it only override.
+     * @method
+     * @public
+     */
+    disuse() {
+        this._clearData();
+        super.disuse();
+    }
+
+    destroy() {
+        this._clearData();
+        super.destroy();
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data for move object to pool or destroy.
+     * @method
+     * @private
+     */
+
+    _clearData() {
+        this._clearRunningAnimation();
+        this._animations.clear(true);
+        this._target = null;
+        this._fps = Macro.FPS;
+        this._fpsCoef = 1;
+    }
 
     /**
      * @desc run animation after init.

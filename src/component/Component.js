@@ -1,14 +1,16 @@
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
 import Pool from "pool";
+import ReusableObject from "memory/ReusableObject";
 
 /**
  * @desc Base class of all components;
  * @class
  * @memberOf MANTICORE.component
+ * @extends MANTICORE.memory.ReusableObject
  */
 
-class Component {
+class Component extends ReusableObject{
 
     /**
      * @constructor
@@ -16,6 +18,7 @@ class Component {
      */
 
     constructor(name = "Component") {
+        super();
         /**
          * @desc Name of component;
          * @type {string}
@@ -61,14 +64,6 @@ class Component {
          */
 
         this._listenerManager = new ListenerManager(this);
-
-        /**
-         * @desc Class for manipulate with memory.
-         * @type {MANTICORE.manager.MemoryManager}
-         * @private
-         */
-
-        this._memoryManager = new MemoryManager(this);
     }
 
     /**
@@ -81,38 +76,12 @@ class Component {
      * @type {boolean}
      */
 
-    get reusable() {
-        return this._memoryManager.reusable;
-    }
-
-    set reusable(value) {
-        this._memoryManager.reusable = value;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
     get blockEvents() {
         return this._listenerManager.blockEvents;
     }
 
     set blockEvents(value) {
         this._listenerManager.blockEvents = value;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get inPool() {
-        return this._memoryManager.inPool;
-    }
-
-    set inPool(value) {
-        this._memoryManager.inPool = value;
     }
 
     /**
@@ -269,6 +238,7 @@ class Component {
 
     disuse() {
         this._listenerManager.removeAllEventListeners();
+        super.disuse();
     }
 
     /**
@@ -279,17 +249,7 @@ class Component {
 
     destroy() {
         this._listenerManager.destroy();
-        this._memoryManager.destroy();
-    }
-
-    /**
-     * @desc Call for destroy object. If it reusable put in pool.
-     * @method
-     * @public
-     */
-
-    kill() {
-        this._memoryManager.kill();
+        super.destroy();
     }
 
     /**
@@ -307,19 +267,6 @@ class Component {
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Calls for create clone of element. Need to don't import pool in children.
-     * @method
-     * @protected
-     * @static
-     * @param {...*} var_args
-     * @return {*}
-     */
-
-    static cloneFromPool(var_args) {
-        return Pool.getObject.apply(Pool, arguments);
-    }
 
     /**
      * @desc Add event listener for element.

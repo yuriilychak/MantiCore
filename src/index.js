@@ -9,6 +9,7 @@ import loader from "./loader";
 import launcher from "./launcher";
 import macro from "./macro";
 import manager from "./manager";
+import memory from "./memory";
 import model from "./model";
 import pool from "./pool";
 import repository from "./repository";
@@ -33,6 +34,7 @@ export {
     launcher,
     macro,
     manager,
+    memory,
     model,
     pool,
     repository,

@@ -167,11 +167,10 @@ const eventDispatcher = {
                 model = this._markForDelete[i];
                 event = model.event;
                 listenerRepo = this._listenerRepo.getElement(event);
-                listenerRepo.removeElement(model.id);
+                listenerRepo.removeElement(model.id, true);
                 if (listenerRepo.isEmpty()) {
                     this._listenerRepo.removeElement(event);
                 }
-                model.kill();
                 ++i;
             }
             this._markForDelete.length = 0;
