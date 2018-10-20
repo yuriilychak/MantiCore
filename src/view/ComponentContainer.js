@@ -6,6 +6,7 @@ import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
 import AnimationManager from "manager/AnimationManager";
 import Macro from "macro";
+import TIME_LINE from "enumerator/TimeLine";
 
 /**
  * @desc Class that implements composite pattern;
@@ -132,15 +133,182 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
+     * @desc Add time line to manager.
+     * @method
+     * @public
+     * @param {string} name
+     * @param {MANTICORE.animation.ActionAnimation | MANTICORE.animation.action.ActionInterval} animation
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine]
+     * @returns {boolean}
+     */
+
+    addAnimation(name, animation, timeLine = TIME_LINE.MAIN) {
+        return this._animationManager.addAnimation(name, animation, timeLine);
+    }
+
+    /**
+     * @desc Remove animation if it exist.
+     * @method
+     * @public
+     * @param {string} name
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @returns {boolean}
+     */
+
+    removeAnimation(name, timeLine = null) {
+        return this._animationManager.removeAnimation(name, timeLine);
+    }
+
+    /**
+     * @desc Remove all animations from time line.
+     * @method
+     * @public
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine]
+     */
+
+    removeAllAnimations(timeLine = TIME_LINE.MAIN) {
+        return this._animationManager.removeAllAnimations(timeLine);
+    }
+
+    /**
      * @desc Run tween action for container.
      * @method
      * @public
      * @param {MANTICORE.animation.action.Action} action
+     * @param {boolean} [loop = false] - Is need to loop animation.
+     * @param {int} frame [frame = 0] - Start frame of animation.
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
      */
 
-    runAction(action) {
-        this._animationManager.runAction(action);
+    runAction(action, loop = false, frame = 0, timeLine = null) {
+        this._animationManager.runAction(action, loop, frame, timeLine);
         this.isUpdate = true;
+    }
+
+    /**
+     * @desc Play animation if it exist
+     * @method
+     * @public
+     * @param {string} name - Name of animation to play.
+     * @param {boolean} [loop = false] - Is need to loop animation.
+     * @param {int} frame [frame = 0] - Start frame of animation.
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
+     * @returns {boolean}
+     */
+
+    play(name, loop = false, frame = 0, timeLine = null) {
+        const result = this._animationManager.play(name, loop, frame, timeLine);
+        this.isUpdate = true;
+        return result;
+    }
+
+    /**
+     * @desc Stop animation by frame.
+     * @method
+     * @public
+     * @param {string} name
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @returns {boolean}
+     */
+
+    stop(name, timeLine = null) {
+        return this._animationManager.stop(name, timeLine);
+    }
+
+    /**
+     * @desc Stop time line if it run some animation.
+     * @method
+     * @public
+     * @param {string | MANTICORE.enumerator.TIME_LINE} timeLine
+     * @returns {boolean}
+     */
+
+    stopTimeLine(timeLine) {
+        return this._animationManager.stopTimeLine(timeLine);
+    }
+
+    /**
+     * @desc Pause animation in time line if it playing.
+     * @method
+     * @public
+     * @param {string} name
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @returns {boolean}
+     */
+
+    pause(name, timeLine = null) {
+        return this._animationManager.pause(name, timeLine);
+    }
+
+    /**
+     * @desc Pause time line if it playing.
+     * @method
+     * @public
+     * @param {string | MANTICORE.enumerator.TIME_LINE | null} timeLine
+     * @returns {boolean}
+     */
+
+    pauseTimeLine(timeLine) {
+        return this._animationManager.pauseTimeLine(timeLine);
+    }
+
+    /**
+     * @desc Resume animation in time line if it paused.
+     * @method
+     * @public
+     * @param {string} name
+     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @returns {boolean}
+     */
+
+    resume(name, timeLine = null) {
+        return this._animationManager.resume(name, timeLine);
+    }
+
+    /**
+     * @desc Pause time line if it playing.
+     * @method
+     * @public
+     * @param {string | MANTICORE.enumerator.TIME_LINE | null} timeLine
+     * @returns {boolean}
+     */
+
+    resumeTimeLine(timeLine) {
+        return this._animationManager.resumeTimeLine(timeLine);
+    }
+
+    /**
+     * @desc Add time line to manager.
+     * @method
+     * @public
+     * @param {string} name
+     * @param {MANTICORE.animation.ActionTimeLine} [timeLine = null]
+     * @return {boolean}
+     */
+
+    addTimeLine(name, timeLine = null) {
+        return this._animationManager.addTimeLine(name, timeLine);
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {string | MANTICORE.enumerator.TIME_LINE} name
+     * @return {boolean}
+     */
+
+    removeTimeLine(name) {
+        return this._animationManager.removeTimeLine(name);
+    }
+
+    /**
+     * @desc Remove all time lines.
+     * @method
+     * @public
+     */
+
+    removeAllTimeLines() {
+        this._animationManager.removeAllTimeLines();
     }
 
     /**
@@ -157,7 +325,7 @@ class ComponentContainer extends PIXI.Container {
         for (let i = 0; i < argumentCount; ++i) {
             result.push(super.addChild(arguments[i]));
         }
-        this._onChildAction(result, (component, child) => component.onAddChild(child));
+        this._componentManager.childAction(result, (component, child) => component.onAddChild(child));
         return result.length === 1 ? result[0] : result;
     }
 
@@ -172,7 +340,7 @@ class ComponentContainer extends PIXI.Container {
 
     addChildAt(child, index) {
         const result = super.addChildAt(child, index);
-        this._onChildAction([result], (component, child) => component.onAddChild(child));
+        this._componentManager.childAction([result], (component, child) => component.onAddChild(child));
         return result;
     }
 
@@ -190,7 +358,7 @@ class ComponentContainer extends PIXI.Container {
         for (let i = 0; i < argumentCount; ++i) {
             result.push(super.removeChild(arguments[i]));
         }
-        this._onChildAction(result, (component, child) => component.onRemoveChild(child));
+        this._componentManager.childAction(result, (component, child) => component.onRemoveChild(child));
         return result.length === 1 ? result[0] : result;
     }
 
@@ -204,7 +372,7 @@ class ComponentContainer extends PIXI.Container {
 
     removeChildAt(index) {
         const result = super.removeChildAt(index);
-        this._onChildAction([result], (component, child) => component.onRemoveChild(child));
+        this._componentManager.childAction([result], (component, child) => component.onRemoveChild(child));
         return result;
     }
 
@@ -219,7 +387,7 @@ class ComponentContainer extends PIXI.Container {
 
     removeChildren(beginIndex = 0, endIndex = super.children.length) {
         const result = super.removeChildren(beginIndex, endIndex);
-        this._onChildAction(result, (component, child) => component.onRemoveChild(child));
+        this._componentManager.childAction(result, (component, child) => component.onRemoveChild(child));
         return result;
     }
 
@@ -245,6 +413,7 @@ class ComponentContainer extends PIXI.Container {
         this._componentManager.destroy();
         this._listenerManager.destroy();
         this._memoryManager.destroy();
+        this._animationManager.destroy();
         super.destroy();
     }
 
@@ -307,42 +476,10 @@ class ComponentContainer extends PIXI.Container {
      */
 
     onUpdate(dt) {
-        this._animationManager.update(dt / Macro.FPS);
-        this._componentManager.iterateComponents(component => {
-            if (!component.active) {
-                return;
-            }
-            component.onUpdate(dt / Macro.FPS);
-        });
-    }
-
-    /**
-     * PRIVATE METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Update components when some children remove.
-     * @method
-     * @private
-     * @param {PIXI.DisplayObject[]} children
-     * @param {MANTICORE.view.callback.ChildAction} callback
-     */
-
-    _onChildAction(children, callback) {
-        if (Type.isNull(children)) {
-            return;
-        }
-        const childCount = children.length;
-        let i;
-        this._componentManager.iterateComponents(component => {
-            if (!component.listenChildren) {
-                return;
-            }
-            for (i = 0; i < childCount; ++i) {
-                callback(component, children[i]);
-            }
-        });
+        const step = dt / Macro.FPS;
+        this._animationManager.update(step);
+        this._componentManager.update(step);
+        this.isUpdate = this._animationManager.active || this._componentManager.active;
     }
 
     /**
@@ -396,12 +533,7 @@ class ComponentContainer extends PIXI.Container {
         if (Type.isEmpty(this._componentManager)) {
             return;
         }
-        this._componentManager.iterateComponents(component => {
-            if (!component.listenVisible) {
-                return;
-            }
-            component.onVisibleChange(this.visible);
-        })
+        this._componentManager.visibleAction(this.visible);
     }
 
     /**

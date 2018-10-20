@@ -254,6 +254,18 @@ class ActionTimeLine extends ReusableObject{
     }
 
     /**
+     * @desc Returns is time line currently play animation.
+     * @method
+     * @public
+     * @param {string} animationName
+     * @returns {boolean}
+     */
+
+    isPlay(animationName) {
+        return this._runningName === animationName;
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -349,13 +361,23 @@ class ActionTimeLine extends ReusableObject{
     }
 
     /**
-     * @desc Returns is action play on time-line.
+     * @desc Flag is animation play on time-line (in pause return false).
      * @public
      * @returns {boolean}
      */
 
     get isPlaying() {
         return this._isPlaying;
+    }
+
+    /**
+     * @desc Flag is currently some animation running (paused or not).
+     * @public
+     * @returns {boolean}
+     */
+
+    get isRunning() {
+        return this._isRunning;
     }
 
     /**

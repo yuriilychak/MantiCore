@@ -1,5 +1,6 @@
 import Repository from "repository/Repository";
 import BaseManager from "./BaseManager";
+import Type from "util/Type";
 
 /**
  * @desc Class for manage components.
@@ -131,22 +132,9 @@ class ComponentManager extends BaseManager{
      */
 
     removeAllComponents() {
-        this.iterateComponents(component => component.onRemove());
+        this._iterateComponents(component => component.onRemove());
         this._componentRepo.clear(true);
         this._initComponents();
-    }
-
-    /**
-     * @desc Iterate components
-     * @method
-     * @public
-     * @param {MANTICORE.view.callback.IterateComponent} callback
-     */
-
-    iterateComponents(callback) {
-        for (let i = 0; i < this._componentCount; ++i) {
-            callback(this._components[i], i);
-        }
     }
 
     /**
@@ -159,10 +147,75 @@ class ComponentManager extends BaseManager{
         this.removeAllComponents();
     }
 
+    update(dt) {
+        let isActive = false;
+        this._iterateComponents(component => {
+            if (!component.active) {
+                return;
+            }
+            isActive = true;
+            component.onUpdate(dt);
+        });
+        this.active = isActive;
+    }
+
+    /**
+     * @desc Update components when some children change.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject[]} children
+     * @param {MANTICORE.view.callback.ChildAction} callback
+     */
+
+    childAction(children, callback) {
+        if (Type.isNull(children)) {
+            return;
+        }
+        const childCount = children.length;
+        let i;
+        this._iterateComponents(component => {
+            if (!component.listenChildren) {
+                return;
+            }
+            for (i = 0; i < childCount; ++i) {
+                callback(component, children[i]);
+            }
+        });
+    }
+
+    /**
+     * @desc Class when update visible of owner.
+     * @method
+     * @public
+     * @param {boolean} visible
+     */
+
+    visibleAction(visible) {
+        this._iterateComponents(component => {
+            if (!component.listenVisible) {
+                return;
+            }
+            component.onVisibleChange(visible);
+        });
+    }
+
     /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Iterate components
+     * @method
+     * @private
+     * @param {MANTICORE.view.callback.IterateComponent} callback
+     */
+
+    _iterateComponents(callback) {
+        for (let i = 0; i < this._componentCount; ++i) {
+            callback(this._components[i], i);
+        }
+    }
 
     /**
      * @desc add and int component, if component already add return false.
@@ -209,7 +262,7 @@ class ComponentManager extends BaseManager{
             return;
         }
         this._inPool = value;
-        this.iterateComponents(component => component.inPool = value);
+        this._iterateComponents(component => component.inPool = value);
     }
 }
 

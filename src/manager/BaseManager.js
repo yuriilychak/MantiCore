@@ -1,3 +1,5 @@
+import Type from "util/Type";
+
 /**
  * @desc Base class for manager classes.
  * @class
@@ -16,6 +18,13 @@ class BaseManager {
          * @private
          */
         this._owner = owner;
+
+        /**
+         * @desc Flag is element need to update.
+         * @type {boolean}
+         * @private
+         */
+        this._isActive = false;
     }
 
     /**
@@ -24,12 +33,23 @@ class BaseManager {
      */
 
     /**
+     * @desc Method for update inner elements in enter frame.
+     * @method
+     * @public
+     * @param {number} dt
+     */
+
+    update(dt) {}
+
+    /**
      * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
      * @method
      * @public
      */
 
-    destroy() {}
+    destroy() {
+        this._owner = null;
+    }
 
     /**
      * PROTECTED METHODS
@@ -43,6 +63,28 @@ class BaseManager {
 
     get owner() {
         return this._owner;
+    }
+
+    /**
+     * @desc Flag is element need to update.
+     * @public
+     * @return {boolean}
+     */
+
+    get active() {
+        return this._isActive;
+    }
+
+    set active(value) {
+        if (this._isActive === value) {
+            return;
+        }
+
+        this._isActive = value;
+
+        if (this._isActive && !Type.isUndefined(this._owner.isUpdate)) {
+            this._owner.isUpdate = this._isActive;
+        }
     }
 }
 

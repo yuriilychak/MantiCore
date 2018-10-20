@@ -859,24 +859,26 @@ declare namespace MANTICORE {
 
     export namespace manager {
         export class BaseManager {
-            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component);
+            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject);
 
+            active: boolean;
+            protected owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject;
+
+            update(dt: number): void;
             destroy(): void;
-
-            protected owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component;
-
         }
         export class ComponentManager extends MANTICORE.manager.BaseManager {
             constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite);
 
             inPool: boolean;
 
+            childAction(children: PIXI.DisplayObject[], callback: MANTICORE.view.callback.ChildAction): void;
+            visibleAction(visible: boolean): void;
             addComponent(component: MANTICORE.component.Component): boolean;
             addComponents(components: any[]): void;
             getComponent(name: string): MANTICORE.component.Component | null;
             removeComponent(name: string): boolean;
             removeAllComponents(): void;
-            iterateComponents(callback: MANTICORE.view.callback.IterateComponent): void;
         }
 
         export class LayoutSizeManager extends MANTICORE.manager.BaseManager {
@@ -1459,6 +1461,7 @@ declare namespace MANTICORE {
 
     export namespace view {
         namespace callback {
+            type ChildAction = (component: MANTICORE.component.Component, child: PIXI.DisplayObject)=>void;
             type IterateComponent = (component: MANTICORE.component.Component, index?: number)=>void;
         }
 
