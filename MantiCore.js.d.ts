@@ -654,10 +654,6 @@ declare namespace MANTICORE {
             onAddChild(child: PIXI.DisplayObject): void;
             onRemoveChild(child: PIXI.DisplayObject): void;
             onVisibleChange(visible: boolean): void;
-            reuse(...var_args: any[]): void;
-            disuse(): void;
-            destroy(): void;
-            kill(): void;
             clone(): MANTICORE.component.Component;
 
             protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.EventModel): void;
