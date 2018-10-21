@@ -13,8 +13,6 @@ import MemoryManager from "manager/MemoryManager";
 import TIME_LINE from "../enumerator/TimeLine";
 import Macro from "../macro";
 
-
-
 /**
  * @desc Class that implements composite pattern for sprite;
  * @class

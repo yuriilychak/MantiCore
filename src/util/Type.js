@@ -91,19 +91,6 @@ const type = {
     },
 
     /**
-     * @desc Init value if ite empty returns default value;
-     * @function
-     * @memberOf MANTICORE.util.type
-     * @param {*} value
-     * @param [defaultValue = null]
-     * @returns {*}
-     */
-
-    setValue: function (value, defaultValue = null) {
-        return !this.isEmpty(value) ? value : defaultValue;
-    },
-
-    /**
      * @desc Check the obj whether is array or not
      * @function
      * @memberOf MANTICORE.util.type
@@ -125,6 +112,31 @@ const type = {
 
     isObject: function (obj) {
         return typeof obj === "object" && this._isProtoEqual(obj, "Object");
+    },
+
+    /**
+     * @desc Init value if ite empty returns default value;
+     * @function
+     * @memberOf MANTICORE.util.type
+     * @param {*} value
+     * @param [defaultValue = null]
+     * @returns {*}
+     */
+
+    setValue: function (value, defaultValue = null) {
+        return !this.isEmpty(value) ? value : defaultValue;
+    },
+
+    /**
+     * @desc Convert value to boolean
+     * @function
+     * @public
+     * @param {*} value
+     * @return {boolean}
+     */
+
+    toBoolean: function(value) {
+        return !!value;
     }
 };
 

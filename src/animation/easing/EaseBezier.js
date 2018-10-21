@@ -1,4 +1,5 @@
 import EaseBase from "./EaseBase";
+import Math from "util/Math";
 
 /**
  * @class
@@ -37,7 +38,7 @@ class EaseBezier extends EaseBase {
         let result = 0;
 
         for (let i = 0; i < this._elementCount; ++i) {
-            result += Math.pow(revTime, this._rank - i) * Math.pow(time, i) * this._coefs[i] * this._multCoefs[i];
+            result += Math.intPow(revTime, this._rank - i) * Math.intPow(time, i) * this._coefs[i] * this._multCoefs[i];
         }
         return result;
     }

@@ -668,6 +668,50 @@ declare namespace MANTICORE {
 
     export namespace enumerator {
 
+        export enum ACTION_EASING {
+            LINEAR = 0,
+
+            SINE_IN = 1,
+            SINE_OUT = 2,
+            SINE_IN_OUT = 3,
+
+            QUAD_IN = 4,
+            QUAD_OUT = 5,
+            QUAD_IN_OUT = 6,
+
+            CUBIC_IN = 7,
+            CUBIC_OUT = 8,
+            CUBIC_IN_OUT = 9,
+
+            QUART_IN = 10,
+            QUART_OUT = 11,
+            QUART_IN_OUT = 12,
+
+            QUINT_IN = 13,
+            QUINT_OUT = 14,
+            QUINT_IN_OUT = 15,
+
+            EXPO_IN = 16,
+            EXPO_OUT = 17,
+            EXPO_IN_OUT = 18,
+
+            CIRC_IN = 19,
+            CIRC_OUT = 20,
+            CIRC_IN_OUT = 21,
+
+            ELASTIC_IN = 22,
+            ELASTIC_OUT = 23,
+            ELASTIC_IN_OUT = 24,
+
+            BACK_IN = 25,
+            BACK_OUT = 26,
+            BACK_IN_OUT = 27,
+
+            BOUNCE_IN = 28,
+            BOUNCE_OUT = 29,
+            BOUNCE_IN_OUT = 30
+        }
+
         export enum ACTION_TYPE {
             NONE = 0,
             POSITION = 1,
@@ -1451,6 +1495,7 @@ declare namespace MANTICORE {
             export function isArray(obj: any): boolean;
             export function isObject(obj: any): boolean;
             export function setValue(value: any, defaultValue?: any): any;
+            export function toBoolean(value: any):  boolean;
         }
 
         export namespace ui {
@@ -1484,6 +1529,22 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
 
+            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
+            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame = 0, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
+            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public stop(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE) boolean;
+
+            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
+            public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public stopTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAllTimeLines(): void;
+
             protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
             protected removeEventListener(event: string): void;
             protected dispatchEvent(event: string, data?: any): void;
@@ -1508,6 +1569,23 @@ declare namespace MANTICORE {
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
+
+
+            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
+            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame = 0, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
+            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public stop(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE) boolean;
+
+            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
+            public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public stopTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAllTimeLines(): void;
 
             protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
             protected removeEventListener(event: string): void;

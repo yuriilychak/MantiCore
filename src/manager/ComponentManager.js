@@ -23,7 +23,6 @@ class ComponentManager extends BaseManager{
          * @type {MANTICORE.repository.Repository}
          * @private
          */
-
         this._componentRepo = new Repository();
 
         /**
@@ -62,7 +61,6 @@ class ComponentManager extends BaseManager{
      * @param {MANTICORE.component.Component} component
      * @returns {boolean}
      */
-
     addComponent(component) {
         const result = this._addComponent(component);
         if (result) {

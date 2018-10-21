@@ -16,11 +16,19 @@ class TintTo extends ActionInterval {
      * @constructor
      * @param {number} duration
      * @param {number} red [0-255]
-     * @param {number} green  [0-255]
-     * @param {number} blue [0-255]
+     * @param {number} [green]  [0-255]
+     * @param {number} [blue] [0-255]
      */
-    constructor(duration, red, green, blue) {
+    constructor(duration, red, green = -1, blue = -1) {
         super(duration);
+
+        if (green === -1) {
+            const color = Color.intToRgb(red);
+            red = color[0];
+            green = color[1];
+            blue = color[2];
+        }
+
         /**
          * @type {number[]}
          * @private

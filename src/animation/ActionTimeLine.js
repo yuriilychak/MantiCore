@@ -81,6 +81,30 @@ class ActionTimeLine extends ReusableObject{
 
         this._fpsCoef = 1;
 
+        /**
+         * @desc Is need to loop animation.
+         * @type {boolean}
+         * @private
+         */
+
+        this._isLoop = false;
+
+        /**
+         * @desc Is calls animation in children.
+         * @type {boolean}
+         * @private
+         */
+
+        this._isInherit = false;
+
+        /**
+         * @desc Flag is currently run action, not saved animation.
+         * @type {boolean}
+         * @private
+         */
+
+        this._isRunAction = false;
+
         this.reusable = true;
     }
 
@@ -143,15 +167,18 @@ class ActionTimeLine extends ReusableObject{
      * @method
      * @public
      * @param {string} name - Play animation with name.
+     * @param {boolean} [loop = false] -
      * @returns {boolean}
      */
 
-    play(name) {
+    play(name, loop = false) {
         this._clearRunningAnimation();
         if (!this._animations.hasElement(name)) {
             return false;
         }
 
+        this.loop = loop;
+        this._isRunAction = false;
         this._runAnimation(name, this._animations.getElement(name));
 
         return true;
@@ -172,11 +199,14 @@ class ActionTimeLine extends ReusableObject{
      * @method
      * @public
      * @param {MANTICORE.animation.action.Action} action
+     * @param {boolean} [loop = false]
      */
 
-    runAction(action) {
+    runAction(action, loop = false) {
         this._clearRunningAnimation();
 
+        this.loop = loop;
+        this._isRunAction = true;
         this._runAnimation(
             Constant.TEMPORARY_ANIMATION_NAME + Math.getUniqueId(),
             Pool.getObject(ActionAnimation, action)
@@ -222,8 +252,14 @@ class ActionTimeLine extends ReusableObject{
         }
         this._runningAnimation.update(dt * this._fpsCoef);
         if (this._runningAnimation.isDone) {
-            this._isPlaying = false;
-            this._isRunning = false;
+            if (this._isLoop) {
+                this._playAnimation();
+            }
+            else {
+                this._isRunAction = false;
+                this._isPlaying = false;
+                this._isRunning = false;
+            }
         }
     }
 
@@ -282,6 +318,7 @@ class ActionTimeLine extends ReusableObject{
         this._target = null;
         this._fps = Macro.FPS;
         this._fpsCoef = 1;
+        this._isInherit = false;
     }
 
     /**
@@ -296,9 +333,10 @@ class ActionTimeLine extends ReusableObject{
         this._runningName = name;
         this._runningAnimation = animation;
 
-        this._runningAnimation.play(this._target);
+        this._playAnimation();
         this._isPlaying = true;
         this._isRunning = true;
+        this._isRunAction = false;
     }
 
     /**
@@ -317,12 +355,39 @@ class ActionTimeLine extends ReusableObject{
             this._runningAnimation.kill();
         }
 
+        this._isRunAction = false;
+        this._isLoop = false;
         this._runningName = null;
         this._runningAnimation = null;
         this._isPlaying = false;
         this._isRunning = false;
 
         return true;
+    }
+
+    /**
+     * @desc Play animation after init.
+     * @method
+     * @private
+     */
+
+    _playAnimation() {
+        this._runningAnimation.play(this._target);
+        if (this._isRunAction || !this._isInherit) {
+            return;
+        }
+
+        const children = this._target.children;
+        const childrenCount = children.length;
+        let i, child;
+
+        for (i = 0; i < childrenCount; ++i) {
+            child = children[i];
+            if (Type.isEmpty(child.play)) {
+                continue;
+            }
+            child.play(this._runningName);
+        }
     }
 
     /**
@@ -398,6 +463,40 @@ class ActionTimeLine extends ReusableObject{
 
     get duration() {
         return !this.isEmpty ? this._runningAnimation.duration : 0;
+    }
+
+    /**
+     * @desc Returns is animation need to loop
+     * @public
+     * @return {boolean}
+     */
+
+    get loop() {
+        return this._isLoop;
+    }
+
+    set loop(value) {
+        if (this._isLoop === value) {
+            return;
+        }
+        this._isLoop = value;
+    }
+
+    /**
+     * @desc Returns is time line inherit run animation for children of owner.
+     * @public
+     * @return {boolean}
+     */
+
+    get inherit() {
+        return this._isInherit;
+    }
+
+    set inherit(value) {
+        if (this._isInherit === value) {
+            return;
+        }
+        this._isInherit = value;
     }
 }
 

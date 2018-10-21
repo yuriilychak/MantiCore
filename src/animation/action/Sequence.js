@@ -21,7 +21,7 @@ class Sequence extends ActionInterval {
      * @param {MANTICORE.animation.action.FiniteTimeAction[] | ...MANTICORE.animation.action.FiniteTimeAction[]} [var_args]
      */
     constructor(var_args) {
-
+        super();
         const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
         if (paramArray.length <= 1) {
             return;
@@ -44,9 +44,7 @@ class Sequence extends ActionInterval {
         let durationOne = actionOne.duration, durationTwo = actionTwo.duration;
         durationOne *= actionOne.repeatMethod ? actionOne.repeatCount : 1;
         durationTwo *= actionTwo.repeatMethod ? actionTwo.repeatCount : 1;
-        const duration = durationOne + durationTwo;
-
-        super(duration);
+        this.duration = durationOne + durationTwo;
 
         /**
          * @type {MANTICORE.animation.action.FiniteTimeAction[]}

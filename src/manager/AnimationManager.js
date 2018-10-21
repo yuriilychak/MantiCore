@@ -188,7 +188,7 @@ class AnimationManager extends BaseManager {
             return false;
         }
 
-        actionTimeLine.play(name);
+        actionTimeLine.play(name, loop);
 
         this._addActiveTimeLine(actionTimeLine);
 
@@ -324,7 +324,7 @@ class AnimationManager extends BaseManager {
          */
         const actionTimeLine = this._timeLines.getElement(timeLine);
 
-        actionTimeLine.runAction(action);
+        actionTimeLine.runAction(action, loop);
 
         this._addActiveTimeLine(actionTimeLine);
     }

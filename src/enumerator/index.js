@@ -1,3 +1,4 @@
+import ACTION_EASING from "./ActionEasing";
 import ACTION_TYPE from "./ActionType";
 import BUNDLE_TYPE from "./BundleType";
 import DIRECTION from "./Direction";
@@ -14,6 +15,7 @@ import ui from "./ui/index";
 
 export default {
     ui,
+    ACTION_EASING,
     ACTION_TYPE,
     BUNDLE_TYPE,
     DIRECTION,
