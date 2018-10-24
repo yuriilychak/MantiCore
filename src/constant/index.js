@@ -43,7 +43,7 @@ const constant = {
      * @type {string}
      */
 
-    MAIN_ATLAS_NAME: "main"
+    MAIN_ATLAS_NAME: "main_0"
 };
 
 export default constant;

@@ -479,6 +479,50 @@ declare namespace MANTICORE {
                 reverse(): EaseSineOut;
             }
         }
+
+        export class ActionAnimation extends MANTICORE.memory.ReusableObject {
+            constructor(action: MANTICORE.animation.action.ActionInterval);
+
+            positionOffset: PIXI.Point;
+            scaleOffset: PIXI.Point;
+            skewOffset: PIXI.Point;
+            rotationOffset: number;
+            tint: number;
+            alpha: number;
+            visible: boolean | null;
+            readonly isDone: boolean;
+            readonly duration: number;
+
+            play(target: PIXI.DisplayObject): void;
+            stop(): void;
+            update(dt: number): void;
+            clone(): MANTICORE.animation.ActionAnimation;
+        }
+
+        export class ActionTimeLine extends MANTICORE.memory.ReusableObject{
+            constructor(target: PIXI.DisplayObject);
+
+            fps: number;
+            inherit: boolean;
+            loop: boolean;
+            readonly isEmpty: boolean;
+            readonly isPlaying: boolean;
+            readonly isRunning: boolean;
+            readonly isDone: boolean;
+            readonly duration: number;
+
+            addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
+            removeAnimation(name: string): boolean;
+            removeAllAnimations(): void;
+            hasAnimation(name: string): boolean;
+            play(name: string, loop?: boolean): boolean;
+            stop(): boolean;
+            runAction(action: MANTICORE.animation.action.Action, loop?: boolean): void;
+            pause(): void;
+            resume(): void;
+            update(dt: number): void;
+            isPlay(animationName: string): boolean;
+        }
     }
     export namespace builder {
         export namespace layoutBuilder {
@@ -488,12 +532,12 @@ declare namespace MANTICORE {
 
     export namespace bundle {
         export namespace ancillary {
-            class TextureAtlas {
+            export class TextureAtlas {
                 constructor(baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo, bundle: MANTICORE.type.AssetBundle);
             }
         }
         export namespace bundle {
-            class AssetBundle extends MANTICORE.bundle.bundle.BaseBundle {
+            export class AssetBundle extends MANTICORE.bundle.bundle.BaseBundle {
                 constructor (data: MANTICORE.type.AssetBundle);
 
 
@@ -739,6 +783,11 @@ declare namespace MANTICORE {
             DOWN = 4
         }
 
+        export enum ENGINE_MODE {
+            DEBUG = 0,
+            RELEASE = 1
+        }
+
         export enum FILE_TYPE {
             JSON = "json",
             PNG = "png",
@@ -897,12 +946,40 @@ declare namespace MANTICORE {
         type LoaderCallback = () => void;
     }
 
+    export namespace logger {
+        export function log(...var_args: any[]): void;
+        export function warn(...var_args: any[]): void;
+        export function error(...var_args: any[]): void;
+    }
+
     export namespace macro {
         export let FPS: number;
         export let USE_WEB_P_FALLBACK: boolean;
+        export let MODE: MANTICORE.enumerator.ENGINE_MODE;
     }
 
     export namespace manager {
+
+        export class AnimationManager extends MANTICORE.manager.BaseManager {
+            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite);
+
+            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
+            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
+            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public stop(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+
+            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
+            public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public stopTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public removeAllTimeLines(): void;
+        }
+
         export class BaseManager {
             constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject);
 
@@ -1530,7 +1607,7 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
 
-            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval | MANTICORE.animation.ActionAnimation, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
             public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
@@ -1539,7 +1616,7 @@ declare namespace MANTICORE {
             public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
 
-            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
+            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: MANTICORE.animation.ActionTimeLine): boolean;
             public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
@@ -1550,7 +1627,6 @@ declare namespace MANTICORE {
             protected removeEventListener(event: string): void;
             protected dispatchEvent(event: string, data?: any): void;
             protected onUpdate(dt: number): void;
-
         }
         export class ComponentSprite extends PIXI.Sprite {
             constructor(frameName: string);
@@ -1570,7 +1646,6 @@ declare namespace MANTICORE {
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
-
 
             public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;

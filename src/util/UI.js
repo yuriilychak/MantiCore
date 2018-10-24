@@ -1,4 +1,5 @@
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import Logger from "logger";
 import Type from "./Type";
 import Format from "./Format";
 
@@ -124,7 +125,7 @@ const ui = {
         if (pathSplit.length !== 1) {
             pathSplit.splice(0, 1);
         }
-        console.log(Format.replace(this.LOG_TEMPLATE, tab, type, pathSplit.join("=>")));
+        Logger.log(Format.replace(this.LOG_TEMPLATE, tab, type, pathSplit.join("=>")));
 
         const isButton = widget.uiType && widget.uiType === UI_ELEMENT.BUTTON;
         const children = widget.uiType && (widget.uiType === UI_ELEMENT.SCROLL_VIEW  || widget.uiType === UI_ELEMENT.LIST_VIEW) ?

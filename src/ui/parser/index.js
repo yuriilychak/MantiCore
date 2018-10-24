@@ -3,6 +3,7 @@ import Math from "util/Math";
 import Color from "util/Color";
 
 import Pool from "pool";
+import Logger from "logger";
 
 import BundleCache from "bundle/BundleCache";
 
@@ -122,7 +123,7 @@ function parseChild (parent, data, bundle) {
             break;
         }
         default: {
-            console.log("Cant parse element");
+            Logger.log("Cant parse element");
             break;
         }
     }

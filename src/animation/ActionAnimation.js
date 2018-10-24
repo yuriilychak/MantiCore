@@ -285,23 +285,6 @@ class ActionAnimation extends ReusableObject{
      * @returns {int}
      */
 
-    get rotationOffset() {
-        return this._rotation;
-    }
-
-    set rotationOffset(value) {
-        if (this._rotation === value) {
-            return;
-        }
-        this._rotation = value;
-    }
-
-    /**
-     * @desc Offset in start of animation from target rotation.
-     * @public
-     * @returns {int}
-     */
-
     get tint() {
         return this._tint;
     }
