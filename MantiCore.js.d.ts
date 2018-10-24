@@ -1246,6 +1246,7 @@ declare namespace MANTICORE {
                 horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
                 verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
                 lineHeight: number;
+                localized: boolean;
 
                 getShadowOffset(): PIXI.Point;
                 setShadowOffset(xOrPoint: number | PIXI.Point, y?: number): void;

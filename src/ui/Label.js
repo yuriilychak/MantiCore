@@ -262,6 +262,10 @@ class Label extends BaseLabel {
     }
 
     set text(value) {
+        if (this._label.text === value) {
+            return;
+        }
+        this.localized = true;
         this._label.text = value;
     }
 

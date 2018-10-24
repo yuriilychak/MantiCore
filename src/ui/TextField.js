@@ -258,6 +258,7 @@ class TextField extends Label {
         if (this._realText === value) {
             return;
         }
+        this.localized = true;
         this._realText = value;
         this._updateTextTransform();
     }

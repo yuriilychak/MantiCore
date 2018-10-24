@@ -768,6 +768,7 @@ function _createLabel(data, bundle) {
     result.verticalAlign = font.align[1];
     result.text = _getText(data, 1, bundle);
     result.color = _getColor(font.color, bundle);
+    result.localized = false;
 
     return result;
 }
@@ -798,6 +799,8 @@ function _createTextField(data, bundle) {
     if (style.placeHolderText !== -1) {
         result.placeholderText = bundle.texts[style.placeHolderText];
     }
+
+    result.localized = false;
 
     return result;
 }

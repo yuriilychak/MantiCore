@@ -103,6 +103,7 @@ class AtlasLabel extends BaseLabel {
 
         this.verticalAlign = VERTICAL_ALIGN.MIDDLE;
         this.horizontalAlign = HORIZONTAL_ALIGN.CENTER;
+        this.localized = true;
     }
 
     /**

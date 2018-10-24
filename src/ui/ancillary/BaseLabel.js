@@ -32,6 +32,14 @@ class BaseLabel extends Widget {
          */
 
         this._horizontalAlign = HORIZONTAL_ALIGN.LEFT;
+
+        /**
+         * @desc Flag is label localized.
+         * @type {boolean}
+         * @private
+         */
+
+        this._localized = false;
     }
 
     /**
@@ -226,6 +234,23 @@ class BaseLabel extends Widget {
 
     get fontName() {
         return "Empty";
+    }
+
+    /**
+     * @desc Flag is label localized.
+     * @public
+     * @returns {boolean}
+     */
+
+    get localize() {
+        return this._localized;
+    }
+
+    set localized(value) {
+        if (this._localized === value) {
+            return;
+        }
+        this._localized = value;
     }
 }
 
