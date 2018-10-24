@@ -79,7 +79,7 @@ class AssetBundle extends BaseBundle {
         const resolution = 1;
 
         let font, i, j, letterCount, fontData, res, kernings, kerningCount, nameSplit,
-            kerning, letters, letter, offset, first, second, amount;
+            kerning, letters, letter, offset, first, second, amount, dimension;
 
 
         for (i = 0; i < fontCount; ++i) {
@@ -101,16 +101,18 @@ class AssetBundle extends BaseBundle {
 
                 offset = font.offsets[letter.offset];
 
+                dimension = letter.dimensions;
+
                 fontData.chars[letter.id] = {
                     xOffset: offset[0] / res,
                     yOffset: offset[1] / res,
                     xAdvance: letter.ax / res,
                     kerning: {},
                     texture: new PIXI.Texture(baseTexture, new PIXI.Rectangle(
-                        letter.dimensions[0] / res,
-                        letter.dimensions[1] / res,
-                        letter.dimensions[2] / res,
-                        letter.dimensions[3] / res
+                        dimension[0] / res,
+                        dimension[1] / res,
+                        dimension[2] / res,
+                        dimension[3] / res
                     )),
                     page: letter.page
                 };
