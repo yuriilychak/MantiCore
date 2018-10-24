@@ -653,6 +653,7 @@ declare namespace MANTICORE {
                 onOwnerDrag(event: MANTICORE.eventDispatcher.EventModel): void;
                 onOwnerClick(event: MANTICORE.eventDispatcher.EventModel): void;
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+                logUnlocalizedFields(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
                 setChildText<T extends PIXI.Container>(text: any, path: string, widget?: T): boolean;
                 getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
                 addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T;
@@ -1579,6 +1580,7 @@ declare namespace MANTICORE {
 
         export namespace ui {
             export function logHierarchy(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+            export function logUnlocalizedFields(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
             export function getChildView<T extends PIXI.Container>(path: string, firstElement: T): T| null;
         }
     }

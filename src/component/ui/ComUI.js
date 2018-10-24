@@ -56,6 +56,18 @@ class ComUI extends Component {
     }
 
     /**
+     * @desc Log labels and buttons that don't localized for owner or custom widget.
+     * @function
+     * @public
+     * @memberOf MANTICORE.util.ui
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} widget
+     */
+
+    logUnlocalizedFields(widget = null) {
+        UI.logUnlocalizedFields(Type.isNull(widget) ? this.owner : widget);
+    }
+
+    /**
      * @desc Get child widget from parent or some custom widget.
      * @public
      * @method
