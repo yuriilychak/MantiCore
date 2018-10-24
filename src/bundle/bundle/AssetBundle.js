@@ -1,7 +1,8 @@
 import BaseBundle from "./BaseBundle";
 import BUNDLE_TYPE from "enumerator/BundleType";
-import TextureAtas from "bundle/ancillary/TextureAtlas";
+import TextureAtlas from "bundle/ancillary/TextureAtlas";
 import FontCache from "ui/fontCache";
+import Constant from "constant";
 
 /**
  * @desc Class for store asset bundles
@@ -69,8 +70,8 @@ class AssetBundle extends BaseBundle {
      */
 
     generateTextureAtlas(baseTexture, atlas) {
-        this._textureAtlases.push(new TextureAtas(baseTexture, atlas, this.data));
-        if (atlas.name !== "main") {
+        this._textureAtlases.push(new TextureAtlas(baseTexture, atlas, this.data));
+        if (atlas.name !== Constant.MAIN_ATLAS_NAME) {
             return;
         }
         const fonts = this.data.fontData;
@@ -90,7 +91,6 @@ class AssetBundle extends BaseBundle {
             fontData.size = font.size;
             fontData.lineHeight = font.lineHeight / res;
             fontData.chars = {};
-
 
             // parse letters
             letters = font.chars;

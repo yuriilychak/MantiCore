@@ -35,7 +35,15 @@ const constant = {
      * @type {string}
      */
 
-    TEMPORARY_ANIMATION_NAME: "TemporaryAnimation"
+    TEMPORARY_ANIMATION_NAME: "TemporaryAnimation",
+
+    /**
+     * @desc Main atlas name, need for font parsing.
+     * @public
+     * @type {string}
+     */
+
+    MAIN_ATLAS_NAME: "main"
 };
 
 export default constant;
