@@ -262,6 +262,9 @@ class AnimationManager extends BaseManager {
      */
 
     pauseTimeLine(timeLine) {
+        /**
+         * @type {MANTICORE.animation.ActionTimeLine}
+         */
         const actionTimeLine = this._timeLines.getElement(timeLine);
         if (!AnimationManager._canPause(actionTimeLine)) {
             return false;
@@ -299,6 +302,9 @@ class AnimationManager extends BaseManager {
      */
 
     resumeTimeLine(timeLine) {
+        /**
+         * @type {MANTICORE.animation.ActionTimeLine}
+         */
         const actionTimeLine = this._timeLines.getElement(timeLine);
         if (!AnimationManager._canResume(actionTimeLine)) {
             return false;

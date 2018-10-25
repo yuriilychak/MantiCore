@@ -995,7 +995,9 @@ declare namespace MANTICORE {
 
             inPool: boolean;
 
-            childAction(children: PIXI.DisplayObject[], callback: MANTICORE.view.callback.ChildAction): void;
+            iterateUIComponents(callback: MANTICORE.view.callback.IterateComponent);
+            addChildrenAction(children: PIXI.DisplayObject[]): void;
+            removeChildrenAction(children: PIXI.DisplayObject[]): void;
             visibleAction(visible: boolean): void;
             addComponent(component: MANTICORE.component.Component): boolean;
             addComponents(components: any[]): void;
@@ -1599,32 +1601,16 @@ declare namespace MANTICORE {
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
+            readonly animationManager: MANTICORE.manager.AnimationManager;
+            readonly componentManager: MANTICORE.manager.ComponentManager;
+            readonly listenerManager: MANTICORE.manager.ListenerManager;
+            readonly hasAnimationManager: boolean;
+            readonly hasComponentManager: boolean;
+            readonly hasListenerManager: boolean;
 
-            public addComponent(component: MANTICORE.component.Component): boolean;
-            public addComponents(components: any[]): void;
-            public getComponent<T extends MANTICORE.component.Component>(name: string): T | null;
-            public removeComponent(name: string): boolean;
-            public removeAllComponents(): void;
-            public runAction(action: MANTICORE.animation.action.Action): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
-
-            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval | MANTICORE.animation.ActionAnimation, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
-            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
-            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public stop(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-
-            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: MANTICORE.animation.ActionTimeLine): boolean;
-            public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public stopTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAllTimeLines(): void;
 
             protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
             protected removeEventListener(event: string): void;
@@ -1639,32 +1625,16 @@ declare namespace MANTICORE {
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
+            readonly animationManager: MANTICORE.manager.AnimationManager;
+            readonly componentManager: MANTICORE.manager.ComponentManager;
+            readonly listenerManager: MANTICORE.manager.ListenerManager;
+            readonly hasAnimationManager: boolean;
+            readonly hasComponentManager: boolean;
+            readonly hasListenerManager: boolean;
 
-            public addComponent(component: MANTICORE.component.Component): boolean;
-            public addComponents(components: any[]): void;
-            public getComponent(name: string): MANTICORE.component.Component | null;
-            public removeComponent(name: string): boolean;
-            public removeAllComponents(): void;
-            public runAction(action: MANTICORE.animation.action.Action): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
-
-            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
-            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
-            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public stop(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-
-            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
-            public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public stopTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAllTimeLines(): void;
 
             protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
             protected removeEventListener(event: string): void;

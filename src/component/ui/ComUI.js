@@ -139,7 +139,7 @@ class ComUI extends Component {
         const child = this.getChildView(path, widget);
 
         if (!Type.isNull(child) && child.uiType) {
-            child.addComponent(component);
+            child.componentManager.addComponent(component);
         }
 
         return component;

@@ -383,10 +383,10 @@ class ActionTimeLine extends ReusableObject{
 
         for (i = 0; i < childrenCount; ++i) {
             child = children[i];
-            if (Type.isEmpty(child.play)) {
+            if (!child.hasAnimationManager) {
                 continue;
             }
-            child.play(this._runningName);
+            child.animationManager.play(this._runningName);
         }
     }
 

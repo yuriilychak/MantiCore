@@ -1,7 +1,6 @@
-import launcher from "launcher/index";
+import Launcher from "launcher/index";
 
 import Asset from "util/Asset";
-import Type from "util/Type";
 import Geometry from "util/Geometry";
 
 import UI_ELEMENT from "enumerator/ui/UIElement";
@@ -10,7 +9,6 @@ import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
-import TIME_LINE from "../enumerator/TimeLine";
 import Macro from "../macro";
 
 /**
@@ -30,11 +28,11 @@ class ComponentSprite extends PIXI.Sprite {
 
         /**
          * @desc Manager of components.
-         * @type {MANTICORE.manager.ComponentManager}
+         * @type {?MANTICORE.manager.ComponentManager}
          * @private
          */
 
-        this._componentManager = new ComponentManager(this);
+        this._componentManager = null;
 
         /**
          * @desc Manager of listeners.
@@ -42,7 +40,7 @@ class ComponentSprite extends PIXI.Sprite {
          * @private
          */
 
-        this._listenerManager = new ListenerManager(this);
+        this._listenerManager = null;
 
         /**
          * @desc Class for manipulate with memory.
@@ -54,11 +52,35 @@ class ComponentSprite extends PIXI.Sprite {
 
         /**
          * @desc Class for manipulate with animations.
-         * @type {MANTICORE.manager.AnimationManager}
+         * @type {?MANTICORE.manager.AnimationManager}
          * @private
          */
 
-        this._animationManager = new AnimationManager(this);
+        this._animationManager = null;
+
+        /**
+         * @desc Flag is animation manager init.
+         * @type {boolean}
+         * @private
+         */
+
+        this._hasAnimationManager = false;
+
+        /**
+         * @desc Flag is component manager init.
+         * @type {boolean}
+         * @private
+         */
+
+        this._hasComponentManager = false;
+
+        /**
+         * @desc Flag is listener manager init.
+         * @type {boolean}
+         * @private
+         */
+
+        this._hasListenerManager = false;
 
         /**
          * @desc Flag is container marked for update;
@@ -82,242 +104,6 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     /**
-     * @desc Add component to container, returns falls if component already add.
-     * @method
-     * @public
-     * @param {MANTICORE.component.Component} component
-     * @returns {boolean}
-     */
-
-    addComponent(component) {
-        return this._componentManager.addComponent(component);
-    }
-
-    /**
-     * @desc Add components to container.
-     * @method
-     * @public
-     * @param {MANTICORE.component.Component[]} components
-     */
-
-    addComponents(components) {
-        this._componentManager.addComponents(components);
-    }
-
-    /**
-     * @desc Returns component by name, if it don't attach returns null.
-     * @method
-     * @public
-     * @param {string} name
-     * @returns {MANTICORE.component.Component | null}
-     */
-
-    getComponent(name) {
-        return this._componentManager.getComponent(name);
-    }
-
-    /**
-     * @desc Remove component from container;
-     * @method
-     * @public
-     * @param {string} name
-     * @returns {boolean}
-     */
-
-    removeComponent(name) {
-        return this._componentManager.removeComponent(name);
-    }
-
-    /**
-     * @desc Remove all components from target;
-     * @method
-     * @public
-     */
-
-    removeAllComponents() {
-        return this._componentManager.removeAllComponents();
-    }
-
-    /**
-     * @desc Add time line to manager.
-     * @method
-     * @public
-     * @param {string} name
-     * @param {MANTICORE.animation.ActionAnimation | MANTICORE.animation.action.ActionInterval} animation
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine]
-     * @returns {boolean}
-     */
-
-    addAnimation(name, animation, timeLine = TIME_LINE.MAIN) {
-        return this._animationManager.addAnimation(name, animation, timeLine);
-    }
-
-    /**
-     * @desc Remove animation if it exist.
-     * @method
-     * @public
-     * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
-     * @returns {boolean}
-     */
-
-    removeAnimation(name, timeLine = null) {
-        return this._animationManager.removeAnimation(name, timeLine);
-    }
-
-    /**
-     * @desc Remove all animations from time line.
-     * @method
-     * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine]
-     */
-
-    removeAllAnimations(timeLine = TIME_LINE.MAIN) {
-        return this._animationManager.removeAllAnimations(timeLine);
-    }
-
-    /**
-     * @desc Run tween action for container.
-     * @method
-     * @public
-     * @param {MANTICORE.animation.action.Action} action
-     * @param {boolean} [loop = false] - Is need to loop animation.
-     * @param {int} frame [frame = 0] - Start frame of animation.
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
-     */
-
-    runAction(action, loop = false, frame = 0, timeLine = null) {
-        this._animationManager.runAction(action, loop, frame, timeLine);
-        this.isUpdate = true;
-    }
-
-    /**
-     * @desc Play animation if it exist
-     * @method
-     * @public
-     * @param {string} name - Name of animation to play.
-     * @param {boolean} [loop = false] - Is need to loop animation.
-     * @param {int} frame [frame = 0] - Start frame of animation.
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
-     * @returns {boolean}
-     */
-
-    play(name, loop = false, frame = 0, timeLine = null) {
-        const result = this._animationManager.play(name, loop, frame, timeLine);
-        this.isUpdate = true;
-        return result;
-    }
-
-    /**
-     * @desc Stop animation by frame.
-     * @method
-     * @public
-     * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
-     * @returns {boolean}
-     */
-
-    stop(name, timeLine = null) {
-        return this._animationManager.stop(name, timeLine);
-    }
-
-    /**
-     * @desc Stop time line if it run some animation.
-     * @method
-     * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE} timeLine
-     * @returns {boolean}
-     */
-
-    stopTimeLine(timeLine) {
-        return this._animationManager.stopTimeLine(timeLine);
-    }
-
-    /**
-     * @desc Pause animation in time line if it playing.
-     * @method
-     * @public
-     * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
-     * @returns {boolean}
-     */
-
-    pause(name, timeLine = null) {
-        return this._animationManager.pause(name, timeLine);
-    }
-
-    /**
-     * @desc Pause time line if it playing.
-     * @method
-     * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE | null} timeLine
-     * @returns {boolean}
-     */
-
-    pauseTimeLine(timeLine) {
-        return this._animationManager.pauseTimeLine(timeLine);
-    }
-
-    /**
-     * @desc Resume animation in time line if it paused.
-     * @method
-     * @public
-     * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
-     * @returns {boolean}
-     */
-
-    resume(name, timeLine = null) {
-        return this._animationManager.resume(name, timeLine);
-    }
-
-    /**
-     * @desc Pause time line if it playing.
-     * @method
-     * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE | null} timeLine
-     * @returns {boolean}
-     */
-
-    resumeTimeLine(timeLine) {
-        return this._animationManager.resumeTimeLine(timeLine);
-    }
-
-    /**
-     * @desc Add time line to manager.
-     * @method
-     * @public
-     * @param {string} name
-     * @param {MANTICORE.animation.ActionTimeLine} [timeLine = null]
-     * @return {boolean}
-     */
-
-    addTimeLine(name, timeLine = null) {
-        return this._animationManager.addTimeLine(name, timeLine);
-    }
-
-    /**
-     * @method
-     * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE} name
-     * @return {boolean}
-     */
-
-    removeTimeLine(name) {
-        return this._animationManager.removeTimeLine(name);
-    }
-
-    /**
-     * @desc Remove all time lines.
-     * @method
-     * @public
-     */
-
-    removeAllTimeLines() {
-        this._animationManager.removeAllTimeLines();
-    }
-
-    /**
      * @method
      * @public
      * @override
@@ -335,7 +121,9 @@ class ComponentSprite extends PIXI.Sprite {
             arguments[i].scale.copy(scale);
             result.push(super.addChild(arguments[i]));
         }
-        this._componentManager.childAction(result, (component, child) => component.onAddChild(child));
+        if (this._hasComponentManager) {
+            this._componentManager.addChildrenAction(result);
+        }
         return result.length === 1 ? result[0] : result;
     }
 
@@ -352,7 +140,9 @@ class ComponentSprite extends PIXI.Sprite {
         const result = super.addChildAt(child, index);
         Geometry.pSub(child.position, Geometry.pCompMult(Geometry.pFromSize(this), this.anchor), true);
         child.scale.copy(Geometry.pInvert(this.scale));
-        this._componentManager.childAction([result], (component, child) => component.onAddChild(child));
+        if (this._hasComponentManager) {
+            this._componentManager.addChildrenAction([result]);
+        }
         return result;
     }
 
@@ -370,7 +160,9 @@ class ComponentSprite extends PIXI.Sprite {
         for (let i = 0; i < argumentCount; ++i) {
             result.push(super.removeChild(arguments[i]));
         }
-        this._componentManager.childAction(result, (component, child) => component.onRemoveChild(child));
+        if (this._hasComponentManager) {
+            this._componentManager.removeChildrenAction(result);
+        }
         return result.length === 1 ? result[0] : result;
     }
 
@@ -384,7 +176,9 @@ class ComponentSprite extends PIXI.Sprite {
 
     removeChildAt(index) {
         const result = super.removeChildAt(index);
-        this._componentManager.childAction([result], (component, child) => component.onRemoveChild(child));
+        if (this._hasComponentManager) {
+            this._componentManager.removeChildrenAction([result]);
+        }
         return result;
     }
 
@@ -399,7 +193,9 @@ class ComponentSprite extends PIXI.Sprite {
 
     removeChildren(beginIndex = 0, endIndex = super.children.length) {
         const result = super.removeChildren(beginIndex, endIndex);
-        this._componentManager.childAction(result, (component, child) => component.onRemoveChild(child));
+        if (this._hasComponentManager) {
+            this._componentManager.removeChildrenAction(result);
+        }
         return result;
     }
 
@@ -422,10 +218,20 @@ class ComponentSprite extends PIXI.Sprite {
 
     destroy() {
         this.isUpdate = false;
-        this._componentManager.destroy();
-        this._listenerManager.destroy();
+        if (this._hasComponentManager) {
+            this._componentManager.destroy();
+        }
+
+        if (this._hasListenerManager) {
+            this._listenerManager.destroy();
+        }
+
+        if (this._hasAnimationManager) {
+            this._animationManager.destroy();
+        }
+
         this._memoryManager.destroy();
-        this._animationManager.destroy();
+
         super.destroy();
     }
 
@@ -453,7 +259,7 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     addEventListener(event, handler) {
-        this._listenerManager.addEventListener(event, handler);
+        this.listenerManager.addEventListener(event, handler);
     }
 
     /**
@@ -464,6 +270,9 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     removeEventListener(event) {
+        if (!this._hasListenerManager) {
+            return;
+        }
         this._listenerManager.removeEventListener(event);
     }
 
@@ -476,7 +285,7 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     dispatchEvent(event, data = null) {
-        this._listenerManager.dispatchEvent(event, data);
+        this.listenerManager.dispatchEvent(event, data);
     }
 
     /**
@@ -489,9 +298,15 @@ class ComponentSprite extends PIXI.Sprite {
 
     onUpdate(dt) {
         const step = dt / Macro.FPS;
-        this._animationManager.update(step);
-        this._componentManager.update(step);
-        this.isUpdate = this._animationManager.active || this._componentManager.active;
+        if (this._hasAnimationManager) {
+            this._animationManager.update(step);
+        }
+        if (this._hasComponentManager) {
+            this._componentManager.update(step);
+        }
+
+        this.isUpdate = (this._hasAnimationManager && this._animationManager.active) ||
+            (this._hasComponentManager && this._componentManager.active);
     }
 
     /**
@@ -514,7 +329,7 @@ class ComponentSprite extends PIXI.Sprite {
         }
         super.visible = value;
 
-        if (Type.isEmpty(this._componentManager)) {
+        if (!this._hasComponentManager) {
             return;
         }
         this._componentManager.visibleAction(this.visible);
@@ -549,6 +364,7 @@ class ComponentSprite extends PIXI.Sprite {
     }
 
     /**
+     * @desc Flag is view currently in pool.
      * @public
      * @type {boolean}
      */
@@ -603,7 +419,7 @@ class ComponentSprite extends PIXI.Sprite {
 
         this._isUpdate = value;
 
-        const app = launcher.getApp();
+        const app = Launcher.getApp();
         const ticker = app.ticker;
 
         if (this._isUpdate) {
@@ -614,6 +430,79 @@ class ComponentSprite extends PIXI.Sprite {
         ticker.remove(this.onUpdate, this);
     }
 
+    /**
+     * @desc Link to animation manager.
+     * @public
+     * @readonly
+     * @return {MANTICORE.manager.AnimationManager}
+     */
+
+    get animationManager() {
+        if (!this._hasAnimationManager) {
+            this._hasAnimationManager = true;
+            this._animationManager = new AnimationManager(this);
+        }
+        return this._animationManager;
+    }
+
+    /**
+     * @desc Link to component manager
+     * @readonly
+     * @public
+     * @return {MANTICORE.manager.ComponentManager}
+     */
+
+    get componentManager() {
+        if (!this._hasComponentManager) {
+            this._hasComponentManager = true;
+            this._componentManager = new ComponentManager(this);
+        }
+        return this._componentManager;
+    }
+
+    /**
+     * @desc Link to listener manager.
+     * @public
+     * @return {MANTICORE.manager.ListenerManager}
+     */
+
+    get listenerManager() {
+        if (!this._hasListenerManager) {
+            this._hasListenerManager = true;
+            this._listenerManager = new ListenerManager(this);
+        }
+        return this._listenerManager;
+    }
+
+    /**
+     * @desc Flag is view has animation manager.
+     * @public
+     * @return {boolean}
+     */
+
+    get hasAnimationManager() {
+        return this._hasAnimationManager;
+    }
+
+    /**
+     * @desc Flag is view has component manager.
+     * @public
+     * @return {boolean}
+     */
+
+    get hasComponentManager() {
+        return this._hasComponentManager;
+    }
+
+    /**
+     * @desc Flag is view has listener manager.
+     * @public
+     * @return {boolean}
+     */
+
+    get hasListenerManager() {
+        return this._hasListenerManager;
+    }
 }
 
 export default ComponentSprite;

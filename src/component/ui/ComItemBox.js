@@ -115,7 +115,7 @@ class ComItemBox extends Component {
 
     addItem(child) {
         const component = new this._componentTemplate();
-        if (!child.addComponent(component)) {
+        if (!child.componentManager.addComponent(component)) {
             return;
         }
         this._items.push(component);
@@ -140,7 +140,7 @@ class ComItemBox extends Component {
                 break;
             }
             component = new this._componentTemplate();
-            if (child.addComponent(component)) {
+            if (child.componentManager.addComponent(component)) {
                 this._items.push(component);
             }
             ++index;

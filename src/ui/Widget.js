@@ -8,7 +8,7 @@ import Asset from "util/Asset";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Constant from "constant/index";
 import Geometry from "util/Geometry";
-import ComUI from "component/ui/ComUI"
+import ComUI from "component/ui/ComUI";
 
 /**
  * @desc Base component for all UI elements.
@@ -64,14 +64,6 @@ class Widget extends ComponentContainer {
          */
 
         this._isInteractiveOver = false;
-
-        /**
-         * @desc Array with ui components. Need to dispatch interactions for components without events.
-         * @type {MANTICORE.component.ui.ComUI[]}
-         * @private
-         */
-
-        this._uiComponents = [];
 
         /**
          * @type {MANTICORE.repository.Repository}
@@ -182,71 +174,6 @@ class Widget extends ComponentContainer {
         }
 
         this._events.addElement(name, id);
-    }
-
-    /**
-     * @desc Add component to container, returns falls if component already add.
-     * @method
-     * @public
-     * @param {MANTICORE.component.Component} component
-     * @returns {boolean}
-     */
-
-    addComponent(component) {
-        const result = super.addComponent(component);
-
-        if (result && component instanceof ComUI) {
-            this._uiComponents.push(component);
-        }
-
-        return result;
-    }
-
-    /**
-     * @desc Add components to container.
-     * @method
-     * @public
-     * @param {MANTICORE.component.Component[]} components
-     */
-
-    addComponents(components) {
-        const componentCount = components.length;
-        for (let i = 0; i < componentCount; ++i) {
-            if (components[i] instanceof ComUI) {
-                this._uiComponents.push(components[i]);
-            }
-        }
-        return super.addComponents(components);
-    }
-
-    /**
-     * @desc Remove component from container;
-     * @method
-     * @public
-     * @param {string} name
-     * @returns {boolean}
-     */
-
-    removeComponent(name) {
-        const uiComponentCount = this._uiComponents.length;
-        for (let i = 0; i < uiComponentCount; ++i) {
-            if (this._uiComponents[i].name === name) {
-                this._uiComponents.splice(i, 1);
-                break;
-            }
-        }
-        return super.removeComponent(name);
-    }
-
-    /**
-     * @desc Remove all components from target;
-     * @method
-     * @public
-     */
-
-    removeAllComponents() {
-        this._uiComponents.length = 0;
-        return super.removeAllComponents();
     }
 
     /**
@@ -418,16 +345,10 @@ class Widget extends ComponentContainer {
      */
 
     _iterateUIComponents(callback) {
-        const componentCount = this._uiComponents.length;
-        let i, component;
-
-        for (i = 0; i < componentCount; ++i) {
-            component = this._uiComponents[i];
-            if (!component.listenInteractions) {
-                continue;
-            }
-            callback(component);
+        if (!this.hasComponentManager) {
+            return;
         }
+        this.componentManager.iterateUIComponents(callback);
     }
 
     /**

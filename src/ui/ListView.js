@@ -37,8 +37,8 @@ class ListView extends ScrollView {
 
         this._childListener = new ComChildListener();
 
-        this.innerContainer.addComponent(this._layout);
-        this.innerContainer.addComponent(this._childListener);
+        this.innerContainer.componentManager.addComponent(this._layout);
+        this.innerContainer.componentManager.addComponent(this._childListener);
 
         this.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
         this._layout.staticHeight = true;

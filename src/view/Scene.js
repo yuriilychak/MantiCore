@@ -27,7 +27,7 @@ class Scene extends ComponentContainer {
 
         this._comTransitionShow = comTransitionShow;
         if (!type.isNull(this._comTransitionShow)) {
-            this.addComponent(this._comTransitionShow);
+            this.componentManager.addComponent(this._comTransitionShow);
         }
 
         /**
@@ -38,7 +38,7 @@ class Scene extends ComponentContainer {
 
         this._comTransitionHide = comTransitionHide;
         if (!type.isNull(this._comTransitionHide)) {
-            this.addComponent(this._comTransitionHide);
+            this.componentManager.addComponent(this._comTransitionHide);
         }
     }
 

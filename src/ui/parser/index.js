@@ -252,7 +252,7 @@ function _parseAnimation(element, data, bundle) {
 
     timeLine.inherit = true;
 
-    element.addTimeLine(TIME_LINE.UI, timeLine);
+    element.animationManager.addTimeLine(TIME_LINE.UI, timeLine);
 }
 
 /**

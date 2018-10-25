@@ -1,6 +1,7 @@
 import Repository from "repository/Repository";
 import BaseManager from "./BaseManager";
 import Type from "util/Type";
+import ComUI from "component/ui/ComUI";
 
 /**
  * @desc Class for manage components.
@@ -24,6 +25,14 @@ class ComponentManager extends BaseManager{
          * @private
          */
         this._componentRepo = new Repository();
+
+        /**
+         * @desc Array with ui components. Need to dispatch interactions for components without events.
+         * @type {MANTICORE.component.ui.ComUI[]}
+         * @private
+         */
+
+        this._uiComponents = [];
 
         /**
          * @desc Link to components. Need to dont create array every frame.
@@ -65,6 +74,9 @@ class ComponentManager extends BaseManager{
         const result = this._addComponent(component);
         if (result) {
             this._initComponents();
+            if (component instanceof ComUI) {
+                this._uiComponents.push(component);
+            }
         }
         return result;
     }
@@ -78,8 +90,12 @@ class ComponentManager extends BaseManager{
 
     addComponents(components) {
         const componentCount = components.length;
-        for (let i = 0; i < componentCount; ++i) {
-            this._addComponent(components[i]);
+        let i, component;
+        for (i = 0; i < componentCount; ++i) {
+            component = components[i];
+            if (this._addComponent(component)) {
+                this._uiComponents.push(component);
+            }
         }
         this._initComponents();
     }
@@ -117,6 +133,13 @@ class ComponentManager extends BaseManager{
         const result = this._componentRepo.removeElement(name);
 
         if (result) {
+            const uiComponentCount = this._uiComponents.length;
+            for (let i = 0; i < uiComponentCount; ++i) {
+                if (this._uiComponents[i].name === name) {
+                    this._uiComponents.splice(i, 1);
+                    break;
+                }
+            }
             this._initComponents();
         }
 
@@ -130,6 +153,7 @@ class ComponentManager extends BaseManager{
      */
 
     removeAllComponents() {
+        this._uiComponents.length = 0;
         this._iterateComponents(component => component.onRemove());
         this._componentRepo.clear(true);
         this._initComponents();
@@ -158,30 +182,6 @@ class ComponentManager extends BaseManager{
     }
 
     /**
-     * @desc Update components when some children change.
-     * @method
-     * @public
-     * @param {PIXI.DisplayObject[]} children
-     * @param {MANTICORE.view.callback.ChildAction} callback
-     */
-
-    childAction(children, callback) {
-        if (Type.isNull(children)) {
-            return;
-        }
-        const childCount = children.length;
-        let i;
-        this._iterateComponents(component => {
-            if (!component.listenChildren) {
-                return;
-            }
-            for (i = 0; i < childCount; ++i) {
-                callback(component, children[i]);
-            }
-        });
-    }
-
-    /**
      * @desc Class when update visible of owner.
      * @method
      * @public
@@ -198,9 +198,80 @@ class ComponentManager extends BaseManager{
     }
 
     /**
+     * @desc Method for process children adding.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject[]} children
+     */
+
+    addChildrenAction(children) {
+        this._childAction(children, (component, child) => component.onAddChild(child));
+    }
+
+    /**
+     * @desc Method for process children removing.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject[]} children
+     */
+
+    removeChildrenAction(children) {
+        this._childAction(children, (component, child) => component.onRemoveChild(child));
+    }
+
+    /**
+     * @desc Function for iterate ui components.
+     * @method
+     * @param {MANTICORE.view.callback.IterateComponent} callback
+     * @public
+     */
+
+    iterateUIComponents(callback) {
+        const componentCount = this._uiComponents.length;
+
+        if (componentCount === 0) {
+            return;
+        }
+
+        let i, component;
+
+        for (i = 0; i < componentCount; ++i) {
+            component = this._uiComponents[i];
+            if (!component.listenInteractions) {
+                continue;
+            }
+            callback(component);
+        }
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Update components when some children change.
+     * @method
+     * @private
+     * @param {PIXI.DisplayObject[]} children
+     * @param {MANTICORE.view.callback.ChildAction} callback
+     */
+
+    _childAction(children, callback) {
+        if (Type.isNull(children)) {
+            return;
+        }
+        const childCount = children.length;
+        let i;
+        this._iterateComponents(component => {
+            if (!component.listenChildren) {
+                return;
+            }
+            for (i = 0; i < childCount; ++i) {
+                callback(component, children[i]);
+            }
+        });
+    }
 
     /**
      * @desc Iterate components

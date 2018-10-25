@@ -32,7 +32,7 @@ class ComUIElement extends ComUI {
         if (Type.isNull(owner)) {
             owner = Parser.parseElement(elementName, bundleName);
         }
-        owner.addComponent(this);
+        owner.componentManager.addComponent(this);
     }
 
     /**
