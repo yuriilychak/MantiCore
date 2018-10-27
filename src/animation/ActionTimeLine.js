@@ -1,5 +1,6 @@
 import Math from "util/Math";
 import Type from "util/Type";
+import Color from "util/Color";
 import Macro from "macro";
 import Repository from "repository/Repository";
 import Constant from "constant";
@@ -105,13 +106,83 @@ class ActionTimeLine extends ReusableObject{
 
         this._isRunAction = false;
 
+        /**
+         * @type {PIXI.Point | Point}
+         * @private
+         */
+
+        this._startPosition = new PIXI.Point(0, 0);
+
+        /**
+         * @type {PIXI.Point | Point}
+         * @private
+         */
+
+        this._startScale = new PIXI.Point(0, 0);
+
+        /**
+         * @type {PIXI.Point | Point}
+         * @private
+         */
+
+        this._startSkew = new PIXI.Point(0, 0);
+
+        /**
+         * @type {number}
+         * @private
+         */
+
+        this._startRotation = 0;
+
+        /**
+         * @type {int}
+         * @private
+         */
+
+        this._startTint = 0;
+
+        /**
+         * @type {int}
+         * @private
+         */
+
+        this._startAlpha = 0;
+
+        /**
+         * @type {boolean}
+         * @private
+         */
+
+        this._startVisible = true;
+
         this.reusable = true;
+
+        this.refreshStartParameters();
     }
 
     /**
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Refresh start parameters of target. Need for correct parameters (scale, position, etc) before start animation.
+     * @method
+     * @public
+     */
+
+    refreshStartParameters() {
+        if (Type.isNull(this._target)) {
+            return;
+        }
+        this._startPosition.copy(this._target.position);
+        this._startScale.copy(this._target.scale);
+        this._startSkew.copy(this._target.skew);
+        this._startTint = Type.setValue(this._target.tint, Color.COLORS.WHITE);
+        this._startAlpha = this._target.alpha;
+        this._startRotation = this._target.rotation;
+        this._startVisible = this._target.visible;
+    }
 
     /**
      * @desc Add animation to time-line.
@@ -272,6 +343,8 @@ class ActionTimeLine extends ReusableObject{
     reuse(target) {
         super.reuse(target);
         this._target = target;
+
+        this.refreshStartParameters();
     }
 
     /**
@@ -305,6 +378,26 @@ class ActionTimeLine extends ReusableObject{
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Set start parameters to target when animation begin.
+     * @method
+     * @private
+     */
+
+    _setStartParameters() {
+        if (Type.isNull(this._target)) {
+            return;
+        }
+
+        this._target.position.copy(this._startPosition);
+        this._target.scale.copy(this._startScale);
+        this._target.skew.copy(this._startSkew);
+        this._target.tint = this._startTint;
+        this._target.alpha = this._startAlpha;
+        this._target.rotation = this._startRotation;
+        this._target.visible = this._startVisible;
+    }
 
     /**
      * @desc Clear data for move object to pool or destroy.
@@ -372,6 +465,7 @@ class ActionTimeLine extends ReusableObject{
      */
 
     _playAnimation() {
+        this._setStartParameters();
         this._runningAnimation.play(this._target);
         if (this._isRunAction || !this._isInherit) {
             return;

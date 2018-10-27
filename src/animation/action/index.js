@@ -18,6 +18,7 @@ import FiniteTimeAction from "./FiniteTimeAction";
 import FlipX from "./FlipX";
 import FlipY from "./FlipY";
 import Follow from "./Follow";
+import FrameChange from "./FrameChange";
 import Hide from "./Hide";
 import JumpBy from "./JumpBy";
 import JumpTo from "./JumpTo";
@@ -80,6 +81,7 @@ export default {
     FlipX,
     FlipY,
     Follow,
+    FrameChange,
     Hide,
     JumpBy,
     JumpTo,

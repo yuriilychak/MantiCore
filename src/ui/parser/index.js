@@ -45,6 +45,8 @@ import Hide from "animation/action/Hide";
 import Sequence from "animation/action/Sequence";
 import Spawn from "animation/action/Spawn";
 import Easing from "animation/easing";
+import FrameChange from "animation/action/FrameChange";
+import bundle from "../../bundle/bundle";
 
 /**
  * @function
@@ -247,7 +249,7 @@ function _parseAnimation(element, data, bundle) {
             timeLine.fps = animation.fps;
         }
 
-        timeLine.addAnimation(_getAnimatioName(animation.name, bundle), _createAnimation(animation));
+        timeLine.addAnimation(_getAnimatioName(animation.name, bundle), _createAnimation(animation, bundle));
     }
 
     timeLine.inherit = true;
@@ -260,10 +262,11 @@ function _parseAnimation(element, data, bundle) {
  * @private
  * @memberOf MANTICORE.ui.parser
  * @param {MANTICORE.type.AnimationData} animation
+ * @param {MANTICORE.type.AssetBundle} bundle
  * @returns {MANTICORE.animation.ActionAnimation}
  */
 
-function _createAnimation(animation) {
+function _createAnimation(animation, bundle) {
     const {frames, fps} = animation;
     const frameCount = frames.length;
     const offsetPosition = new PIXI.Point(0, 0);
@@ -324,6 +327,9 @@ function _createAnimation(animation) {
                     (nextData, prevData, time) => {
                         result.push(new DelayTime(time));
                     });
+                if (result.length === 0) {
+                    result.push(new DelayTime(0));
+                }
                 break;
             }
             case ACTION_TYPE.POSITION: {
@@ -431,6 +437,17 @@ function _createAnimation(animation) {
                             return;
                         }
                         result.push(nextValue ? new Show() : new Hide());
+                    });
+                break;
+            }
+            case ACTION_TYPE.FRAME: {
+                _iterateFrames(
+                    track,
+                    fps,
+                    data => result.push(new FrameChange(_getTextureFromData(data[0], bundle))),
+                    (nextData, prevData, time) => {
+                        result.push(new DelayTime(time));
+                        result.push(new FrameChange(_getTextureFromData(nextData[0], bundle)));
                     });
                 break;
             }

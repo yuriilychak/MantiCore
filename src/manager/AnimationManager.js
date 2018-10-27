@@ -171,6 +171,24 @@ class AnimationManager extends BaseManager {
     }
 
     /**
+     * @desc Refresh time line target parameters
+     * @method
+     * @public
+     */
+
+    refreshTimeLines() {
+        /**
+         * @type {MANTICORE.animation.ActionTimeLine[]}
+         */
+        const timeLines = this._timeLines.values;
+        const timeLineCount = timeLines.length;
+
+        for (let i = 0; i < timeLineCount; ++i) {
+            timeLines[i].refreshStartParameters();
+        }
+    }
+
+    /**
      * @desc Play animation if it exist
      * @method
      * @public

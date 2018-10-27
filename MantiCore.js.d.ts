@@ -162,6 +162,12 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.Follow;
             }
 
+            export class FrameChange extends MANTICORE.animation.action.ActionInstant {
+                constructor(frame: string);
+                clone(): MANTICORE.animation.action.FrameChange;
+                reverse(): MANTICORE.animation.action.FrameChange;
+            }
+
             export class Hide extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.Hide;
                 reverse(): MANTICORE.animation.action.Show;
@@ -511,6 +517,7 @@ declare namespace MANTICORE {
             readonly isDone: boolean;
             readonly duration: number;
 
+            refreshStartParameters(): void;
             addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
             removeAnimation(name: string): boolean;
             removeAllAnimations(): void;
@@ -973,6 +980,7 @@ declare namespace MANTICORE {
             public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
 
+            public refreshTimeLines(): void;
             public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
             public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
