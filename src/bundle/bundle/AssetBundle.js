@@ -40,20 +40,17 @@ class AssetBundle extends BaseBundle {
 
         this._textureAtlases = [];
 
-        let i, j , images, atlas, imageCount;
+        let i, images, atlas;
 
         for (i = 0; i < atlasCount; ++i) {
             atlas = atlases[i];
             images = atlases[i].images;
-            imageCount = images.length;
-            for (j = 0; j < imageCount; ++j) {
-                this._linkedTextures.push({
-                    link: data.name + "_" + images[i],
-                    name: images[i],
-                    isLoaded: false,
-                    atlas: atlas
-                });
-            }
+            this._linkedTextures.push({
+                link: data.name + "_" + images[0],
+                name: images[0],
+                isLoaded: false,
+                atlas: atlas
+            });
         }
     }
 
