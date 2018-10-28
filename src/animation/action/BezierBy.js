@@ -79,21 +79,7 @@ class BezierBy extends ActionInterval{
 
         const locStartPosition = this._startPoint;
 
-        if (Constant.ENABLE_STACK_ACTIONS) {
-            const targetX = this.target.x;
-            const targetY = this.target.y;
-            const locPreviousPosition = this._prevPoint;
-
-            locStartPosition.x = locStartPosition.x + targetX - locPreviousPosition.x;
-            locStartPosition.y = locStartPosition.y + targetY - locPreviousPosition.y;
-            x = x + locStartPosition.x;
-            y = y + locStartPosition.y;
-            locPreviousPosition.x = x;
-            locPreviousPosition.y = y;
-            this.target.position.set(x, y);
-        } else {
-            this.target.position.set(locStartPosition.x + x, locStartPosition.y + y);
-        }
+        this.target.position.set(locStartPosition.x + x, locStartPosition.y + y);
     }
 
     /**

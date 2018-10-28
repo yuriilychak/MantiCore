@@ -531,6 +531,14 @@ declare namespace MANTICORE {
             isPlay(animationName: string): boolean;
         }
     }
+
+    export namespace boot {
+        export function init(callback: Function);
+        export function isMobile(): boolean;
+        export function isDesktop(): boolean;
+        export function dump(): void;
+    }
+
     export namespace builder {
         export namespace layoutBuilder {
             export function infiniteLayout(component: MANTICORE.component.ui.ComLayout): void;
@@ -717,6 +725,15 @@ declare namespace MANTICORE {
     export namespace constant {
         export const COLLIDER_NAME: string;
         export const MAIN_ATLAS_NAME: string;
+        export const FLT_EPSILON: number;
+        export const TEMPORARY_ANIMATION_NAME: string;
+        export const OS_VERSION: string;
+        export const OS: MANTICORE.enumerator.system.OS;
+        export const BROWSER: MANTICORE.enumerator.system.BROWSER;
+        export const BROWSER_VERSION: number;
+        export const CLIENT: MANTICORE.enumerator.system.CLIENT;
+        export const COOKIES_ENABLED: boolean;
+        export const PLATFORM: MANTICORE.enumerator.system.PLATFORM;
     }
 
     export namespace enumerator {
@@ -821,6 +838,53 @@ declare namespace MANTICORE {
             SCROLL_VIEW = "scrollView",
             SPINE = "spine",
             UI = "ui"
+        }
+
+        export namespace system {
+            export enum BROWSER {
+                UNKNOWN = 0,
+                CHROME = 1,
+                FIREFOX = 2,
+                EDGE = 3,
+                OPERA = 4,
+                SAFARI = 5,
+                IE = 6
+            }
+
+            export enum CLIENT {
+                UNKNOWN = 0,
+                BROWSER = 1,
+                NODE = 2,
+                CORDOVA = 3,
+                ELECTRON = 4,
+                COCOON_JS = 5,
+                WEB_APP = 6
+            }
+
+            export enum OS {
+                UNKNOWN = 0,
+                IOS = 1,
+                ANDROID = 2,
+                WINDOWS = 3,
+                LINUX = 4,
+                WINDOWS_MOBILE = 5,
+                BLACKBERRY = 6,
+                MAC_OS = 7,
+                UNIX = 8,
+                BSD = 9,
+                SUN = 10,
+                TIZEN = 11,
+                CHROME_OS = 13,
+                KINDLE = 14,
+                DEPRECATED_OS = 15,
+                SEARCH_BOT = 16
+            }
+
+            export enum PLATFORM {
+                UNKNOWN = 0,
+                DESKTOP = 1,
+                MOBILE = 2
+            }
         }
 
         export namespace ui {

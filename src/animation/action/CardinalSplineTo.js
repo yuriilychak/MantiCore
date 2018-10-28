@@ -92,16 +92,6 @@ class CardinalSplineTo extends CardinalSpline {
             CardinalSplineTo.getControlPointAt(this._points, p + 2),
             this._tension, lt);
 
-        if (Constant.ENABLE_STACK_ACTIONS) {
-            this._stackPoint.copy(this.target.position);
-            Geometry.pSub(this._stackPoint, this._previousPosition, true);
-            if (this._stackPoint.x !== 0 || this._stackPoint.y !== 0) {
-                Geometry.pAdd(this._stackPoint, this._accumulatedDiff, true);
-                this._accumulatedDiff.copy(this._stackPoint);
-                Geometry.pAdd(result, this._stackPoint, true);
-                this._stackPoint.set(0, 0);
-            }
-        }
         this.updatePosition(result);
     }
 

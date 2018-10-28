@@ -88,20 +88,7 @@ class MoveBy extends ActionInterval {
         let x = this._delta.x * dt;
         let y = this._delta.y * dt;
 
-        if (Constant.ENABLE_STACK_ACTIONS) {
-            const targetX = this.target.x;
-            const targetY = this.target.y;
-
-            this._prevPoint.x = this._startPoint.x + targetX - this._prevPoint.x;
-            this._prevPoint.y = this._startPoint.y + targetY - this._prevPoint.y;
-            x = x + this._prevPoint.x;
-            y = y + this._prevPoint.y;
-            this._prevPoint.x = x;
-            this._prevPoint.y = y;
-            this.target.position.set(x, y);
-        } else {
-            this.target.position.set(this._startPoint.x + x, this._startPoint.y + y);
-        }
+        this.target.position.set(this._startPoint.x + x, this._startPoint.y + y);
     }
 
     /**

@@ -101,19 +101,7 @@ class JumpBy extends ActionInterval {
             y += this._delta.y * dt;
 
             let x = this._delta.x * dt;
-            if (Constant.ENABLE_STACK_ACTIONS) {
-                const locPreviousPosition = this._previousPosition;
-
-                this._startPoint.x = this._startPoint.x + this.target.x - this._previousPosition.x;
-                this._startPoint.y = this._startPoint.y + this.target.y - this._previousPosition.y;
-                x = x + this._startPoint.x;
-                y = y + this._startPoint.y;
-                this._previousPosition.x = x;
-                this._previousPosition.y = y;
-                this.target.position.set(x, y);
-            } else {
-                this.target.position.set(this._startPoint.x + x, this._startPoint.y + y);
-            }
+            this.target.position.set(this._startPoint.x + x, this._startPoint.y + y);
         }
     }
 

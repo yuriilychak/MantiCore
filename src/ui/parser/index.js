@@ -46,7 +46,6 @@ import Sequence from "animation/action/Sequence";
 import Spawn from "animation/action/Spawn";
 import Easing from "animation/easing";
 import FrameChange from "animation/action/FrameChange";
-import bundle from "../../bundle/bundle";
 
 /**
  * @function
