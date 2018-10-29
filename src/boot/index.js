@@ -390,7 +390,6 @@ export default {
                             break;
                         }
                         case Type.toBoolean(nAgt.match('Ubuntu')): {
-                            console.log("Ubuntu");
                             this.OS_VERSION = 'Ubuntu';
                             if (match = /Ubuntu\/([0-9.]*)/.exec(nAgt)) {
                                 this.OS_VERSION += " " + match[1];
