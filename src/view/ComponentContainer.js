@@ -1,11 +1,13 @@
 import Timer from "timer";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+
 import Type from "util/Type";
+import Math from "util/Math";
+
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
 import AnimationManager from "manager/AnimationManager";
-import Macro from "macro";
 
 /**
  * @desc Class that implements composite pattern;
@@ -285,7 +287,7 @@ class ComponentContainer extends PIXI.Container {
      */
 
     onUpdate(dt) {
-        const step = dt / Macro.FPS;
+        const step = Math.framesToSeconds(dt);
         if (this._hasAnimationManager) {
             this._animationManager.update(step);
         }

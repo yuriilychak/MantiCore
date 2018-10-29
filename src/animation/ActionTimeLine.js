@@ -506,7 +506,7 @@ class ActionTimeLine extends ReusableObject{
 
         this._fps = value;
 
-        this._fpsCoef = this._fps / Macro.FPS;
+        this._fpsCoef = Math.framesToSeconds(this._fps);
     }
 
     /**

@@ -1,3 +1,5 @@
+import Macro from "macro";
+
 /**
  * @desc Namespace that contain some math function for fast calculations.
  * @namespace MANTICORE.util.math
@@ -328,6 +330,30 @@ const math = {
 
     percentToFloat: function (value) {
         return value * 0.01;
+    },
+
+    /**
+     * @desc Convert frames to seconds.
+     * @function
+     * @param {number} value
+     * @memberOf MANTICORE.util.math
+     * @return {number}
+     */
+
+    framesToSeconds: function (value) {
+        return value / Macro.FPS;
+    },
+
+    /**
+     * @desc Convert seconds to frames.
+     * @function
+     * @param {number} value
+     * @memberOf MANTICORE.util.math
+     * @return {int}
+     */
+
+    secondsToFrames: function (value) {
+        return this.ceil(value * Macro.FPS);
     },
 
     /**

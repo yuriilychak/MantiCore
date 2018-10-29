@@ -2,6 +2,7 @@ import Timer from "timer";
 
 import Asset from "util/Asset";
 import Geometry from "util/Geometry";
+import Math from "util/Math";
 
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
@@ -9,7 +10,7 @@ import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
-import Macro from "macro";
+
 
 /**
  * @desc Class that implements composite pattern for sprite;
@@ -297,7 +298,7 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     onUpdate(dt) {
-        const step = dt / Macro.FPS;
+        const step = Math.framesToSeconds(dt);
         if (this._hasAnimationManager) {
             this._animationManager.update(step);
         }
