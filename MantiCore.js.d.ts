@@ -533,6 +533,18 @@ declare namespace MANTICORE {
     }
 
     export namespace boot {
+        export const OS_VERSION: string;
+        export const OS: MANTICORE.enumerator.system.OS;
+        export const BROWSER: MANTICORE.enumerator.system.BROWSER;
+        export const BROWSER_VERSION: number;
+        export const CLIENT: MANTICORE.enumerator.system.CLIENT;
+        export const COOKIES_ENABLED: boolean;
+        export const PLATFORM: MANTICORE.enumerator.system.PLATFORM;
+        export const MOUSE_ENABLED: boolean;
+        export const KEYBOARD_ENABLED: boolean;
+        export const TOUCHES_ENABLED: boolean;
+        export const ACCELEROMETER_ENABLED: boolean;
+
         export function init(callback: Function);
         export function isMobile(): boolean;
         export function isDesktop(): boolean;
@@ -727,13 +739,6 @@ declare namespace MANTICORE {
         export const MAIN_ATLAS_NAME: string;
         export const FLT_EPSILON: number;
         export const TEMPORARY_ANIMATION_NAME: string;
-        export const OS_VERSION: string;
-        export const OS: MANTICORE.enumerator.system.OS;
-        export const BROWSER: MANTICORE.enumerator.system.BROWSER;
-        export const BROWSER_VERSION: number;
-        export const CLIENT: MANTICORE.enumerator.system.CLIENT;
-        export const COOKIES_ENABLED: boolean;
-        export const PLATFORM: MANTICORE.enumerator.system.PLATFORM;
     }
 
     export namespace enumerator {

@@ -1,4 +1,3 @@
-import Constant from "constant";
 import Type from "util/Type";
 import PLATFORM from "enumerator/system/Platform";
 import OS from "enumerator/system/OS";
@@ -14,13 +13,127 @@ import Format from "util/Format";
  */
 
 export default {
+
+    /**
+     * @desc Version of os that run application.
+     * @type {string}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    OS_VERSION: "unknown",
+
+    /**
+     * @desc Os that run application
+     * @type {MANTICORE.enumerator.system.OS}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    OS: OS.UNKNOWN,
+
+    /**
+     * @desc Browser that run application.
+     * @type {MANTICORE.enumerator.system.BROWSER}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    BROWSER: BROWSER.UNKNOWN,
+
+    /**
+     * @desc Version of browser that run application.
+     * @type {int}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    BROWSER_VERSION: -1,
+
+    /**
+     * @desc Client of application (Browser, electron, cordova etc)
+     * @type {MANTICORE.enumerator.system.CLIENT}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    CLIENT: CLIENT.UNKNOWN,
+
+    /**
+     * @desc Is cookies enabled.
+     * @type {boolean}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    COOKIES_ENABLED: false,
+
+    /**
+     * @desc Platform where run device (Desktop, mobile).
+     * @type {MANTICORE.enumerator.system.PLATFORM}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    PLATFORM: PLATFORM.UNKNOWN,
+
+    /**
+     * @desc Flag is mouse input enabled.
+     * @type {boolean}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    MOUSE_ENABLED: false,
+
+    /**
+     * @desc Flag is keyboard input enabled.
+     * @type {boolean}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    KEYBOARD_ENABLED: false,
+
+    /**
+     * @desc Flag is touches input enabled.
+     * @type {boolean}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    TOUCHES_ENABLED: false,
+
+    /**
+     * @desc Flag is accelerometer input enabled.
+     * @type {boolean}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    ACCELEROMETER_ENABLED: false,
+
     /**
      * @desc Init engine
      * @function
      * @param {Function} callback
+     * @memberOf MANTICORE.boot
      */
 
     init: function(callback) {
+
+        const docEle = document.documentElement;
+
+        /*
+         * CAPABILITIES
+         * -------------------------------------------------------------------------------------------------------------
+         */
+
+        this.TOUCHES_ENABLED = !Type.isUndefined(docEle["ontouchstart"]) || !Type.isUndefined(document["ontouchstart"]) || navigator.msPointerEnabled;
+        this.MOUSE_ENABLED = !Type.isUndefined(docEle['onmouseup']);
+        this.KEYBOARD_ENABLED = !Type.isUndefined(docEle['onkeyup']);
+        this.ACCELEROMETER_ENABLED = Type.toBoolean(Type.setValue(window.DeviceMotionEvent, window.DeviceOrientationEvent));
+
         /*
          * CLIENT
          * -------------------------------------------------------------------------------------------------------------
@@ -30,27 +143,27 @@ export default {
 
         switch (true) {
             case (!Type.isUndefined(navigator["standalone"]) && navigator["standalone"]): {
-                Constant.CLIENT = CLIENT.WEB_APP;
+                this.CLIENT = CLIENT.WEB_APP;
                 break
             }
             case (!Type.isUndefined(window["cordova"])): {
-                Constant.CLIENT = CLIENT.CORDOVA;
+                this.CLIENT = CLIENT.CORDOVA;
                 break;
             }
             case (typeof process !== 'undefined' && process.versions !== null && process.versions.node !== null): {
                 if (!!process.versions.electron) {
-                    Constant.CLIENT = CLIENT.ELECTRON;
+                    this.CLIENT = CLIENT.ELECTRON;
                     break;
                 }
-                Constant.CLIENT = CLIENT.NODE;
+                this.CLIENT = CLIENT.NODE;
                 break;
             }
             case (!Type.isUndefined(navigator["isCocoonJS"])): {
-                Constant.CLIENT = CLIENT.COCOON_JS;
+                this.CLIENT = CLIENT.COCOON_JS;
                 break;
             }
             default: {
-                Constant.CLIENT = CLIENT.BROWSER;
+                this.CLIENT = CLIENT.BROWSER;
                 break;
             }
         }
@@ -66,10 +179,10 @@ export default {
         let version = '' + parseFloat(navigator.appVersion);
         let nameOffset, verOffset, ix;
 
-        if (Constant.CLIENT === CLIENT.BROWSER) {
+        if (this.CLIENT === CLIENT.BROWSER) {
             switch (true) {
                 case (verOffset = nAgt.indexOf('Opera')) !== -1: {
-                    Constant.BROWSER = BROWSER.OPERA;
+                    this.BROWSER = BROWSER.OPERA;
                     version = nAgt.substring(verOffset + 6);
                     if ((verOffset = nAgt.indexOf('Version')) !== -1) {
                         version = nAgt.substring(verOffset + 8);
@@ -77,27 +190,27 @@ export default {
                     break;
                 }
                 case (verOffset = nAgt.indexOf('OPR')) !== -1: {
-                    Constant.BROWSER = BROWSER.OPERA;
+                    this.BROWSER = BROWSER.OPERA;
                     version = nAgt.substring(verOffset + 4);
                     break;
                 }
                 case (verOffset = nAgt.indexOf('Edge')) !== -1: {
-                    Constant.BROWSER = BROWSER.EDGE;
+                    this.BROWSER = BROWSER.EDGE;
                     version = nAgt.substring(verOffset + 5);
                     break;
                 }
                 case (verOffset = nAgt.indexOf('MSIE')) !== -1: {
-                    Constant.BROWSER = BROWSER.IE;
+                    this.BROWSER = BROWSER.IE;
                     version = nAgt.substring(verOffset + 5);
                     break
                 }
                 case (verOffset = nAgt.indexOf('Chrome')) !== -1: {
-                    Constant.BROWSER = BROWSER.CHROME;
+                    this.BROWSER = BROWSER.CHROME;
                     version = nAgt.substring(verOffset + 7);
                     break;
                 }
                 case (verOffset = nAgt.indexOf('Safari')) !== -1: {
-                    Constant.BROWSER = BROWSER.SAFARI;
+                    this.BROWSER = BROWSER.SAFARI;
                     version = nAgt.substring(verOffset + 7);
                     if ((verOffset = nAgt.indexOf('Version')) !== -1) {
                         version = nAgt.substring(verOffset + 8);
@@ -105,12 +218,12 @@ export default {
                     break;
                 }
                 case (verOffset = nAgt.indexOf('Firefox')) !== -1: {
-                    Constant.BROWSER = BROWSER.FIREFOX;
+                    this.BROWSER = BROWSER.FIREFOX;
                     version = nAgt.substring(verOffset + 8);
                     break;
                 }
                 case nAgt.indexOf('Trident/') !== -1: {
-                    Constant.BROWSER = BROWSER.IE;
+                    this.BROWSER = BROWSER.IE;
                     version = nAgt.substring(nAgt.indexOf('rv:') + 3);
                     break;
                 }
@@ -133,14 +246,14 @@ export default {
                 version = parseInt(navigator.appVersion, 10);
             }
 
-            Constant.BROWSER_VERSION = version;
+            this.BROWSER_VERSION = version;
         }
 
         /*
          * PLATFORM
          * -------------------------------------------------------------------------------------------------------------
          */
-        Constant.PLATFORM = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer) ? PLATFORM.MOBILE : PLATFORM.DESKTOP;
+        this.PLATFORM = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer) ? PLATFORM.MOBILE : PLATFORM.DESKTOP;
 
         /*
          * COOKIES
@@ -148,10 +261,10 @@ export default {
          */
         if (Type.isUndefined(navigator.cookieEnabled)) {
             document.cookie = 'testcookie';
-            Constant.COOKIES_ENABLED = document.cookie.indexOf('testcookie') !== -1;
+            this.COOKIES_ENABLED = document.cookie.indexOf('testcookie') !== -1;
         }
         else {
-            Constant.COOKIES_ENABLED = navigator.cookieEnabled;
+            this.COOKIES_ENABLED = navigator.cookieEnabled;
         }
 
         /*
@@ -161,23 +274,23 @@ export default {
 
         switch (true) {
             case /(Windows 10.0|Windows NT 10.0)/.test(nAgt): {
-                Constant.OS = OS.WINDOWS;
-                Constant.OS_VERSION = "10";
+                this.OS = OS.WINDOWS;
+                this.OS_VERSION = "10";
                 break;
             }
             case /(Windows 8.1|Windows NT 6.3)/.test(nAgt): {
-                Constant.OS = OS.WINDOWS;
-                Constant.OS_VERSION = "8.1";
+                this.OS = OS.WINDOWS;
+                this.OS_VERSION = "8.1";
                 break;
             }
             case /(Windows 8|Windows NT 6.2)/.test(nAgt): {
-                Constant.OS = OS.WINDOWS;
-                Constant.OS_VERSION = "8";
+                this.OS = OS.WINDOWS;
+                this.OS_VERSION = "8";
                 break;
             }
             case /(Windows 7|Windows NT 6.1)/.test(nAgt): {
-                Constant.OS = OS.WINDOWS;
-                Constant.OS_VERSION = "7";
+                this.OS = OS.WINDOWS;
+                this.OS_VERSION = "7";
                 break;
             }
             case /Windows NT 6.0/.test(nAgt):
@@ -190,83 +303,83 @@ export default {
             case /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/.test(nAgt):
             case /Windows CE/.test(nAgt):
             case /Win16/.test(nAgt): {
-                Constant.OS = OS.WINDOWS;
-                Constant.OS_VERSION = "Vista and earlier";
+                this.OS = OS.WINDOWS;
+                this.OS_VERSION = "Vista and earlier";
                 break;
             }
             case /Android/.test(nAgt): {
-                Constant.OS = OS.ANDROID;
-                Constant.OS_VERSION = /Android ([\.\_\d]+)/.exec(nAgt)[1];
+                this.OS = OS.ANDROID;
+                this.OS_VERSION = /Android ([\.\_\d]+)/.exec(nAgt)[1];
                 break;
             }
             case /OpenBSD/.test(nAgt): {
-                Constant.OS = OS.BSD;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.BSD;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /SunOS/.test(nAgt): {
-                Constant.OS = OS.SUN;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.SUN;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /(Linux|X11)/.test(nAgt): {
-                Constant.OS = Constant.PLATFORM === PLATFORM.DESKTOP ? OS.LINUX : OS.TIZEN;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = this.PLATFORM === PLATFORM.DESKTOP ? OS.LINUX : OS.TIZEN;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /(iPhone|iPad|iPod)/.test(nAgt): {
-                Constant.OS = OS.IOS;
-                Constant.OS_VERSION = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+                this.OS = OS.IOS;
+                this.OS_VERSION = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
                 break;
             }
             case /Mac OS X/.test(nAgt): {
-                Constant.OS = OS.MAC_OS;
-                Constant.OS_VERSION = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
+                this.OS = OS.MAC_OS;
+                this.OS_VERSION = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
                 break;
             }
             case /(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/.test(nAgt): {
-                Constant.OS = OS.MAC_OS;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.MAC_OS;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /UNIX/.test(nAgt): {
-                Constant.OS = OS.UNIX;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.UNIX;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /QNX/.test(nAgt): {
-                Constant.OS = OS.BLACKBERRY;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.BLACKBERRY;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /Windows Phone/i.test(ua) || (/IEMobile/i).test(ua): {
-                Constant.OS = OS.WINDOWS_MOBILE;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.WINDOWS_MOBILE;
+                this.OS_VERSION = "Unknown";
             }
             case /Kindle/.test(nAgt) || (/\bKF[A-Z][A-Z]+/).test(ua) || (/Silk.*Mobile Safari/).test(nAgt): {
-                Constant.OS = OS.KINDLE;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.KINDLE;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /(CrOS)/.test(navigator.userAgent): {
-                Constant.OS = OS.CHROME_OS;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.CHROME_OS;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /BeOS/.test(nAgt):
             case /OS\/2/.test(nAgt): {
-                Constant.OS = OS.DEPRECATED_OS;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.DEPRECATED_OS;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             case /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/.test(nAgt): {
-                Constant.OS = OS.SEARCH_BOT;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.SEARCH_BOT;
+                this.OS_VERSION = "Unknown";
                 break;
             }
             default: {
-                Constant.OS = OS.UNKNOWN;
-                Constant.OS_VERSION = "Unknown";
+                this.OS = OS.UNKNOWN;
+                this.OS_VERSION = "Unknown";
                 break;
             }
         }
@@ -282,7 +395,7 @@ export default {
      */
 
     isMobile: function () {
-        return Constant.PLATFORM === PLATFORM.MOBILE;
+        return this.PLATFORM === PLATFORM.MOBILE;
     },
 
     /**
@@ -290,16 +403,18 @@ export default {
      * @function
      * @public
      * @return {boolean}
+     * @memberOf MANTICORE.boot
      */
 
     isDesktop: function () {
-        return Constant.PLATFORM === PLATFORM.DESKTOP;
+        return this.PLATFORM === PLATFORM.DESKTOP;
     },
 
     /**
      * @desc Dump information about platform.
      * @function
      * @public
+     * @memberOf MANTICORE.boot
      */
 
     dump: function() {
@@ -314,11 +429,15 @@ export default {
         const template2 = "{0}: {1}\n";
 
         Logger.log(
-            Format.replace(template1, "OS", oses[Constant.OS], Constant.OS_VERSION) +
-            Format.replace(template1, "Browser", browsers[Constant.BROWSER], Constant.BROWSER_VERSION) +
-            Format.replace(template2, "Platform", platforms[Constant.PLATFORM]) +
-            Format.replace(template2, "Client", clients[Constant.CLIENT]) +
-            Format.replace(template2, "Cookies enabled", Constant.COOKIES_ENABLED.toString())
+            Format.replace(template1, "OS", oses[this.OS], this.OS_VERSION) +
+            Format.replace(template1, "Browser", browsers[this.BROWSER], this.BROWSER_VERSION.toString()) +
+            Format.replace(template2, "Platform", platforms[this.PLATFORM]) +
+            Format.replace(template2, "Client", clients[this.CLIENT]) +
+            Format.replace(template2, "Cookies enabled", this.COOKIES_ENABLED.toString()) +
+            Format.replace(template2, "Mouse enabled", this.MOUSE_ENABLED.toString()) +
+            Format.replace(template2, "Touches enabled", this.TOUCHES_ENABLED.toString()) +
+            Format.replace(template2, "Keyboard enabled", this.KEYBOARD_ENABLED.toString()) +
+            Format.replace(template2, "Accelerometer enabled", this.ACCELEROMETER_ENABLED.toString())
         );
 
     }

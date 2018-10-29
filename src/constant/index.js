@@ -44,73 +44,7 @@ const constant = {
      * @memberOf MANTICORE.constant
      */
 
-    MAIN_ATLAS_NAME: "main",
-
-    /**
-     * @desc Version of os that run application.
-     * @type {string}
-     * @constant
-     * @memberOf MANTICORE.constant
-     */
-
-    OS_VERSION: "unknown",
-
-    /**
-     * @desc Os that run application
-     * @type {MANTICORE.enumerator.system.OS}
-     * @constant
-     * @memberOf MANTICORE.constant
-     */
-
-    OS: OS.UNKNOWN,
-
-    /**
-     * @desc Browser that run application.
-     * @type {MANTICORE.enumerator.system.BROWSER}
-     * @constant
-     * @memberOf MANTICORE.constant
-     */
-
-    BROWSER: BROWSER.UNKNOWN,
-
-    /**
-     * @desc Version of browser that run application.
-     * @type {int}
-     * @constant
-     * @memberOf MANTICORE.constant
-     */
-
-    BROWSER_VERSION: -1,
-
-    /**
-     * @desc Client of application (Browser, electron, cordova etc)
-     * @type {MANTICORE.enumerator.system.CLIENT}
-     * @constant
-     * @readonly
-     * @memberOf MANTICORE.constant
-     */
-
-    CLIENT: CLIENT.UNKNOWN,
-
-    /**
-     * @desc Is coockes enabled.
-     * @type {boolean}
-     * @constant
-     * @readonly
-     * @memberOf MANTICORE.constant
-     */
-
-    COOKIES_ENABLED: false,
-
-    /**
-     * @desc Platform where run device (Desktop, mobile).
-     * @type {MANTICORE.enumerator.system.PLATFORM}
-     * @constant
-     * @readonly
-     * @memberOf MANTICORE.constant
-     */
-
-    PLATFORM: PLATFORM.UNKNOWN
+    MAIN_ATLAS_NAME: "main"
 };
 
 export default constant;
