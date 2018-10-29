@@ -129,7 +129,7 @@ export default {
          * -------------------------------------------------------------------------------------------------------------
          */
 
-        this.TOUCHES_ENABLED = !Type.isUndefined(docEle["ontouchstart"]) || !Type.isUndefined(document["ontouchstart"]) || navigator.msPointerEnabled;
+        this.TOUCHES_ENABLED = Type.toBoolean(!Type.isUndefined(docEle["ontouchstart"]) || !Type.isUndefined(document["ontouchstart"]) || navigator.msPointerEnabled);
         this.MOUSE_ENABLED = !Type.isUndefined(docEle['onmouseup']);
         this.KEYBOARD_ENABLED = !Type.isUndefined(docEle['onkeyup']);
         this.ACCELEROMETER_ENABLED = Type.toBoolean(Type.setValue(window.DeviceMotionEvent, window.DeviceOrientationEvent));
@@ -323,12 +323,97 @@ export default {
                 break;
             }
             case /(Linux|X11)/.test(nAgt): {
-                this.OS = this.PLATFORM === PLATFORM.DESKTOP ? OS.LINUX : OS.TIZEN;
-                this.OS_VERSION = "Unknown";
+                if (this.PLATFORM === PLATFORM.DESKTOP) {
+                    this.OS = OS.LINUX;
+
+                    let match;
+
+
+                    switch (true) {
+                        case Type.toBoolean(nAgt.match('CentOS')): {
+                            this.OS_VERSION = 'CentOS';
+                            if (match = /CentOS\/[0-9\.\-]+el([0-9_]+)/.exec(nAgt)) {
+                                this.OS_VERSION += " " + match[1].replace(/_/g,'.');
+                            }
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Debian')): {
+                            this.OS_VERSION = 'Debian';
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Fedora')): {
+                            this.OS_VERSION = 'Fedora';
+                            if (match = /Fedora\/[0-9\.\-]+fc([0-9]+)/.exec(nAgt)) {
+                                this.OS_VERSION += " " + match[1];
+                            }
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Gentoo')): {
+                            this.OS_VERSION = 'Gentoo';
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Kubuntu')): {
+                            this.OS_VERSION = 'Kubuntu';
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Mandriva Linux')): {
+                            this.OS_VERSION = 'Mandriva';
+                            if (match = /Mandriva Linux\/[0-9\.\-]+mdv([0-9]+)/.exec(nAgt)) {
+                                this.os.version += " " + match[1];
+                            }
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Mageia')): {
+                            this.OS_VERSION = 'Mageia';
+                            if (match = /Mageia\/[0-9\.\-]+mga([0-9]+)/.exec(nAgt)) {
+                                this.os.version += " " + match[1];
+                            }
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Red Hat')): {
+                            this.OS_VERSION = 'Red Hat';
+                            if (match = /Red Hat[^\/]*\/[0-9\.\-]+el([0-9_]+)/.exec(nAgt)) {
+                                this.OS_VERSION += " " + match[1].replace(/_/g,'.');
+                            }
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Slackware')): {
+                            this.OS_VERSION = 'Slackware';
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('SUSE')): {
+                            this.OS_VERSION = 'SUSE';
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Turbolinux')): {
+                            this.OS_VERSION = 'Turbolinux';
+                            break;
+                        }
+                        case Type.toBoolean(nAgt.match('Ubuntu')): {
+                            console.log("Ubuntu");
+                            this.OS_VERSION = 'Ubuntu';
+                            if (match = /Ubuntu\/([0-9.]*)/.exec(nAgt)) {
+                                this.OS_VERSION += " " + match[1];
+                            }
+                            break;
+                        }
+                        default: {
+                            this.OS_VERSION = "Unknown";
+                            break;
+                        }
+                    }
+
+                }
+                else {
+                    this.OS = OS.TIZEN;
+                    this.OS_VERSION = "Unknown";
+                }
+
                 break;
             }
             case /(iPhone|iPad|iPod)/.test(nAgt): {
                 this.OS = OS.IOS;
+                const osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
                 this.OS_VERSION = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
                 break;
             }
@@ -439,6 +524,5 @@ export default {
             Format.replace(template2, "Keyboard enabled", this.KEYBOARD_ENABLED.toString()) +
             Format.replace(template2, "Accelerometer enabled", this.ACCELEROMETER_ENABLED.toString())
         );
-
     }
 };
