@@ -1,5 +1,6 @@
 import RESOLUTION from "enumerator/Resolution";
 import Color from "util/Color";
+import Timer from "timer";
 
 let application = null;
 
@@ -43,6 +44,7 @@ export default {
         }
         application = new PIXI.Application(width, height, {backgroundColor : bgColor});
         document.body.appendChild(application.view);
+        Timer.enterFrameTimer = application.ticker;
     },
 
     /**

@@ -1,4 +1,4 @@
-import Launcher from "launcher/index";
+import Timer from "timer";
 
 import Asset from "util/Asset";
 import Geometry from "util/Geometry";
@@ -9,7 +9,7 @@ import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
-import Macro from "../macro";
+import Macro from "macro";
 
 /**
  * @desc Class that implements composite pattern for sprite;
@@ -419,15 +419,12 @@ class ComponentSprite extends PIXI.Sprite {
 
         this._isUpdate = value;
 
-        const app = Launcher.getApp();
-        const ticker = app.ticker;
-
         if (this._isUpdate) {
-            ticker.add(this.onUpdate, this);
+            Timer.enterFrameTimer.add(this.onUpdate, this);
             return;
         }
 
-        ticker.remove(this.onUpdate, this);
+        Timer.enterFrameTimer.remove(this.onUpdate, this);
     }
 
     /**

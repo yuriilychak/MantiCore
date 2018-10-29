@@ -1,4 +1,4 @@
-import launcher from "launcher/index";
+import Timer from "timer";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Type from "util/Type";
 import ComponentManager from "manager/ComponentManager";
@@ -319,15 +319,13 @@ class ComponentContainer extends PIXI.Container {
 
         this._isUpdate = value;
 
-        const app = launcher.getApp();
-        const ticker = app.ticker;
 
         if (this._isUpdate) {
-            ticker.add(this.onUpdate, this);
+            Timer.enterFrameTimer.add(this.onUpdate, this);
             return;
         }
 
-        ticker.remove(this.onUpdate, this);
+        Timer.enterFrameTimer.remove(this.onUpdate, this);
     }
 
     /**
