@@ -391,7 +391,28 @@ function _createAnimation(animation, bundle) {
                             action = new DelayTime(time);
                         }
                         else {
-                            action = nextValue.x !== nextValue.y ? new SkewBy(time, nextValue.x, nextValue.y) : new RotateBy(time, nextValue.x);
+                            action = new SkewBy(time, nextValue.x, nextValue.y);
+                            if (!Type.isNull(ease)) {
+                                action.easing(ease);
+                            }
+                        }
+                        result.push(action);
+                    });
+                break;
+            }
+            case ACTION_TYPE.ROTATION: {
+                _iterateFrames(
+                    track,
+                    fps,
+                    data => offsetRotation = data[0],
+                    (nextData, prevData, time, ease) => {
+                        nextValue.set(nextData[0], nextData[1]);
+
+                        if (nextData[0] === prevData[0]) {
+                            action = new DelayTime(time);
+                        }
+                        else {
+                            action = new RotateBy(time, nextData[0]);
                             if (!Type.isNull(ease)) {
                                 action.easing(ease);
                             }
@@ -455,10 +476,31 @@ function _createAnimation(animation, bundle) {
         if (result.length > 0) {
             tracks.push(result.length > 1 ? new Sequence(result) : result[0]);
         }
-
     }
 
-    return Pool.getObject(ActionAnimation, tracks.length === 1 ? tracks[0] : new Spawn(tracks));
+    /**
+     * @type {MANTICORE.animation.ActionAnimation}
+     */
+    const resultAnimation = Pool.getObject(ActionAnimation, tracks.length === 1 ? tracks[0] : new Spawn(tracks));
+
+    resultAnimation.positionOffset = offsetPosition;
+    resultAnimation.scaleOffset = offsetScale;
+    resultAnimation.skewOffset = offsetSkew;
+    resultAnimation.rotationOffset = offsetRotation;
+
+    if (tint !== -1) {
+        resultAnimation.tint = tint;
+    }
+
+    if (alpha !== -1) {
+        resultAnimation.alpha = alpha;
+    }
+
+    if (!Type.isNull(visible)) {
+        resultAnimation.visible = visible;
+    }
+
+    return resultAnimation;
 }
 
 /**
