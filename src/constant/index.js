@@ -44,7 +44,16 @@ const constant = {
      * @memberOf MANTICORE.constant
      */
 
-    MAIN_ATLAS_NAME: "main"
+    MAIN_ATLAS_NAME: "main",
+
+    /**
+     * @desc Default name for objects, if name not init.
+     * @public
+     * @type {string}
+     * @memberOf MANTICORE.constant
+     */
+
+    DEFAULT_NAME: "Untitled"
 };
 
 export default constant;

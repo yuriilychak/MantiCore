@@ -238,7 +238,7 @@ function _parseAnimation(element, data, bundle) {
     /**
      * @type {MANTICORE.animation.ActionTimeLine}
      */
-    const timeLine = Pool.getObject(ActionTimeLine, element);
+    const timeLine = Pool.getObject(ActionTimeLine, element, TIME_LINE.UI);
 
     let i, animation;
 

@@ -5,6 +5,7 @@ import ActionAnimation from "animation/ActionAnimation";
 import TIME_LINE from "enumerator/TimeLine";
 import Type from "util/Type";
 import Pool from "pool";
+import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
 
 /**
  * @desc Class for manipulate with animations
@@ -44,7 +45,15 @@ class AnimationManager extends BaseManager {
 
         this._activeTimeLineCount = 0;
 
-        this._timeLines.addElement(new ActionTimeLine(owner), TIME_LINE.MAIN);
+        /**
+         * @desc Events that dispatch time line.
+         * @type {MANTICORE.repository.Repository}
+         * @private
+         */
+
+        this._events = new Repository();
+
+        this._timeLines.addElement(Pool.getObject(ActionTimeLine, owner, TIME_LINE.MAIN), TIME_LINE.MAIN);
     }
 
     /**
@@ -134,7 +143,20 @@ class AnimationManager extends BaseManager {
         if (this._timeLines.hasElement(name)) {
             return false;
         }
-        this._timeLines.addElement(!Type.isNull(timeLine) ? timeLine : Pool.getObject(ActionTimeLine, this.owner), name);
+        /**
+         * @type {MANTICORE.animation.ActionTimeLine}
+         */
+        const actionTimeLine = !Type.isNull(timeLine) ? timeLine : Pool.getObject(ActionTimeLine, this.owner, name);
+        const eventIds = this._events.keys;
+        const eventCount = eventIds.length;
+        let eventId, i;
+
+        for (i = 0; i < eventCount; ++i) {
+            eventId = eventIds[i];
+            actionTimeLine.setEvent(eventId, this._events.getElement(eventId));
+        }
+
+        this._timeLines.addElement(actionTimeLine, name);
         return true;
     }
 
@@ -388,6 +410,7 @@ class AnimationManager extends BaseManager {
 
     destroy() {
         this.removeAllTimeLines();
+        this._events.clear();
         super.destroy();
     }
 
@@ -496,6 +519,142 @@ class AnimationManager extends BaseManager {
         ++this._activeTimeLineCount;
 
         this.active = true;
+    }
+
+    /**
+     * @desc Set event in repository.
+     * @method
+     * @private
+     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {string | null} event
+     */
+
+    _setEvent(eventId, event) {
+        const hasEvent = this._events.hasElement(eventId);
+        if (Type.isNull(event)) {
+            if (!hasEvent) {
+                return;
+            }
+            this._events.removeElement(eventId);
+            this._setTimeLineEvent(eventId, null);
+            return;
+        }
+        if (hasEvent) {
+            this._events.updateElement(event, eventId);
+        }
+        else {
+            this._events.addElement(event, eventId);
+        }
+        this._setTimeLineEvent(eventId, event);
+    }
+
+    /**
+     * @desc Update time line events
+     * @method
+     * @private
+     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {?string} event
+     */
+
+    _setTimeLineEvent(eventId, event) {
+        /**
+         * @type {MANTICORE.animation.ActionTimeLine[]}
+         */
+        const timeLines = this._timeLines.values;
+        const timeLineCount = timeLines.length;
+
+        for (let i = 0; i < timeLineCount; ++i) {
+            timeLines[i].setEvent(eventId, event);
+        }
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Event dispatch when animation start.
+     * @public
+     * @return {string | null}
+     */
+
+    get eventStart() {
+        return this._events.getElement(TIME_LINE_EVENT.START);
+    }
+
+    set eventStart(value) {
+        this._setEvent(TIME_LINE_EVENT.START, value);
+    }
+
+    /**
+     * @desc Event dispatch when animation end.
+     * @public
+     * @return {string | null}
+     */
+
+    get eventEnd() {
+        return this._events.getElement(TIME_LINE_EVENT.END);
+    }
+
+    set eventEnd(value) {
+        this._setEvent(TIME_LINE_EVENT.END, value);
+    }
+
+    /**
+     * @desc Event dispatch when animation pause.
+     * @public
+     * @return {string | null}
+     */
+
+    get eventPause() {
+        return this._events.getElement(TIME_LINE_EVENT.PAUSE);
+    }
+
+    set eventPause(value) {
+        this._setEvent(TIME_LINE_EVENT.PAUSE, value);
+    }
+
+    /**
+     * @desc Event dispatch when animation resume.
+     * @public
+     * @return {string | null}
+     */
+
+    get eventResume() {
+        return this._events.getElement(TIME_LINE_EVENT.RESUME);
+    }
+
+    set eventResume(value) {
+        this._setEvent(TIME_LINE_EVENT.RESUME, value);
+    }
+
+    /**
+     * @desc Event dispatch when animation stop.
+     * @public
+     * @return {string | null}
+     */
+
+    get eventStop() {
+        return this._events.getElement(TIME_LINE_EVENT.STOP);
+    }
+
+    set eventStop(value) {
+        this._setEvent(TIME_LINE_EVENT.STOP, value);
+    }
+
+    /**
+     * @desc Event dispatch when animation complete.
+     * @public
+     * @return {string | null}
+     */
+
+    get eventComplete() {
+        return this._events.getElement(TIME_LINE_EVENT.COMPLETE);
+    }
+
+    set eventComplete(value) {
+        this._setEvent(TIME_LINE_EVENT.COMPLETE, value);
     }
 }
 

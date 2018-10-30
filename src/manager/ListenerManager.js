@@ -12,7 +12,7 @@ import BaseManager from "./BaseManager";
 class ListenerManager extends BaseManager {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component} owner
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject} owner
      */
     constructor(owner) {
         super(owner);

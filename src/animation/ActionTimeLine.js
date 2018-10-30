@@ -1,12 +1,18 @@
 import Math from "util/Math";
 import Type from "util/Type";
 import Color from "util/Color";
+
 import Macro from "macro";
-import Repository from "repository/Repository";
 import Constant from "constant";
 import Pool from "pool";
+import EventDispatcher from "eventDispatcher";
+
+import Repository from "repository/Repository";
+
 import ActionAnimation from "./ActionAnimation";
 import ReusableObject from "memory/ReusableObject";
+
+import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
 
 /**
  * @desc Class for manipulate with animated actions and listen their event.
@@ -19,9 +25,18 @@ class ActionTimeLine extends ReusableObject{
     /**
      * @constructor
      * @param {PIXI.DisplayObject} target
+     * @param {string} name
      */
-    constructor(target) {
+    constructor(target, name) {
         super();
+
+        /**
+         * @desc Name of time line.
+         * @type {string}
+         * @private
+         */
+
+        this._name = name;
 
         /**
          * @desc action that currently run
@@ -155,6 +170,14 @@ class ActionTimeLine extends ReusableObject{
 
         this._startVisible = true;
 
+        /**
+         * @desc Events that dispatch time line.
+         * @type {MANTICORE.repository.Repository}
+         * @private
+         */
+
+        this._events = new Repository();
+
         this.reusable = true;
 
         this.refreshStartParameters();
@@ -263,6 +286,7 @@ class ActionTimeLine extends ReusableObject{
      */
 
     stop() {
+        this._dispatchEvent(TIME_LINE_EVENT.STOP);
         return this._clearRunningAnimation();
     }
 
@@ -295,6 +319,7 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         this._isPlaying = false;
+        this._dispatchEvent(TIME_LINE_EVENT.PAUSE);
     }
 
     /**
@@ -308,6 +333,7 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         this._isPlaying = true;
+        this._dispatchEvent(TIME_LINE_EVENT.RESUME);
     }
 
     /**
@@ -324,12 +350,12 @@ class ActionTimeLine extends ReusableObject{
         this._runningAnimation.update(dt * this._fpsCoef);
         if (this._runningAnimation.isDone) {
             if (this._isLoop) {
+                this._dispatchEvent(TIME_LINE_EVENT.END);
                 this._playAnimation();
             }
             else {
-                this._isRunAction = false;
-                this._isPlaying = false;
-                this._isRunning = false;
+                this._dispatchEvent(TIME_LINE_EVENT.COMPLETE);
+                this._clearRunningAnimation();
             }
         }
     }
@@ -375,6 +401,30 @@ class ActionTimeLine extends ReusableObject{
     }
 
     /**
+     * @desc Set event in repository.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {?string} event
+     */
+
+    setEvent(eventId, event) {
+        const hasEvent = this._events.hasElement(eventId);
+        if (Type.isNull(event)) {
+            if (!hasEvent) {
+                return;
+            }
+            this._events.removeElement(eventId);
+            return;
+        }
+        if (hasEvent) {
+            this._events.updateElement(event, eventId);
+            return;
+        }
+        this._events.addElement(event, eventId);
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -406,6 +456,8 @@ class ActionTimeLine extends ReusableObject{
      */
 
     _clearData() {
+        this._name = Constant.DEFAULT_NAME;
+        this._events.clear();
         this._clearRunningAnimation();
         this._animations.clear(true);
         this._target = null;
@@ -482,6 +534,22 @@ class ActionTimeLine extends ReusableObject{
             }
             child.animationManager.play(this._runningName);
         }
+
+        this._dispatchEvent(TIME_LINE_EVENT.START);
+    }
+
+    /**
+     * @desc Dispatch animation event if it exist.
+     * @method
+     * @private
+     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     */
+
+    _dispatchEvent(eventId) {
+        if (!this._events.hasElement(eventId) || Type.isNull(this._runningAnimation)) {
+            return;
+        }
+        EventDispatcher.dispatch(this._events.getElement(eventId), this, this._runningName);
     }
 
     /**
@@ -591,6 +659,23 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         this._isInherit = value;
+    }
+
+    /**
+     * @desc Name of time line
+     * @public
+     * @return {string}
+     */
+
+    get name() {
+        return this._name;
+    }
+
+    set name(value) {
+        if (this._name === value) {
+            return;
+        }
+        this._name = value;
     }
 }
 

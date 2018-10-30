@@ -506,8 +506,9 @@ declare namespace MANTICORE {
         }
 
         export class ActionTimeLine extends MANTICORE.memory.ReusableObject{
-            constructor(target: PIXI.DisplayObject);
+            constructor(target: PIXI.DisplayObject, name);
 
+            name: string;
             fps: number;
             inherit: boolean;
             loop: boolean;
@@ -517,6 +518,7 @@ declare namespace MANTICORE {
             readonly isDone: boolean;
             readonly duration: number;
 
+            setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT, event: string | null);
             refreshStartParameters(): void;
             addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
             removeAnimation(name: string): boolean;
@@ -739,6 +741,7 @@ declare namespace MANTICORE {
         export const MAIN_ATLAS_NAME: string;
         export const FLT_EPSILON: number;
         export const TEMPORARY_ANIMATION_NAME: string;
+        export const DEFAULT_NAME: string;
     }
 
     export namespace enumerator {
@@ -843,6 +846,17 @@ declare namespace MANTICORE {
             SCROLL_VIEW = "scrollView",
             SPINE = "spine",
             UI = "ui"
+        }
+
+        export namespace animation {
+            export enum TIME_LINE_EVENT {
+                START = 0,
+                END = 1,
+                PAUSE = 2,
+                RESUME = 3,
+                STOP = 4,
+                COMPLETE = 5
+            }
         }
 
         export namespace system {
@@ -1040,6 +1054,13 @@ declare namespace MANTICORE {
         export class AnimationManager extends MANTICORE.manager.BaseManager {
             constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite);
 
+            eventStart: string;
+            eventEnd: string;
+            eventPause: string;
+            eventResume: string;
+            eventStop: string;
+            eventComplete: string;
+
             public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
@@ -1098,7 +1119,7 @@ declare namespace MANTICORE {
         }
 
         export class ListenerManager extends MANTICORE.manager.BaseManager {
-            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component);
+            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject);
 
             blockEvents: boolean;
 
