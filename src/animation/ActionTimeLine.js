@@ -178,6 +178,14 @@ class ActionTimeLine extends ReusableObject{
 
         this._events = new Repository();
 
+        /**
+         * @desc Children that need to run inherited animation.
+         * @type {?MANTICORE.view.ComponentContainer[]}
+         * @private
+         */
+
+        this._nestedChildren = null;
+
         this.reusable = true;
 
         this.refreshStartParameters();
@@ -287,6 +295,7 @@ class ActionTimeLine extends ReusableObject{
 
     stop() {
         this._dispatchEvent(TIME_LINE_EVENT.STOP);
+        this._iterateNestedChildren(child => child.animationManager.stop(this._runningName, this._name));
         return this._clearRunningAnimation();
     }
 
@@ -319,6 +328,7 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         this._isPlaying = false;
+        this._iterateNestedChildren(child => child.animationManager.pause(this._runningName, this._name));
         this._dispatchEvent(TIME_LINE_EVENT.PAUSE);
     }
 
@@ -333,6 +343,7 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         this._isPlaying = true;
+        this._iterateNestedChildren(child => child.animationManager.resume(this._runningName, this._name));
         this._dispatchEvent(TIME_LINE_EVENT.RESUME);
     }
 
@@ -425,6 +436,47 @@ class ActionTimeLine extends ReusableObject{
     }
 
     /**
+     * @desc Enable child for use in inherited animation.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} child
+     */
+
+    addNestedChild(child) {
+        if (!this._isInherit) {
+            return;
+        }
+        const index = this._nestedChildren.indexOf(child);
+
+        if (index !== -1) {
+            return;
+        }
+
+        this._nestedChildren.push(child);
+    }
+
+    /**
+     * @desc Disable child for use in inherited animation.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} child
+     */
+
+    removeNestedChild(child) {
+        if (!this._isInherit) {
+            return;
+        }
+
+        const index = this._nestedChildren.indexOf(child);
+
+        if (index === -1) {
+            return;
+        }
+
+        this._nestedChildren.splice(index, 1);
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -464,6 +516,8 @@ class ActionTimeLine extends ReusableObject{
         this._fps = Macro.FPS;
         this._fpsCoef = 1;
         this._isInherit = false;
+        this._nestedChildren.length = 0;
+        this._nestedChildren = null;
     }
 
     /**
@@ -523,17 +577,7 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
 
-        const children = this._target.children;
-        const childrenCount = children.length;
-        let i, child;
-
-        for (i = 0; i < childrenCount; ++i) {
-            child = children[i];
-            if (!child.hasAnimationManager) {
-                continue;
-            }
-            child.animationManager.play(this._runningName);
-        }
+        this._iterateNestedChildren(child => child.animationManager.play(this._runningName, this._name));
 
         this._dispatchEvent(TIME_LINE_EVENT.START);
     }
@@ -550,6 +594,39 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         EventDispatcher.dispatch(this._events.getElement(eventId), this, this._runningName);
+    }
+
+    /**
+     * @method
+     * @private
+     * @param {MANTICORE.animation.ActionTimeLine.IterateNestedChildren} callback
+     */
+
+    _iterateNestedChildren(callback) {
+        if (Type.isNull(this._nestedChildren)) {
+            return;
+        }
+
+        let childCount = this._nestedChildren.length;
+
+        if (childCount === 0) {
+            return;
+        }
+
+        let i = 0;
+        let child;
+
+        while (i < childCount) {
+            child = this._nestedChildren[i];
+            if (child.inPool || child.isDestroyed) {
+                this._nestedChildren.splice(i, 1);
+                --childCount;
+                continue;
+            }
+
+            callback(child);
+            ++i;
+        }
     }
 
     /**
@@ -659,6 +736,14 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         this._isInherit = value;
+
+        if (this._isInherit) {
+            this._nestedChildren = [];
+        }
+        else {
+            this._nestedChildren.length = 0;
+            this._nestedChildren = null;
+        }
     }
 
     /**
@@ -678,5 +763,13 @@ class ActionTimeLine extends ReusableObject{
         this._name = value;
     }
 }
+
+/**
+ * @callback
+ * @name IterateNestedChildren
+ * @typedef {Function}
+ * @param {MANTICORE.view.ComponentContainer} child
+ * @memberOf MANTICORE.animation.ActionTimeLine
+ */
 
 export default ActionTimeLine;

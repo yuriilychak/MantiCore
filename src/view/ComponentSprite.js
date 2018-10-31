@@ -92,6 +92,14 @@ class ComponentSprite extends PIXI.Sprite {
         this._isUpdate = false;
 
         /**
+         * @desc Flag is element destroyed.
+         * @type {boolean}
+         * @private
+         */
+
+        this._isDestroyed = false;
+
+        /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
          * @private
          */
@@ -232,6 +240,8 @@ class ComponentSprite extends PIXI.Sprite {
         }
 
         this._memoryManager.destroy();
+
+        this._isDestroyed = true;
 
         super.destroy();
     }
@@ -426,6 +436,17 @@ class ComponentSprite extends PIXI.Sprite {
         }
 
         Timer.enterFrameTimer.remove(this.onUpdate, this);
+    }
+
+    /**
+     * @desc Flag is element destroyed.
+     * @readonly
+     * @public
+     * @return {boolean}
+     */
+
+    get isDestroyed() {
+        return this._isDestroyed;
     }
 
     /**

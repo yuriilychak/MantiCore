@@ -179,6 +179,17 @@ class AnimationManager extends BaseManager {
     }
 
     /**
+     * @method
+     * @public
+     * @param {string | MANTICORE.enumerator.TIME_LINE} name
+     * @return {MANTICORE.animation.ActionTimeLine | null}
+     */
+
+    getTimeLine(name) {
+        return this._timeLines.getElement(name);
+    }
+
+    /**
      * @desc Remove all time lines.
      * @method
      * @public

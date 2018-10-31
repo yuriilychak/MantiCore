@@ -88,6 +88,14 @@ class ComponentContainer extends PIXI.Container {
         this._isUpdate = false;
 
         /**
+         * @desc Flag is element destroyed.
+         * @type {boolean}
+         * @private
+         */
+
+        this._isDestroyed = false;
+
+        /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
          * @private
          */
@@ -221,6 +229,8 @@ class ComponentContainer extends PIXI.Container {
             this._animationManager.destroy();
         }
 
+        this._isDestroyed = true;
+
         this._memoryManager.destroy();
         super.destroy();
     }
@@ -328,6 +338,17 @@ class ComponentContainer extends PIXI.Container {
         }
 
         Timer.enterFrameTimer.remove(this.onUpdate, this);
+    }
+
+    /**
+     * @desc Flag is element destroyed.
+     * @readonly
+     * @public
+     * @return {boolean}
+     */
+
+    get isDestroyed() {
+        return this._isDestroyed;
     }
 
     /**

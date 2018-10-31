@@ -518,6 +518,8 @@ declare namespace MANTICORE {
             readonly isDone: boolean;
             readonly duration: number;
 
+            addNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+            removeNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
             setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT, event: string | null);
             refreshStartParameters(): void;
             addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
@@ -1072,6 +1074,7 @@ declare namespace MANTICORE {
 
             public refreshTimeLines(): void;
             public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
+            public getTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): MANTICORE.animation.ActionTimeLine | null;
             public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
             public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
@@ -1696,11 +1699,13 @@ declare namespace MANTICORE {
         export class ComponentContainer extends PIXI.Container{
             constructor();
 
+
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
+            readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
             readonly listenerManager: MANTICORE.manager.ListenerManager;
@@ -1725,6 +1730,7 @@ declare namespace MANTICORE {
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
+            readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
             readonly listenerManager: MANTICORE.manager.ListenerManager;

@@ -54,9 +54,10 @@ import FrameChange from "animation/action/FrameChange";
  * @param {MANTICORE.ui.Widget} parent
  * @param {Object} data
  * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {MANTICORE.ui.Widget} globalParent
  */
 
-function parseChild (parent, data, bundle) {
+function parseChild (parent, data, bundle, globalParent) {
     let result = null;
     switch (data.type) {
         case UI_ELEMENT.BUTTON: {
@@ -134,9 +135,12 @@ function parseChild (parent, data, bundle) {
     }
 
     _parseWidgetData(result, data, bundle);
-    _parseAnimation(result, data, bundle);
+    _parseAnimation(result, data, bundle, globalParent);
 
-    if (parent !== null) {
+    if (Type.isNull(parent)) {
+        globalParent = result;
+    }
+    else {
         parent.addChild(result);
     }
 
@@ -144,7 +148,7 @@ function parseChild (parent, data, bundle) {
     const childCount = children.length;
 
     for (let i = 0; i < childCount; ++i) {
-        parseChild(result, children[i], bundle);
+        parseChild(result, children[i], bundle, globalParent);
     }
 
     return result;
@@ -224,10 +228,11 @@ function _parseWidgetData(element, data, bundle) {
  * @param {MANTICORE.ui.Widget} element
  * @param {MANTICORE.type.ElementData} data
  * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {MANTICORE.ui.Widget} globalParent
  * @private
  */
 
-function _parseAnimation(element, data, bundle) {
+function _parseAnimation(element, data, bundle, globalParent) {
     if (Type.isEmpty(data.animations)) {
         return;
     }
@@ -251,7 +256,13 @@ function _parseAnimation(element, data, bundle) {
         timeLine.addAnimation(_getAnimatioName(animation.name, bundle), _createAnimation(animation, bundle));
     }
 
-    timeLine.inherit = true;
+    if (Type.isNull(globalParent)) {
+        timeLine.inherit = true;
+    }
+    else {
+        const globalTimeLine = globalParent.animationManager.getTimeLine(TIME_LINE.UI);
+        globalTimeLine.addNestedChild(element);
+    }
 
     element.animationManager.addTimeLine(TIME_LINE.UI, timeLine);
 }
@@ -1134,6 +1145,6 @@ export default {
         const index = bundle.componentNames.indexOf(name);
         const data = bundle.ui[index];
 
-        return parseChild(null, data, bundle);
+        return parseChild(null, data, bundle, null);
     }
 }
