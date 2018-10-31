@@ -89,7 +89,7 @@ class Slider extends Widget {
 
         this.uiType = UI_ELEMENT.SLIDER;
 
-        this.addEventListener(this._eventDrag, this._onBallDragHandler);
+        this.listenerManager.addEventListener(this._eventDrag, this._onBallDragHandler);
     }
 
     /**
@@ -188,7 +188,7 @@ class Slider extends Widget {
             this._updateProgress(localPos.y, this.height, DIRECTION.UP);
         }
 
-        this.dispatchEvent(this._eventScroll, this._progress);
+        this.listenerManager.dispatchEvent(this._eventScroll, this._progress);
     }
 
     /**

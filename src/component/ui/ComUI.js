@@ -181,7 +181,7 @@ class ComUI extends Component {
         const event = Format.generateEventName(this, "CHILD_EVENT");
 
         child.updateInteractiveEvent(eventType, event);
-        this.addEventListener(event, listener);
+        this.listenerManager.addEventListener(event, listener);
         this._childEvents.push(Pool.getObject(ChildEventModel, child, eventType));
 
         return true;
@@ -227,8 +227,8 @@ class ComUI extends Component {
 
     removeAllChildListeners() {
         this._iterateChildEvents(model => {
-            this.removeEventListener(model.getInteractiveEvent(model.event));
-            model.kill()
+            this.listenerManager.removeEventListener(model.getInteractiveEvent(model.event));
+            model.kill();
         });
         this._childEvents.length = 0;
     }

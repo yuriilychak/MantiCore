@@ -518,6 +518,7 @@ declare namespace MANTICORE {
             readonly isDone: boolean;
             readonly duration: number;
 
+            clone(): MANTICORE.animation.ActionTimeLine;
             addNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
             removeNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
             setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT, event: string | null);
@@ -722,6 +723,8 @@ declare namespace MANTICORE {
             active: boolean;
             listenChildren: boolean;
             listenVisible: boolean;
+            readonly hasListenerManager: boolean;
+            readonly listenerManager: MANTICORE.manager.ListenerManager;
 
             hasOwner(): boolean;
             onAdd(owner: MANTICORE.view.ComponentContainer): void;
@@ -731,10 +734,6 @@ declare namespace MANTICORE {
             onRemoveChild(child: PIXI.DisplayObject): void;
             onVisibleChange(visible: boolean): void;
             clone(): MANTICORE.component.Component;
-
-            protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.EventModel): void;
-            protected removeEventListener(event: string): void;
-            protected dispatchEvent(event: string, data?: any): void;
         }
     }
 
@@ -1082,19 +1081,17 @@ declare namespace MANTICORE {
             public removeAllTimeLines(): void;
         }
 
-        export class BaseManager {
+        export class BaseManager extends MANTICORE.memory.ReusableObject {
             constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject);
 
             active: boolean;
             protected owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject;
 
             update(dt: number): void;
-            destroy(): void;
+            protected clearData(): void;
         }
         export class ComponentManager extends MANTICORE.manager.BaseManager {
             constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite);
-
-            inPool: boolean;
 
             iterateUIComponents(callback: MANTICORE.view.callback.IterateComponent);
             addChildrenAction(children: PIXI.DisplayObject[]): void;
@@ -1118,7 +1115,6 @@ declare namespace MANTICORE {
             maxHeight: number;
             contentWidth: number;
             contentHeight: number;
-
         }
 
         export class ListenerManager extends MANTICORE.manager.BaseManager {
@@ -1137,11 +1133,9 @@ declare namespace MANTICORE {
 
         export class MemoryManager extends MANTICORE.manager.BaseManager {
             constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component);
+            isOwnerReusable: boolean;
 
-            reusable: boolean;
-            inPool: boolean;
-
-            kill(): void;
+            killOwner(): void;
         }
     }
 
@@ -1152,6 +1146,7 @@ declare namespace MANTICORE {
 
             reusable: boolean;
             inPool: boolean;
+            readonly isDestroyed;
 
             reuse(...var_args: any[]): void;
             disuse(): void
@@ -1717,9 +1712,6 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
 
-            protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
-            protected removeEventListener(event: string): void;
-            protected dispatchEvent(event: string, data?: any): void;
             protected onUpdate(dt: number): void;
         }
         export class ComponentSprite extends PIXI.Sprite {
@@ -1742,9 +1734,6 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
 
-            protected addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
-            protected removeEventListener(event: string): void;
-            protected dispatchEvent(event: string, data?: any): void;
             protected onUpdate(dt: number): void;
 
         }

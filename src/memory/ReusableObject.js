@@ -1,4 +1,3 @@
-import MemoryManger from "manager/MemoryManager";
 import Pool from "pool";
 
 /**
@@ -13,11 +12,27 @@ class ReusableObject {
      */
     constructor() {
         /**
-         * @desc Memory manager. Need to manipulate with pool and destruction.
-         * @type {MANTICORE.manager.MemoryManager}
+         * @desc Flag is currently object destroyed
+         * @type {boolean}
          * @private
          */
-        this._memoryManager = new MemoryManger(this);
+        this._isDestroyed = false;
+
+        /**
+         * @desc Flag is owner put in pool after call kill() or destroy.
+         * @type {boolean}
+         * @private
+         */
+
+        this._reusable = false;
+
+        /**
+         * @desc Flag is currently owner in pool or his owner in pool.
+         * @type {boolean}
+         * @private
+         */
+
+        this._inPool = false;
     }
 
     /**
@@ -31,14 +46,18 @@ class ReusableObject {
      * @public
      * @param {...*} var_args
      */
-    reuse(var_args) {}
+    reuse(var_args) {
+        this._inPool = false;
+    }
 
     /**
      * @desc Calls by pool when object put in to pool. Don't call it only override.
      * @method
      * @public
      */
-    disuse() {}
+    disuse() {
+        this._inPool = true;
+    }
 
     /**
      * @desc Removes all internal references and listeners.
@@ -46,8 +65,9 @@ class ReusableObject {
      * @public
      */
     destroy() {
-        this._memoryManager.destroy();
-        this._memoryManager = null;
+        this._isDestroyed = true;
+        this._inPool = false;
+        this._reusable = false;
     }
 
     /**
@@ -57,7 +77,11 @@ class ReusableObject {
      */
 
     kill() {
-        this._memoryManager.kill();
+        if (this._reusable) {
+            Pool.putObject(this);
+            return;
+        }
+        this.destroy();
     }
 
     /**
@@ -85,11 +109,14 @@ class ReusableObject {
      */
 
     get reusable() {
-        return this._memoryManager.reusable;
+        return this._reusable;
     }
 
     set reusable(value) {
-        this._memoryManager.reusable = value;
+        if (this._reusable === value) {
+            return;
+        }
+        this._reusable = value;
     }
 
     /**
@@ -99,14 +126,25 @@ class ReusableObject {
      */
 
     get inPool() {
-        return this._memoryManager.inPool;
+        return this._inPool;
     }
 
     set inPool(value) {
-        if (this._memoryManager.inPool === value) {
+        if (this._inPool === value) {
             return;
         }
-        this._memoryManager.inPool = value;
+        this._inPool = value;
+    }
+
+    /**
+     * @desc Flag is currently object destroyed
+     * @public
+     * @readonly
+     * @return {boolean}
+     */
+
+    get isDestroyd() {
+        return this._isDestroyed;
     }
 }
 

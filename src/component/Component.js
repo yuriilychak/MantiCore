@@ -1,5 +1,4 @@
 import ListenerManager from "manager/ListenerManager";
-import MemoryManager from "manager/MemoryManager";
 import Pool from "pool";
 import ReusableObject from "memory/ReusableObject";
 
@@ -59,15 +58,130 @@ class Component extends ReusableObject{
 
         /**
          * @desc Storage of listeners.
-         * @type {MANTICORE.manager.ListenerManager}
+         * @type {?MANTICORE.manager.ListenerManager}
          * @private
          */
 
-        this._listenerManager = new ListenerManager(this);
+        this._listenerManager = null;
+
+        /**
+         * @desc Flag is listener manager init.
+         * @type {boolean}
+         * @private
+         */
+
+        this._hasListenerManager = false;
     }
 
     /**
      * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Returns is component has owner;
+     * @method
+     * @public
+     * @returns {boolean}
+     */
+
+    hasOwner() {
+        return this._owner !== null;
+    }
+
+    /**
+     * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentContainer} owner
+     */
+
+    onAdd (owner) {
+        this._owner = owner;
+    }
+
+    /**
+     * @desc Callback that calls when component detach from owner. Don't use it manually. Only override.
+     * @method
+     * @public
+     */
+
+    onRemove () {
+        this._owner = null;
+        this.kill();
+    }
+
+    /**
+     * @desc Callback that calls when owner update;
+     * @method
+     * @public
+     * @param {number} dt - Time step on update;
+     */
+
+    onUpdate (dt) {}
+
+    /**
+     * @desc Calls when owner add children.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} child
+     */
+
+    onAddChild(child) {}
+
+    /**
+     * @desc Calls when owner remove children.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} child
+     */
+
+    onRemoveChild(child) {}
+
+    /**
+     * @desc Calls when owner change visible.
+     * @method
+     * @public
+     * @param {boolean} visible
+     */
+
+    onVisibleChange(visible) {}
+
+    /**
+     * @desc Calls by pool when component put in to pool (Can be only override). DON'T USE IT MANUALLY!!!
+     * @method
+     * @public
+     */
+
+    disuse() {
+        this._listenerManager.removeAllEventListeners();
+        super.disuse();
+    }
+
+    /**
+     * @desc Calls by memory manager when object kill (Can be only override). DON'T USE IT MANUALLY!!!
+     * @method
+     * @public
+     */
+
+    destroy() {
+        this._listenerManager.kill();
+        super.destroy();
+    }
+
+    /**
+     * @desc Clone component
+     * @method
+     * @public
+     * @return {MANTICORE.component.Component}
+     */
+
+    clone() {
+        return Component.cloneFromPool(Component, this._name);
+    }
+
+    /**
+     * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -153,154 +267,27 @@ class Component extends ReusableObject{
     }
 
     /**
-     * @desc Returns is component has owner;
-     * @method
+     * @desc Link to listener manager.
      * @public
-     * @returns {boolean}
+     * @return {MANTICORE.manager.ListenerManager}
      */
 
-    hasOwner() {
-        return this._owner !== null;
+    get listenerManager() {
+        if (!this._hasListenerManager) {
+            this._hasListenerManager = true;
+            this._listenerManager = Pool.getObject(ListenerManager, this);
+        }
+        return this._listenerManager;
     }
 
     /**
-     * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
-     * @method
+     * @desc Flag is view has listener manager.
      * @public
-     * @param {MANTICORE.view.ComponentContainer} owner
+     * @return {boolean}
      */
 
-    onAdd (owner) {
-        this._owner = owner;
-    }
-
-    /**
-     * @desc Callback that calls when component detach from owner. Don't use it manually. Only override.
-     * @method
-     * @public
-     */
-
-    onRemove () {
-        this._owner = null;
-        this.kill();
-    }
-
-    /**
-     * @desc Callback that calls when owner update;
-     * @method
-     * @public
-     * @param {number} dt - Time step on update;
-     */
-
-    onUpdate (dt) {}
-
-    /**
-     * @desc Calls when owner add children.
-     * @method
-     * @public
-     * @param {PIXI.DisplayObject} child
-     */
-
-    onAddChild(child) {}
-
-    /**
-     * @desc Calls when owner remove children.
-     * @method
-     * @public
-     * @param {PIXI.DisplayObject} child
-     */
-
-    onRemoveChild(child) {}
-
-    /**
-     * @desc Calls when owner change visible.
-     * @method
-     * @public
-     * @param {boolean} visible
-     */
-
-    onVisibleChange(visible) {}
-
-    /**
-     * @desc Calls by pool when component get from pool (Can be only override). DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     * @param {...*} var_args
-     */
-
-    reuse(var_args) {}
-
-    /**
-     * @desc Calls by pool when component put in to pool (Can be only override). DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    disuse() {
-        this._listenerManager.removeAllEventListeners();
-        super.disuse();
-    }
-
-    /**
-     * @desc Calls by memory manager when object kill (Can be only override). DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    destroy() {
-        this._listenerManager.destroy();
-        super.destroy();
-    }
-
-    /**
-     * @desc Clone component
-     * @method
-     * @public
-     * @return {MANTICORE.component.Component}
-     */
-
-    clone() {
-        return Component.cloneFromPool(Component);
-    }
-
-    /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Add event listener for element.
-     * @method
-     * @protected
-     * @param {string} event
-     * @param {Function} handler
-     */
-
-    addEventListener(event, handler) {
-        this._listenerManager.addEventListener(event, handler);
-    }
-
-    /**
-     * @desc Remove event listener.
-     * @method
-     * @protected
-     * @param {string} event
-     */
-
-    removeEventListener(event) {
-        this._listenerManager.removeEventListener(event);
-    }
-
-    /**
-     * @desc Dispatch event.
-     * @method
-     * @protected
-     * @param {string} event
-     * @param {*} [data = null]
-     */
-
-    dispatchEvent(event, data = null) {
-        this._listenerManager.dispatchEvent(event, data);
+    get hasListenerManager() {
+        return this._hasListenerManager;
     }
 }
 

@@ -111,13 +111,19 @@ class ListenerManager extends BaseManager {
     }
 
     /**
-     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls for clear data on disuse and destroy.
      * @method
      * @public
      */
 
-    destroy() {
+    clearData() {
         this.removeAllEventListeners();
+        this._blockEvents = false;
     }
 
     /**

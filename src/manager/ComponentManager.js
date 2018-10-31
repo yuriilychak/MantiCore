@@ -10,7 +10,7 @@ import ComUI from "component/ui/ComUI";
  * @memberOf MANTICORE.manager
  */
 
-class ComponentManager extends BaseManager{
+class ComponentManager extends BaseManager {
     /**
      * @constructor
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} owner
@@ -48,14 +48,6 @@ class ComponentManager extends BaseManager{
          */
 
         this._componentCount = this._components.length;
-
-        /**
-         * @desc Flag is currently view in pool or his parent in pool.
-         * @type {boolean}
-         * @private
-         */
-
-        this._inPool = false;
     }
 
     /**
@@ -159,16 +151,6 @@ class ComponentManager extends BaseManager{
         this._initComponents();
     }
 
-    /**
-     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    destroy() {
-        this.removeAllComponents();
-    }
-
     update(dt) {
         let isActive = false;
         this._iterateComponents(component => {
@@ -242,6 +224,21 @@ class ComponentManager extends BaseManager{
             }
             callback(component);
         }
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls for clear data on disuse and destroy.
+     * @method
+     * @public
+     */
+
+    clearData() {
+        this.removeAllComponents();
     }
 
     /**
@@ -323,14 +320,14 @@ class ComponentManager extends BaseManager{
      */
 
     get inPool() {
-        return this._inPool;
+        return super.inPool;
     }
 
     set inPool(value) {
-        if (this._inPool === value) {
+        if (this.inPool === value) {
             return;
         }
-        this._inPool = value;
+        super.inPool = value;
         this._iterateComponents(component => component.inPool = value);
     }
 }

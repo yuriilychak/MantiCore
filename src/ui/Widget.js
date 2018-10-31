@@ -419,7 +419,7 @@ class Widget extends ComponentContainer {
 
         const event = this._events.getElement(id);
         
-        this.dispatchEvent(event, interactiveEvent);
+        this.listenerManager.dispatchEvent(event, interactiveEvent);
     }
 
     /**

@@ -6,10 +6,13 @@ import Math from "util/Math";
 
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
+import Pool from "pool";
+
 import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import MemoryManager from "manager/MemoryManager";
+import Type from "../util/Type";
 
 
 /**
@@ -49,7 +52,7 @@ class ComponentSprite extends PIXI.Sprite {
          * @private
          */
 
-        this._memoryManager = new MemoryManager(this);
+        this._memoryManager = Pool.getObject(MemoryManager, this);
 
         /**
          * @desc Class for manipulate with animations.
@@ -227,19 +230,14 @@ class ComponentSprite extends PIXI.Sprite {
 
     destroy() {
         this.isUpdate = false;
-        if (this._hasComponentManager) {
-            this._componentManager.destroy();
-        }
+        this._componentManager = this._killManager(this._componentManager);
+        this._listenerManager = this._killManager(this._listenerManager);
+        this._animationManager = this._killManager(this._animationManager);
+        this._memoryManager = this._killManager(this._memoryManager);
 
-        if (this._hasListenerManager) {
-            this._listenerManager.destroy();
-        }
-
-        if (this._hasAnimationManager) {
-            this._animationManager.destroy();
-        }
-
-        this._memoryManager.destroy();
+        this._hasListenerManager = false;
+        this._hasComponentManager = false;
+        this._hasAnimationManager = false;
 
         this._isDestroyed = true;
 
@@ -253,51 +251,13 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     kill() {
-        this._memoryManager.kill();
+        this._memoryManager.killOwner();
     }
 
     /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Add event listener for element.
-     * @method
-     * @protected
-     * @param {string} event
-     * @param {Function} handler
-     */
-
-    addEventListener(event, handler) {
-        this.listenerManager.addEventListener(event, handler);
-    }
-
-    /**
-     * @desc Remove event listener.
-     * @method
-     * @protected
-     * @param {string} event
-     */
-
-    removeEventListener(event) {
-        if (!this._hasListenerManager) {
-            return;
-        }
-        this._listenerManager.removeEventListener(event);
-    }
-
-    /**
-     * @desc Dispatch event.
-     * @method
-     * @protected
-     * @param {string} event
-     * @param {*} [data = null]
-     */
-
-    dispatchEvent(event, data = null) {
-        this.listenerManager.dispatchEvent(event, data);
-    }
 
     /**
      * @desc Handler that calls if container mark for update.
@@ -318,6 +278,27 @@ class ComponentSprite extends PIXI.Sprite {
 
         this.isUpdate = (this._hasAnimationManager && this._animationManager.active) ||
             (this._hasComponentManager && this._componentManager.active);
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Safe kill of manager.
+     * @method
+     * @private
+     * @param {MANTICORE.manager.BaseManager} manager
+     * @returns {null}
+     */
+
+    _killManager(manager) {
+        if (Type.isNull(manager)) {
+            return null;
+        }
+        manager.kill();
+        return null;
     }
 
     /**
@@ -353,11 +334,11 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     get reusable() {
-        return this._memoryManager.reusable;
+        return this._memoryManager.isOwnerReusable;
     }
 
     set reusable(value) {
-        this._memoryManager.reusable = value;
+        this._memoryManager.isOwnerReusable = value;
     }
 
     /**
@@ -459,7 +440,7 @@ class ComponentSprite extends PIXI.Sprite {
     get animationManager() {
         if (!this._hasAnimationManager) {
             this._hasAnimationManager = true;
-            this._animationManager = new AnimationManager(this);
+            this._animationManager = Pool.getObject(AnimationManager, this);
         }
         return this._animationManager;
     }
@@ -474,7 +455,7 @@ class ComponentSprite extends PIXI.Sprite {
     get componentManager() {
         if (!this._hasComponentManager) {
             this._hasComponentManager = true;
-            this._componentManager = new ComponentManager(this);
+            this._componentManager = Pool.getObject(ComponentManager, this);
         }
         return this._componentManager;
     }
@@ -488,7 +469,7 @@ class ComponentSprite extends PIXI.Sprite {
     get listenerManager() {
         if (!this._hasListenerManager) {
             this._hasListenerManager = true;
-            this._listenerManager = new ListenerManager(this);
+            this._listenerManager = Pool.getObject(ListenerManager, this);
         }
         return this._listenerManager;
     }

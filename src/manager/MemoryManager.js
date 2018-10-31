@@ -22,15 +22,7 @@ class MemoryManager extends BaseManager {
          * @private
          */
 
-        this._reusable = false;
-
-        /**
-         * @desc Flag is currently owner in pool or his owner in pool.
-         * @type {boolean}
-         * @private
-         */
-
-        this._inPool = false;
+        this._ownerReusable = false;
     }
 
     /**
@@ -39,28 +31,33 @@ class MemoryManager extends BaseManager {
      */
 
     /**
-     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    destroy() {
-        this._inPool = true;
-        this._reusable = false;
-    }
-
-    /**
      * @desc Destroy or put owner to pool.
      * @method
      * @public
      */
 
-    kill() {
-        if (this._reusable) {
+    killOwner() {
+        if (this._ownerReusable) {
             Pool.putObject(this.owner);
             return;
         }
         this.owner.destroy();
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls for clear data on disuse and destroy.
+     * @method
+     * @public
+     */
+
+    clearData() {
+        this._ownerReusable = false;
+        super.clearData();
     }
 
     /**
@@ -73,31 +70,15 @@ class MemoryManager extends BaseManager {
      * @type {boolean}
      */
 
-    get reusable() {
-        return this._reusable;
+    get isOwnerReusable() {
+        return this._ownerReusable;
     }
 
-    set reusable(value) {
-        if (this._reusable === value) {
+    set isOwnerReusable(value) {
+        if (this._ownerReusable === value) {
             return;
         }
-        this._reusable = value;
-    }
-
-    /**
-     * @public
-     * @type {boolean}
-     */
-
-    get inPool() {
-        return this._inPool;
-    }
-
-    set inPool(value) {
-        if (this._inPool === value) {
-            return;
-        }
-        this._inPool = value;
+        this._ownerReusable = value;
     }
 }
 

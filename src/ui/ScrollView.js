@@ -111,8 +111,8 @@ class ScrollView extends Panel {
         const eventDown = Format.generateEventName(this, LOCAL_EVENT.DOWN);
         const eventDrag = Format.generateEventName(this, LOCAL_EVENT.DRAG);
 
-        this.addEventListener(eventDrag, this.onDragInnerContainerHandler);
-        this.addEventListener(eventDown, this.onDownInnerContainerHandler);
+        this.listenerManager.addEventListener(eventDrag, this.onDragInnerContainerHandler);
+        this.listenerManager.addEventListener(eventDown, this.onDownInnerContainerHandler);
 
         this._innerContainer.eventDrag = eventDrag;
         this._innerContainer.eventDown = eventDown;
@@ -411,7 +411,7 @@ class ScrollView extends Panel {
      */
 
     onDownInnerContainerHandler(event) {
-        this.dispatchEvent(this._eventDown, event.data);
+        this.listenerManager.dispatchEvent(this._eventDown, event.data);
         Geometry.sSub(this, this._innerContainer, this._innerBoundary);
         this._prvDragPos.copy(this._innerContainer.toLocal(event.data.data.global));
     }
@@ -423,7 +423,7 @@ class ScrollView extends Panel {
      */
 
     onDragInnerContainerHandler(event) {
-        this.dispatchEvent(this._eventDrag, event.data);
+        this.listenerManager.dispatchEvent(this._eventDrag, event.data);
         const crtDragPos = this._innerContainer.toLocal(event.data.data.global);
         const nextPosition = Geometry.pRange(
             Geometry.pRound(
@@ -500,14 +500,14 @@ class ScrollView extends Panel {
 
         if (Type.isNull(nxtSlider)) {
             event = prvSlider.eventScroll;
-            this.removeEventListener(event);
+            this.listenerManager.removeEventListener(event);
             prvSlider.eventScroll = null;
             return nxtSlider;
         }
 
         event = Format.generateEventName(this, eventName);
         nxtSlider.eventScroll = event;
-        this.addEventListener(event, handler);
+        this.listenerManager.addEventListener(event, handler);
         this._updateScrollDimension(nxtSlider.progress, direction);
 
         return nxtSlider;

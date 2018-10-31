@@ -1,20 +1,24 @@
 import Type from "util/Type";
+import ReusableObject from "memory/ReusableObject";
 
 /**
  * @desc Base class for manager classes.
  * @class
  * @memberOf MANTICORE.manager
+ * @extends MANTICORE.memory.ReusableObject
  */
 
-class BaseManager {
+class BaseManager extends ReusableObject {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component} owner
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject} owner
      */
     constructor(owner) {
+        super();
+
         /**
          * @desc Owner of manager.
-         * @type {MANTICORE.view.ComponentContainer|MANTICORE.view.ComponentSprite|MANTICORE.component.Component}
+         * @type {MANTICORE.view.ComponentContainer|MANTICORE.view.ComponentSprite|MANTICORE.memory.ReusableObject}
          * @private
          */
         this._owner = owner;
@@ -25,6 +29,8 @@ class BaseManager {
          * @private
          */
         this._isActive = false;
+
+        this.reusable = true;
     }
 
     /**
@@ -42,19 +48,53 @@ class BaseManager {
     update(dt) {}
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject} owner
+     */
+    reuse(owner) {
+        this._owner = owner;
+        super.reuse(...arguments);
+    }
+
+    /**
+     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
+     * @method
+     * @public
+     */
+
+    disuse() {
+        this.clearData();
+        super.disuse();
+    }
+
+    /**
      * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
      * @method
      * @public
      */
 
     destroy() {
-        this._owner = null;
+        this.clearData();
+        super.destroy();
     }
 
     /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._owner = null;
+        this._isActive = false;
+    }
 
     /**
      * @protected

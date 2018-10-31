@@ -92,7 +92,6 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {MANTICORE.animation.ActionAnimation | MANTICORE.animation.action.ActionInterval} animation
      * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
@@ -419,10 +418,21 @@ class AnimationManager extends BaseManager {
         super.update(dt);
     }
 
-    destroy() {
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls for clear data on disuse and destroy.
+     * @method
+     * @private
+     */
+
+    clearData() {
         this.removeAllTimeLines();
         this._events.clear();
-        super.destroy();
+        super.clearData();
     }
 
     /**

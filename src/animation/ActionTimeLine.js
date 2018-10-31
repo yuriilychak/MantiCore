@@ -477,6 +477,23 @@ class ActionTimeLine extends ReusableObject{
     }
 
     /**
+     * @method
+     * @public
+     * @return {MANTICORE.animation.ActionTimeLine}
+     */
+
+    clone() {
+        /**
+         * @type {MANTICORE.animation.ActionTimeLine}
+         */
+        const result = ActionTimeLine.cloneFromPool(ActionTimeLine, this._target);
+        result.fps = this._fps;
+        result.inherit = this._isInherit;
+        result.loop = this._isLoop;
+        return result;
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

@@ -217,21 +217,16 @@ class ComponentContainer extends PIXI.Container {
 
     destroy() {
         this.isUpdate = false;
-        if (this._hasComponentManager) {
-            this._componentManager.destroy();
-        }
+        this._componentManager = this._killManager(this._componentManager);
+        this._listenerManager = this._killManager(this._listenerManager);
+        this._animationManager = this._killManager(this._animationManager);
+        this._memoryManager = this._killManager(this._memoryManager);
 
-        if (this._hasListenerManager) {
-            this._listenerManager.destroy();
-        }
-
-        if (this._hasAnimationManager) {
-            this._animationManager.destroy();
-        }
+        this._hasListenerManager = false;
+        this._hasComponentManager = false;
+        this._hasAnimationManager = false;
 
         this._isDestroyed = true;
-
-        this._memoryManager.destroy();
         super.destroy();
     }
 
@@ -242,51 +237,13 @@ class ComponentContainer extends PIXI.Container {
      */
 
     kill() {
-        this._memoryManager.kill();
+        this._memoryManager.killOwner();
     }
 
     /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Add event listener for element.
-     * @method
-     * @protected
-     * @param {string} event
-     * @param {Function} handler
-     */
-
-    addEventListener(event, handler) {
-        this.listenerManager.addEventListener(event, handler);
-    }
-
-    /**
-     * @desc Remove event listener.
-     * @method
-     * @protected
-     * @param {string} event
-     */
-
-    removeEventListener(event) {
-        if (!this._hasListenerManager) {
-            return;
-        }
-        this._listenerManager.removeEventListener(event);
-    }
-
-    /**
-     * @desc Dispatch event.
-     * @method
-     * @protected
-     * @param {string} event
-     * @param {*} [data = null]
-     */
-
-    dispatchEvent(event, data = null) {
-        this.listenerManager.dispatchEvent(event, data);
-    }
 
     /**
      * @desc Handler that calls if container mark for update.
@@ -307,6 +264,27 @@ class ComponentContainer extends PIXI.Container {
 
         this.isUpdate = (this._hasAnimationManager && this._animationManager.active) ||
             (this._hasComponentManager && this._componentManager.active);
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Safe kill of manager.
+     * @method
+     * @private
+     * @param {MANTICORE.manager.BaseManager} manager
+     * @returns {null}
+     */
+
+    _killManager(manager) {
+        if (Type.isNull(manager)) {
+            return null;
+        }
+        manager.kill();
+        return null;
     }
 
     /**
@@ -379,11 +357,11 @@ class ComponentContainer extends PIXI.Container {
      */
 
     get reusable() {
-        return this._memoryManager.reusable;
+        return this._memoryManager.isOwnerReusable;
     }
 
     set reusable(value) {
-        this._memoryManager.reusable = value;
+        this._memoryManager.isOwnerReusable = value;
     }
 
     /**

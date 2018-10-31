@@ -155,6 +155,10 @@ const pool = {
         if (object.reuse && reuseArguments.length !== 0) {
             object.reuse(...reuseArguments);
         }
+
+        if (object.inPool) {
+            object.inPool = false;
+        }
         return object;
     },
 
