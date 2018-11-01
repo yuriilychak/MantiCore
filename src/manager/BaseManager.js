@@ -59,28 +59,6 @@ class BaseManager extends ReusableObject {
     }
 
     /**
-     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    disuse() {
-        this.clearData();
-        super.disuse();
-    }
-
-    /**
-     * @desc Calls when destroy owner. DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    destroy() {
-        this.clearData();
-        super.destroy();
-    }
-
-    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -94,6 +72,7 @@ class BaseManager extends ReusableObject {
     clearData() {
         this._owner = null;
         this._isActive = false;
+        super.clearData();
     }
 
     /**

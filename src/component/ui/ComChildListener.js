@@ -82,28 +82,6 @@ class ComChildListener extends ComChildIterator {
     }
 
     /**
-     * @desc Calls by pool when component put in to pool (Can be only override). DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    disuse() {
-        this._clearEvents();
-        super.disuse();
-    }
-
-    /**
-     * @desc Calls by memory manager when object kill. DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    destroy() {
-        this._clearEvents();
-        super.destroy();
-    }
-
-    /**
      * @desc Clone component
      * @method
      * @public
@@ -115,7 +93,7 @@ class ComChildListener extends ComChildIterator {
     }
 
     /**
-     * PRIVATE METHODS
+     * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
 
@@ -125,10 +103,16 @@ class ComChildListener extends ComChildIterator {
      * @private
      */
 
-    _clearEvents() {
+    clearData() {
         this.iterateChildren(child => this._removeEvents(child));
         this._events.clear();
+        super.clearData();
     }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Add events to new child.

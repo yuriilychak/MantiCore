@@ -385,21 +385,6 @@ class ActionTimeLine extends ReusableObject{
     }
 
     /**
-     * @desc Calls by pool when model put in to pool. Don't call it only override.
-     * @method
-     * @public
-     */
-    disuse() {
-        this._clearData();
-        super.disuse();
-    }
-
-    destroy() {
-        this._clearData();
-        super.destroy();
-    }
-
-    /**
      * @desc Returns is time line currently play animation.
      * @method
      * @public
@@ -494,6 +479,31 @@ class ActionTimeLine extends ReusableObject{
     }
 
     /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data for move object to pool or destroy.
+     * @method
+     * @private
+     */
+
+    clearData() {
+        this._name = Constant.DEFAULT_NAME;
+        this._events.clear();
+        this._clearRunningAnimation();
+        this._animations.clear(true);
+        this._target = null;
+        this._fps = Macro.FPS;
+        this._fpsCoef = 1;
+        this._isInherit = false;
+        this._nestedChildren.length = 0;
+        this._nestedChildren = null;
+        super.clearData();
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -516,25 +526,6 @@ class ActionTimeLine extends ReusableObject{
         this._target.alpha = this._startAlpha;
         this._target.rotation = this._startRotation;
         this._target.visible = this._startVisible;
-    }
-
-    /**
-     * @desc Clear data for move object to pool or destroy.
-     * @method
-     * @private
-     */
-
-    _clearData() {
-        this._name = Constant.DEFAULT_NAME;
-        this._events.clear();
-        this._clearRunningAnimation();
-        this._animations.clear(true);
-        this._target = null;
-        this._fps = Macro.FPS;
-        this._fpsCoef = 1;
-        this._isInherit = false;
-        this._nestedChildren.length = 0;
-        this._nestedChildren = null;
     }
 
     /**

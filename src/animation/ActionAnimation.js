@@ -146,23 +146,6 @@ class ActionAnimation extends ReusableObject{
     }
 
     /**
-     * @desc Calls by pool when model put in to pool. Don't call it only override.
-     * @method
-     * @public
-     */
-    disuse() {
-        this.stop();
-        this._clearData();
-        super.disuse();
-    }
-
-    destroy() {
-        this.stop();
-        this._clearData();
-        super.destroy();
-    }
-
-    /**
      * @desc Clone object
      * @method
      * @public
@@ -171,6 +154,30 @@ class ActionAnimation extends ReusableObject{
 
     clone() {
         return ActionAnimation.cloneFromPool(ActionAnimation, this._action.clone());
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear inner data of animation on destroy and kill.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this.stop();
+        this._action = null;
+        this._position.set(0, 0);
+        this._scale.set(1, 1);
+        this._skew.set(0, 0);
+        this._rotation = 0;
+        this._tint = -1;
+        this._alpha = -1;
+        this._visible = null;
+        super.clearData();
     }
 
     /**
@@ -187,23 +194,6 @@ class ActionAnimation extends ReusableObject{
 
     _isEmpty() {
         return Type.isNull(this._action);
-    }
-
-    /**
-     * @desc Clear inner data of animation.
-     * @method
-     * @private
-     */
-
-    _clearData() {
-        this._action = null;
-        this._position.set(0, 0);
-        this._scale.set(1, 1);
-        this._skew.set(0, 0);
-        this._rotation = 0;
-        this._tint = -1;
-        this._alpha = -1;
-        this._visible = null;
     }
 
     /**

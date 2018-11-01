@@ -56,6 +56,7 @@ class ReusableObject {
      * @public
      */
     disuse() {
+        this.clearData();
         this._inPool = true;
     }
 
@@ -65,6 +66,7 @@ class ReusableObject {
      * @public
      */
     destroy() {
+        this.clearData();
         this._isDestroyed = true;
         this._inPool = false;
         this._reusable = false;
@@ -83,6 +85,19 @@ class ReusableObject {
         }
         this.destroy();
     }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {}
 
     /**
      * PROPERTIES

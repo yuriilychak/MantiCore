@@ -1088,7 +1088,6 @@ declare namespace MANTICORE {
             protected owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject;
 
             update(dt: number): void;
-            protected clearData(): void;
         }
         export class ComponentManager extends MANTICORE.manager.BaseManager {
             constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite);
@@ -1153,6 +1152,7 @@ declare namespace MANTICORE {
             destroy(): void;
             kill(): void;
 
+            protected clearData(): void;
             protected static cloneFromPool<T extends MANTICORE.memory.ReusableObject>(...var_args: any[]): T;
         }
     }
