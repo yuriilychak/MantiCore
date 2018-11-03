@@ -95,6 +95,8 @@ class OutlineBitmapText extends PIXI.Container {
 
         this._color = 0xFFFFFF;
 
+        this.interactiveChildren = false;
+
         this.addChild(this._label);
     }
 

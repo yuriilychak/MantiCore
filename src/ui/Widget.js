@@ -376,6 +376,10 @@ class Widget extends ComponentContainer {
         const childrenCount = target.children.length;
         let i, child, pos;
 
+        if (!this.interactiveChildren) {
+            return false;
+        }
+
         for (i = 0; i < childrenCount; ++i) {
             child = target.children[i];
             if (child.interactive) {
