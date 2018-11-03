@@ -1048,6 +1048,7 @@ declare namespace MANTICORE {
         export let FPS: number;
         export let USE_WEB_P_FALLBACK: boolean;
         export let MODE: MANTICORE.enumerator.ENGINE_MODE;
+        export let DEFAULT_POOL_SIZE: number;
     }
 
     export namespace manager {
@@ -1178,6 +1179,7 @@ declare namespace MANTICORE {
         export function putObject(object: Object): void;
         export function hasObject(objectClass: Object): boolean;
         export function removeObject(object: Object): void;
+        export function setPoolSize(object: Object, count: number): void;
         export function getObject(...var_args: any[]): void;
         export function drain(): void;
 

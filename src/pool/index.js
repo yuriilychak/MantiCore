@@ -1,4 +1,5 @@
 import Repository from "repository/Repository";
+import Macro from "macro";
 
 /**
  * @desc Singleton object serves as an object cache pool.<br>
@@ -17,6 +18,15 @@ const pool = {
      */
 
     _pool: new Repository(),
+
+    /**
+     * @desc Pool bounds for some objects.
+     * @type {MANTICORE.repository.Repository}
+     * @memberOf MANTICORE.pool
+     * @private
+     */
+
+    _sizeBounds: new Repository(),
 
     /**
      * @desc Variable for generate pool id's.
@@ -86,12 +96,27 @@ const pool = {
         const pid = this._getPID(object.constructor);
         let elements;
 
+        if (!this._sizeBounds.hasElement(pid)) {
+            this._sizeBounds.addElement(Macro.DEFAULT_POOL_SIZE, pid);
+        }
+
+        const maxElementCount = this._sizeBounds.getElement(pid);
+
+
         if (!this._pool.hasElement(pid)) {
             elements = [];
             this._pool.addElement(elements, pid);
+
         }
         else {
             elements = this._pool.getElement(pid);
+        }
+
+        if (elements.length >= maxElementCount) {
+            if (object.destroy) {
+                object.destroy();
+            }
+            return;
         }
 
         if (!object.inPool) {
@@ -103,6 +128,45 @@ const pool = {
         }
 
         elements.push(object);
+    },
+
+    /**
+     * @desc Redifine max count of object in pool.
+     * @function
+     * @memberOf MANTICORE.pool
+     * @param {Object} object
+     * @param {int} count
+     */
+
+    setPoolSize(object, count) {
+        const pid = this._getPID(object.constructor);
+
+        if (!this._sizeBounds.hasElement(pid)) {
+            this._sizeBounds.addElement(count, pid);
+            return;
+        }
+
+        this._sizeBounds.updateElement(count, pid);
+
+        if (!this._pool.hasElement(pid)) {
+            return;
+        }
+        const elements = this._pool.getElement(pid);
+        const elementCount = elements.length;
+
+        if (elementCount < count) {
+            return;
+        }
+
+        const dif = count - elementCount;
+        let element, i;
+
+        for (i = 0, i < dif; ++i) {
+            element = elements.shift();
+            if (element.destroy) {
+                element.destroy();
+            }
+        }
     },
 
     /**

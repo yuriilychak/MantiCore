@@ -28,5 +28,13 @@ export default {
      * @memberOf MANTICORE.macro
      */
 
-    MODE: ENGINE_MODE.DEBUG
+    MODE: ENGINE_MODE.DEBUG,
+
+    /**
+     * @desc Default size of pool, for some object.
+     * @type {int}
+     * @memberOf MANTICORE.macro
+     */
+
+    DEFAULT_POOL_SIZE: 15
 }
