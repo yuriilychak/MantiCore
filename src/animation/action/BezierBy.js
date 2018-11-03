@@ -1,5 +1,4 @@
 import ActionInterval from "./ActionInterval";
-import Constant from "constant";
 
 /**
  * @desc An action that moves the target with a cubic Bezier curve by a certain distance. Relative to its movement.

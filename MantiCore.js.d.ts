@@ -1153,7 +1153,7 @@ declare namespace MANTICORE {
             kill(): void;
 
             protected clearData(): void;
-            protected static cloneFromPool<T extends MANTICORE.memory.ReusableObject>(...var_args: any[]): T;
+            protected static create<T extends MANTICORE.memory.ReusableObject>(...var_args: any[]): T;
         }
     }
 

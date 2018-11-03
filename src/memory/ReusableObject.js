@@ -108,19 +108,6 @@ class ReusableObject {
      */
 
     /**
-     * @desc Calls for create clone of element. Need to don't import pool in children.
-     * @method
-     * @protected
-     * @static
-     * @param {...*} var_args
-     * @return {*}
-     */
-
-    static cloneFromPool(var_args) {
-        return Pool.getObject(...arguments);
-    }
-
-    /**
      * @desc Static constructor of reusable object
      * @method
      * @static
