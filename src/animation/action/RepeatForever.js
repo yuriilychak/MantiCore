@@ -25,6 +25,11 @@ class RepeatForever extends ActionInterval{
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -48,10 +53,6 @@ class RepeatForever extends ActionInterval{
         }
     }
 
-    get isDone() {
-        return false;
-    }
-
     /**
      * @desc Returns a reversed action.
      * @method
@@ -61,6 +62,32 @@ class RepeatForever extends ActionInterval{
 
     reverse() {
         return this.doReverse(new RepeatForever(this._innerAction.reverse()));
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._innerAction.kill();
+        this._innerAction = null;
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    get isDone() {
+        return false;
     }
 
     /**

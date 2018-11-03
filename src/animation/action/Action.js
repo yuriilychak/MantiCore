@@ -1,16 +1,21 @@
 import Type from "util/Type";
+import ReusableObject from "memory/ReusableObject";
 
 /**
  * @desc Base class for all animation actions.
  * @class
  * @memberOf MANTICORE.animation.action
+ * @extends MANTICORE.memory.ReusableObject
  */
 
-class Action {
+class Action extends ReusableObject {
     /**
      * @constructor
      */
     constructor () {
+
+        super();
+
         /**
          * @type {?PIXI.DisplayObject}
          * @private
@@ -35,7 +40,7 @@ class Action {
      * @return {MANTICORE.animation.action.Action}
      */
     clone() {
-        return new Action();
+        return Action.cloneFromPool(Action);
     }
 
     /**
@@ -84,6 +89,23 @@ class Action {
      */
 
     update (dt) {}
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._target = null;
+        this._originalTarget = null;
+        super.clearData();
+    }
 
     /**
      * PROPERTIES

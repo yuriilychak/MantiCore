@@ -19,8 +19,17 @@ class BezierTo extends BezierBy{
      */
     constructor(t, c) {
         super(t, []);
+        /**
+         * @type {PIXI.Point[]}
+         * @private
+         */
         this._toConfig = c;
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -41,6 +50,22 @@ class BezierTo extends BezierBy{
         for (let i = 0; i < configSize; ++i) {
             this.config[i].copy(Geometry.pSub(this._toConfig[i], this.startPoint));
         }
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._toConfig.length = 0;
+        super.clearData();
     }
 }
 

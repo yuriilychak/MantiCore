@@ -7,7 +7,7 @@ import ActionInterval from "./ActionInterval";
  * @memberOf MANTICORE.animation.action
  */
 
-class Tween extends ActionInterval{
+class Tween extends ActionInterval {
 
     /**
      * @constructor
@@ -41,6 +41,11 @@ class Tween extends ActionInterval{
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * Start this tween with target.
      * @param {PIXI.DisplayObject} target
      */
@@ -50,8 +55,9 @@ class Tween extends ActionInterval{
     }
 
     /**
-     * Called once per frame. Time is the number of seconds of a frame interval.
-     *
+     * @desc Called once per frame. Time is the number of seconds of a frame interval.
+     * @method
+     * @public
      * @param {Number}  dt
      */
     update(dt) {
@@ -59,21 +65,57 @@ class Tween extends ActionInterval{
     }
 
     /**
-     * returns a reversed action.
+     * @desc Returns a reversed action.
+     * @method
+     * @public
      * @return {MANTICORE.animation.action.Tween}
      */
     reverse() {
-        return new Tween(this.duration, this._key, this._to, this._from);
+        return Tween.cloneFromPool(Tween, this.duration, this._key, this._to, this._from);
     }
 
     /**
-     * to copy object with deep copy.
-     * returns a clone of action.
-     *
+     * @desc To copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
      * @return {MANTICORE.animation.action.Tween}
      */
     clone() {
-        return new Tween(this.duration, this._key, this._from, this._to);
+        return Tween.cloneFromPool(Tween, this.duration, this._key, this._from, this._to);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        this._key = arguments[1];
+        this._from = arguments[2];
+        this._to = arguments[3];
+        this._delta = this._to - this._from;
+        super.reuse(...arguments);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._key = null;
+        this._from = -1;
+        this._to = -1;
+        this._delta = 0;
+        super.clearData();
     }
 }
 

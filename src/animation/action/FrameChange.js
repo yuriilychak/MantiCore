@@ -18,6 +18,11 @@ class FrameChange extends ActionInstant {
         this._frame = frame;
     }
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {
         this.target.texture = Asset.getSpriteFrame(this._frame);
     }
@@ -30,7 +35,7 @@ class FrameChange extends ActionInstant {
      */
 
     clone(){
-        return new FrameChange(this._frame);
+        return FrameChange.cloneFromPool(FrameChange, this._frame);
     }
 
     /**
@@ -40,7 +45,23 @@ class FrameChange extends ActionInstant {
      */
 
     reverse(){
-        return new FrameChange(this._frame);
+        return FrameChange.cloneFromPool(FrameChange, this._frame);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._frame = null;
+        super.clearData();
     }
 }
 

@@ -21,6 +21,11 @@ class CatmullRomTo extends CardinalSplineTo {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public

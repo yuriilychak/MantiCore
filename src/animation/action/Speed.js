@@ -11,7 +11,7 @@ import Action from "./Action";
  * @memberOf MANTICORE.animation.action
  */
 
-class Speed extends Action{
+class Speed extends Action {
     /**
      * @constructor
      * @param {MANTICORE.animation.action.ActionInterval} action
@@ -32,18 +32,9 @@ class Speed extends Action{
     }
 
     /**
-     * Gets the current running speed. <br>
-     * Will get a percentage number, compared to the original speed.
-     * @public
-     * @return {number}
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
      */
-    get speed() {
-        return this._speed;
-    }
-
-    set speed(speed) {
-        this._speed = speed;
-    }
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -71,10 +62,6 @@ class Speed extends Action{
         super.step(dt);
     }
 
-    get isDone () {
-        return this._innerAction.isDone();
-    }
-
     /**
      * @desc Returns a reversed action.
      * @method
@@ -83,7 +70,60 @@ class Speed extends Action{
      */
 
     reverse () {
-        return new Speed(this._innerAction.reverse(), this._speed);
+        return Speed.cloneFromPool(Speed, this._innerAction.reverse(), this._speed);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        this._innerAction = arguments[0];
+        this._speed = arguments[1];
+        super.reuse();
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._innerAction = null;
+        this._speed = 0;
+        this._innerAction = null;
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Gets the current running speed. Will get a percentage number, compared to the original speed.
+     * @public
+     * @return {number}
+     */
+    get speed() {
+        return this._speed;
+    }
+
+    set speed(speed) {
+        this._speed = speed;
+    }
+
+    get isDone () {
+        return this._innerAction.isDone();
     }
 
     /**

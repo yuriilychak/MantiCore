@@ -10,6 +10,11 @@ import Type from "util/Type";
 
 class FlipX extends ActionInstant {
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {
         if (!Type.isEmpty(this.target.flipX)) {
             this.target.flipX = !this.target.flipX;
@@ -26,7 +31,7 @@ class FlipX extends ActionInstant {
      */
 
     clone(){
-        return new FlipX();
+        return FlipX.cloneFromPool(FlipX);
     }
 
     /**
@@ -37,7 +42,7 @@ class FlipX extends ActionInstant {
      */
 
     reverse () {
-        return new FlipX();
+        return FlipX.cloneFromPool(FlipX);
     }
 
 }

@@ -41,6 +41,11 @@ class JumpTo extends JumpBy {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Called before the action start. It will also set the target.
      * @method
      * @public
@@ -64,6 +69,22 @@ class JumpTo extends JumpBy {
 
     clone() {
         return this.doClone(new JumpTo(this.duration, this._endPosition, this.height, this.jumps));
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._endPosition.set(0, 0);
+        super.clearData();
     }
 }
 

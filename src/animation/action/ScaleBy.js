@@ -10,6 +10,11 @@ import ScaleTo from "./ScaleTo";
 class ScaleBy extends ScaleTo {
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Called before the action start. It will also set the target.
      * @method
      * @public
@@ -32,7 +37,7 @@ class ScaleBy extends ScaleTo {
      */
 
     reverse() {
-        return this.doReverse(new ScaleBy(this.duration, 1 / this.endPoint.x, 1 / this.endPoint.y));
+        return this.doReverse(ScaleBy.cloneFromPool(ScaleBy, this.duration, 1 / this.endPoint.x, 1 / this.endPoint.y));
     }
 
     /**
@@ -43,7 +48,7 @@ class ScaleBy extends ScaleTo {
      */
 
     clone() {
-        return this.doClone(new ScaleBy(this.duration, this.endPoint.x, this.endPoint.y));
+        return this.doClone(ScaleBy.cloneFromPool(ScaleBy, this.duration, this.endPoint.x, this.endPoint.y));
     }
 }
 

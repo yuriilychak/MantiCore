@@ -21,8 +21,17 @@ class ReverseTime extends ActionInterval {
 
     constructor(action) {
         super(action.duration);
+        /**
+         * @type {MANTICORE.animation.action.FiniteTimeAction}
+         * @private
+         */
         this._other = action;
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -67,6 +76,23 @@ class ReverseTime extends ActionInterval {
     stop() {
         this._other.stop();
         super.stop();
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._other.kill();
+        this._other = null;
+        super.clearData();
     }
 }
 

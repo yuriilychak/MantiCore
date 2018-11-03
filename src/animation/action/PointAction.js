@@ -40,6 +40,29 @@ class PointAction extends ActionInterval{
     }
 
     /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._startPoint.set(0, 0);
+        this._endPoint.set(0, 0);
+        this._delta.set(0, 0);
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @protected
      * @returns {PIXI.Point|Point}
      */

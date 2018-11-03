@@ -9,6 +9,12 @@ import Math from "util/Math";
  */
 
 class CardinalSpline extends ActionInterval {
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     /**
      * Returns the Cardinal Spline position for a given set of control points, tension and time. <br />
      * CatmullRom Spline formula. <br />

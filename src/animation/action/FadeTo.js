@@ -31,6 +31,10 @@ class FadeTo extends ActionInterval{
         this._fromAlpha = 0;
     }
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -58,6 +62,23 @@ class FadeTo extends ActionInterval{
     startWithTarget(target) {
         super.startWithTarget(target);
         this._fromAlpha = target.alpha;
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._toAlpha = 0;
+        this._fromAlpha = 0;
+        super.clearData();
     }
 }
 

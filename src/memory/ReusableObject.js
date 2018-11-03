@@ -79,6 +79,9 @@ class ReusableObject {
      */
 
     kill() {
+        if (this._inPool || this._isDestroyed) {
+            return;
+        }
         if (this._reusable) {
             Pool.putObject(this);
             return;

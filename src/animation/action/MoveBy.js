@@ -53,6 +53,11 @@ class MoveBy extends ActionInterval {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -101,6 +106,29 @@ class MoveBy extends ActionInterval {
     reverse() {
         return this.doReverse(new MoveBy(this.duration, Geometry.pNeg(this._delta)));
     }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._delta.set(0, 0);
+        this._startPoint.set(0, 0);
+        this._prevPoint.set(0, 0);
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @protected

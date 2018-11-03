@@ -10,6 +10,11 @@ import Type from "util/Type";
 
 class FlipY extends ActionInstant {
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {
         if (!Type.isEmpty(this.target.flipY)) {
             this.target.flipY = !this.target.flipY;
@@ -26,7 +31,7 @@ class FlipY extends ActionInstant {
      */
 
     clone(){
-        return new FlipY();
+        return FlipY.cloneFromPool(FlipY);
     }
 
     /**
@@ -37,7 +42,7 @@ class FlipY extends ActionInstant {
      */
 
     reverse () {
-        return new FlipY();
+        return FlipY.cloneFromPool(FlipY);
     }
 
 }

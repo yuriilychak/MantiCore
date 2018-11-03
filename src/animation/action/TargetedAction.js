@@ -30,6 +30,11 @@ class TargetedAction extends ActionInterval {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -37,7 +42,7 @@ class TargetedAction extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new TargetedAction(this._forcedTarget, this._action.clone()));
+        return this.doClone(TargetedAction.cloneFromPool(TargetedAction, this._forcedTarget, this._action.clone()));
     }
 
     /**
@@ -60,6 +65,42 @@ class TargetedAction extends ActionInterval {
         dt = this.computeEaseTime(dt);
         this._action.update(dt);
     }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        this._action = arguments[0];
+        this._forcedTarget = arguments[1];
+        super.reuse(this._action.duration);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._action.kill();
+        this._action = null;
+        this._forcedTarget = null;
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc The target that the action will be forced to run with.

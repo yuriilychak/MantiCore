@@ -22,29 +22,6 @@ class Sequence extends ActionInterval {
      */
     constructor(var_args) {
         super();
-        const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
-        if (paramArray.length <= 1) {
-            return;
-        }
-        const last = paramArray.length - 1;
-
-        let prev = paramArray[0];
-        let action, i;
-        for (i = 1; i < last; ++i) {
-            if (Type.isEmpty(paramArray[i])) {
-                continue;
-            }
-            action = prev;
-            prev = new Sequence(action, paramArray[i]);
-        }
-
-        const actionOne = prev;
-        const actionTwo = paramArray[last];
-
-        let durationOne = actionOne.duration, durationTwo = actionTwo.duration;
-        durationOne *= actionOne.repeatMethod ? actionOne.repeatCount : 1;
-        durationTwo *= actionTwo.repeatMethod ? actionTwo.repeatCount : 1;
-        this.duration = durationOne + durationTwo;
 
         /**
          * @type {MANTICORE.animation.action.FiniteTimeAction[]}
@@ -70,30 +47,16 @@ class Sequence extends ActionInterval {
          */
         this._reversed = false;
 
-        this._actions[0] = actionOne;
-        this._actions[1] = actionTwo;
+        this._actions[0] = null;
+        this._actions[1] = null;
+
+        this._initData(...arguments);
     }
 
     /**
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @public
-     * @returns {boolean}
-     */
-
-    get reversed() {
-        return this._reversed;
-    }
-
-    set reversed(value) {
-        if (this._reversed === value) {
-            return;
-        }
-        this._reversed = value;
-    }
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -103,7 +66,7 @@ class Sequence extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new Sequence(this._actions[0].clone(), this._actions[1].clone()));
+        return this.doClone(Sequence.cloneFromPool(Sequence, this._actions[0].clone(), this._actions[1].clone()));
     }
 
     startWithTarget(target) {
@@ -171,15 +134,88 @@ class Sequence extends ActionInterval {
      */
 
     reverse() {
-        const action = this.doReverse(new Sequence(this._actions[1].reverse(), this._actions[0].reverse()));
+        const action = this.doReverse(Sequence.cloneFromPool(Sequence, this._actions[1].reverse(), this._actions[0].reverse()));
         action.reversed = true;
         return action;
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        super.reuse();
+        this._initData(...arguments);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        const actionCount = this._actions.length;
+        for (let i = 0; i < actionCount; ++i) {
+            this._actions[i].kill();
+        }
+        this._actions.length = 0;
+        super.clearData();
     }
 
     /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Init data of sequence in constructor and after reuse
+     * @method
+     * @private
+     * @param {...*} var_args
+     */
+
+    _initData(var_args) {
+        const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
+        if (paramArray.length <= 1) {
+            return;
+        }
+        const last = paramArray.length - 1;
+
+        let prev = paramArray[0];
+        let action, i;
+        for (i = 1; i < last; ++i) {
+            if (Type.isEmpty(paramArray[i])) {
+                continue;
+            }
+            action = prev;
+            prev = new Sequence(action, paramArray[i]);
+        }
+
+        const actionOne = prev;
+        const actionTwo = paramArray[last];
+
+        let durationOne = actionOne.duration, durationTwo = actionTwo.duration;
+        durationOne *= actionOne.repeatMethod ? actionOne.repeatCount : 1;
+        durationTwo *= actionTwo.repeatMethod ? actionTwo.repeatCount : 1;
+        this.duration = durationOne + durationTwo;
+
+        this._actions = [];
+        this._split = 0;
+        this._last = 0;
+        this._reversed = false;
+
+        this._actions[0] = actionOne;
+        this._actions[1] = actionTwo;
+    }
 
     /**
      * @method
@@ -193,6 +229,27 @@ class Sequence extends ActionInterval {
          action.update(time);
          action.stop();
      }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @returns {boolean}
+     */
+
+    get reversed() {
+        return this._reversed;
+    }
+
+    set reversed(value) {
+        if (this._reversed === value) {
+            return;
+        }
+        this._reversed = value;
+    }
 }
 
 export default Sequence;

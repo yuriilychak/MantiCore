@@ -19,6 +19,11 @@ class RemoveSelf extends ActionInstant {
         this._isKill = isKill;
     }
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {
         if (this.target.parent) {
             this.target.parent.removeChild(this.target);
@@ -42,6 +47,22 @@ class RemoveSelf extends ActionInstant {
 
     clone(){
         return new RemoveSelf(this._isKill);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._isKill = false;
+        super.clearData();
     }
 }
 

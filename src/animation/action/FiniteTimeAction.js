@@ -31,6 +31,59 @@ class FiniteTimeAction extends Action {
          */
         this._repeatCount = 1;
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * Returns a reversed action. <br />
+     * For example: <br />
+     * - The action will be x coordinates of 0 move to 100. <br />
+     * - The reversed action will be x of 100 move to 0.
+     * - Will be rewritten
+     * @method
+     * @public
+     * @return {*}
+     */
+    reverse() {
+        return null;
+    }
+
+    /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.FiniteTimeAction}
+     */
+
+    clone() {
+        return new FiniteTimeAction();
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._duration = 0;
+        this._repeatCount = 1;
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     /**
      * @desc Get duration of the action. (seconds).
      * @public
@@ -74,31 +127,6 @@ class FiniteTimeAction extends Action {
     }
 
     set repeatMethod(value) {}
-
-    /**
-     * Returns a reversed action. <br />
-     * For example: <br />
-     * - The action will be x coordinates of 0 move to 100. <br />
-     * - The reversed action will be x of 100 move to 0.
-     * - Will be rewritten
-     * @method
-     * @public
-     * @return {*}
-     */
-    reverse() {
-        return null;
-    }
-
-    /**
-     * @desc Need to copy object with deep copy. Returns a clone of action.
-     * @method
-     * @public
-     * @return {MANTICORE.animation.action.FiniteTimeAction}
-     */
-
-    clone() {
-        return new FiniteTimeAction();
-    }
 }
 
 export default FiniteTimeAction;

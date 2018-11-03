@@ -9,6 +9,11 @@ import ActionInstant from "./ActionInstant";
 
 class Hide extends ActionInstant {
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {
         this.target.visible = false;
     }
@@ -21,7 +26,7 @@ class Hide extends ActionInstant {
      */
 
     clone(){
-        return new Hide();
+        return Hide.cloneFromPool(Hide);
     }
 }
 

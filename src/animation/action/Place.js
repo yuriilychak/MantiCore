@@ -32,8 +32,12 @@ class Place extends ActionInstant {
         else {
             this._position = new PIXI.Point(x.x, x.y);
         }
-
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     update(dt) {
         this.target.position.copy(this._position);
@@ -61,6 +65,21 @@ class Place extends ActionInstant {
         return new Place(this._position);
     }
 
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._position.set(0, 0);
+        super.clearData();
+    }
 }
 
 export default Place;

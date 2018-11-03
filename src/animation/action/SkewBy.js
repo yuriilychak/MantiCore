@@ -1,5 +1,7 @@
 import SkewTo from "./SkewTo";
 import Geometry from "util/Geometry";
+import Spawn from "./Spawn";
+import Math from "../../util/Math";
 
 /**
  * @desc Skews a Node object by skewX and skewY degrees.Relative to its property modification.
@@ -9,6 +11,12 @@ import Geometry from "util/Geometry";
  */
 
 class SkewBy extends SkewTo{
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     /**
      * @constructor
      * @param {number} t time in seconds
@@ -33,7 +41,7 @@ class SkewBy extends SkewTo{
      */
 
     clone() {
-        return this.doClone(new SkewBy(this.duration, this._skew.x, this._skew.y));
+        return this.doClone(SkewBy.cloneFromPool(SkewBy, this.duration, this._skew.x, this._skew.y));
     }
 
     /**
@@ -57,7 +65,35 @@ class SkewBy extends SkewTo{
      */
 
     reverse() {
-        return this.doReverse(new SkewBy(this.duration, -this._skew.x, -this._skew.y));
+        return this.doReverse(SkewBy.cloneFromPool(SkewBy, this.duration, -this._skew.x, -this._skew.y));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        this._skew.set(arguments[1], arguments[2]);
+        super.reuse(...arguments);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._skew.set(0, 0);
+        super.clearData();
     }
 }
 

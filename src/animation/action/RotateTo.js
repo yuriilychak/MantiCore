@@ -14,6 +14,11 @@ import Math from "util/Math";
 class RotateTo extends ActionInterval{
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @constructor
      * @param {number} duration
      * @param {number} deltaAngle
@@ -89,6 +94,24 @@ class RotateTo extends ActionInterval{
         }
         dt = this.computeEaseTime(dt);
         this.target.rotation = Math.toRadians(this._startAngle + this._diffAngle * dt);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._dstAngle = 0;
+        this._startAngle = 0;
+        this._diffAngle = 0;
+        super.clearData();
     }
 }
 

@@ -88,6 +88,11 @@ class Follow extends Action {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -97,19 +102,6 @@ class Follow extends Action {
     clone() {
         const rect = new PIXI.Rectangle(this._worldRect.x, this._worldRect.y, this._worldRect.width, this._worldRect.height);
         return new Follow(this._followedDisplayObject, rect);
-    }
-
-    /**
-     * @desc Get whether camera should be limited to certain area.
-     * @public
-     * @return {boolean}
-     */
-    get boundarySet() {
-        return this._boundarySet;
-    }
-
-    set boudarySet(value) {
-        this._boundarySet = value;
     }
     
     /**
@@ -173,13 +165,60 @@ class Follow extends Action {
         this.target.position.set(nextPos.x, nextPos.y);
     }
 
+    stop() {
+        this.target = null;
+        super.stop();
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._followedDisplayObject = null;
+        this._boundarySet = false;
+        this._boundaryFullyCovered = false;
+        this._halfScreenSize = null;
+        this._fullScreenSize = null;
+        this._leftBoundary = 0;
+        this._rightBoundary = 0;
+        this._topBoundary = 0;
+        this._bottomBoundary = 0;
+        this._worldRect.x = 0;
+        this._worldRect.y = 0;
+        this._worldRect.width = 0;
+        this._worldRect.height = 0;
+        this._zeroPoint.set(0, 0);
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     get isDone() {
         return !this._followedDisplayObject.visible;
     }
 
-    stop() {
-        this.target = null;
-        super.stop();
+    /**
+     * @desc Get whether camera should be limited to certain area.
+     * @public
+     * @return {boolean}
+     */
+    get boundarySet() {
+        return this._boundarySet;
+    }
+
+    set boudarySet(value) {
+        this._boundarySet = value;
     }
 }
 

@@ -24,6 +24,11 @@ class Blink extends ActionInterval {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -69,6 +74,23 @@ class Blink extends ActionInterval {
 
     reverse() {
         return this.doReverse(new Blink(this.duration, this._times));
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._times = 0;
+        this._originalState = false;
+        super.clearData();
     }
 }
 

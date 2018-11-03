@@ -18,48 +18,32 @@ class Spawn extends ActionInterval {
      * @param {MANTICORE.animation.action.FiniteTimeAction[] | ...MANTICORE.animation.action.FiniteTimeAction} [var_args]
      */
     constructor(var_args) {
-        const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
+        const actions = Spawn._initActionArray(...arguments);
 
-        if (paramArray.length <= 1) {
+        if (actions.length === 0) {
             return;
         }
-        const last = paramArray.length - 1;
 
+        super(Math.max(actions[0].duration, actions[1].duration));
 
-        let prev = paramArray[0];
-        let action, i;
-
-        for (i = 1; i < last; ++i) {
-            if (paramArray[i]) {
-                action = prev;
-                prev = new Spawn(action, paramArray[i]);
-            }
-        }
-
-        const action1 = prev;
-        const action2 = paramArray[last];
-        const duration1 = action1.duration;
-        const duration2 = action2.duration;
-        const dif = duration1 - duration2;
-
-        super(Math.max(duration1, duration2));
         /**
          * @type {?MANTICORE.animation.action.FiniteTimeAction}
          * @private
          */
-        this._firstAction = action1;
+        this._firstAction = null;
         /**
          * @type {?MANTICORE.animation.action.FiniteTimeAction}
          * @private
          */
-        this._secondAction = action2;
+        this._secondAction = null;
 
-        if (dif > 0) {
-            this._secondAction = new Sequence(action2, new DelayTime(dif));
-        } else if (dif < 0) {
-            this._firstAction = new Sequence(action1, new DelayTime(-dif));
-        }
+        this._updateActions(actions[0], actions[1]);
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -69,7 +53,7 @@ class Spawn extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new Spawn(this._firstAction.clone(), this._secondAction.clone()));
+        return this.doClone(Spawn.cloneFromPool(Spawn, this._firstAction.clone(), this._secondAction.clone()));
     }
 
     startWithTarget(target) {
@@ -103,7 +87,104 @@ class Spawn extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse(new Spawn(this._firstAction.reverse(), this._secondAction.reverse()));
+        return this.doReverse(Spawn.cloneFromPool(Spawn, this._firstAction.reverse(), this._secondAction.reverse()));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        const actions = Spawn._initActionArray(...arguments);
+
+        if (actions.length === 0) {
+            return;
+        }
+
+        super.reuse(Math.max(actions[0].duration, actions[1].duration));
+
+        this._updateActions(actions[0], actions[1]);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._firstAction.kill();
+        this._firstAction = null;
+        this._secondAction.kill();
+        this._secondAction = null;
+        super.clearData();
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Update actions.
+     * @method
+     * @private
+     * @param {MANTICORE.animation.action.ActionInterval} action1
+     * @param {MANTICORE.animation.action.ActionInterval} action2
+     */
+
+    _updateActions(action1, action2) {
+        const duration1 = action1.duration;
+        const duration2 = action2.duration;
+        const dif = duration1 - duration2;
+
+        this._firstAction = action1;
+        this._secondAction = action2;
+
+        if (dif > 0) {
+            this._secondAction = Spawn.cloneFromPool(Sequence, this._secondAction, Spawn.cloneFromPool(DelayTime, dif));
+        } else if (dif < 0) {
+            this._firstAction = Spawn.cloneFromPool(Sequence, this._firstAction, Spawn.cloneFromPool(DelayTime, -dif));
+        }
+    }
+
+    /**
+     * @desc Returns two actions for spawn.
+     * @static
+     * @method
+     * @private
+     * @param {...*} var_args
+     * @return {MANTICORE.animation.action.ActionInterval[]}
+     */
+
+    static _initActionArray(var_args) {
+        const paramArray = Type.isArray(arguments[0]) ? arguments[0] : arguments;
+
+        if (paramArray.length <= 1) {
+            return [];
+        }
+        const last = paramArray.length - 1;
+
+
+        let prev = paramArray[0];
+        let action, i;
+
+        for (i = 1; i < last; ++i) {
+            if (paramArray[i]) {
+                action = prev;
+                prev = Spawn.cloneFromPool(Spawn, action, paramArray[i]);
+            }
+        }
+
+        return [prev, paramArray[last]];
     }
 }
 

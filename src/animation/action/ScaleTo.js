@@ -27,6 +27,10 @@ class ScaleTo extends PointAction{
         super(duration, sx, !Type.isNull(sy) ? sy : sx);
     }
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -36,7 +40,7 @@ class ScaleTo extends PointAction{
      */
 
     clone() {
-        return this.doClone(new ScaleTo(this.duration, this.endPoint.x, this.endPoint.y));
+        return this.doClone(ScaleTo.cloneFromPool(ScaleTo, this.duration, this.endPoint.x, this.endPoint.y));
     }
 
     /**
@@ -62,6 +66,17 @@ class ScaleTo extends PointAction{
             this.startPoint.x + this.delta.x * dt,
             this.startPoint.y + this.delta.y * dt
         );
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        super.reuse(arguments[0], arguments[1], arguments.length === 3 ? arguments[2] : arguments[1]);
     }
 }
 

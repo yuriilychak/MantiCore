@@ -11,6 +11,12 @@ import Math from "util/Math";
  */
 
 class RotateBy extends ActionInterval {
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     /**
      * @constructor
      * @param {number} [duration = 0]
@@ -62,6 +68,23 @@ class RotateBy extends ActionInterval {
 
     reverse() {
         return this.doReverse(new RotateBy(this.duration, -this._angle));
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._angle = 0;
+        this._startAngle = 0;
+        super.clearData();
     }
 }
 

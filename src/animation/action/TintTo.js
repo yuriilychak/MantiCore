@@ -1,5 +1,6 @@
 import ActionInterval from "./ActionInterval";
 import Color from "util/Color";
+import Type from "../../util/Type";
 
 /**
  * @desc Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
@@ -41,6 +42,10 @@ class TintTo extends ActionInterval {
         this._from = [0, 0, 0];
     }
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
@@ -50,7 +55,7 @@ class TintTo extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new TintTo(this.duration, this._to[0], this._to[1], this._to[2]));
+        return this.doClone(TintTo.cloneFromPool(TintTo, this.duration, this._to[0], this._to[1], this._to[2]));
     }
 
     /**
@@ -72,6 +77,49 @@ class TintTo extends ActionInterval {
             this._from[1] + (this._to[1] - this._from[1]) * dt,
             this._from[2] + (this._to[2] - this._from[2]) * dt
         );
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        let red, green, blue;
+        if (arguments.length === 2) {
+            const color = Color.intToRgb(arguments[1]);
+            red = color[0];
+            green = color[1];
+            blue = color[2];
+        }
+        else {
+            red = arguments[1];
+            green = arguments[2];
+            blue = arguments[3];
+        }
+
+        this._to = [red, green, blue];
+        this._from = [0, 0, 0];
+        super.reuse(...arguments);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._to.length = 0;
+        this._from.length = 0;
+        super.clearData();
     }
 }
 

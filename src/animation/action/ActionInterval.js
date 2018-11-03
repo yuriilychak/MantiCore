@@ -179,9 +179,42 @@ class ActionInterval extends FiniteTimeAction {
     }
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        if (!Type.isEmpty(arguments[0]))  {
+            this.duration = arguments[0];
+        }
+        super.reuse(...arguments);
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this.MAX_VALUE = 2;
+        this._elapsed = 0;
+        this._firstTick = true;
+        this._eases = [];
+        this._speed = 1;
+        this._repeatForever = false;
+        this._repeatMethod = false;
+        this._speedMethod = false;
+        this.repeatCount = 1;
+        super.clearData();
+    }
 
     /**
      * @desc Clone parameters to action, and return it.

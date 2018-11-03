@@ -56,6 +56,11 @@ class CardinalSplineTo extends CardinalSpline {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -117,6 +122,32 @@ class CardinalSplineTo extends CardinalSpline {
         this.target.position.set(newPos);
         this._previousPosition.copy(newPos);
     }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._points.length = 0;
+        this._deltaT = 0;
+        this._tension = -1;
+        this._previousPosition.set(0, 0);
+        this._accumulatedDiff.set(0, 0);
+        this._stackPoint.set(0, 0);
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Points getter

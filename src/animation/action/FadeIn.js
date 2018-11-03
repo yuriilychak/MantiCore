@@ -14,6 +14,11 @@ class FadeIn extends FadeTo{
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Returns a reversed action.
      * @method
      * @public

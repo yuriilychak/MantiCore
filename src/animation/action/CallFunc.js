@@ -36,6 +36,11 @@ class CallFunc extends ActionInstant {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Execute callback.
      * @method
      * @public
@@ -52,6 +57,40 @@ class CallFunc extends ActionInstant {
     }
 
     /**
+     * @desc Need to copy object with deep copy. Returns a clone of action.
+     * @method
+     * @public
+     * @return {MANTICORE.animation.action.CallFunc}
+     */
+
+    clone() {
+        return new CallFunc(this._callback, this._context, this._data);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._context = null;
+        this._callback = null;
+        this._data = null;
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Get selectorTarget.
      * @public
      * @return {object}
@@ -65,17 +104,6 @@ class CallFunc extends ActionInstant {
             return
         }
         this._context = value;
-    }
-
-    /**
-     * @desc Need to copy object with deep copy. Returns a clone of action.
-     * @method
-     * @public
-     * @return {MANTICORE.animation.action.CallFunc}
-     */
-
-    clone() {
-        return new CallFunc(this._callback, this._context, this._data);
     }
 }
 

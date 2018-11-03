@@ -1,7 +1,7 @@
 declare namespace MANTICORE {
     export namespace animation {
         export namespace action {
-            export class Action {
+            export class Action extends MANTICORE.memory.ReusableObject{
                 constructor ();
 
                 readonly isDone: boolean;

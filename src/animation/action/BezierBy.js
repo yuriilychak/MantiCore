@@ -20,8 +20,20 @@ class BezierBy extends ActionInterval{
      */
     constructor(t, c) {
         super(t);
+        /**
+         * @type {PIXI.Point[]}
+         * @private
+         */
         this._config = c;
+        /**
+         * @type {PIXI.Point | Point}
+         * @private
+         */
         this._startPoint = new PIXI.Point(0, 0);
+        /**
+         * @type {PIXI.Point | Point}
+         * @private
+         */
         this._prevPoint = new PIXI.Point(0, 0);
     }
 
@@ -99,6 +111,24 @@ class BezierBy extends ActionInterval{
             new PIXI.Point(x0 - x2, y0 - y2),
             new PIXI.Point(-x2, -y2) ];
         return this.doReverse(new BezierBy(this.duration, r));
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._config.length;
+        this._startPoint.set(0, 0);
+        this._prevPoint.set(0, 0);
+        super.clearData();
     }
 
     /**

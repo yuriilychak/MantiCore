@@ -15,6 +15,11 @@ class FadeOut extends FadeTo {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Returns a reversed action.
      * @method
      * @public

@@ -9,6 +9,11 @@ import ActionInstant from "./ActionInstant";
 
 class ToggleVisibility extends ActionInstant {
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {
         this.target.visible = !this.target.visible;
     }
@@ -21,7 +26,7 @@ class ToggleVisibility extends ActionInstant {
      */
 
     clone(){
-        return new ToggleVisibility();
+        return ToggleVisibility.cloneFromPool(ToggleVisibility);
     }
 
     /**
@@ -32,7 +37,7 @@ class ToggleVisibility extends ActionInstant {
      */
 
     reverse () {
-        return new ToggleVisibility();
+        return ToggleVisibility.cloneFromPool(ToggleVisibility);
     }
 
 }

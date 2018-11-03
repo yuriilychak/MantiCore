@@ -38,6 +38,11 @@ class MoveTo extends MoveBy {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -59,6 +64,22 @@ class MoveTo extends MoveBy {
         super.startWithTarget(target);
         this.delta.x = this._endPosition.x - target.x;
         this.delta.y = this._endPosition.y - target.y;
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._endPosition.set(0, 0);
+        super.clearData();
     }
 }
 

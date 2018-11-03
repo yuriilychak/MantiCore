@@ -13,6 +13,11 @@ import Math from "util/Math";
 class SkewTo extends PointAction {
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -20,7 +25,7 @@ class SkewTo extends PointAction {
      */
 
     clone() {
-        return this.doClone(new SkewTo(this.duration, this.endPoint.x, this.endPoint.y));
+        return this.doClone(SkewTo.cloneFromPool(SkewTo, this.duration, this.endPoint.x, this.endPoint.y));
     }
 
     /**

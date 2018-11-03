@@ -34,6 +34,11 @@ class TintBy extends ActionInterval{
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
@@ -78,7 +83,37 @@ class TintBy extends ActionInterval{
      */
 
     reverse() {
-        return this.doReverse(new TintBy(this.duration, -this._delta[0], -this._delta[1], -this._delta[2]));
+        return this.doReverse(TintBy.cloneFromPool(TintBy, this.duration, -this._delta[0], -this._delta[1], -this._delta[2]));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {...*} var_args
+     */
+
+    reuse(var_args) {
+        this._delta = [arguments[1], arguments[2], arguments[3]];
+        this._from = [0, 0, 0];
+        super.reuse(...arguments);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._delta.length = 0;
+        this._from.length = 0;
+        super.clearData();
     }
 }
 

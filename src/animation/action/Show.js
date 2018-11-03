@@ -9,6 +9,11 @@ import ActionInstant from "./ActionInstant";
 
 class Show extends ActionInstant {
 
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {
         this.target.visible = true;
     }
@@ -21,7 +26,7 @@ class Show extends ActionInstant {
      */
 
     clone(){
-        return new Show();
+        return Show.cloneFromPool(Show);
     }
 }
 

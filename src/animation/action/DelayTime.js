@@ -8,6 +8,12 @@ import ActionInterval from "./ActionInterval";
  */
 
 class DelayTime extends ActionInterval{
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     update(dt) {}
 
     /**
