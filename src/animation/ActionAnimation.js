@@ -169,6 +169,7 @@ class ActionAnimation extends ReusableObject{
 
     clearData() {
         this.stop();
+        this._action.kill();
         this._action = null;
         this._position.set(0, 0);
         this._scale.set(1, 1);
