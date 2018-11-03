@@ -161,7 +161,7 @@ const pool = {
         const dif = count - elementCount;
         let element, i;
 
-        for (i = 0, i < dif; ++i) {
+        for (i = 0; i < dif; ++i) {
             element = elements.shift();
             if (element.destroy) {
                 element.destroy();

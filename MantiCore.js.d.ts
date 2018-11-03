@@ -1182,7 +1182,6 @@ declare namespace MANTICORE {
         export function setPoolSize(object: Object, count: number): void;
         export function getObject(...var_args: any[]): void;
         export function drain(): void;
-
     }
 
     export namespace repository {
