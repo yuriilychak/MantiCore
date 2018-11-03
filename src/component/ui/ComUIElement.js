@@ -43,7 +43,7 @@ class ComUIElement extends ComUI {
      */
 
     clone() {
-        return ComUIElement.cloneFromPool(this._elementName, this._bundleName);
+        return ComUIElement.create(this._elementName, this._bundleName);
     }
 }
 

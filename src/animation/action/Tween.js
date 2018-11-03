@@ -71,7 +71,7 @@ class Tween extends ActionInterval {
      * @return {MANTICORE.animation.action.Tween}
      */
     reverse() {
-        return Tween.cloneFromPool(Tween, this.duration, this._key, this._to, this._from);
+        return Tween.create(this.duration, this._key, this._to, this._from);
     }
 
     /**
@@ -81,22 +81,25 @@ class Tween extends ActionInterval {
      * @return {MANTICORE.animation.action.Tween}
      */
     clone() {
-        return Tween.cloneFromPool(Tween, this.duration, this._key, this._from, this._to);
+        return Tween.create(this.duration, this._key, this._from, this._to);
     }
 
     /**
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {number} duration
+     * @param {string} key
+     * @param {number} from
+     * @param {number} to
      */
 
-    reuse(var_args) {
-        this._key = arguments[1];
-        this._from = arguments[2];
-        this._to = arguments[3];
+    reuse(duration, key, from, to) {
+        super.reuse(duration);
+        this._key = key;
+        this._to = to;
+        this._from = from;
         this._delta = this._to - this._from;
-        super.reuse(...arguments);
     }
 
     /**

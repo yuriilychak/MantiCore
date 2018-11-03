@@ -31,7 +31,7 @@ class FlipY extends ActionInstant {
      */
 
     clone(){
-        return FlipY.cloneFromPool(FlipY);
+        return FlipY.create();
     }
 
     /**
@@ -42,7 +42,7 @@ class FlipY extends ActionInstant {
      */
 
     reverse () {
-        return FlipY.cloneFromPool(FlipY);
+        return FlipY.create();
     }
 
 }

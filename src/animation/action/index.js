@@ -47,11 +47,11 @@ import ToggleVisibility from "./ToggleVisibility";
 import Tween from "./Tween";
 
 Show.prototype.reverse = function () {
-    return new Hide();
+    return Hide.create();
 };
 
 Hide.prototype.reverse = function () {
-    return new Show();
+    return Show.create();
 };
 
 /**

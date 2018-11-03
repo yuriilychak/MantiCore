@@ -26,7 +26,7 @@ class ToggleVisibility extends ActionInstant {
      */
 
     clone(){
-        return ToggleVisibility.cloneFromPool(ToggleVisibility);
+        return ToggleVisibility.create();
     }
 
     /**
@@ -37,7 +37,7 @@ class ToggleVisibility extends ActionInstant {
      */
 
     reverse () {
-        return ToggleVisibility.cloneFromPool(ToggleVisibility);
+        return ToggleVisibility.create();
     }
 
 }

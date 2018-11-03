@@ -44,7 +44,7 @@ class Speed extends Action {
      */
 
     clone() {
-        return new Speed(this._innerAction.clone(), this._speed);
+        return Speed.create(this._innerAction.clone(), this._speed);
     }
 
     startWithTarget(target) {
@@ -70,20 +70,21 @@ class Speed extends Action {
      */
 
     reverse () {
-        return Speed.cloneFromPool(Speed, this._innerAction.reverse(), this._speed);
+        return Speed.create(this._innerAction.reverse(), this._speed);
     }
 
     /**
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {number} speed
      */
 
-    reuse(var_args) {
-        this._innerAction = arguments[0];
-        this._speed = arguments[1];
+    reuse(action, speed) {
         super.reuse();
+        this._speed = speed;
+        this._innerAction = action;
     }
 
     /**

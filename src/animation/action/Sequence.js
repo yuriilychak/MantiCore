@@ -66,7 +66,7 @@ class Sequence extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(Sequence.cloneFromPool(Sequence, this._actions[0].clone(), this._actions[1].clone()));
+        return this.doClone(Sequence.create(this._actions[0].clone(), this._actions[1].clone()));
     }
 
     startWithTarget(target) {
@@ -134,7 +134,7 @@ class Sequence extends ActionInterval {
      */
 
     reverse() {
-        const action = this.doReverse(Sequence.cloneFromPool(Sequence, this._actions[1].reverse(), this._actions[0].reverse()));
+        const action = this.doReverse(Sequence.create(this._actions[1].reverse(), this._actions[0].reverse()));
         action.reversed = true;
         return action;
     }
@@ -197,7 +197,7 @@ class Sequence extends ActionInterval {
                 continue;
             }
             action = prev;
-            prev = new Sequence(action, paramArray[i]);
+            prev = Sequence.create(action, paramArray[i]);
         }
 
         const actionOne = prev;

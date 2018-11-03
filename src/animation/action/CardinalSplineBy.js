@@ -38,7 +38,7 @@ class CardinalSplineBy extends CardinalSplineTo {
      */
 
     clone() {
-        return new CardinalSplineBy(this.duration, CardinalSplineBy.cloneControlPoints(this.points), this.tension);
+        return CardinalSplineBy.create(this.duration, CardinalSplineBy.cloneControlPoints(this.points), this.tension);
     }
 
     startWithTarget(target) {
@@ -83,7 +83,7 @@ class CardinalSplineBy extends CardinalSplineTo {
             p = reverseArray[i] = Geometry.pAdd(Geometry.pNeg(reverseArray[i], true), p, true);
         }
 
-        return new CardinalSplineBy(this.duration, reverseArray, this.tension);
+        return CardinalSplineBy.create(this.duration, reverseArray, this.tension);
     }
 
     /**
@@ -96,6 +96,20 @@ class CardinalSplineBy extends CardinalSplineTo {
         const nextPos = Geometry.pAdd(newPos, this._startPosition);
         this.previousPosition.copy(nextPos);
         this.target.position.copy(nextPos);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration
+     * @param {PIXI.Point[]} points
+     * @param {number} [tension = 0]
+     */
+
+    reuse(duration, points, tension = 0) {
+        super.reuse(duration, points, tension);
+        this._startPosition.set(0, 0);
     }
 
     /**

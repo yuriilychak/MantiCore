@@ -89,7 +89,7 @@ class ComChildListener extends ComChildIterator {
      */
 
     clone() {
-        return ComChildListener.cloneFromPool(ComChildListener);
+        return ComChildListener.create();
     }
 
     /**

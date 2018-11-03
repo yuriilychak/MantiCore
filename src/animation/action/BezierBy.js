@@ -55,7 +55,7 @@ class BezierBy extends ActionInterval{
         for (let i = 0; i < configSize; ++i) {
             newConfigs.push(this._config[i].clone());
         }
-        return this.doClone(new BezierBy(this.duration, newConfigs));
+        return this.doClone(BezierBy.create(this.duration, newConfigs));
     }
 
     startWithTarget(target) {
@@ -110,7 +110,22 @@ class BezierBy extends ActionInterval{
             new PIXI.Point(x1 - x2, y1 - y2),
             new PIXI.Point(x0 - x2, y0 - y2),
             new PIXI.Point(-x2, -y2) ];
-        return this.doReverse(new BezierBy(this.duration, r));
+        return this.doReverse(BezierBy.create(this.duration, r));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} t
+     * @param {PIXI.Point[]} c - Array of points
+     */
+
+    reuse(t, c) {
+        super.reuse(t);
+        this._config = c;
+        this._startPoint.set(0, 0);
+        this._prevPoint.set(0, 0);
     }
 
     /**

@@ -317,10 +317,10 @@ function _createAnimation(animation, bundle) {
                         nextValue = Math.percentToFloat(nextData[0]);
                         prevValue = !Type.isNull(prevData) ? Math.percentToFloat(prevData[0]) : -1;
                         if (nextValue === prevValue) {
-                            action = new DelayTime(time);
+                            action = DelayTime.create(time);
                         }
                         else {
-                            action = new FadeTo(time, nextValue);
+                            action = FadeTo.create(time, nextValue);
                             if (!Type.isNull(ease)) {
                                 action.easing(ease);
                             }
@@ -335,10 +335,10 @@ function _createAnimation(animation, bundle) {
                     fps,
                     () => {},
                     (nextData, prevData, time) => {
-                        result.push(new DelayTime(time));
+                        result.push(DelayTime.create(time));
                     });
                 if (result.length === 0) {
-                    result.push(new DelayTime(0));
+                    result.push(DelayTime.create(0));
                 }
                 break;
             }
@@ -353,10 +353,10 @@ function _createAnimation(animation, bundle) {
                         nextValue.set(nextData[0], nextData[1]);
 
                         if (nextValue.equals(prevValue)) {
-                            action = new DelayTime(time);
+                            action = DelayTime.create(time);
                         }
                         else {
-                            action = new MoveBy(time, nextValue);
+                            action = MoveBy.create(time, nextValue);
                             if (!Type.isNull(ease)) {
                                 action.easing(ease);
                             }
@@ -376,10 +376,10 @@ function _createAnimation(animation, bundle) {
                         nextValue.set(nextData[0], nextData[1]);
 
                         if (nextValue.equals(prevValue)) {
-                            action = new DelayTime(time);
+                            action = DelayTime.create(time);
                         }
                         else {
-                            action = new ScaleBy(time, nextValue.x, nextValue.y);
+                            action = ScaleBy.create(time, nextValue.x, nextValue.y);
                             if (!Type.isNull(ease)) {
                                 action.easing(ease);
                             }
@@ -399,10 +399,10 @@ function _createAnimation(animation, bundle) {
                         nextValue.set(nextData[0], nextData[1]);
 
                         if (nextValue.equals(prevValue)) {
-                            action = new DelayTime(time);
+                            action = DelayTime.create(time);
                         }
                         else {
-                            action = new SkewBy(time, nextValue.x, nextValue.y);
+                            action = SkewBy.create(time, nextValue.x, nextValue.y);
                             if (!Type.isNull(ease)) {
                                 action.easing(ease);
                             }
@@ -420,10 +420,10 @@ function _createAnimation(animation, bundle) {
                         nextValue.set(nextData[0], nextData[1]);
 
                         if (nextData[0] === prevData[0]) {
-                            action = new DelayTime(time);
+                            action = DelayTime.create(time);
                         }
                         else {
-                            action = new RotateBy(time, nextData[0]);
+                            action = RotateBy.create(time, nextData[0]);
                             if (!Type.isNull(ease)) {
                                 action.easing(ease);
                             }
@@ -440,13 +440,13 @@ function _createAnimation(animation, bundle) {
                     (nextData, prevData, time, ease) => {
                         nextValue = nextData[0];
                         prevValue = !Type.isNull(prevData) ? prevData[0] : -1;
-                        result.push(nextValue === prevValue ? new DelayTime(time) : new TintTo(time, nextValue));
+                        result.push(nextValue === prevValue ? DelayTime.create(time) : TintTo.create(time, nextValue));
 
                         if (nextValue === prevValue) {
-                            action = new DelayTime(time);
+                            action = DelayTime.create(time);
                         }
                         else {
-                            action = new TintTo(time, nextValue);
+                            action = TintTo.create(time, nextValue);
                             if (!Type.isNull(ease)) {
                                 action.easing(ease);
                             }
@@ -463,11 +463,11 @@ function _createAnimation(animation, bundle) {
                     (nextData, prevData, time) => {
                         prevValue = !Type.isNull(prevData) ? Type.toBoolean(prevData[0]) : null;
                         nextValue = Type.toBoolean(nextData[0]);
-                        result.push(new DelayTime(time));
+                        result.push(DelayTime.create(time));
                         if (prevValue === nextValue) {
                             return;
                         }
-                        result.push(nextValue ? new Show() : new Hide());
+                        result.push(nextValue ? Show.create() : Hide.create());
                     });
                 break;
             }
@@ -475,24 +475,24 @@ function _createAnimation(animation, bundle) {
                 _iterateFrames(
                     track,
                     fps,
-                    data => result.push(new FrameChange(_getTextureFromData(data[0], bundle))),
+                    data => result.push(FrameChange.create(_getTextureFromData(data[0], bundle))),
                     (nextData, prevData, time) => {
-                        result.push(new DelayTime(time));
-                        result.push(new FrameChange(_getTextureFromData(nextData[0], bundle)));
+                        result.push(DelayTime.create(time));
+                        result.push(FrameChange.create(_getTextureFromData(nextData[0], bundle)));
                     });
                 break;
             }
         }
 
         if (result.length > 0) {
-            tracks.push(result.length > 1 ? new Sequence(result) : result[0]);
+            tracks.push(result.length > 1 ? Sequence.create(result) : result[0]);
         }
     }
 
     /**
      * @type {MANTICORE.animation.ActionAnimation}
      */
-    const resultAnimation = Pool.getObject(ActionAnimation, tracks.length === 1 ? tracks[0] : new Spawn(tracks));
+    const resultAnimation = Pool.getObject(ActionAnimation, tracks.length === 1 ? tracks[0] : Spawn.create(tracks));
 
     resultAnimation.positionOffset = offsetPosition;
     resultAnimation.scaleOffset = offsetScale;

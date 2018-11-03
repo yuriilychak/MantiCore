@@ -39,7 +39,7 @@ class BezierTo extends BezierBy{
      */
 
     clone() {
-        return this.doClone(new BezierTo(this.duration, this._toConfig));
+        return this.doClone(BezierTo.create(this.duration, this._toConfig));
     }
 
     startWithTarget(target) {
@@ -50,6 +50,19 @@ class BezierTo extends BezierBy{
         for (let i = 0; i < configSize; ++i) {
             this.config[i].copy(Geometry.pSub(this._toConfig[i], this.startPoint));
         }
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} t
+     * @param {PIXI.Point[]} c - Array of points
+     */
+
+    reuse(t, c) {
+        super.reuse(t, []);
+        this._toConfig = c;
     }
 
     /**

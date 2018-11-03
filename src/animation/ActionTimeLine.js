@@ -471,7 +471,7 @@ class ActionTimeLine extends ReusableObject{
         /**
          * @type {MANTICORE.animation.ActionTimeLine}
          */
-        const result = ActionTimeLine.cloneFromPool(ActionTimeLine, this._target);
+        const result = ActionTimeLine.create(this._target);
         result.fps = this._fps;
         result.inherit = this._isInherit;
         result.loop = this._isLoop;

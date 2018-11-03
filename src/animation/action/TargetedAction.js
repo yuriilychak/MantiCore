@@ -42,7 +42,7 @@ class TargetedAction extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(TargetedAction.cloneFromPool(TargetedAction, this._forcedTarget, this._action.clone()));
+        return this.doClone(TargetedAction.create(this._forcedTarget, this._action.clone()));
     }
 
     /**
@@ -70,13 +70,14 @@ class TargetedAction extends ActionInterval {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {PIXI.DisplayObject} target
+     * @param {MANTICORE.animation.action.FiniteTimeAction} action
      */
 
-    reuse(var_args) {
-        this._action = arguments[0];
-        this._forcedTarget = arguments[1];
-        super.reuse(this._action.duration);
+    reuse(target, action) {
+        super.reuse(action.duration);
+        this._action = action;
+        this._forcedTarget = target;
     }
 
     /**

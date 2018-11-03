@@ -46,7 +46,19 @@ class RemoveSelf extends ActionInstant {
      */
 
     clone(){
-        return new RemoveSelf(this._isKill);
+        return RemoveSelf.create(this._isKill);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {boolean} [isKill = false] - Is need kill target.
+     */
+
+    reuse(isKill = false) {
+        this._isKill = isKill;
+        super.reuse();
     }
 
     /**

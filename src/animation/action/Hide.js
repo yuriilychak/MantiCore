@@ -26,7 +26,7 @@ class Hide extends ActionInstant {
      */
 
     clone(){
-        return Hide.cloneFromPool(Hide);
+        return Hide.create();
     }
 }
 

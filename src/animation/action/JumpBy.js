@@ -78,7 +78,7 @@ class JumpBy extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new JumpBy(this.duration, this._delta, this._height, this._jumps));
+        return this.doClone(JumpBy.create(this.duration, this._delta, this._height, this._jumps));
     }
 
     /**
@@ -118,7 +118,37 @@ class JumpBy extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse(new JumpBy(this.duration, Geometry.pNeg(this._delta), this._height, this._jumps));
+        return this.doReverse(JumpBy.create(this.duration, Geometry.pNeg(this._delta), this._height, this._jumps));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} [duration = 0]
+     * @param {PIXI.Point | Point | number} [position]
+     * @param {number} [y]
+     * @param {number} [height]
+     * @param {number} [jumps]
+     */
+
+    reuse(duration, position, y, height, jumps) {
+        super.reuse(duration);
+
+        if (Type.isEmpty(jumps)) {
+            jumps = height;
+            height = y;
+            y = position.y;
+            position = position.x;
+        }
+
+        this._startPoint.set(0, 0);
+        this._previousPosition.set(0, 0);
+        this._delta.set(0, 0);
+        this._height = height;
+        this._jumps = jumps;
+        this._delta.x = position;
+        this._delta.y = y;
     }
 
     /**

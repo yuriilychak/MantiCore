@@ -67,7 +67,7 @@ class Repeat extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new Repeat(this._innerAction.clone(), this._times));
+        return this.doClone(Repeat.create(this._innerAction.clone(), this._times));
     }
 
     startWithTarget(target) {
@@ -124,7 +124,30 @@ class Repeat extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse(new Repeat(this._innerAction.reverse(), this._times));
+        return this.doReverse(Repeat.create(this._innerAction.reverse(), this._times));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.FiniteTimeAction} [action]
+     * @param {int} [times]
+     */
+
+    reuse(action = null, times = 1) {
+        const duration = action.duration * times;
+        super.reuse(duration);
+        this._times = times;
+        this._total = 0;
+        this._nextDt = 0;
+        this._actionInstant = false;
+        this._innerAction = action;
+
+        if (this._innerAction instanceof ActionInstant){
+            this._actionInstant = true;
+            this._times -= 1;
+        }
     }
 
     /**

@@ -177,7 +177,7 @@ class Component extends ReusableObject{
      */
 
     clone() {
-        return Component.cloneFromPool(Component, this._name);
+        return Component.create(this._name);
     }
 
     /**

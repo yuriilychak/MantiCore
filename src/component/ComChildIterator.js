@@ -143,7 +143,7 @@ class ComChildIterator extends Component {
      */
 
     clone() {
-        return ComChildIterator.cloneFromPool(ComChildIterator, this.name);
+        return ComChildIterator.create(this.name);
     }
 
     /**

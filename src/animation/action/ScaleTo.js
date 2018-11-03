@@ -40,7 +40,7 @@ class ScaleTo extends PointAction{
      */
 
     clone() {
-        return this.doClone(ScaleTo.cloneFromPool(ScaleTo, this.duration, this.endPoint.x, this.endPoint.y));
+        return this.doClone(ScaleTo.create(this.duration, this.endPoint.x, this.endPoint.y));
     }
 
     /**
@@ -72,11 +72,13 @@ class ScaleTo extends PointAction{
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {number} duration
+     * @param {number} sx  scale parameter in X
+     * @param {?number} [sy] scale parameter in Y, if Null equal to sx
      */
 
-    reuse(var_args) {
-        super.reuse(arguments[0], arguments[1], arguments.length === 3 ? arguments[2] : arguments[1]);
+    reuse(duration, sx, sy = null) {
+        super.reuse(duration, sx, !Type.isNull(sy) ? sy : sx);
     }
 }
 

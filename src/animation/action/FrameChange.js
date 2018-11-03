@@ -15,6 +15,10 @@ class FrameChange extends ActionInstant {
     constructor(frame) {
         super();
 
+        /**
+         * @type {string}
+         * @private
+         */
         this._frame = frame;
     }
 
@@ -35,7 +39,7 @@ class FrameChange extends ActionInstant {
      */
 
     clone(){
-        return FrameChange.cloneFromPool(FrameChange, this._frame);
+        return FrameChange.create(this._frame);
     }
 
     /**
@@ -45,7 +49,20 @@ class FrameChange extends ActionInstant {
      */
 
     reverse(){
-        return FrameChange.cloneFromPool(FrameChange, this._frame);
+        return FrameChange.create(this._frame);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} frame
+     */
+
+    reuse(frame) {
+        super.reuse();
+
+        this._frame = frame;
     }
 
     /**

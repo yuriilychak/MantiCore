@@ -26,7 +26,7 @@ class FadeIn extends FadeTo{
      */
 
     reverse() {
-        return this.doReverse(new FadeTo(this.duration, 0));
+        return this.doReverse(FadeTo.create(this.duration, 0));
     }
 
     /**
@@ -37,7 +37,7 @@ class FadeIn extends FadeTo{
      */
 
     clone() {
-        return this.doClone(new FadeIn(this.duration));
+        return this.doClone(FadeIn.create(this.duration));
     }
 }
 

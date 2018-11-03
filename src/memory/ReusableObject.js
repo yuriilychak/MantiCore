@@ -117,7 +117,19 @@ class ReusableObject {
      */
 
     static cloneFromPool(var_args) {
-        return Pool.getObject.apply(Pool, arguments);
+        return Pool.getObject(...arguments);
+    }
+
+    /**
+     * @desc Static constructor of reusable object
+     * @method
+     * @static
+     * @param var_args
+     * @return {*}
+     */
+
+    static create(var_args) {
+        return Pool.getObject(this, ...arguments);
     }
 
     /**

@@ -68,7 +68,29 @@ class JumpTo extends JumpBy {
      */
 
     clone() {
-        return this.doClone(new JumpTo(this.duration, this._endPosition, this.height, this.jumps));
+        return this.doClone(JumpTo.create(this.duration, this._endPosition, this.height, this.jumps));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration
+     * @param {PIXI.Point|number} position
+     * @param {number} [y]
+     * @param {number} [height]
+     * @param {number} [jumps]
+     */
+
+    reuse(duration, position, y, height, jumps) {
+        super.reuse(duration, position, y, height, jumps);
+
+        if(Type.isNumber(position)) {
+            this._endPosition.set(position, y);
+        }
+        else {
+            this._endPosition.copy(position);
+        }
     }
 
     /**

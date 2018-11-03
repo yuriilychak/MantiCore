@@ -1,6 +1,5 @@
 import ActionInterval from "./ActionInterval";
 import Color from "util/Color";
-import Type from "../../util/Type";
 
 /**
  * @desc Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
@@ -55,7 +54,7 @@ class TintTo extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(TintTo.cloneFromPool(TintTo, this.duration, this._to[0], this._to[1], this._to[2]));
+        return this.doClone(TintTo.create(this.duration, this._to[0], this._to[1], this._to[2]));
     }
 
     /**
@@ -83,26 +82,24 @@ class TintTo extends ActionInterval {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {number} duration
+     * @param {number} red [0-255]
+     * @param {number} [green]  [0-255]
+     * @param {number} [blue] [0-255]
      */
 
-    reuse(var_args) {
-        let red, green, blue;
-        if (arguments.length === 2) {
-            const color = Color.intToRgb(arguments[1]);
+    reuse(duration, red, green = -1, blue = -1) {
+        super.reuse(duration);
+
+        if (green === -1) {
+            const color = Color.intToRgb(red);
             red = color[0];
             green = color[1];
             blue = color[2];
         }
-        else {
-            red = arguments[1];
-            green = arguments[2];
-            blue = arguments[3];
-        }
 
         this._to = [red, green, blue];
         this._from = [0, 0, 0];
-        super.reuse(...arguments);
     }
 
     /**

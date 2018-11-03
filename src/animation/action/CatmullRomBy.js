@@ -33,7 +33,7 @@ class CatmullRomBy extends CardinalSplineBy {
      */
 
     clone() {
-        return new CatmullRomBy(this.duration, CatmullRomBy.cloneControlPoints(this.points));
+        return CatmullRomBy.create(this.duration, CatmullRomBy.cloneControlPoints(this.points));
     }
 }
 

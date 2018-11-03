@@ -65,7 +65,7 @@ class MoveBy extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new MoveBy(this.duration, this._delta));
+        return this.doClone(MoveBy.create(this.duration, this._delta));
     }
 
     /**
@@ -104,7 +104,29 @@ class MoveBy extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse(new MoveBy(this.duration, Geometry.pNeg(this._delta)));
+        return this.doReverse(MoveBy.create(this.duration, Geometry.pNeg(this._delta)));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration duration in seconds
+     * @param {PIXI.Point|number} deltaPos
+     * @param {number} [deltaY]
+     */
+
+    reuse(duration, deltaPos, deltaY) {
+        super.reuse(duration);
+        this._startPoint.set(0, 0);
+        this._prevPoint.set(0, 0);
+
+        if(Type.isNumber(deltaPos)) {
+            this._delta.set(deltaPos, deltaY);
+        }
+        else {
+            this._delta.copy(deltaPos);
+        }
     }
 
     /**

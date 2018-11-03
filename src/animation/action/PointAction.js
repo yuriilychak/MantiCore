@@ -40,6 +40,22 @@ class PointAction extends ActionInterval{
     }
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} t time in seconds
+     * @param {number} x
+     * @param {number} y
+     */
+
+    reuse(t, x, y) {
+        super.reuse(t);
+        this._startPoint.set(0, 0);
+        this._endPoint.set(x, y);
+        this._delta.set(0, 0);
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

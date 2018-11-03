@@ -59,7 +59,19 @@ class FiniteTimeAction extends Action {
      */
 
     clone() {
-        return new FiniteTimeAction();
+        return FiniteTimeAction.create();
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     */
+
+    reuse() {
+        super.reuse();
+        this._duration = 0;
+        this._repeatCount = 1;
     }
 
     /**

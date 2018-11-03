@@ -84,7 +84,7 @@ class Follow extends Action {
 
         this._zeroPoint = new PIXI.Point();
 
-        this.initWithTarget(followedDisplayObject, rect)
+        this.initWithTarget(followedDisplayObject, rect);
     }
 
     /**
@@ -101,7 +101,7 @@ class Follow extends Action {
 
     clone() {
         const rect = new PIXI.Rectangle(this._worldRect.x, this._worldRect.y, this._worldRect.width, this._worldRect.height);
-        return new Follow(this._followedDisplayObject, rect);
+        return Follow.create(this._followedDisplayObject, rect);
     }
     
     /**
@@ -168,6 +168,34 @@ class Follow extends Action {
     stop() {
         this.target = null;
         super.stop();
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {PIXI.DisplayObject} followedDisplayObject
+     * @param {PIXI.Rectangle | Rectangle} rect
+     */
+
+    reuse(followedDisplayObject, rect) {
+        super.reuse();
+        this._followedDisplayObject = null;
+        this._boundarySet = false;
+        this._boundaryFullyCovered = false;
+        this._halfScreenSize = null;
+        this._fullScreenSize = null;
+        this._leftBoundary = 0;
+        this._rightBoundary = 0;
+        this._topBoundary = 0;
+        this._bottomBoundary = 0;
+        this._worldRect.x = 0;
+        this._worldRect.y = 0;
+        this._worldRect.width = 0;
+        this._worldRect.height = 0;
+        this._zeroPoint.set(0, 0);
+
+        this.initWithTarget(followedDisplayObject, rect)
     }
 
     /**

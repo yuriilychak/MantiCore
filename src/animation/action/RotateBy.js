@@ -19,8 +19,8 @@ class RotateBy extends ActionInterval {
 
     /**
      * @constructor
-     * @param {number} [duration = 0]
-     * @param {number} [deltaAngle = 0]
+     * @param {number} duration
+     * @param {number} deltaAngle
      */
     constructor(duration, deltaAngle) {
         super(duration);
@@ -36,7 +36,7 @@ class RotateBy extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new RotateBy(this.duration, this._angle));
+        return this.doClone(RotateBy.create(this.duration, this._angle));
     }
 
     /**
@@ -67,7 +67,21 @@ class RotateBy extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse(new RotateBy(this.duration, -this._angle));
+        return this.doReverse(RotateBy.create(this.duration, -this._angle));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration
+     * @param {number} deltaAngle
+     */
+
+    reuse(duration, deltaAngle) {
+        this._angle = deltaAngle;
+        this._startAngle = 0;
+        super.reuse(duration);
     }
 
     /**

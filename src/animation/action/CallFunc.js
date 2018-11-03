@@ -64,7 +64,23 @@ class CallFunc extends ActionInstant {
      */
 
     clone() {
-        return new CallFunc(this._callback, this._context, this._data);
+        return CallFunc.create(this._callback, this._context, this._data);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.animation.callback.CallFuncExecute} callback
+     * @param {object} [context = null]
+     * @param {*} [data=null] - Data for function, it accepts all data types.
+     */
+
+    reuse(callback, context = null, data = null) {
+        super.reuse();
+        this._context = context;
+        this._callback = callback;
+        this._data = data;
     }
 
     /**

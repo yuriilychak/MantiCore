@@ -24,7 +24,7 @@ class DelayTime extends ActionInterval{
      */
 
     reverse() {
-        return this.doReverse(new DelayTime(this.duration));
+        return this.doReverse(DelayTime.create(this.duration));
     }
 
     /**
@@ -35,7 +35,7 @@ class DelayTime extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new DelayTime(this.duration));
+        return this.doClone(DelayTime.create(this.duration));
     }
 }
 

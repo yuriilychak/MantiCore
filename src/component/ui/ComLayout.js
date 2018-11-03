@@ -131,7 +131,7 @@ class ComLayout extends ComChildIterator {
         /**
          * @type {MANTICORE.component.ui.ComLayout}
          */
-        const result = ComLayout.cloneFromPool(ComLayout);
+        const result = ComLayout.create();
         result.verticalAlign = this._verticalAlign;
         result.horizontalAlign = this._horizontalAlign;
         result.resizeItems = this._resizeItems;

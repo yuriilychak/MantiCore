@@ -203,7 +203,7 @@ class ComItemBox extends Component {
      */
 
     clone() {
-        return ComItemBox.cloneFromPool(ComItemBox, this._componentTemplate, this._templateName, this._templateNumCount, this._startIndex);
+        return ComItemBox.create(this._componentTemplate, this._templateName, this._templateNumCount, this._startIndex);
     }
 
     /**

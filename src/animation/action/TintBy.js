@@ -46,7 +46,7 @@ class TintBy extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new TintBy(this.duration, this._delta[0], this._delta[1], this._delta[2]));
+        return this.doClone(TintBy.create(this.duration, this._delta[0], this._delta[1], this._delta[2]));
     }
 
     /**
@@ -83,20 +83,23 @@ class TintBy extends ActionInterval{
      */
 
     reverse() {
-        return this.doReverse(TintBy.cloneFromPool(TintBy, this.duration, -this._delta[0], -this._delta[1], -this._delta[2]));
+        return this.doReverse(TintBy.create(this.duration, -this._delta[0], -this._delta[1], -this._delta[2]));
     }
 
     /**
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {number} duration  duration in seconds
+     * @param {number} deltaRed
+     * @param {number} deltaGreen
+     * @param {number} deltaBlue
      */
 
-    reuse(var_args) {
-        this._delta = [arguments[1], arguments[2], arguments[3]];
+    reuse(duration, deltaRed, deltaGreen, deltaBlue) {
+        super.reuse(duration);
+        this._delta = [deltaRed, deltaGreen, deltaBlue];
         this._from = [0, 0, 0];
-        super.reuse(...arguments);
     }
 
     /**

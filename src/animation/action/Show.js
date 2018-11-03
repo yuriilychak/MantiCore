@@ -26,7 +26,7 @@ class Show extends ActionInstant {
      */
 
     clone(){
-        return Show.cloneFromPool(Show);
+        return Show.create();
     }
 }
 

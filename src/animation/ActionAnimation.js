@@ -153,7 +153,7 @@ class ActionAnimation extends ReusableObject{
      */
 
     clone() {
-        return ActionAnimation.cloneFromPool(ActionAnimation, this._action.clone());
+        return ActionAnimation.create(this._action.clone());
     }
 
     /**

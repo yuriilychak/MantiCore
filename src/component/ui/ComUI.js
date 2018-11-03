@@ -333,7 +333,7 @@ class ComUI extends Component {
      */
 
     clone() {
-        return ComUI.cloneFromPool(ComUI, this.name);
+        return ComUI.create(this.name);
     }
 
     /**

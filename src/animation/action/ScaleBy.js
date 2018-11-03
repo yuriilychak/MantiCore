@@ -37,7 +37,7 @@ class ScaleBy extends ScaleTo {
      */
 
     reverse() {
-        return this.doReverse(ScaleBy.cloneFromPool(ScaleBy, this.duration, 1 / this.endPoint.x, 1 / this.endPoint.y));
+        return this.doReverse(ScaleBy.create(this.duration, 1 / this.endPoint.x, 1 / this.endPoint.y));
     }
 
     /**
@@ -48,7 +48,7 @@ class ScaleBy extends ScaleTo {
      */
 
     clone() {
-        return this.doClone(ScaleBy.cloneFromPool(ScaleBy, this.duration, this.endPoint.x, this.endPoint.y));
+        return this.doClone(ScaleBy.create(this.duration, this.endPoint.x, this.endPoint.y));
     }
 }
 

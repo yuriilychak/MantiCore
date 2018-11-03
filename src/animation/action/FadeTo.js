@@ -44,7 +44,7 @@ class FadeTo extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new FadeTo(this.duration, this._toAlpha));
+        return this.doClone(FadeTo.create(this.duration, this._toAlpha));
     }
 
     update(dt) {
@@ -62,6 +62,28 @@ class FadeTo extends ActionInterval{
     startWithTarget(target) {
         super.startWithTarget(target);
         this._fromAlpha = target.alpha;
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration
+     * @param {number} alpha
+     */
+
+    reuse(duration,  alpha = 0) {
+        super.reuse(duration);
+        /**
+         * @type {number}
+         * @private
+         */
+        this._toAlpha = alpha;
+        /**
+         * @type {number}
+         * @private
+         */
+        this._fromAlpha = 0;
     }
 
     /**

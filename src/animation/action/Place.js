@@ -25,12 +25,32 @@ class Place extends ActionInstant {
          */
         this._position = null;
 
-        if (Type.isnumber(x)) {
+        if (Type.isNumber(x)) {
             y = Type.setValue(y, x);
             this._position = new PIXI.Point(x, y);
         }
         else {
             this._position = new PIXI.Point(x.x, x.y);
+        }
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint | number} x
+     * @param {number} [y]
+     */
+
+    reuse(x, y) {
+        super.reuse();
+
+        if (Type.isNumber(x)) {
+            y = Type.setValue(y, x);
+            this._position.set(x, y);
+        }
+        else {
+            this._position.set(x.x, x.y);
         }
     }
 
@@ -51,7 +71,7 @@ class Place extends ActionInstant {
      */
 
     clone(){
-        return new Place(this._position);
+        return Place.create(this._position);
     }
 
     /**
@@ -62,7 +82,7 @@ class Place extends ActionInstant {
      */
 
     reverse () {
-        return new Place(this._position);
+        return Place.create(this._position);
     }
 
     /**

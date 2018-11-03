@@ -50,7 +50,7 @@ class ActionInstant extends FiniteTimeAction {
      */
 
     clone(){
-        return ActionInstant.cloneFromPool(ActionInstant);
+        return ActionInstant.create();
     }
 
     /**

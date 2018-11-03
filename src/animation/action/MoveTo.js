@@ -50,7 +50,7 @@ class MoveTo extends MoveBy {
      */
 
     clone() {
-        return this.doClone(new MoveTo(this.duration, this._endPosition));
+        return this.doClone(MoveTo.create(this.duration, this._endPosition));
     }
 
     /**
@@ -64,6 +64,26 @@ class MoveTo extends MoveBy {
         super.startWithTarget(target);
         this.delta.x = this._endPosition.x - target.x;
         this.delta.y = this._endPosition.y - target.y;
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration duration in seconds
+     * @param {PIXI.Point | number} position
+     * @param {number} [y]
+     */
+
+    reuse(duration, position, y) {
+        super.reuse(duration, position, y);
+
+        if(Type.isNumber(position)) {
+            this._endPosition.set(position, y);
+        }
+        else {
+            this._endPosition.copy(position);
+        }
     }
 
     /**

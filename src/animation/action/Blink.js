@@ -36,7 +36,7 @@ class Blink extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new Blink(this.duration, this._times));
+        return this.doClone(Blink.create(this.duration, this._times));
     }
 
     update(dt) {
@@ -73,7 +73,21 @@ class Blink extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse(new Blink(this.duration, this._times));
+        return this.doReverse(Blink.create(this.duration, this._times));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration - Duration in seconds
+     * @param {number} blinks - Blinks in times
+     */
+
+    reuse(duration, blinks) {
+        super.reuse(duration);
+        this._times = blinks;
+        this._originalState = false;
     }
 
     /**

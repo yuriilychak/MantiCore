@@ -33,7 +33,7 @@ class CatmullRomTo extends CardinalSplineTo {
      */
 
     clone() {
-        return new CatmullRomTo(this.duration, CatmullRomTo.cloneControlPoints(this.points));
+        return CatmullRomTo.create(this.duration, CatmullRomTo.cloneControlPoints(this.points));
     }
 }
 

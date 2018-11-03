@@ -41,7 +41,7 @@ class ReverseTime extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(new ReverseTime(this._other.clone()));
+        return this.doClone(ReverseTime.create(this._other.clone()));
     }
 
     /**
@@ -76,6 +76,18 @@ class ReverseTime extends ActionInterval {
     stop() {
         this._other.stop();
         super.stop();
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.FiniteTimeAction} action
+     */
+
+    reuse(action) {
+        this._other = action;
+        super.reuse(this._other.duration);
     }
 
     /**

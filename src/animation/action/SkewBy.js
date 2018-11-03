@@ -41,7 +41,7 @@ class SkewBy extends SkewTo{
      */
 
     clone() {
-        return this.doClone(SkewBy.cloneFromPool(SkewBy, this.duration, this._skew.x, this._skew.y));
+        return this.doClone(SkewBy.create(this.duration, this._skew.x, this._skew.y));
     }
 
     /**
@@ -65,19 +65,21 @@ class SkewBy extends SkewTo{
      */
 
     reverse() {
-        return this.doReverse(SkewBy.cloneFromPool(SkewBy, this.duration, -this._skew.x, -this._skew.y));
+        return this.doReverse(SkewBy.create(this.duration, -this._skew.x, -this._skew.y));
     }
 
     /**
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {number} sx  skew in degrees for X axis
+     * @param {number} sy  skew in degrees for Y axis
      */
 
-    reuse(var_args) {
-        this._skew.set(arguments[1], arguments[2]);
-        super.reuse(...arguments);
+    reuse(t, sx, sy) {
+        super.reuse(t, sx, sy);
+        this._skew.set(sx, sy);
+
     }
 
     /**

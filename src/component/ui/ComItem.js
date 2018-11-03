@@ -28,7 +28,7 @@ class ComItem extends ComUI {
      */
 
     clone() {
-        return ComItem.cloneFromPool(ComItem);
+        return ComItem.create();
     }
 
     /**

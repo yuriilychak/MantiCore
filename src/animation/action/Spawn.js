@@ -53,7 +53,7 @@ class Spawn extends ActionInterval {
      */
 
     clone() {
-        return this.doClone(Spawn.cloneFromPool(Spawn, this._firstAction.clone(), this._secondAction.clone()));
+        return this.doClone(Spawn.create(this._firstAction.clone(), this._secondAction.clone()));
     }
 
     startWithTarget(target) {
@@ -87,7 +87,7 @@ class Spawn extends ActionInterval {
      */
 
     reverse() {
-        return this.doReverse(Spawn.cloneFromPool(Spawn, this._firstAction.reverse(), this._secondAction.reverse()));
+        return this.doReverse(Spawn.create(this._firstAction.reverse(), this._secondAction.reverse()));
     }
 
     /**
@@ -150,9 +150,9 @@ class Spawn extends ActionInterval {
         this._secondAction = action2;
 
         if (dif > 0) {
-            this._secondAction = Spawn.cloneFromPool(Sequence, this._secondAction, Spawn.cloneFromPool(DelayTime, dif));
+            this._secondAction = Sequence.create(this._secondAction, DelayTime.create(dif));
         } else if (dif < 0) {
-            this._firstAction = Spawn.cloneFromPool(Sequence, this._firstAction, Spawn.cloneFromPool(DelayTime, -dif));
+            this._firstAction = Sequence.create(this._firstAction, DelayTime.create(-dif));
         }
     }
 
@@ -180,7 +180,7 @@ class Spawn extends ActionInterval {
         for (i = 1; i < last; ++i) {
             if (paramArray[i]) {
                 action = prev;
-                prev = Spawn.cloneFromPool(Spawn, action, paramArray[i]);
+                prev = Spawn.create(action, paramArray[i]);
             }
         }
 

@@ -13,9 +13,9 @@ import ActionInterval from "./ActionInterval";
 class RepeatForever extends ActionInterval{
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.ActionInterval} [action = null]
+     * @param {MANTICORE.animation.action.ActionInterval} action
      */
-    constructor(action = null) {
+    constructor(action) {
         super();
         /**
          * @type {?MANTICORE.animation.action.ActionInterval}
@@ -37,7 +37,7 @@ class RepeatForever extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new RepeatForever(this._innerAction.clone()));
+        return this.doClone(RepeatForever.create(this._innerAction.clone()));
     }
 
     startWithTarget(target) {
@@ -61,7 +61,19 @@ class RepeatForever extends ActionInterval{
      */
 
     reverse() {
-        return this.doReverse(new RepeatForever(this._innerAction.reverse()));
+        return this.doReverse(RepeatForever.create(this._innerAction.reverse()));
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.animation.action.ActionInterval} action
+     */
+
+    reuse(action) {
+        this._innerAction = action;
+        super.reuse();
     }
 
     /**

@@ -1,6 +1,4 @@
 import CardinalSpline from "./CardinalSpline";
-import Constant from "constant";
-import Geometry from "util/Geometry";
 
 /**
  * @desc BCreate cardinal spline action for move display object.
@@ -52,7 +50,6 @@ class CardinalSplineTo extends CardinalSpline {
          */
 
         this._stackPoint = new PIXI.Point();
-
     }
 
     /**
@@ -68,7 +65,7 @@ class CardinalSplineTo extends CardinalSpline {
      */
 
     clone() {
-        return new CardinalSplineTo(this.duration, CardinalSplineTo.cloneControlPoints(this._points), this._tension);
+        return CardinalSplineTo.create(this.duration, CardinalSplineTo.cloneControlPoints(this._points), this._tension);
     }
 
     startWithTarget(target) {
@@ -109,7 +106,7 @@ class CardinalSplineTo extends CardinalSpline {
 
     reverse() {
         const reversePoints = CardinalSplineTo.reverseControlPoints(this._points);
-        return new CardinalSplineTo(this.duration, reversePoints, this._tension);
+        return CardinalSplineTo.create(this.duration, reversePoints, this._tension);
     }
 
     /**
@@ -121,6 +118,25 @@ class CardinalSplineTo extends CardinalSpline {
     updatePosition(newPos) {
         this.target.position.set(newPos);
         this._previousPosition.copy(newPos);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration
+     * @param {PIXI.Point[]} points
+     * @param {number} [tension = 0]
+     */
+
+    reuse(duration, points, tension = 0) {
+        super.reuse(duration);
+        this._points = points.slice(0);
+        this._deltaT = 0;
+        this._tension = tension;
+        this._previousPosition.set(0, 0);
+        this._accumulatedDiff.set(0, 0);
+        this._stackPoint.set(0, 0);
     }
 
     /**

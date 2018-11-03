@@ -40,7 +40,7 @@ class Action extends ReusableObject {
      * @return {MANTICORE.animation.action.Action}
      */
     clone() {
-        return Action.cloneFromPool(Action);
+        return Action.create();
     }
 
     /**

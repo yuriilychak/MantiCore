@@ -50,7 +50,7 @@ class RotateTo extends ActionInterval{
      */
 
     clone() {
-        return this.doClone(new RotateTo(this.duration, this._dstAngle));
+        return this.doClone(RotateTo.create(this.duration, this._dstAngle));
     }
 
     /**
@@ -94,6 +94,21 @@ class RotateTo extends ActionInterval{
         }
         dt = this.computeEaseTime(dt);
         this.target.rotation = Math.toRadians(this._startAngle + this._diffAngle * dt);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} duration
+     * @param {number} deltaAngle
+     */
+
+    reuse(duration, deltaAngle) {
+        this._dstAngle = deltaAngle;
+        this._startAngle = 0;
+        this._diffAngle = 0;
+        super.reuse(duration);
     }
 
     /**

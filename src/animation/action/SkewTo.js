@@ -25,7 +25,7 @@ class SkewTo extends PointAction {
      */
 
     clone() {
-        return this.doClone(SkewTo.cloneFromPool(SkewTo, this.duration, this.endPoint.x, this.endPoint.y));
+        return this.doClone(SkewTo.create(this.duration, this.endPoint.x, this.endPoint.y));
     }
 
     /**
