@@ -322,7 +322,7 @@ function _createAnimation(animation, bundle) {
                         else {
                             action = FadeTo.create(time, nextValue);
                             if (!Type.isNull(ease)) {
-                                action.easing(ease);
+                                action.ease = ease;
                             }
                         }
                         result.push(action);
@@ -358,7 +358,7 @@ function _createAnimation(animation, bundle) {
                         else {
                             action = MoveBy.create(time, nextValue);
                             if (!Type.isNull(ease)) {
-                                action.easing(ease);
+                                action.ease = ease;
                             }
                         }
                         result.push(action);
@@ -381,7 +381,7 @@ function _createAnimation(animation, bundle) {
                         else {
                             action = ScaleBy.create(time, nextValue.x, nextValue.y);
                             if (!Type.isNull(ease)) {
-                                action.easing(ease);
+                                action.ease = ease;
                             }
                         }
                         result.push(action);
@@ -404,7 +404,7 @@ function _createAnimation(animation, bundle) {
                         else {
                             action = SkewBy.create(time, nextValue.x, nextValue.y);
                             if (!Type.isNull(ease)) {
-                                action.easing(ease);
+                                action.ease = ease;
                             }
                         }
                         result.push(action);
@@ -425,7 +425,7 @@ function _createAnimation(animation, bundle) {
                         else {
                             action = RotateBy.create(time, nextData[0]);
                             if (!Type.isNull(ease)) {
-                                action.easing(ease);
+                                action.ease = ease;
                             }
                         }
                         result.push(action);
@@ -448,7 +448,7 @@ function _createAnimation(animation, bundle) {
                         else {
                             action = TintTo.create(time, nextValue);
                             if (!Type.isNull(ease)) {
-                                action.easing(ease);
+                                action.ease = ease;
                             }
                         }
                         result.push(action);
@@ -526,7 +526,7 @@ function _createEasing(easeData) {
         return null;
     }
     if (easeData.length > 1) {
-        return new Easing.EaseBezier(
+        return Easing.EaseBezier.create(
             Math.percentToFloat(easeData[0]),
             Math.percentToFloat(easeData[1]),
             Math.percentToFloat(easeData[2]),
@@ -536,36 +536,36 @@ function _createEasing(easeData) {
 
     switch (easeData[0]) {
         case ACTION_EASING.LINEAR: return null;
-        case ACTION_EASING.SINE_IN: return new Easing.EaseSineIn();
-        case ACTION_EASING.SINE_OUT: return new Easing.EaseSineOut();
-        case ACTION_EASING.SINE_IN_OUT: return new Easing.EaseSineInOut();
-        case ACTION_EASING.QUAD_IN: return new Easing.EaseQuadraticIn();
-        case ACTION_EASING.QUAD_OUT: return new Easing.EaseQuadraticOut();
-        case ACTION_EASING.QUAD_IN_OUT: return new Easing.EaseQuadraticInOut();
-        case ACTION_EASING.CUBIC_IN: return new Easing.EaseCubicIn();
-        case ACTION_EASING.CUBIC_OUT: return new Easing.EaseCubicOut();
-        case ACTION_EASING.CUBIC_IN_OUT: return new Easing.EaseCubicInOut();
-        case ACTION_EASING.QUART_IN: return new Easing.EaseQuarticIn();
-        case ACTION_EASING.QUART_OUT: return new Easing.EaseQuarticOut();
-        case ACTION_EASING.QUART_IN_OUT: return new Easing.EaseQuarticInOut();
-        case ACTION_EASING.QUINT_IN: return new Easing.EaseQuinticIn();
-        case ACTION_EASING.QUINT_OUT: return new Easing.EaseQuinticOut();
-        case ACTION_EASING.QUINT_IN_OUT: return new Easing.EaseQuinticInOut();
-        case ACTION_EASING.EXPO_IN: return new Easing.EaseExponentialIn();
-        case ACTION_EASING.EXPO_OUT: return new Easing.EaseExponentialOut();
-        case ACTION_EASING.EXPO_IN_OUT: return new Easing.EaseExponentialInOut();
-        case ACTION_EASING.CIRC_IN: return new Easing.EaseCircleIn();
-        case ACTION_EASING.CIRC_OUT: return new Easing.EaseCircleOut();
-        case ACTION_EASING.CIRC_IN_OUT: return new Easing.EaseCircleInOut();
-        case ACTION_EASING.ELASTIC_IN: return new Easing.EaseElasticIn();
-        case ACTION_EASING.ELASTIC_OUT: return new Easing.EaseElasticOut();
-        case ACTION_EASING.ELASTIC_IN_OUT: return new Easing.EaseElasticInOut();
-        case ACTION_EASING.BACK_IN: return new Easing.EaseBackIn();
-        case ACTION_EASING.BACK_OUT: return new Easing.EaseBackOut();
-        case ACTION_EASING.BACK_IN_OUT: return new Easing.EaseBackInOut();
-        case ACTION_EASING.BOUNCE_IN: return new Easing.EaseBounceIn();
-        case ACTION_EASING.BOUNCE_OUT: return new Easing.EaseBounceOut();
-        case ACTION_EASING.BOUNCE_IN_OUT: return new Easing.EaseBounceInOut();
+        case ACTION_EASING.SINE_IN: return Easing.EaseSineIn.create();
+        case ACTION_EASING.SINE_OUT: return Easing.EaseSineOut.create();
+        case ACTION_EASING.SINE_IN_OUT: return Easing.EaseSineInOut.create();
+        case ACTION_EASING.QUAD_IN: return Easing.EaseQuadraticIn.create();
+        case ACTION_EASING.QUAD_OUT: return Easing.EaseQuadraticOut.create();
+        case ACTION_EASING.QUAD_IN_OUT: return Easing.EaseQuadraticInOut.create();
+        case ACTION_EASING.CUBIC_IN: return Easing.EaseCubicIn.create();
+        case ACTION_EASING.CUBIC_OUT: return Easing.EaseCubicOut.create();
+        case ACTION_EASING.CUBIC_IN_OUT: return Easing.EaseCubicInOut.create();
+        case ACTION_EASING.QUART_IN: return Easing.EaseQuarticIn.create();
+        case ACTION_EASING.QUART_OUT: return Easing.EaseQuarticOut.create();
+        case ACTION_EASING.QUART_IN_OUT: return Easing.EaseQuarticInOut.create();
+        case ACTION_EASING.QUINT_IN: return Easing.EaseQuinticIn.create();
+        case ACTION_EASING.QUINT_OUT: return Easing.EaseQuinticOut.create();
+        case ACTION_EASING.QUINT_IN_OUT: return Easing.EaseQuinticInOut.create();
+        case ACTION_EASING.EXPO_IN: return Easing.EaseExponentialIn.create();
+        case ACTION_EASING.EXPO_OUT: return Easing.EaseExponentialOut.create();
+        case ACTION_EASING.EXPO_IN_OUT: return Easing.EaseExponentialInOut.create();
+        case ACTION_EASING.CIRC_IN: return Easing.EaseCircleIn.create();
+        case ACTION_EASING.CIRC_OUT: return Easing.EaseCircleOut.create();
+        case ACTION_EASING.CIRC_IN_OUT: return Easing.EaseCircleInOut.create();
+        case ACTION_EASING.ELASTIC_IN: return Easing.EaseElasticIn.create();
+        case ACTION_EASING.ELASTIC_OUT: return Easing.EaseElasticOut.create();
+        case ACTION_EASING.ELASTIC_IN_OUT: return Easing.EaseElasticInOut.create();
+        case ACTION_EASING.BACK_IN: return Easing.EaseBackIn.create();
+        case ACTION_EASING.BACK_OUT: return Easing.EaseBackOut.create();
+        case ACTION_EASING.BACK_IN_OUT: return Easing.EaseBackInOut.create();
+        case ACTION_EASING.BOUNCE_IN: return Easing.EaseBounceIn.create();
+        case ACTION_EASING.BOUNCE_OUT: return Easing.EaseBounceOut.create();
+        case ACTION_EASING.BOUNCE_IN_OUT: return Easing.EaseBounceInOut.create();
     }
 
     return null;

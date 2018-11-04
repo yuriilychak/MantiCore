@@ -28,13 +28,34 @@ class EaseOut extends EaseRate {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseOut}
+     */
+    clone() {
+        return EaseOut.create(this.rate);
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseOut}
      */
     reverse() {
-        return new EaseOut(1 / this.rate);
+        return EaseOut.create(1 / this.rate);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} rate
+     */
+
+    reuse(rate) {
+        super.reuse(1 / rate);
     }
 }
 

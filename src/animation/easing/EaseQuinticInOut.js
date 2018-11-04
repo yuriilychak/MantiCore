@@ -27,13 +27,23 @@ class EaseQuinticInOut extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseQuinticInOut}
+     */
+    clone() {
+        return EaseQuinticInOut.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseQuinticInOut}
      */
     reverse() {
-        return new EaseQuinticInOut();
+        return EaseQuinticInOut.create();
     }
 }
 

@@ -47,10 +47,10 @@ class ActionInterval extends FiniteTimeAction {
         this._firstTick = true;
 
         /**
-         * @type {MANTICORE.animation.easing.EaseBase[]}
+         * @type {MANTICORE.animation.easing.EaseBase}
          * @private
          */
-        this._eases = [];
+        this._ease = null;
 
         /**
          * @type {number}
@@ -96,19 +96,6 @@ class ActionInterval extends FiniteTimeAction {
 
     clone() {
         return this.doClone(ActionInterval.create(this.duration));
-    }
-
-    /**
-     * @desc Implementation of ease motion.
-     * @method
-     * @param {...MANTICORE.animation.easing.EaseBase} var_args
-     */
-    easing(var_args) {
-        this._eases.length = 0;
-        const argumentCount = arguments.length;
-        for (let i = 0; i < argumentCount; ++i) {
-            this._eases.push(arguments[i]);
-        }
     }
 
     step(dt) {
@@ -190,7 +177,7 @@ class ActionInterval extends FiniteTimeAction {
         this.MAX_VALUE = 2;
         this._elapsed = 0;
         this._firstTick = true;
-        this._eases = [];
+        this._ease = [];
         this._speed = 1;
         this._repeatForever = false;
         this._repeatMethod = false;
@@ -217,7 +204,8 @@ class ActionInterval extends FiniteTimeAction {
         this.MAX_VALUE = 2;
         this._elapsed = 0;
         this._firstTick = true;
-        this._eases = [];
+        this._ease.kill();
+        this._ease = null;
         this._speed = 1;
         this._repeatForever = false;
         this._repeatMethod = false;
@@ -238,7 +226,7 @@ class ActionInterval extends FiniteTimeAction {
         action.repeatForever = this._repeatForever;
         action.speed = this._speed;
         action.repeatCount = this.repeatCount;
-        action.eases = this._eases;
+        action.ease = this._ease.clone();
         action.speedMethod = this._speedMethod;
         action.repeatMethod = this._repeatMethod;
         return action;
@@ -255,11 +243,8 @@ class ActionInterval extends FiniteTimeAction {
     doReverse(action) {
         this.doClone(action);
 
-        if(this._eases.length !== 0){
-            const easeCount = this._eases.length;
-            for(let i = 0; i< easeCount; ++i){
-                action.eases.push(this._eases[i].reverse());
-            }
+        if(!Type.isNull(this._ease)){
+            action.ease = this._ease.reverse();
         }
         return action;
     }
@@ -273,14 +258,10 @@ class ActionInterval extends FiniteTimeAction {
      */
 
     computeEaseTime(dt) {
-        if (this._eases.length === 0) {
+        if (Type.isNull(this._ease)) {
             return dt;
         }
-        const easingCount = this._eases.length;
-        for (let i = 0; i < easingCount; ++i) {
-            dt = this._eases[i].easing(dt);
-        }
-        return dt;
+        return this._ease.easing(dt);
     }
 
     /**
@@ -317,18 +298,18 @@ class ActionInterval extends FiniteTimeAction {
     /**
      * @desc Returns array with easing.
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBase[]}
+     * @returns {MANTICORE.animation.easing.EaseBase}
      */
 
-    get eases() {
-        return this._eases;
+    get ease() {
+        return this._ease;
     }
 
-    set eases(value) {
-        if (this._eases === value) {
+    set ease(value) {
+        if (this._ease === value) {
             return;
         }
-        this._eases = value.slice(0);
+        this._ease = value;
     }
 
     /**

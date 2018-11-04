@@ -55,19 +55,52 @@ class EasePeriod extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EasePeriod}
+     */
+    clone() {
+        return EasePeriod.create(this.period);
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EasePeriod}
      */
     reverse() {
-        return new EasePeriod();
+        return EasePeriod.create(this.period);
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {number} [period = -1]
+     */
+
+    reuse(period = -1) {
+        super.reuse();
+        this._period = period;
     }
 
     /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data befor disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._period = -1;
+        super.clearData();
+    }
 
     /**
      * @method

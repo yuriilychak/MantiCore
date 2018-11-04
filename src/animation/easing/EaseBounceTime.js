@@ -7,6 +7,17 @@ import EaseBase from "./EaseBase";
  */
 
 class EaseBounceTime extends EaseBase {
+
+    /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseBounceTime}
+     */
+    clone() {
+        return EaseBounceTime.create();
+    }
+
     /**
      * @desc Returns reversed easing.
      * @method
@@ -14,7 +25,7 @@ class EaseBounceTime extends EaseBase {
      * @returns {MANTICORE.animation.easing.EaseBounceTime}
      */
     reverse() {
-        return new EaseBounceTime();
+        return EaseBounceTime.create();
     }
 
     /**

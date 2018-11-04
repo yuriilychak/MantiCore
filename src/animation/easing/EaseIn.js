@@ -19,13 +19,23 @@ class EaseIn extends EaseRate {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseIn}
+     */
+    clone() {
+        return EaseIn.create(this.rate);
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseIn}
      */
     reverse() {
-        return new EaseIn(1 / this.rate);
+        return EaseIn.create(1 / this.rate);
     }
 }
 

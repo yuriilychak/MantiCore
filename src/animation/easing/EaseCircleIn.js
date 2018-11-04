@@ -19,13 +19,23 @@ class EaseCircleIn extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseCircleIn}
+     */
+    clone() {
+        return EaseCircleIn.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseCircleIn}
      */
     reverse() {
-        return new EaseCircleIn();
+        return EaseCircleIn.create();
     }
 }
 

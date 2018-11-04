@@ -20,13 +20,23 @@ class EaseSineIn extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseSineIn}
+     */
+    clone() {
+        return EaseSineIn.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseSineIn}
      */
     reverse() {
-        return new EaseSineIn();
+        return EaseSineIn.create();
     }
 }
 

@@ -1,10 +1,13 @@
+import ReusableObject from "memory/ReusableObject";
+
 /**
  * @desc Base class for easing.
  * @class
  * @memberOf MANTICORE.animation.easing
+ * @extends MANTICORE.memory.ReusableObject
  */
 
-class EaseBase {
+class EaseBase extends ReusableObject{
     /**
      * @desc calculate easing.
      * @method
@@ -15,6 +18,17 @@ class EaseBase {
     easing(time) {
         return 0;
     }
+
+    /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseBase}
+     */
+    clone() {
+        return EaseBase.create();
+    }
+
     /**
      * @desc Returns reversed easing.
      * @method
@@ -22,7 +36,7 @@ class EaseBase {
      * @returns {MANTICORE.animation.easing.EaseBase}
      */
     reverse() {
-        return new EaseBase();
+        return EaseBase.create();
     }
 }
 

@@ -22,13 +22,23 @@ class EaseQuarticOut extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseQuarticOut}
+     */
+    clone() {
+        return EaseQuarticOut.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseQuarticOut}
      */
     reverse() {
-        return new EaseQuarticOut();
+        return EaseQuarticOut.create();
     }
 }
 

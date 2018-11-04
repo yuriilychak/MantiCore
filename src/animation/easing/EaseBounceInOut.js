@@ -21,13 +21,23 @@ class EaseBounceInOut extends EaseBounceTime {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseBounceInOut}
+     */
+    clone() {
+        return EaseBounceInOut.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseBounceInOut}
      */
     reverse() {
-        return new EaseBounceInOut();
+        return EaseBounceInOut.create();
     }
 }
 

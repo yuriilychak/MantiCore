@@ -14,13 +14,23 @@ class EaseElasticInOut extends EasePeriod {
      */
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseElasticInOut}
+     */
+    clone() {
+        return EaseElasticInOut.create(this.period);
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseElasticInOut}
      */
     reverse() {
-        return new EaseElasticInOut(this.period);
+        return EaseElasticInOut.create(this.period);
     }
 
     /**

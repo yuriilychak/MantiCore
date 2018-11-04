@@ -25,7 +25,7 @@ declare namespace MANTICORE {
                 constructor(duration?: number);
 
                 readonly elapsed: number;
-                eases: MANTICORE.animation.easing.EaseBase[];
+                ease: MANTICORE.animation.easing.EaseBase;
                 repeatForever: boolean;
                 speedMethod: boolean;
                 repeatMethod: boolean;
@@ -33,7 +33,6 @@ declare namespace MANTICORE {
                 speed: number;
 
                 clone(): MANTICORE.animation.action.ActionInterval;
-                easing(...var_args: MANTICORE.animation.easing.EaseBase[]): void;
                 changeSpeed(speed: number): number;
                 repeat(times: number): void;
 
@@ -358,79 +357,103 @@ declare namespace MANTICORE {
         export namespace easing {
             export class EaseBackIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackIn;
+                clone(): EaseBackIn;
             }
             export class EaseBackInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackInOut;
+                clone(): EaseBackInOut;
             }
             export class EaseBackOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackOut;
+                clone(): EaseBackOut;
             }
-            export class EaseBase {
+            export class EaseBase extends MANTICORE.memory.ReusableObject {
                 constructor();
                 easing(time: number): void;
                 reverse(): EaseBase;
+                clone(): EaseBase;
             }
             export class EaseBezier extends MANTICORE.animation.easing.EaseBase {
                 constructor(first: number, second: number, third: number, fourth: number);
                 reverse(): EaseBezier;
+                clone(): EaseBezier;
             }
             export class EaseBounceIn extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceIn;
+                clone(): EaseBounceIn;
             }
             export class EaseBounceInOut extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceInOut;
+                clone(): EaseBounceInOut;
             }
             export class EaseBounceOut extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceOut;
+                clone(): EaseBounceOut;
             }
             export class EaseBounceTime  extends EaseBase {
                 protected bounceTime (time: number): number;
                 reverse(): EaseBounceTime;
+                clone(): EaseBounceTime;
             }
             export class EaseCircleIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleIn;
+                clone(): EaseCircleIn;
             }
             export class EaseCircleInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleInOut;
+                clone(): EaseCircleInOut;
             }
             export class EaseCircleOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleOut;
+                clone(): EaseCircleOut;
             }
             export class EaseCubicIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicIn;
+                clone(): EaseCubicIn;
             }
             export class EaseCubicInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicInOut;
+                clone(): EaseCubicInOut;
             }
             export class EaseCubicOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicOut;
+                clone(): EaseCubicOut;
             }
             export class EaseElasticIn  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticIn;
+                clone(): EaseElasticIn;
             }
             export class EaseElasticInOut  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticInOut;
+                clone(): EaseElasticInOut;
             }
             export class EaseElasticOut  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticOut;
+                clone(): EaseElasticOut;
             }
             export class EaseExponentialIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialIn;
+                clone(): EaseExponentialIn;
             }
             export class EaseExponentialInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialInOut;
+                clone(): EaseExponentialInOut;
             }
             export class EaseExponentialOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialOut;
+                clone(): EaseExponentialOut;
             }
             export class EaseIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseIn;
+                clone(): EaseIn;
             }
             export class EaseInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseInOut;
+                clone(): EaseInOut;
             }
             export class EaseOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseOut;
+                clone(): EaseOut;
             }
             export class EasePeriod extends MANTICORE.animation.easing.EaseBase {
                 constructor(period?: number);
@@ -438,6 +461,7 @@ declare namespace MANTICORE {
                 public period: number;
 
                 reverse(): EasePeriod;
+                clone(): EasePeriod;
 
                 protected calculateTime(time: number, period: number): number;
                 protected easingPeriod(time: number);
@@ -446,30 +470,39 @@ declare namespace MANTICORE {
 
             export class EaseQuadraticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticIn;
+                clone(): EaseQuadraticIn;
             }
             export class EaseQuadraticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticInOut;
+                clone(): EaseQuadraticInOut;
             }
             export class EaseQuadraticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticOut;
+                clone(): EaseQuadraticOut;
             }
             export class EaseQuarticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticIn;
+                clone(): EaseQuarticIn;
             }
             export class EaseQuarticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticInOut;
+                clone(): EaseQuarticInOut;
             }
             export class EaseQuarticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticOut;
+                clone(): EaseQuarticOut;
             }
             export class EaseQuinticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticIn;
+                clone(): EaseQuinticIn;
             }
             export class EaseQuinticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticInOut;
+                clone(): EaseQuinticInOut;
             }
             export class EaseQuinticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticOut;
+                clone(): EaseQuinticOut;
             }
             export class EaseRate extends MANTICORE.animation.easing.EaseBase {
                 constructor(rate?: number);
@@ -477,12 +510,15 @@ declare namespace MANTICORE {
             }
             export class EaseSineIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineIn;
+                clone(): EaseSineIn;
             }
             export class EaseSineInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineInOut;
+                clone(): EaseSineInOut;
             }
             export class EaseSineOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineOut;
+                clone(): EaseSineOut;
             }
         }
 

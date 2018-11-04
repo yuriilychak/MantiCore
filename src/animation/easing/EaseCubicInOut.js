@@ -27,13 +27,23 @@ class EaseCubicInOut extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseCubicInOut}
+     */
+    clone() {
+        return EaseCubicInOut.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseCubicInOut}
      */
     reverse() {
-        return new EaseCubicInOut();
+        return EaseCubicInOut.create();
     }
 }
 

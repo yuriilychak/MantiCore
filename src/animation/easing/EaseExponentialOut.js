@@ -19,13 +19,23 @@ class EaseExponentialOut extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseExponentialOut}
+     */
+    clone() {
+        return EaseExponentialOut.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseExponentialOut}
      */
     reverse() {
-        return new EaseExponentialOut();
+        return EaseExponentialOut.create();
     }
 }
 

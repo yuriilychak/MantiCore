@@ -21,13 +21,23 @@ class EaseBackOut extends EaseBase {
     }
 
     /**
+     * @desc Returns clone of easing.
+     * @method
+     * @public
+     * @returns {MANTICORE.animation.easing.EaseBackOut}
+     */
+    clone() {
+        return EaseBackOut.create();
+    }
+
+    /**
      * @desc Returns reversed easing.
      * @method
      * @public
      * @returns {MANTICORE.animation.easing.EaseBackOut}
      */
     reverse() {
-        return new EaseBackOut();
+        return EaseBackOut.create();
     }
 }
 
