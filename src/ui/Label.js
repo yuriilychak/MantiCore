@@ -267,6 +267,7 @@ class Label extends BaseLabel {
     }
 
     set outlineSize(value) {
+        this.outlineEnabled = value !== 0;
         this._label.outlineSize = value;
         if (!this._isShadowEnabled) {
             return;
