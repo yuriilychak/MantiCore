@@ -6,8 +6,9 @@ import Math from "util/Math";
 
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
-import MemoryManager from "manager/MemoryManager";
 import AnimationManager from "manager/AnimationManager";
+
+import Pool from "pool";
 
 /**
  * @desc Class that implements composite pattern;
@@ -38,14 +39,6 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._listenerManager = null;
-
-        /**
-         * @desc Class for manipulate with memory.
-         * @type {MANTICORE.manager.MemoryManager}
-         * @private
-         */
-
-        this._memoryManager = new MemoryManager(this);
 
         /**
          * @desc Class for manipulate with animations.
@@ -88,12 +81,27 @@ class ComponentContainer extends PIXI.Container {
         this._isUpdate = false;
 
         /**
-         * @desc Flag is element destroyed.
+         * @desc Flag is currently object destroyed
+         * @type {boolean}
+         * @private
+         */
+        this._isDestroyed = false;
+
+        /**
+         * @desc Flag is owner put in pool after call kill() or destroy.
          * @type {boolean}
          * @private
          */
 
-        this._isDestroyed = false;
+        this._reusable = true;
+
+        /**
+         * @desc Flag is currently owner in pool or his owner in pool.
+         * @type {boolean}
+         * @private
+         */
+
+        this._inPool = false;
 
         /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
@@ -107,6 +115,18 @@ class ComponentContainer extends PIXI.Container {
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Static constructor of component container
+     * @method
+     * @static
+     * @param var_args
+     * @return {*}
+     */
+
+    static create(var_args) {
+        return Pool.getObject(this, ...arguments);
+    }
 
     /**
      * @method
@@ -199,34 +219,49 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
-     * @desc Calls by pool when view put in to pool. Don't call it only override.
+     * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
+     * @param {...*} var_args
      */
-
-    disuse() {
-        this.isUpdate = false;
-        this.parent.removeChild(this);
+    reuse(var_args) {
+        this.inPool = false;
     }
 
     /**
-     * @desc Removes all internal references and listeners as well as removes children from the display list. Do not use a Container after calling destroy.
+     * @desc Calls by pool when object put in to pool. Don't call it only override.
      * @method
      * @public
      */
+    disuse() {
+        this.isUpdate = false;
+        this.parent.removeChild(this);
+        this.clearData();
+        this.inPool = true;
+    }
 
+    /**
+     * @desc Removes all internal references and listeners.
+     * @method
+     * @public
+     */
     destroy() {
         this.isUpdate = false;
+
+        this.clearData();
+
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
         this._animationManager = this._killManager(this._animationManager);
-        this._memoryManager = this._killManager(this._memoryManager);
 
         this._hasListenerManager = false;
         this._hasComponentManager = false;
         this._hasAnimationManager = false;
 
         this._isDestroyed = true;
+        this._inPool = false;
+        this._reusable = false;
+
         super.destroy();
     }
 
@@ -237,13 +272,28 @@ class ComponentContainer extends PIXI.Container {
      */
 
     kill() {
-        this._memoryManager.killOwner();
+        if (this._inPool || this._isDestroyed) {
+            return;
+        }
+        if (this._reusable) {
+            Pool.putObject(this);
+            return;
+        }
+        this.destroy();
     }
 
     /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {}
 
     /**
      * @desc Handler that calls if container mark for update.
@@ -357,11 +407,14 @@ class ComponentContainer extends PIXI.Container {
      */
 
     get reusable() {
-        return this._memoryManager.isOwnerReusable;
+        return this._reusable;
     }
 
     set reusable(value) {
-        this._memoryManager.isOwnerReusable = value;
+        if (this._reusable === value) {
+            return;
+        }
+        this._reusable = value;
     }
 
     /**
@@ -387,14 +440,14 @@ class ComponentContainer extends PIXI.Container {
      */
 
     get inPool() {
-        return this._memoryManager.inPool;
+        return this._inPool;
     }
 
     set inPool(value) {
-        if (this._memoryManager.inPool === value) {
+        if (this._inPool === value) {
             return;
         }
-        this._memoryManager.inPool = value;
+        this._listenerManager.inPool = value;
         this._componentManager.inPool = value;
         const childCount = this.children;
         for (let i = 0; i < childCount; ++i) {
@@ -430,7 +483,7 @@ class ComponentContainer extends PIXI.Container {
     get animationManager() {
         if (!this._hasAnimationManager) {
             this._hasAnimationManager = true;
-            this._animationManager = new AnimationManager(this);
+            this._animationManager = AnimationManager.create(this);
         }
         return this._animationManager;
     }
@@ -445,7 +498,7 @@ class ComponentContainer extends PIXI.Container {
     get componentManager() {
         if (!this._hasComponentManager) {
             this._hasComponentManager = true;
-            this._componentManager = new ComponentManager(this);
+            this._componentManager = ComponentManager.create(this);
         }
         return this._componentManager;
     }
@@ -459,7 +512,7 @@ class ComponentContainer extends PIXI.Container {
     get listenerManager() {
         if (!this._hasListenerManager) {
             this._hasListenerManager = true;
-            this._listenerManager = new ListenerManager(this);
+            this._listenerManager = ListenerManager.create(this);
         }
         return this._listenerManager;
     }

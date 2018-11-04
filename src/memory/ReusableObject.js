@@ -90,24 +90,6 @@ class ReusableObject {
     }
 
     /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @desc Clear data befor disuse and destroy.
-     * @method
-     * @protected
-     */
-
-    clearData() {}
-
-    /**
-     * PROPERTIES
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
      * @desc Static constructor of reusable object
      * @method
      * @static
@@ -118,6 +100,24 @@ class ReusableObject {
     static create(var_args) {
         return Pool.getObject(this, ...arguments);
     }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {}
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Flag is object destroy or put in pool after kill.

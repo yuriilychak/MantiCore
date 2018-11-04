@@ -1,5 +1,4 @@
 import ListenerManager from "manager/ListenerManager";
-import Pool from "pool";
 import ReusableObject from "memory/ReusableObject";
 
 /**
@@ -9,7 +8,7 @@ import ReusableObject from "memory/ReusableObject";
  * @extends MANTICORE.memory.ReusableObject
  */
 
-class Component extends ReusableObject{
+class Component extends ReusableObject {
 
     /**
      * @constructor
@@ -275,7 +274,7 @@ class Component extends ReusableObject{
     get listenerManager() {
         if (!this._hasListenerManager) {
             this._hasListenerManager = true;
-            this._listenerManager = Pool.getObject(ListenerManager, this);
+            this._listenerManager = ListenerManager.create(this);
         }
         return this._listenerManager;
     }

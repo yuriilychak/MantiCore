@@ -6,14 +6,12 @@ import Math from "util/Math";
 
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
-import Pool from "pool";
-
 import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
-import MemoryManager from "manager/MemoryManager";
 import Type from "../util/Type";
 
+import Pool from "pool";
 
 /**
  * @desc Class that implements composite pattern for sprite;
@@ -45,14 +43,6 @@ class ComponentSprite extends PIXI.Sprite {
          */
 
         this._listenerManager = null;
-
-        /**
-         * @desc Class for manipulate with memory.
-         * @type {MANTICORE.manager.MemoryManager}
-         * @private
-         */
-
-        this._memoryManager = Pool.getObject(MemoryManager, this);
 
         /**
          * @desc Class for manipulate with animations.
@@ -95,12 +85,27 @@ class ComponentSprite extends PIXI.Sprite {
         this._isUpdate = false;
 
         /**
-         * @desc Flag is element destroyed.
+         * @desc Flag is currently object destroyed
+         * @type {boolean}
+         * @private
+         */
+        this._isDestroyed = false;
+
+        /**
+         * @desc Flag is owner put in pool after call kill() or destroy.
          * @type {boolean}
          * @private
          */
 
-        this._isDestroyed = false;
+        this._reusable = true;
+
+        /**
+         * @desc Flag is currently owner in pool or his owner in pool.
+         * @type {boolean}
+         * @private
+         */
+
+        this._inPool = false;
 
         /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
@@ -114,6 +119,18 @@ class ComponentSprite extends PIXI.Sprite {
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Static constructor of component sprite
+     * @method
+     * @static
+     * @param var_args
+     * @return {*}
+     */
+
+    static create(var_args) {
+        return Pool.getObject(this, ...arguments);
+    }
 
     /**
      * @method
@@ -212,34 +229,48 @@ class ComponentSprite extends PIXI.Sprite {
     }
 
     /**
-     * @desc Calls by pool when view put in to pool. Don't call it only override.
+     * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
+     * @param {string} frameName - Link to sprite frame.
      */
-
-    disuse() {
-        this.isUpdate = false;
-        this.parent.removeChild(this);
+    reuse(frameName) {
+        this.texture = Asset.getSpriteFrame(frameName);
     }
 
     /**
-     * @desc Removes all internal references and listeners as well as removes children from the display list. DON'T USE IT MANUALLY!!!
+     * @desc Calls by pool when object put in to pool. Don't call it only override.
      * @method
      * @public
      */
+    disuse() {
+        this.isUpdate = false;
+        this.parent.removeChild(this);
+        this.clearData();
+        this.inPool = true;
+    }
 
+    /**
+     * @desc Removes all internal references and listeners.
+     * @method
+     * @public
+     */
     destroy() {
         this.isUpdate = false;
+
+        this.clearData();
+
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
         this._animationManager = this._killManager(this._animationManager);
-        this._memoryManager = this._killManager(this._memoryManager);
 
         this._hasListenerManager = false;
         this._hasComponentManager = false;
         this._hasAnimationManager = false;
 
         this._isDestroyed = true;
+        this._inPool = false;
+        this._reusable = false;
 
         super.destroy();
     }
@@ -251,13 +282,28 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     kill() {
-        this._memoryManager.killOwner();
+        if (this._inPool || this._isDestroyed) {
+            return;
+        }
+        if (this._reusable) {
+            Pool.putObject(this);
+            return;
+        }
+        this.destroy();
     }
 
     /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {}
 
     /**
      * @desc Handler that calls if container mark for update.
@@ -334,11 +380,14 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     get reusable() {
-        return this._memoryManager.isOwnerReusable;
+        return this._reusable;
     }
 
     set reusable(value) {
-        this._memoryManager.isOwnerReusable = value;
+        if (this._reusable === value) {
+            return;
+        }
+        this._reusable = value;
     }
 
     /**
@@ -362,14 +411,14 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     get inPool() {
-        return this._memoryManager.inPool;
+        return this._inPool;
     }
 
     set inPool(value) {
-        if (this._memoryManager.inPool === value) {
+        if (this._inPool === value) {
             return;
         }
-        this._memoryManager.inPool = value;
+        this._listenerManager.inPool = value;
         this._componentManager.inPool = value;
         const childCount = this.children;
         for (let i = 0; i < childCount; ++i) {
@@ -440,7 +489,7 @@ class ComponentSprite extends PIXI.Sprite {
     get animationManager() {
         if (!this._hasAnimationManager) {
             this._hasAnimationManager = true;
-            this._animationManager = Pool.getObject(AnimationManager, this);
+            this._animationManager = AnimationManager.create(this);
         }
         return this._animationManager;
     }
@@ -455,7 +504,7 @@ class ComponentSprite extends PIXI.Sprite {
     get componentManager() {
         if (!this._hasComponentManager) {
             this._hasComponentManager = true;
-            this._componentManager = Pool.getObject(ComponentManager, this);
+            this._componentManager = ComponentManager.create(this);
         }
         return this._componentManager;
     }
@@ -469,7 +518,7 @@ class ComponentSprite extends PIXI.Sprite {
     get listenerManager() {
         if (!this._hasListenerManager) {
             this._hasListenerManager = true;
-            this._listenerManager = Pool.getObject(ListenerManager, this);
+            this._listenerManager = ListenerManager.create(this);
         }
         return this._listenerManager;
     }

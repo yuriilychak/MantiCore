@@ -1166,13 +1166,6 @@ declare namespace MANTICORE {
             dispatchEvent(event: string, data?: any): void;
 
         }
-
-        export class MemoryManager extends MANTICORE.manager.BaseManager {
-            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component);
-            isOwnerReusable: boolean;
-
-            killOwner(): void;
-        }
     }
 
     export namespace memory {
@@ -1188,9 +1181,10 @@ declare namespace MANTICORE {
             disuse(): void
             destroy(): void;
             kill(): void;
+            static create<T extends MANTICORE.memory.ReusableObject>(...var_args: any[]): T;
 
             protected clearData(): void;
-            protected static create<T extends MANTICORE.memory.ReusableObject>(...var_args: any[]): T;
+
         }
     }
 
@@ -1745,6 +1739,8 @@ declare namespace MANTICORE {
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
 
+            static create<T extends MANTICORE.view.ComponentContainer>(...var_args: any[]): T;
+            public reuse(...var_args: any[]): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
@@ -1767,6 +1763,8 @@ declare namespace MANTICORE {
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
 
+            static create<T extends MANTICORE.view.ComponentSprite>(...var_args: any[]): T;
+            public reuse(...var_args: any[]): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
