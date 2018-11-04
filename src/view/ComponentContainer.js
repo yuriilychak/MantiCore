@@ -121,7 +121,7 @@ class ComponentContainer extends PIXI.Container {
      * @method
      * @static
      * @param var_args
-     * @return {*}
+     * @returns {*}
      */
 
     static create(var_args) {

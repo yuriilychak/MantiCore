@@ -831,12 +831,25 @@ function _createSlider(data, bundle) {
 function _createLabel(data, bundle) {
     const font = _getFontStyle(data.fileData[0], bundle);
     const name = bundle.fonts[font.name];
+    /**
+     * @type {MANTICORE.ui.Label}
+     */
     const result = Label.create(name, font.size);
     result.horizontalAlign = font.align[0];
     result.verticalAlign = font.align[1];
     result.text = _getText(data, 1, bundle);
     result.color = _getColor(font.color, bundle);
     result.localized = false;
+
+    if (font.outlineSize > 0) {
+        result.outlineSize = font.outlineSize;
+        result.outlineColor = _getColor(font.outlineColor, bundle);
+    }
+
+    if (font.shadowOffset[0] !== 0 || font.shadowOffset[1] !== 0) {
+        result.setShadowOffset(font.shadowOffset[0], font.shadowOffset[1]);
+        result.shadowColor = _getColor(font.shadowColor, bundle);
+    }
 
     return result;
 }
@@ -866,6 +879,16 @@ function _createTextField(data, bundle) {
 
     if (style.placeHolderText !== -1) {
         result.placeholderText = bundle.texts[style.placeHolderText];
+    }
+
+    if (font.outlineSize > 0) {
+        result.outlineSize = font.outlineSize;
+        result.outlineColor = _getColor(font.outlineColor, bundle);
+    }
+
+    if (font.shadowOffset[0] !== 0 || font.shadowOffset[1] !== 0) {
+        result.setShadowOffset(font.shadowOffset[0], font.shadowOffset[1]);
+        result.shadowColor = _getColor(font.shadowColor, bundle);
     }
 
     result.localized = false;
