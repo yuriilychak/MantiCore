@@ -58,7 +58,7 @@ class Slider extends Widget {
          * @private
          */
 
-        this._progressBar = !Type.isNull(progressFrame) ? new ProgressBar(progressFrame) : null;
+        this._progressBar = !Type.isNull(progressFrame) ? ProgressBar.create(progressFrame) : null;
 
         /**
          *
@@ -112,7 +112,7 @@ class Slider extends Widget {
         this._direction = direction;
         this._isEnabled = true;
         this._eventDrag = Format.generateEventName(this, "BALL_DRAG");
-        this._progressBar = !Type.isNull(progressFrame) ? new ProgressBar(progressFrame) : null;
+        this._progressBar = !Type.isNull(progressFrame) ? ProgressBar.create(progressFrame) : null;
         this._progress = 1;
         this._eventScroll = null;
 
@@ -340,7 +340,7 @@ class Slider extends Widget {
             return;
         }
 
-        this._progressBar = new ProgressBar(value, this._direction);
+        this._progressBar = ProgressBar.create(value, this._direction);
 
         this.addChildAt(this._progressBar, 0);
 

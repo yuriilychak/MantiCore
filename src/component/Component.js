@@ -147,28 +147,6 @@ class Component extends ReusableObject {
     onVisibleChange(visible) {}
 
     /**
-     * @desc Calls by pool when component put in to pool (Can be only override). DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    disuse() {
-        this._listenerManager.removeAllEventListeners();
-        super.disuse();
-    }
-
-    /**
-     * @desc Calls by memory manager when object kill (Can be only override). DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     */
-
-    destroy() {
-        this._listenerManager.kill();
-        super.destroy();
-    }
-
-    /**
      * @desc Clone component
      * @method
      * @public
@@ -177,6 +155,26 @@ class Component extends ReusableObject {
 
     clone() {
         return Component.create(this._name);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        if (this._hasListenerManager) {
+            this._listenerManager.kill();
+            this._listenerManager = null;
+            this._hasListenerManager = false;
+        }
+        super.clearData();
     }
 
     /**

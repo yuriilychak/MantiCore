@@ -614,7 +614,7 @@ declare namespace MANTICORE {
                 generateTextureAtlas(baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo): void;
 
             }
-            export class BaseBundle {
+            export class BaseBundle extends MANTICORE.memory.ReusableObject{
                 constructor();
             }
 
