@@ -491,7 +491,7 @@ function _createAnimation(animation, bundle) {
     /**
      * @type {MANTICORE.animation.ActionAnimation}
      */
-    const resultAnimation = ActionAnimation.create(tracks.length === 1 ? tracks[0] : Spawn.create(tracks);
+    const resultAnimation = ActionAnimation.create(tracks.length === 1 ? tracks[0] : Spawn.create(tracks));
 
     resultAnimation.positionOffset = offsetPosition;
     resultAnimation.scaleOffset = offsetScale;
