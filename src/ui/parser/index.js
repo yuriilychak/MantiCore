@@ -2,7 +2,6 @@ import Type from "util/Type";
 import Math from "util/Math";
 import Color from "util/Color";
 
-import Pool from "pool";
 import Logger from "logger";
 
 import BundleCache from "bundle/BundleCache";
@@ -243,7 +242,7 @@ function _parseAnimation(element, data, bundle, globalParent) {
     /**
      * @type {MANTICORE.animation.ActionTimeLine}
      */
-    const timeLine = Pool.getObject(ActionTimeLine, element, TIME_LINE.UI);
+    const timeLine = ActionTimeLine.create(element, TIME_LINE.UI);
 
     let i, animation;
 
@@ -492,7 +491,7 @@ function _createAnimation(animation, bundle) {
     /**
      * @type {MANTICORE.animation.ActionAnimation}
      */
-    const resultAnimation = Pool.getObject(ActionAnimation, tracks.length === 1 ? tracks[0] : Spawn.create(tracks));
+    const resultAnimation = ActionAnimation.create(tracks.length === 1 ? tracks[0] : Spawn.create(tracks);
 
     resultAnimation.positionOffset = offsetPosition;
     resultAnimation.scaleOffset = offsetScale;
