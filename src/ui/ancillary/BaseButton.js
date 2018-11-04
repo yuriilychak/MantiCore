@@ -42,6 +42,19 @@ class BaseButton extends Widget {
      */
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} frame - Default frame of button.
+     * @param {int} state - Default state of button.
+     */
+    reuse(frame, state) {
+        super.reuse(new StateSlice9Sprite(frame, state));
+        this._isEnabled = true;
+        this._title = null;
+    }
+
+    /**
      * @method
      * @public
      * @return {boolean}
@@ -55,6 +68,23 @@ class BaseButton extends Widget {
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._isEnabled = true;
+
+        if (this.hasTitle()) {
+            this._title.kill();
+            this._title = null;
+        }
+
+        super.clearData();
+    }
 
     /**
      * @desc Change frame of button if it exist.

@@ -27,7 +27,7 @@ class ListView extends ScrollView {
          * @private
          */
 
-        this._layout = new ComLayout();
+        this._layout = ComLayout.create();
 
         /**
          * @desc Component for add event for child interactions.
@@ -35,7 +35,7 @@ class ListView extends ScrollView {
          * @private
          */
 
-        this._childListener = new ComChildListener();
+        this._childListener = ComChildListener.create();
 
         this.innerContainer.componentManager.addComponent(this._layout);
         this.innerContainer.componentManager.addComponent(this._childListener);
@@ -48,6 +48,53 @@ class ListView extends ScrollView {
         this._layout.verticalAlign = VERTICAL_ALIGN.MIDDLE;
 
         this.uiType = UI_ELEMENT.LIST_VIEW;
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
+     */
+    reuse(graphicType = PANEL_GRAPHIC_TYPE.NONE, data = null) {
+        super.reuse(graphicType, data);
+
+        this._layout = ComLayout.create();
+        this._childListener = ComChildListener.create();
+
+        this.innerContainer.componentManager.addComponent(this._layout);
+        this.innerContainer.componentManager.addComponent(this._childListener);
+
+        this.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+        this._layout.staticHeight = true;
+        this._layout.minWidth = this.width;
+
+        this._layout.horizontalAlign = HORIZONTAL_ALIGN.CENTER;
+        this._layout.verticalAlign = VERTICAL_ALIGN.MIDDLE;
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._layout = null;
+        this._childListener = null;
+
+        super.clearData();
     }
 
     /**

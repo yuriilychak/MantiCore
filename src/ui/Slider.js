@@ -98,6 +98,39 @@ class Slider extends Widget {
      */
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.ui.Widget} ball - Slider ball texture
+     * @param {MANTICORE.enumerator.DIRECTION} [direction = MANTICORE.enumerator.DIRECTION.LEFT] - Type of progress direction.
+     * @param {?string} [progressFrame = null] - Progress texture
+     */
+    reuse(ball, direction = DIRECTION.LEFT, progressFrame = null) {
+        super.reuse();
+
+        this._ball = ball;
+        this._direction = direction;
+        this._isEnabled = true;
+        this._eventDrag = Format.generateEventName(this, "BALL_DRAG");
+        this._progressBar = !Type.isNull(progressFrame) ? new ProgressBar(progressFrame) : null;
+        this._progress = 1;
+        this._eventScroll = null;
+
+        this._ball.name = "btnBall";
+        this._ball.anchor.set(0.5);
+        this._ball.interactive = true;
+        this._ball.eventDrag = this._eventDrag;
+
+        if (this.hasProgressBar()) {
+            this.addChild(this._progressBar);
+        }
+
+        this.addChild(this._ball);
+
+        this.listenerManager.addEventListener(this._eventDrag, this._onBallDragHandler);
+    }
+
+    /**
      * @desc Returns is progress bar available.
      * @method
      * @public
@@ -106,6 +139,29 @@ class Slider extends Widget {
 
     hasProgressBar() {
         return !Type.isNull(this._progressBar);
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._ball = null;
+        this._direction = DIRECTION.NONE;
+        this._isEnabled = true;
+        this._eventDrag = null;
+        this._progressBar = null;
+        this._progress = 1;
+        this._eventScroll = null;
+
+        super.clearData();
     }
 
     /**

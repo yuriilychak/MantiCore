@@ -34,6 +34,23 @@ class Panel extends Widget {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
+     */
+    reuse(graphicType, data) {
+        super.reuse();
+        this.setType(graphicType, data);
+    }
+
+    /**
      * @method
      * @public
      * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.

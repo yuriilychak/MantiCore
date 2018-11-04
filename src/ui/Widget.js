@@ -8,7 +8,6 @@ import Asset from "util/Asset";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Constant from "constant/index";
 import Geometry from "util/Geometry";
-import ComUI from "component/ui/ComUI";
 
 /**
  * @desc Base component for all UI elements.
@@ -108,7 +107,7 @@ class Widget extends ComponentContainer {
         const listenerCount = events.length;
 
         for (let i = 0; i < listenerCount; ++i) {
-            this.on(events[i], handlers[i].bind(this));
+            this.on(events[i], handlers[i], this);
         }
 
         this.uiType = UI_ELEMENT.WIDGET;
@@ -177,9 +176,87 @@ class Widget extends ComponentContainer {
     }
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {PIXI.Sprite | MANTICORE.view.Slice9Sprite} [collider]
+     */
+    reuse(collider = Asset.createWhiteSprite()) {
+        super.reuse();
+
+        this._collider = collider;
+
+        this._anchor.set(0, 0);
+        this._isInteractiveDrag = false;
+        this._isInteractiveDown = false;
+        this._isInteractiveOver = false;
+        this._clippingMask = null;
+        this._propagateChildrenEvent = false;
+
+        if (this._collider instanceof PIXI.Sprite) {
+            this._collider.width = 100;
+            this._collider.height = 100;
+            this._collider.renderable = false;
+        }
+
+        super.addChild(this._collider);
+
+        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
+        const handlers = [
+            this.onActionDownHandler,
+            this.onActionUpHandler,
+            this.onActionUpOutsideHandler,
+            this.onActionOverHandler,
+            this.onActionOutHandler,
+            this.onActionMoveHandler,
+        ];
+        const listenerCount = events.length;
+
+        for (let i = 0; i < listenerCount; ++i) {
+            this.on(events[i], handlers[i], this);
+        }
+        this._collider.name = Constant.COLLIDER_NAME;
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._collider = null;
+        this._anchor.set(0, 0);
+        this._isInteractiveDrag = false;
+        this._isInteractiveDown = false;
+        this._isInteractiveOver = false;
+        this._events.clear(true);
+        this._clippingMask = null;
+        this._propagateChildrenEvent = false;
+
+
+        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
+        const handlers = [
+            this.onActionDownHandler,
+            this.onActionUpHandler,
+            this.onActionUpOutsideHandler,
+            this.onActionOverHandler,
+            this.onActionOutHandler,
+            this.onActionMoveHandler,
+        ];
+        const listenerCount = events.length;
+
+        for (let i = 0; i < listenerCount; ++i) {
+            this.off(events[i], handlers[i], this);
+        }
+
+        super.clearData();
+    }
 
     /**
      * @method
@@ -402,6 +479,9 @@ class Widget extends ComponentContainer {
      */
 
     _onAnchorPointUpdate() {
+        if (Type.isNull(this._collider)) {
+            return;
+        }
         this.pivot.copy(Geometry.pCompMult(
             Geometry.pFromSize(this._collider),
             this._anchor,

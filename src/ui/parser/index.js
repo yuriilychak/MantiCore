@@ -65,7 +65,7 @@ function parseChild (parent, data, bundle, globalParent) {
             break;
         }
         case UI_ELEMENT.WIDGET: {
-            result = new Widget();
+            result = Widget.create();
             break;
         }
         case UI_ELEMENT.IMAGE_VIEW: {
@@ -97,7 +97,7 @@ function parseChild (parent, data, bundle, globalParent) {
             break;
         }
         case UI_ELEMENT.CONTAINER: {
-            result = new ComponentContainer();
+            result = ComponentContainer.create();
             break;
         }
         case UI_ELEMENT.PROGRESS_BAR: {
@@ -636,7 +636,7 @@ function _parseSlice9(element, data) {
 function _createAtlasLabel(data, bundle) {
     const atlasFont = _getAtlasLabelData(data, 0, bundle);
     const texture = _getTextureFromData(atlasFont.texture, bundle);
-    const result = new AtlasLabel(texture, atlasFont.size[0], atlasFont.size[1], atlasFont.dotWidth);
+    const result = AtlasLabel.create(texture, atlasFont.size[0], atlasFont.size[1], atlasFont.dotWidth);
 
     result.text = _getText(data, 1, bundle);
 
@@ -656,7 +656,7 @@ function _createScrollView(data, bundle) {
     const {content} = data;
     const graphicType = data.fileData[1];
     const contentData = graphicType === PANEL_GRAPHIC_TYPE.SPRITE ? _getTextureLinkFromData(data, 0, bundle) : Color.COLORS.WHITE;
-    const result = new ScrollView(graphicType, contentData);
+    const result = ScrollView.create(graphicType, contentData);
 
     result.backgroundColor = _getColor(data.fileData[2], bundle);
     result.backgroundAlpha = Math.percentToFloat(data.fileData[3]);
@@ -683,7 +683,7 @@ function _createListView(data, bundle) {
     const {content} = data;
     const graphicType = data.fileData[1];
     const contentData = graphicType === PANEL_GRAPHIC_TYPE.SPRITE ? _getTextureLinkFromData(data, 0, bundle) : Color.COLORS.WHITE;
-    const result = new ListView(graphicType, contentData);
+    const result = ListView.create(graphicType, contentData);
 
     result.backgroundColor = _getColor(data.fileData[2], bundle);
     result.backgroundAlpha = Math.percentToFloat(data.fileData[3]);
@@ -711,7 +711,7 @@ function _createListView(data, bundle) {
 function _createCheckBox(data, bundle) {
     const {content} = data;
 
-    const result = new CheckBox(
+    const result = CheckBox.create(
         _getTextureLinkFromData(data, 0, bundle),
         _getTextureLinkFromData(content, 0, bundle),
         _getTextureLinkFromData(data, 1, bundle),
@@ -746,7 +746,7 @@ function _createCheckBox(data, bundle) {
  */
 
 function _createButton(data, bundle) {
-    const result = new Button(
+    const result = Button.create(
         _getTextureLinkFromData(data, 0, bundle),
         _getTextureLinkFromData(data, 1, bundle),
         _getTextureLinkFromData(data, 2, bundle),
@@ -780,7 +780,7 @@ function _createButton(data, bundle) {
 function _createProgressBar(data, bundle) {
     const textureLink = _getTextureLinkFromData(data, 0, bundle);
     const type = data.clipped ? PROGRESS_TYPE.CLIPPING : PROGRESS_TYPE.SIZE;
-    const result = new ProgressBar(textureLink, data.fileData[1], type);
+    const result = ProgressBar.create(textureLink, data.fileData[1], type);
     _parseSlice9(result, data);
     return result;
 }
@@ -796,7 +796,7 @@ function _createProgressBar(data, bundle) {
 
 function _createSprite(data, bundle) {
     const textureLink = _getTextureLinkFromData(data, 0, bundle);
-    return new ComponentSprite(textureLink);
+    return ComponentSprite.create(textureLink);
 }
 
 /**
@@ -811,7 +811,7 @@ function _createSprite(data, bundle) {
 function _createSlider(data, bundle) {
     const ball = _createButton(data.content, bundle);
     const progressFrame = _getTextureLinkFromData(data, 0, bundle);
-    const result = new Slider(ball, data.fileData[1], progressFrame);
+    const result = Slider.create(ball, data.fileData[1], progressFrame);
 
     if (!Type.isNull(result.progressBar)) {
         _parseSlice9(result.progressBar, data);
@@ -832,7 +832,7 @@ function _createSlider(data, bundle) {
 function _createLabel(data, bundle) {
     const font = _getFontStyle(data.fileData[0], bundle);
     const name = bundle.fonts[font.name];
-    const result = new Label(name, font.size);
+    const result = Label.create(name, font.size);
     result.horizontalAlign = font.align[0];
     result.verticalAlign = font.align[1];
     result.text = _getText(data, 1, bundle);
@@ -855,7 +855,7 @@ function _createTextField(data, bundle) {
     const font = _getFontStyle(data.fileData[0], bundle);
     const style = _getTextFieldStyle(data.fileData[2], bundle);
     const name = bundle.fonts[font.name];
-    const result = new TextField(name, font.size);
+    const result = TextField.create(name, font.size);
 
     result.horizontalAlign = font.align[0];
     result.verticalAlign = font.align[1];
@@ -886,7 +886,7 @@ function _createTextField(data, bundle) {
 function _createPanel(data, bundle) {
     const graphicType = data.fileData[1];
     const contentData = graphicType === PANEL_GRAPHIC_TYPE.SPRITE ? _getTextureLinkFromData(data, 0, bundle) : Color.COLORS.WHITE;
-    const result = new Panel(graphicType, contentData);
+    const result = Panel.create(graphicType, contentData);
 
     result.backgroundColor = _getColor(data.fileData[2], bundle);
     result.backgroundAlpha = Math.percentToFloat(data.fileData[3]);
@@ -926,7 +926,7 @@ function _createUIElement(data, bundle) {
 
 function _createImageView(data, bundle) {
     const texture = _getTextureLinkFromData(data, 0, bundle);
-    const result = Type.isNull(data.slice9) ? new ComponentSprite(texture) : new ImageView(texture);
+    const result = Type.isNull(data.slice9) ? ComponentSprite.create(texture) : ImageView.create(texture);
 
     _parseSlice9(result, data);
 
@@ -943,7 +943,7 @@ function _createImageView(data, bundle) {
  */
 
 function _createToggleButton(data, bundle) {
-    const result = new ToggleButton(
+    const result = ToggleButton.create(
         _getTextureLinkFromData(data, 0, bundle),
         _getTextureLinkFromData(data, 4, bundle),
         _getTextureLinkFromData(data, 1, bundle),

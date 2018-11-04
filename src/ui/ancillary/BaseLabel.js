@@ -48,6 +48,19 @@ class BaseLabel extends Widget {
      */
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     */
+    reuse() {
+        super.reuse();
+
+        this._verticalAlign = VERTICAL_ALIGN.TOP;
+        this._horizontalAlign = HORIZONTAL_ALIGN.LEFT;
+        this._localized = false;
+    }
+
+    /**
      * @method
      * @public
      * @return {PIXI.Point}
@@ -70,6 +83,20 @@ class BaseLabel extends Widget {
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._verticalAlign = VERTICAL_ALIGN.TOP;
+        this._horizontalAlign = HORIZONTAL_ALIGN.LEFT;
+        this._localized = false;
+
+        super.clearData();
+    }
 
     /**
      * @desc Calls when horizontal align change.

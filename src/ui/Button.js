@@ -1,6 +1,7 @@
 import BaseButton from "./ancillary/BaseButton";
 import INTERACTIVE_STATE from "enumerator/ui/InteractiveState";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import StateSlice9Sprite from "./ancillary/StateSlice9Sprite";
 
 /**
  * @desc realization of button class.
@@ -27,6 +28,28 @@ class Button extends BaseButton {
         this.collider.addState(disabledFrame, INTERACTIVE_STATE.DISABLED);
 
         this.uiType = UI_ELEMENT.BUTTON;
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} upFrame - Frame when button do nothing.
+     * @param {?string} [downFrame = null] - Frame when button activated.
+     * @param {?string} [overFrame = null] - Frame when button hover.
+     * @param {?string} [disabledFrame = null] - Frame when button disabled.
+     */
+    reuse(upFrame, downFrame = null, overFrame = null, disabledFrame = null) {
+        super.reuse(upFrame, INTERACTIVE_STATE.UP);
+
+        this.collider.addState(downFrame, INTERACTIVE_STATE.DOWN);
+        this.collider.addState(overFrame, INTERACTIVE_STATE.OVER);
+        this.collider.addState(disabledFrame, INTERACTIVE_STATE.DISABLED);
     }
 
     /**

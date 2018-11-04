@@ -114,7 +114,7 @@ class TextField extends Label {
          * @private
          */
 
-        this._color = 0xFFFFFF;
+        this._color = Color.COLORS.WHITE;
 
         /**
          * @desc Color of placeholder.
@@ -137,9 +137,59 @@ class TextField extends Label {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} fontName
+     * @param {int} size
+     */
+    reuse(fontName, size) {
+        super.reuse(fontName, size);
+
+        this._maxLength = -1;
+        this._realText = "";
+        this._passwordMode = false;
+        this._passwordChar = "*";
+        this._cursorEnabled = true;
+        this._cursorChar = "I";
+        this._placeholderText = null;
+        this._color = Color.COLORS.WHITE;
+        this._placeholderColor = 0xAAAAAA;
+        this._isSelected = false;
+
+        this._updateTextTransform();
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._maxLength = -1;
+        this._realText = "";
+        this._passwordMode = false;
+        this._passwordChar = "*";
+        this._cursorEnabled = true;
+        this._cursorChar = "I";
+        this._placeholderText = null;
+        this._color = Color.COLORS.WHITE;
+        this._placeholderColor = 0xAAAAAA;
+        this._isSelected = false;
+
+        super.clearData();
+    }
 
     /**
      * @method

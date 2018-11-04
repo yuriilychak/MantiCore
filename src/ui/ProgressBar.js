@@ -77,6 +77,34 @@ class ProgressBar extends Widget {
      */
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} frameLink - link to progress frame in texture;
+     * @param {MANTICORE.enumerator.DIRECTION} [direction = MANTICORE.enumerator.DIRECTION.LEFT] - Type of progress direction.
+     * @param {MANTICORE.enumerator.ui.PROGRESS_TYPE} [type = MANTICORE.enumerator.ui.PROGRESS_TYPE.SIZE] - Type of progress change.
+     */
+    reuse(frameLink, direction = DIRECTION.LEFT, type = PROGRESS_TYPE.SIZE) {
+        super.reuse();
+
+        this._progressSprite = new Slice9Sprite(frameLink);
+        this._mask = null;
+        this._direction = DIRECTION.NONE;
+        this._type = PROGRESS_TYPE.NONE;
+        this._progress = 1;
+
+        super.width = this._progressSprite.width;
+        super.height = this._progressSprite.height;
+
+        this.type = type;
+        this.direction = direction;
+
+        this.uiType = UI_ELEMENT.PROGRESS_BAR;
+
+        this.addChild(this._progressSprite);
+    }
+
+    /**
      * @desc Set slice of colider if it slice9 sprite.
      * @method
      * @public
@@ -89,6 +117,27 @@ class ProgressBar extends Widget {
 
     setSlice(leftSlice = 0, rightSlice = 0, topSlice = 0, bottomSlice = 0) {
         this._progressSprite.slice = [leftSlice, rightSlice, topSlice, bottomSlice];
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._progressSprite = null;
+        this._mask = null;
+        this._direction = DIRECTION.NONE;
+        this._type = PROGRESS_TYPE.NONE;
+        this._progress = 1;
+
+        super.clearData();
     }
 
     /**

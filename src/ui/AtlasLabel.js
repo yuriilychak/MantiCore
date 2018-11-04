@@ -107,9 +107,56 @@ class AtlasLabel extends BaseLabel {
     }
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} frame - Frame name of font.
+     * @param {int} letterWidth - Width of letter;
+     * @param {int} letterHeight - Height of letter;
+     * @param {int} dotWidth - Width of dot symbol.
+     */
+    reuse(frame, letterWidth, letterHeight, dotWidth) {
+        super.reuse();
+
+        this._fontFrame = AssetUtil.getSpriteFrame(frame);
+        this._letterDimensions.set(letterWidth, letterHeight);
+        this._dotWidth = dotWidth;
+        this._text = "";
+        this._fontName = frame;
+        this._fontSize = letterHeight;
+        this._lineWidth = 0;
+        this.verticalAlign = VERTICAL_ALIGN.MIDDLE;
+        this.horizontalAlign = HORIZONTAL_ALIGN.CENTER;
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._fontFrame = null;
+        this._letterDimensions.set(0, 0);
+        this._dotWidth = 0;
+        this._chars.length = 0;
+        this._text = null;
+        this._fontName = null;
+        this._fontSize = 0;
+        this._lineWidth = 0;
+
+        super.clearData();
+    }
 
     /**
      * @desc Calls when horizontal align change.

@@ -19,7 +19,7 @@ class CheckBox extends Button {
         disabledBackFrame = null,
         downIconFrame = null,
         overIconFrame = null,
-        disableIconFrame = null,
+        disableIconFrame = null
     ) {
         super(upBackFrame, downBackFrame, overBackFrame, disabledBackFrame);
 
@@ -46,6 +46,38 @@ class CheckBox extends Button {
         this.uiType = UI_ELEMENT.CHECK_BOX;
 
         this.addChild(this._icon);
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     */
+    reuse(
+        upBackFrame,
+        upIconFrame,
+        downBackFrame = null,
+        overBackFrame = null,
+        disabledBackFrame = null,
+        downIconFrame = null,
+        overIconFrame = null,
+        disableIconFrame = null
+    ) {
+        super.reuse(upBackFrame, downBackFrame, overBackFrame, disabledBackFrame);
+
+        this._icon = new StateSlice9Sprite(upIconFrame, INTERACTIVE_STATE.UP);
+        this._icon.addState(downIconFrame, INTERACTIVE_STATE.DOWN);
+        this._icon.addState(overIconFrame, INTERACTIVE_STATE.OVER);
+        this._icon.addState(disableIconFrame, INTERACTIVE_STATE.DISABLED);
+        this._icon.name = "imgCheck";
+
+        this._icon.visible = false;
+        this._isSelected = false;
     }
 
     /**

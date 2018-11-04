@@ -1,6 +1,7 @@
 import TOGGLE_INTERACTIVE_STATE from "enumerator/ui/ToggleInteractiveState";
 import BaseButton from "./ancillary/BaseButton";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import Asset from "../util/Asset";
 
 /**
  * @desc Realization of toggle button class.
@@ -52,6 +53,47 @@ class ToggleButton extends BaseButton {
         this.collider.addState(sDisabledFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_DISABLED);
 
         this.uiType = UI_ELEMENT.TOGGLE_BUTTON;
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} dUpFrame - Deselected frame when button do nothing.
+     * @param {string} sUpFrame - Selected frame when button do nothing.
+     * @param {?string} [sDownFrame = null] - Deselected frame when button activated.
+     * @param {?string} [dDownFrame = null] - Selected frame when button activated.
+     * @param {?string} [dOverFrame = null] - Deselected frame when button hover.
+     * @param {?string} [sOverFrame = null] - Selected frame when button hover.
+     * @param {?string} [dDisabledFrame = null] - Deselected frame when button disabled.
+     * @param {?string} [sDisabledFrame = null] - Selected frame when button disabled.
+     */
+    reuse(
+        dUpFrame,
+        sUpFrame,
+        dDownFrame = null,
+        sDownFrame = null,
+        dOverFrame = null,
+        sOverFrame = null,
+        dDisabledFrame = null,
+        sDisabledFrame = null
+    ) {
+        super.reuse(dUpFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_UP);
+
+        this._isSelected = false;
+
+        this.collider.addState(dDownFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN);
+        this.collider.addState(dOverFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER);
+        this.collider.addState(dDisabledFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_DISABLED);
+        this.collider.addState(sUpFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_UP);
+        this.collider.addState(sDownFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN);
+        this.collider.addState(sOverFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_OVER);
+        this.collider.addState(sDisabledFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_DISABLED);
     }
 
     /**

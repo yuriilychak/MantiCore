@@ -72,6 +72,24 @@ class Label extends BaseLabel {
      */
 
     /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} fontName
+     * @param {int} size
+     */
+    reuse(fontName, size) {
+        super.reuse();
+
+        this._label = new OutlineBitmapText(fontName, size);
+        this._isShadowEnabled = false;
+        this._shadowOffset = null;
+        this._shadow = null;
+        this._lineHeight = this._label.lineHeight;
+        this._label.maxWidth = this.width;
+    }
+
+    /**
      * @method
      * @public
      * @return {PIXI.Point}
@@ -104,6 +122,23 @@ class Label extends BaseLabel {
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._label = null;
+        this._isShadowEnabled = false;
+        this._shadowOffset = null;
+        this._shadow = null;
+        this._lineHeight = 0;
+        this._label.maxWidth = 0;
+
+        super.clearData();
+    }
 
     /**
      * @desc Calls when horizontal align change.

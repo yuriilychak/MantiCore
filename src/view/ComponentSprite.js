@@ -244,10 +244,9 @@ class ComponentSprite extends PIXI.Sprite {
      * @public
      */
     disuse() {
-        this.isUpdate = false;
-        this.parent.removeChild(this);
-        this.clearData();
         this.inPool = true;
+        this.clearData();
+        this.parent.removeChild(this);
     }
 
     /**
@@ -256,22 +255,10 @@ class ComponentSprite extends PIXI.Sprite {
      * @public
      */
     destroy() {
-        this.isUpdate = false;
-
-        this.clearData();
-
-        this._componentManager = this._killManager(this._componentManager);
-        this._listenerManager = this._killManager(this._listenerManager);
-        this._animationManager = this._killManager(this._animationManager);
-
-        this._hasListenerManager = false;
-        this._hasComponentManager = false;
-        this._hasAnimationManager = false;
-
         this._isDestroyed = true;
         this._inPool = false;
         this._reusable = false;
-
+        this.clearData();
         super.destroy();
     }
 
@@ -303,7 +290,32 @@ class ComponentSprite extends PIXI.Sprite {
      * @protected
      */
 
-    clearData() {}
+    clearData() {
+        this.isUpdate = false;
+
+        this._componentManager = this._killManager(this._componentManager);
+        this._listenerManager = this._killManager(this._listenerManager);
+        this._animationManager = this._killManager(this._animationManager);
+
+        this._hasListenerManager = false;
+        this._hasComponentManager = false;
+        this._hasAnimationManager = false;
+
+        const children = this.children;
+        const childCount = children.length;
+        let i, child;
+
+        for (i = 0; i < childCount; ++i) {
+            child = children[i];
+
+            if (child.kill) {
+                child.kill();
+            }
+            else {
+                super.removeChild(child);
+            }
+        }
+    }
 
     /**
      * @desc Handler that calls if container mark for update.

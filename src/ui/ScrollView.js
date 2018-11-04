@@ -44,7 +44,7 @@ class ScrollView extends Panel {
          * @private
          */
 
-        this._innerContainer = new Widget();
+        this._innerContainer = Widget.create();
 
         /**
          * @desc Previous drag pos for update drag.
@@ -128,6 +128,38 @@ class ScrollView extends Panel {
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
+     */
+    reuse(graphicType, data) {
+        super.reuse(graphicType, data);
+
+        this._innerContainer = Widget.create();
+        this._prvDragPos.set(0, 0);
+        this._zeroPoint.set(0, 0);
+        this._innerBoundary.set(0, 0);
+        this._verticalSlider = null;
+        this._horizontalSlider = null;
+        this._eventDown = null;
+        this._eventDrag = null;
+        this._scrollDirection = SCROLL_DIRECTION.BOTH;
+
+        const eventDown = Format.generateEventName(this, LOCAL_EVENT.DOWN);
+        const eventDrag = Format.generateEventName(this, LOCAL_EVENT.DRAG);
+
+        this.listenerManager.addEventListener(eventDrag, this.onDragInnerContainerHandler);
+        this.listenerManager.addEventListener(eventDown, this.onDownInnerContainerHandler);
+
+        this._innerContainer.eventDrag = eventDrag;
+        this._innerContainer.eventDown = eventDown;
+        this._innerContainer.propagateChildrenEvents = true;
+        this._innerContainer.interactive = true;
+    }
 
     /**
      * @method
@@ -379,10 +411,31 @@ class ScrollView extends Panel {
         this._jumpVertical(percent);
     }
 
+
     /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._innerContainer = null;
+        this._prvDragPos.set(0, 0);
+        this._zeroPoint.set(0, 0);
+        this._innerBoundary.set(0, 0);
+        this._verticalSlider = null;
+        this._horizontalSlider = null;
+        this._eventDown = null;
+        this._eventDrag = null;
+        this._scrollDirection = SCROLL_DIRECTION.BOTH;
+
+        super.clearData();
+    }
 
     /**
      * @method
