@@ -186,8 +186,6 @@ class ActionTimeLine extends ReusableObject{
 
         this._nestedChildren = null;
 
-        this.reusable = true;
-
         this.refreshStartParameters();
     }
 

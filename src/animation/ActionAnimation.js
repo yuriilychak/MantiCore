@@ -71,8 +71,6 @@ class ActionAnimation extends ReusableObject{
          */
 
         this._visible = null;
-
-        this.reusable = true;
     }
 
     /**

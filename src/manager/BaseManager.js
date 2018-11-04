@@ -29,8 +29,6 @@ class BaseManager extends ReusableObject {
          * @private
          */
         this._isActive = false;
-
-        this.reusable = true;
     }
 
     /**

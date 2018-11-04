@@ -24,7 +24,7 @@ class ReusableObject {
          * @private
          */
 
-        this._reusable = false;
+        this._reusable = true;
 
         /**
          * @desc Flag is currently owner in pool or his owner in pool.
