@@ -3,6 +3,7 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
 
 import Type from "util/Type";
 import Math from "util/Math";
+import Color from "util/Color";
 
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
@@ -102,6 +103,22 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._inPool = false;
+
+        /**
+         * @desc Tint of sprite
+         * @type {int}
+         * @private
+         */
+
+        this._tint = Color.COLORS.WHITE;
+
+        /**
+         * @desc Real tint of parent.
+         * @type {int}
+         * @private
+         */
+
+        this._parentTint = Color.COLORS.WHITE;
 
         /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
@@ -284,6 +301,9 @@ class ComponentContainer extends PIXI.Container {
     clearData() {
         this.isUpdate = false;
 
+        this._parentTint = Color.COLORS.WHITE;
+        this._tint = Color.COLORS.WHITE;
+
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
         this._animationManager = this._killManager(this._animationManager);
@@ -354,6 +374,24 @@ class ComponentContainer extends PIXI.Container {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Real tint of parent element.
+     * @public
+     * @type {int}
+     */
+
+    get parentTint() {
+        return this._parentTint;
+    }
+
+
+    set parentTint(value) {
+        if (this._parentTint === value) {
+            return;
+        }
+        this._parentTint = value;
+    }
 
     /**
      * @desc Returns is container marked for update.

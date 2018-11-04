@@ -2,6 +2,7 @@ import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import Math from "util/Math";
 import FontCache from "ui/fontCache";
+import Color from "util/Color";
 
 /**
  * @desc Bitmap text with outline.
@@ -85,7 +86,7 @@ class OutlineBitmapText extends PIXI.Container {
          * @private
          */
 
-        this._outlineColor = 0xFFFFFF;
+        this._outlineColor = Color.COLORS.WHITE;
 
         /**
          * @desc Color of label.
@@ -93,7 +94,7 @@ class OutlineBitmapText extends PIXI.Container {
          * @private
          */
 
-        this._color = 0xFFFFFF;
+        this._color = Color.COLORS.WHITE;
 
         this.interactiveChildren = false;
 
@@ -254,7 +255,7 @@ class OutlineBitmapText extends PIXI.Container {
         }
 
         this._outlineSize = 0;
-        this._outlineColor = 0xFFFFFF;
+        this._outlineColor = Color.COLORS.WHITE;
 
         const outlineCount = this._outlines.length;
 

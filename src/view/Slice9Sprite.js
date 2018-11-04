@@ -2,6 +2,7 @@ import Asset from "util/Asset";
 import Type from "util/Type";
 import Math from "util/Math";
 import Constant from "constant/index";
+import Color from "util/Color";
 
 /**
  * @desc Slice 9 sprite to avoid breaking batch.
@@ -45,7 +46,15 @@ class Slice9Sprite extends PIXI.Container {
          * @private
          */
 
-        this._tint = 0xFFFFFF;
+        this._tint = Color.COLORS.WHITE;
+
+        /**
+         * @desc Real tint of parent.
+         * @type {int}
+         * @private
+         */
+
+        this._parentTint = Color.COLORS.WHITE;
 
         /**
          * @desc Frame name of element;
@@ -101,6 +110,25 @@ class Slice9Sprite extends PIXI.Container {
      */
 
     /**
+     * @desc Real tint of parent element.
+     * @public
+     * @type {int}
+     */
+
+    get parentTint() {
+        return this._parentTint;
+    }
+
+
+    set parentTint(value) {
+        if (this._parentTint === value) {
+            return;
+        }
+        this._parentTint = value;
+    }
+
+    /**
+     * @desc Tint of slice 9 element.
      * @public
      * @type {int}
      */

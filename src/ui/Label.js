@@ -3,6 +3,7 @@ import Math from "util/Math";
 import Type from "util/Type";
 import OutlineBitmapText from "./ancillary/OutlineBitmapText";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import Color from "util/Color";
 
 /**
  * @desc Class for manipulate with bitmap fonts.
@@ -362,7 +363,7 @@ class Label extends BaseLabel {
             this._shadowOffset = new PIXI.Point(0, 0);
             this._shadow = this._label.clone();
             this.addChildAt(this._shadow, 1);
-            this._shadow.color = this._shadow.outlineColor = 0xFFFFFF;
+            this._shadow.color = this._shadow.outlineColor = Color.COLORS.WHITE;
             this._updateHorizontalPos(this._shadow);
             this._updateVerticalPos(this._shadow);
             return;

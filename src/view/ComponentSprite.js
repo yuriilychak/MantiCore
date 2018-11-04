@@ -3,6 +3,7 @@ import Timer from "timer";
 import Asset from "util/Asset";
 import Geometry from "util/Geometry";
 import Math from "util/Math";
+import Color from "util/Color";
 
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
@@ -106,6 +107,14 @@ class ComponentSprite extends PIXI.Sprite {
          */
 
         this._inPool = false;
+
+        /**
+         * @desc Real tint of parent.
+         * @type {int}
+         * @private
+         */
+
+        this._parentTint = Color.COLORS.WHITE;
 
         /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
@@ -293,6 +302,9 @@ class ComponentSprite extends PIXI.Sprite {
     clearData() {
         this.isUpdate = false;
 
+        this._parentTint = Color.COLORS.WHITE;
+        super.tint = Color.COLORS.WHITE;
+
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
         this._animationManager = this._killManager(this._animationManager);
@@ -363,6 +375,24 @@ class ComponentSprite extends PIXI.Sprite {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Real tint of parent element.
+     * @public
+     * @type {int}
+     */
+
+    get parentTint() {
+        return this._parentTint;
+    }
+
+
+    set parentTint(value) {
+        if (this._parentTint === value) {
+            return;
+        }
+        this._parentTint = value;
+    }
 
     /**
      * @public
