@@ -158,7 +158,7 @@ const pool = {
             return;
         }
 
-        const dif = count - elementCount;
+        const dif = elementCount - count;
         let element, i;
 
         for (i = 0; i < dif; ++i) {
