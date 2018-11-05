@@ -96,6 +96,14 @@ class OutlineBitmapText extends PIXI.Container {
 
         this._color = Color.COLORS.WHITE;
 
+        /**
+         * @desc Real tint of parent.
+         * @type {int}
+         * @private
+         */
+
+        this._parentTint = Color.COLORS.WHITE;
+
         this.interactiveChildren = false;
 
         this.addChild(this._label);
@@ -165,9 +173,43 @@ class OutlineBitmapText extends PIXI.Container {
     }
 
     /**
+     * @desc Update tint of children.
+     * @method
+     * @private
+     */
+
+    _updateTint() {
+        this._label.tint = Color.multiply(this._parentTint, this._color);
+        if (!this._isOutlineEnabled) {
+            return;
+        }
+        const outlineTint = Color.multiply(this._parentTint, this._outlineColor);
+        this._iterateOutlines(outline => outline.tint = outlineTint);
+    }
+
+    /**
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Real tint of parent element.
+     * @public
+     * @type {int}
+     */
+
+    get parentTint() {
+        return this._parentTint;
+    }
+
+
+    set parentTint(value) {
+        if (this._parentTint === value) {
+            return;
+        }
+        this._parentTint = value;
+        this._updateTint();
+    }
 
     /**
      * @type {PIXI.Point | Point}
@@ -287,9 +329,10 @@ class OutlineBitmapText extends PIXI.Container {
 
         if (outlineCount === 0) {
             outlineCount = 8;
+            const color = Color.multiply(this._outlineColor, this._parentTint);
             for (i = 0; i < outlineCount; ++i) {
                 outline = this._cloneLabel();
-                outline.tint = this._outlineColor;
+                outline.tint = color;
                 this._outlines.push(outline);
                 this.addChild(outline);
             }
@@ -323,7 +366,7 @@ class OutlineBitmapText extends PIXI.Container {
             return;
         }
         this._color = value;
-        this._label.tint = value;
+        this._updateTint();
     }
 
     /**
@@ -341,7 +384,7 @@ class OutlineBitmapText extends PIXI.Container {
         }
         this._outlineColor = value;
 
-        this._iterateOutlines(element => element.tint = this._outlineColor);
+        this._updateTint();
     }
 
     /**

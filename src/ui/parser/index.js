@@ -195,7 +195,7 @@ function _parseWidgetData(element, data, bundle) {
     const color = _getColor(data.tint, bundle);
 
     if (color !== Color.COLORS.WHITE) {
-        element.tint = color;//TODO Fix tint for display objects.
+        element.tint = color;
     }
 
     element.alpha = Math.percentToFloat(data.alpha);

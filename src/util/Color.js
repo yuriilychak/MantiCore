@@ -100,6 +100,26 @@ const color = {
     },
 
     /**
+     * @desc Calculate multiply of two colors.
+     * @function
+     * @public
+     * @param {int} color1
+     * @param {int} color2
+     * @memberOf MANTICORE.util.color
+     */
+
+    multiply(color1, color2) {
+        const rgb1 = this.intToRgb(color1);
+        const rgb2 = this.intToRgb(color2);
+        const result = [];
+        const rgbSize = rgb1.length;
+        for (let i = 0; i < rgbSize; ++i) {
+            result.push(Math.round((rgb1[i] * rgb2[i]) / Math.MAX_BYTE));
+        }
+        return this.rgbToInt(result[0], result[1], result[2]);
+    },
+
+    /**
      * @desc Method for manipulate with hue
      * @memberOf MANTICORE.util.color
      * @param {number} p

@@ -109,12 +109,28 @@ class ComponentSprite extends PIXI.Sprite {
         this._inPool = false;
 
         /**
+         * @desc Tint of sprite
+         * @type {int}
+         * @private
+         */
+
+        this._customTint = Color.COLORS.WHITE;
+
+        /**
          * @desc Real tint of parent.
          * @type {int}
          * @private
          */
 
         this._parentTint = Color.COLORS.WHITE;
+
+        /**
+         * @desc Real tint of element.
+         * @type {int}
+         * @private
+         */
+
+        this._realTint = Color.COLORS.WHITE;
 
         /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
@@ -154,10 +170,13 @@ class ComponentSprite extends PIXI.Sprite {
         const result = [];
         const offset = Geometry.pCompMult(Geometry.pFromSize(this), this.anchor);
         const scale = Geometry.pInvert(this.scale);
-        for (let i = 0; i < argumentCount; ++i) {
-            Geometry.pSub(arguments[i].position, offset, true);
-            arguments[i].scale.copy(scale);
-            result.push(super.addChild(arguments[i]));
+        let i, child;
+        for (i = 0; i < argumentCount; ++i) {
+            child = arguments[i];
+            Geometry.pSub(child.position, offset, true);
+            this.updateChildTint(child);
+            child.scale.copy(scale);
+            result.push(super.addChild(child));
         }
         if (this._hasComponentManager) {
             this._componentManager.addChildrenAction(result);
@@ -176,6 +195,7 @@ class ComponentSprite extends PIXI.Sprite {
 
     addChildAt(child, index) {
         const result = super.addChildAt(child, index);
+        this.updateChildTint(child);
         Geometry.pSub(child.position, Geometry.pCompMult(Geometry.pFromSize(this), this.anchor), true);
         child.scale.copy(Geometry.pInvert(this.scale));
         if (this._hasComponentManager) {
@@ -351,6 +371,24 @@ class ComponentSprite extends PIXI.Sprite {
     }
 
     /**
+     * @method
+     * @protected
+     * @param {PIXI.DisplayObject | MANTICORE.view.ComponentContainer} child
+     *
+     */
+
+    updateChildTint(child) {
+        if (!Type.isUndefined(child.parentTint)) {
+            child.parentTint = this._realTint;
+            return;
+        }
+        if (Type.isUndefined(child.tint)) {
+            return;
+        }
+        child.tint = this._realTint;
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -369,6 +407,22 @@ class ComponentSprite extends PIXI.Sprite {
         }
         manager.kill();
         return null;
+    }
+
+    /**
+     * @desc Update tint of children.
+     * @method
+     * @private
+     */
+
+    _updateTint() {
+        this._realTint = Color.multiply(this._parentTint, this._customTint);;
+
+        const children = this.children;
+        const childCount = children.length;
+        for (let i = 0; i < childCount; ++i) {
+            this.updateChildTint(children[i]);
+        }
     }
 
     /**
@@ -392,6 +446,36 @@ class ComponentSprite extends PIXI.Sprite {
             return;
         }
         this._parentTint = value;
+        this._updateTint();
+    }
+
+    /**
+     * @desc Returns real tint of container.
+     * @protected
+     * @returns {int}
+     */
+
+    get realTint() {
+        return this._realTint;
+    }
+
+    /**
+     * @desc Real tint of parent element.
+     * @public
+     * @type {int}
+     */
+
+    get tint() {
+        return this._customTint;
+    }
+
+
+    set tint(value) {
+        if (this._customTint === value) {
+            return;
+        }
+        this._customTint = value;
+        this._updateTint();
     }
 
     /**

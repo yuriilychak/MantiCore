@@ -1399,6 +1399,7 @@ declare namespace MANTICORE {
                 verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
                 lineHeight: number;
                 text: string;
+                parentTint: number;
 
                 clone(): MANTICORE.ui.ancillary.OutlineBitmapText;
 
@@ -1622,6 +1623,7 @@ declare namespace MANTICORE {
                 GREEN = 65535,
                 BLUE = 255,
             }
+            export function multiply(color1: number, color2: number): number;
             export function getLightness(color: number): number;
             export function setLightness(color: number, lightness: number): number;
             export function getHue(color: number): number;
@@ -1731,6 +1733,9 @@ declare namespace MANTICORE {
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
+            tint: number;
+            parentTint: number;
+            protected  readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
@@ -1745,6 +1750,7 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
 
+            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
             protected onUpdate(dt: number): void;
         }
         export class ComponentSprite extends PIXI.Sprite {
@@ -1755,6 +1761,8 @@ declare namespace MANTICORE {
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
+            parentTint: number;
+            protected  readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
@@ -1769,6 +1777,7 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
 
+            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
             protected onUpdate(dt: number): void;
 
         }
@@ -1787,6 +1796,7 @@ declare namespace MANTICORE {
         export class Slice9Sprite extends PIXI.Container {
             constructor(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number);
             tint: number;
+            parentTint: number;
             anchor: PIXI.ObservablePoint;
             leftSlice: number;
             rightSlice: number;
@@ -1794,6 +1804,7 @@ declare namespace MANTICORE {
             bottomSlice: number;
             frameName: string;
             slice: number[];
+            protected  readonly realTint: number;
         }
     }
 }

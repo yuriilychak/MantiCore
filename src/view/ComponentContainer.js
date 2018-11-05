@@ -110,7 +110,7 @@ class ComponentContainer extends PIXI.Container {
          * @private
          */
 
-        this._tint = Color.COLORS.WHITE;
+        this._customTint = Color.COLORS.WHITE;
 
         /**
          * @desc Real tint of parent.
@@ -119,6 +119,14 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._parentTint = Color.COLORS.WHITE;
+
+        /**
+         * @desc Real tint of element.
+         * @type {int}
+         * @private
+         */
+
+        this._realTint = Color.COLORS.WHITE;
 
         /**
          * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
@@ -156,8 +164,11 @@ class ComponentContainer extends PIXI.Container {
     addChild(var_args) {
         const argumentCount = arguments.length;
         const result = [];
-        for (let i = 0; i < argumentCount; ++i) {
-            result.push(super.addChild(arguments[i]));
+        let i, child;
+        for (i = 0; i < argumentCount; ++i) {
+            child = arguments[i];
+            this.updateChildTint(child);
+            result.push(super.addChild(child));
         }
         if (this._hasComponentManager) {
             this._componentManager.addChildrenAction(result);
@@ -176,6 +187,7 @@ class ComponentContainer extends PIXI.Container {
 
     addChildAt(child, index) {
         const result = super.addChildAt(child, index);
+        this.updateChildTint(child);
         if (this._hasComponentManager) {
             this._componentManager.addChildrenAction([result]);
         }
@@ -302,7 +314,7 @@ class ComponentContainer extends PIXI.Container {
         this.isUpdate = false;
 
         this._parentTint = Color.COLORS.WHITE;
-        this._tint = Color.COLORS.WHITE;
+        this._customTint = Color.COLORS.WHITE;
 
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
@@ -350,6 +362,24 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
+     * @method
+     * @protected
+     * @param {PIXI.DisplayObject | MANTICORE.view.ComponentContainer} child
+     *
+     */
+
+    updateChildTint(child) {
+        if (!Type.isUndefined(child.parentTint)) {
+            child.parentTint = this._realTint;
+            return;
+        }
+        if (Type.isUndefined(child.tint)) {
+            return;
+        }
+        child.tint = this._realTint;
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -368,6 +398,22 @@ class ComponentContainer extends PIXI.Container {
         }
         manager.kill();
         return null;
+    }
+
+    /**
+     * @desc Update tint of children.
+     * @method
+     * @private
+     */
+
+    _updateTint() {
+        this._realTint = Color.multiply(this._parentTint, this._customTint);;
+
+        const children = this.children;
+        const childCount = children.length;
+        for (let i = 0; i < childCount; ++i) {
+            this.updateChildTint(children[i]);
+        }
     }
 
     /**
@@ -391,6 +437,36 @@ class ComponentContainer extends PIXI.Container {
             return;
         }
         this._parentTint = value;
+        this._updateTint();
+    }
+
+    /**
+     * @desc Returns real tint of container.
+     * @protected
+     * @returns {int}
+     */
+
+    get realTint() {
+        return this._realTint;
+    }
+
+    /**
+     * @desc Real tint of parent element.
+     * @public
+     * @type {int}
+     */
+
+    get tint() {
+        return this._customTint;
+    }
+
+
+    set tint(value) {
+        if (this._customTint === value) {
+            return;
+        }
+        this._customTint = value;
+        this._updateTint();
     }
 
     /**

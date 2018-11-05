@@ -46,7 +46,7 @@ class Slice9Sprite extends PIXI.Container {
          * @private
          */
 
-        this._tint = Color.COLORS.WHITE;
+        this._customTint = Color.COLORS.WHITE;
 
         /**
          * @desc Real tint of parent.
@@ -55,6 +55,14 @@ class Slice9Sprite extends PIXI.Container {
          */
 
         this._parentTint = Color.COLORS.WHITE;
+
+        /**
+         * @desc Real tint of element.
+         * @type {int}
+         * @private
+         */
+
+        this._realTint = Color.COLORS.WHITE;
 
         /**
          * @desc Frame name of element;
@@ -125,31 +133,36 @@ class Slice9Sprite extends PIXI.Container {
             return;
         }
         this._parentTint = value;
+        this._updateTint();
     }
 
     /**
-     * @desc Tint of slice 9 element.
+     * @desc Returns real tint of container.
+     * @protected
+     * @returns {int}
+     */
+
+    get realTint() {
+        return this._realTint;
+    }
+
+    /**
+     * @desc Real tint of parent element.
      * @public
      * @type {int}
      */
 
     get tint() {
-        return this._tint;
+        return this._customTint;
     }
 
 
     set tint(value) {
-        if (this._tint === value) {
+        if (this._customTint === value) {
             return;
         }
-        this._tint = value;
-
-        this._iterateFrames((frame, index, row, col) => {
-            if (Type.isNull(frame)) {
-                return;
-            }
-            frame.tint = this._tint;
-        });
+        this._customTint = value;
+        this._updateTint();
     }
 
     /**
@@ -312,6 +325,40 @@ class Slice9Sprite extends PIXI.Container {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @method
+     * @private
+     * @param {PIXI.DisplayObject | MANTICORE.view.ComponentContainer} child
+     *
+     */
+
+    _updateChildTint(child) {
+        if (!Type.isUndefined(child.parentTint)) {
+            child.parentTint = this._realTint;
+            return;
+        }
+        if (Type.isUndefined(child.tint)) {
+            return;
+        }
+        child.tint = this._realTint;
+    }
+
+    /**
+     * @desc Update tint of children.
+     * @method
+     * @private
+     */
+
+    _updateTint() {
+        this._realTint = Color.multiply(this._parentTint, this._customTint);;
+
+        const children = this.children;
+        const childCount = children.length;
+        for (let i = 0; i < childCount; ++i) {
+            this._updateChildTint(children[i]);
+        }
+    }
 
     /**
      * @desc Generate dimensions parameters from boundary.
@@ -486,7 +533,7 @@ class Slice9Sprite extends PIXI.Container {
                 if (Type.isNull(sprite)) {
                     frameTexture = new PIXI.Texture(baseTexture, rect);
                     sprite = PIXI.Sprite.from(frameTexture);
-                    sprite.tint = this._tint;
+                    sprite.tint = this._realTint;
                     sprite.interactive = false;
                     sprite.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
                     this.addChildAt(sprite, 0);

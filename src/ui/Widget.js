@@ -596,35 +596,6 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @type {int}
-     */
-
-    get tint() {
-        return this._collider.tint;
-    }
-
-    set tint(value) {
-        if (this._collider.tint === value) {
-            return;
-        }
-
-        const children = this.children;
-        const childrenCount = children.length;
-        let child, i;
-
-        for (i = 0; i < childrenCount; ++i) {
-            child = children[i];
-
-            if (Type.isUndefined(child.tint)) {
-                continue;
-            }
-
-            child.tint = value;
-        }
-    }
-
-    /**
-     * @public
      * @type {PIXI.ObservablePoint}
      */
 
@@ -833,6 +804,7 @@ class Widget extends ComponentContainer {
         }
 
         if (!Type.isNull(this._collider)) {
+            this.updateChildTint(value);
             value.tint = this._collider.tint;
             super.removeChild(this._collider);
         }
