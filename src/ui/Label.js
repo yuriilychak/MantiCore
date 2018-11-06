@@ -108,13 +108,14 @@ class Label extends BaseLabel {
      */
 
     setShadowOffset(xOrPoint, y) {
-        if (!this._isShadowEnabled) {
+        const offsetX = Math.round(Type.isNumber(xOrPoint) ? xOrPoint : xOrPoint.x);
+        const offsetY = Math.round(!Type.isUndefined(y) ? y : Type.isNumber(xOrPoint) ? xOrPoint : xOrPoint.y);
+        if (offsetX === 0 &&  offsetY === 0) {
+            this.shadowEnabled = false;
             return;
         }
-        this._shadowOffset.set(
-            Math.round(Type.isNumber(xOrPoint) ? xOrPoint : xOrPoint.x),
-            Math.round(!Type.isUndefined(y) ? y : Type.isNumber(xOrPoint) ? xOrPoint : xOrPoint.y)
-        );
+        this.shadowEnabled = true;
+        this._shadowOffset.set(offsetX, offsetY);
         this._updateHorizontalPos(this._shadow, this._shadowOffset.x);
         this._updateVerticalPos(this._shadow, this._shadowOffset.y);
     }
@@ -188,7 +189,7 @@ class Label extends BaseLabel {
      */
 
     _updateHorizontalPos(target, offset = 0) {
-        target.x = Math.round((this.width + offset) * target.anchor.x);
+        target.x = Math.round(this.width * target.anchor.x  + offset);
     }
 
     /**
@@ -199,7 +200,7 @@ class Label extends BaseLabel {
      */
 
     _updateVerticalPos(target, offset = 0) {
-        target.y = Math.round((this.height + offset) * target.anchor.y);
+        target.y = Math.round(this.height * target.anchor.y + offset);
     }
 
     /**
@@ -304,6 +305,10 @@ class Label extends BaseLabel {
         }
         this.localized = true;
         this._label.text = value;
+        if (!this._isShadowEnabled) {
+            return;
+        }
+        this._shadow.text = value;
     }
 
     /**
