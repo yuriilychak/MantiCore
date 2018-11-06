@@ -119,7 +119,7 @@
  * @typedef {Object}
  * @name AnimationFrame
  * @memberOf MANTICORE.type
- * @property {MANTICORE.enumerator.ACTION_TYPE} type - type of frame.
+ * @property {MANTICORE.enumerator.animation.ACTION_TYPE} type - type of frame.
  * @property {int} index - Index of frame.
  * @property {int[] | null} data - Data for animation.
  * @property {int[] | null} ease - Id of sprite frame.

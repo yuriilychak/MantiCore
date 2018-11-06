@@ -2,7 +2,7 @@
  * @desc Enumerator with action types for editor animations.
  * @enumerator {int}
  * @name ACTION_TYPE
- * @memberOf MANTICORE.enumerator
+ * @memberOf MANTICORE.enumerator.animation
  */
 
 export default {

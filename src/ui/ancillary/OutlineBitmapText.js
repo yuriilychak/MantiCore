@@ -3,6 +3,7 @@ import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import Math from "util/Math";
 import FontCache from "ui/fontCache";
 import Color from "util/Color";
+import Macro from "macro";
 
 /**
  * @desc Bitmap text with outline.
@@ -328,7 +329,7 @@ class OutlineBitmapText extends PIXI.Container {
         let outlineCount = this._outlines.length;
 
         if (outlineCount === 0) {
-            outlineCount = 8;
+            outlineCount = Macro.OUTLINE_SAMPLES;
             const color = Color.multiply(this._outlineColor, this._parentTint);
             for (i = 0; i < outlineCount; ++i) {
                 outline = this._cloneLabel();

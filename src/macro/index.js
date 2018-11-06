@@ -36,5 +36,13 @@ export default {
      * @memberOf MANTICORE.macro
      */
 
-    DEFAULT_POOL_SIZE: 15
+    DEFAULT_POOL_SIZE: 15,
+
+    /**
+     * @desc Count of samples for generate outline for text fields.
+     * @type {int}
+     * @memberOf MANTICORE.macro
+     */
+
+    OUTLINE_SAMPLES: 8
 }

@@ -782,64 +782,6 @@ declare namespace MANTICORE {
     }
 
     export namespace enumerator {
-
-        export enum ACTION_EASING {
-            LINEAR = 0,
-
-            SINE_IN = 1,
-            SINE_OUT = 2,
-            SINE_IN_OUT = 3,
-
-            QUAD_IN = 4,
-            QUAD_OUT = 5,
-            QUAD_IN_OUT = 6,
-
-            CUBIC_IN = 7,
-            CUBIC_OUT = 8,
-            CUBIC_IN_OUT = 9,
-
-            QUART_IN = 10,
-            QUART_OUT = 11,
-            QUART_IN_OUT = 12,
-
-            QUINT_IN = 13,
-            QUINT_OUT = 14,
-            QUINT_IN_OUT = 15,
-
-            EXPO_IN = 16,
-            EXPO_OUT = 17,
-            EXPO_IN_OUT = 18,
-
-            CIRC_IN = 19,
-            CIRC_OUT = 20,
-            CIRC_IN_OUT = 21,
-
-            ELASTIC_IN = 22,
-            ELASTIC_OUT = 23,
-            ELASTIC_IN_OUT = 24,
-
-            BACK_IN = 25,
-            BACK_OUT = 26,
-            BACK_IN_OUT = 27,
-
-            BOUNCE_IN = 28,
-            BOUNCE_OUT = 29,
-            BOUNCE_IN_OUT = 30
-        }
-
-        export enum ACTION_TYPE {
-            NONE = 0,
-            POSITION = 1,
-            SCALE = 2,
-            ROTATION = 3,
-            SKEW = 4,
-            TINT = 5,
-            ALPHA = 6,
-            VISIBLE = 7,
-            FRAME = 8,
-            DELAY = 9
-        }
-
         export enum BUNDLE_TYPE {
             NONE = 0,
             ASSET = 1,
@@ -876,16 +818,64 @@ declare namespace MANTICORE {
             HIDE = "TransitionHide"
         }
 
-        export enum TIME_LINE {
-            BUTTON = "button",
-            CHECK_BOX = "checkBox",
-            MAIN = "main",
-            SCROLL_VIEW = "scrollView",
-            SPINE = "spine",
-            UI = "ui"
-        }
-
         export namespace animation {
+            export enum ACTION_EASING {
+                LINEAR = 0,
+
+                SINE_IN = 1,
+                SINE_OUT = 2,
+                SINE_IN_OUT = 3,
+
+                QUAD_IN = 4,
+                QUAD_OUT = 5,
+                QUAD_IN_OUT = 6,
+
+                CUBIC_IN = 7,
+                CUBIC_OUT = 8,
+                CUBIC_IN_OUT = 9,
+
+                QUART_IN = 10,
+                QUART_OUT = 11,
+                QUART_IN_OUT = 12,
+
+                QUINT_IN = 13,
+                QUINT_OUT = 14,
+                QUINT_IN_OUT = 15,
+
+                EXPO_IN = 16,
+                EXPO_OUT = 17,
+                EXPO_IN_OUT = 18,
+
+                CIRC_IN = 19,
+                CIRC_OUT = 20,
+                CIRC_IN_OUT = 21,
+
+                ELASTIC_IN = 22,
+                ELASTIC_OUT = 23,
+                ELASTIC_IN_OUT = 24,
+
+                BACK_IN = 25,
+                BACK_OUT = 26,
+                BACK_IN_OUT = 27,
+
+                BOUNCE_IN = 28,
+                BOUNCE_OUT = 29,
+                BOUNCE_IN_OUT = 30
+            }
+
+            export enum ACTION_TYPE {
+                NONE = 0,
+                POSITION = 1,
+                SCALE = 2,
+                ROTATION = 3,
+                SKEW = 4,
+                TINT = 5,
+                ALPHA = 6,
+                VISIBLE = 7,
+                FRAME = 8,
+                DELAY = 9
+            }
+
             export enum TIME_LINE_EVENT {
                 START = 0,
                 END = 1,
@@ -893,6 +883,14 @@ declare namespace MANTICORE {
                 RESUME = 3,
                 STOP = 4,
                 COMPLETE = 5
+            }
+            export enum TIME_LINE {
+                BUTTON = "button",
+                CHECK_BOX = "checkBox",
+                MAIN = "main",
+                SCROLL_VIEW = "scrollView",
+                SPINE = "spine",
+                UI = "ui"
             }
         }
 
@@ -1085,6 +1083,7 @@ declare namespace MANTICORE {
         export let USE_WEB_P_FALLBACK: boolean;
         export let MODE: MANTICORE.enumerator.ENGINE_MODE;
         export let DEFAULT_POOL_SIZE: number;
+        export let OUTLINE_SAMPLES: number;
     }
 
     export namespace manager {
@@ -1099,22 +1098,22 @@ declare namespace MANTICORE {
             eventStop: string;
             eventComplete: string;
 
-            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
-            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): void;
-            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public stop(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public pause(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public resume(name: string, timeLine?: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): void;
+            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): void;
+            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public stop(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public pause(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public resume(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
 
             public refreshTimeLines(): void;
-            public addTimeLine(name: string | MANTICORE.enumerator.TIME_LINE, timeLine?: any): boolean;
-            public getTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): MANTICORE.animation.ActionTimeLine | null;
-            public pauseTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public resumeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public removeTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
-            public stopTimeLine(name: string | MANTICORE.enumerator.TIME_LINE): boolean;
+            public addTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE, timeLine?: any): boolean;
+            public getTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): MANTICORE.animation.ActionTimeLine | null;
+            public pauseTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public resumeTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public removeTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public stopTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public removeAllTimeLines(): void;
         }
 
@@ -1240,7 +1239,7 @@ declare namespace MANTICORE {
         }
 
         export interface AnimationFrame {
-            type: MANTICORE.enumerator.ACTION_TYPE;
+            type: MANTICORE.enumerator.animation.ACTION_TYPE;
             index: number;
             data: number[] | null;
             ease: number[] | null;

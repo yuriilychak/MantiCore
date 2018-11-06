@@ -2,7 +2,7 @@ import BaseManager from "./BaseManager";
 import Repository from "repository/Repository";
 import ActionTimeLine from "animation/ActionTimeLine";
 import ActionAnimation from "animation/ActionAnimation";
-import TIME_LINE from "enumerator/TimeLine";
+import TIME_LINE from "enumerator/animation/TimeLine";
 import Type from "util/Type";
 import Pool from "pool";
 import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
@@ -67,7 +67,7 @@ class AnimationManager extends BaseManager {
      * @public
      * @param {string} name
      * @param {MANTICORE.animation.ActionAnimation | MANTICORE.animation.action.ActionInterval} animation
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine]
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine]
      * @returns {boolean}
      */
 
@@ -92,7 +92,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
@@ -115,7 +115,7 @@ class AnimationManager extends BaseManager {
      * @desc Remove all animations from time line.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine]
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine]
      */
 
     removeAllAnimations(timeLine = TIME_LINE.MAIN) {
@@ -162,7 +162,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE} name
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} name
      * @return {boolean}
      */
 
@@ -180,7 +180,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE} name
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} name
      * @return {MANTICORE.animation.ActionTimeLine | null}
      */
 
@@ -227,7 +227,7 @@ class AnimationManager extends BaseManager {
      * @param {string} name - Name of animation to play.
      * @param {boolean} [loop = false] - Is need to loop animation.
      * @param {int} frame [frame = 0] - Start frame of animation.
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null] - Time line to play.
      * @returns {boolean}
      */
 
@@ -250,7 +250,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
@@ -270,7 +270,7 @@ class AnimationManager extends BaseManager {
      * @desc Stop time line if it run some animation.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE} timeLine
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} timeLine
      * @returns {boolean}
      */
 
@@ -288,7 +288,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
@@ -307,7 +307,7 @@ class AnimationManager extends BaseManager {
      * @desc Pause time line if it playing.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE | null} timeLine
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE | null} timeLine
      * @returns {boolean}
      */
 
@@ -328,7 +328,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null]
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
@@ -347,7 +347,7 @@ class AnimationManager extends BaseManager {
      * @desc Pause time line if it playing.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.TIME_LINE | null} timeLine
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE | null} timeLine
      * @returns {boolean}
      */
 
@@ -369,7 +369,7 @@ class AnimationManager extends BaseManager {
      * @param {MANTICORE.animation.action.Action} action
      * @param {boolean} [loop = false] - Is need to loop animation.
      * @param {int} frame [frame = 0] - Start frame of animation.
-     * @param {string | MANTICORE.enumerator.TIME_LINE} [timeLine = null] - Time line to play.
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null] - Time line to play.
      */
 
     runAction(action, loop = false, frame = 0, timeLine = null) {
@@ -475,7 +475,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @private
      * @param {string} animationName
-     * @param {string | MANTICORE.enumerator.TIME_LINE} timeLineName
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} timeLineName
      * @returns {MANTICORE.animation.ActionTimeLine}
      */
 
@@ -546,7 +546,7 @@ class AnimationManager extends BaseManager {
      * @desc Set event in repository.
      * @method
      * @private
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {MANTICORE.enumerator.animation.animation.TIME_LINE_EVENT | int} eventId
      * @param {string | null} event
      */
 
@@ -573,7 +573,7 @@ class AnimationManager extends BaseManager {
      * @desc Update time line events
      * @method
      * @private
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {MANTICORE.enumerator.animation.animation.TIME_LINE_EVENT | int} eventId
      * @param {?string} event
      */
 

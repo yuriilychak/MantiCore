@@ -28,9 +28,9 @@ import ScrollView from "../ScrollView";
 
 import ActionAnimation from "animation/ActionAnimation";
 import ActionTimeLine from "animation/ActionTimeLine";
-import TIME_LINE from "enumerator/TimeLine";
-import ACTION_TYPE from "enumerator/ActionType";
-import ACTION_EASING from "enumerator/ActionEasing";
+import TIME_LINE from "enumerator/animation/TimeLine";
+import ACTION_TYPE from "enumerator/animation/ActionType";
+import ACTION_EASING from "enumerator/animation/ActionEasing";
 
 import DelayTime from "animation/action/DelayTime";
 import FadeTo from "animation/action/FadeTo";
