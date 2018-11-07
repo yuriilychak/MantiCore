@@ -193,6 +193,17 @@ const math = {
     MAX_BYTE: 255,
 
     /**
+     * @desc Milli value. Need to convert seconds to milliseconds and etc.
+     * @type {number}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf MANTICORE.util.math
+     */
+
+    MILLI: 0.001,
+
+    /**
      * @desc Calculate fast sin with low precision.
      * @function
      * @param {number} angle
@@ -386,6 +397,30 @@ const math = {
             b *= b;
         }
         return result;
+    },
+
+    /**
+     * @desc Convert seconds to milliseconds.
+     * @function
+     * @param {number} seconds
+     * @return {int}
+     * @memberOf MANTICORE.util.math
+     */
+
+    toMilliseconds(seconds) {
+        return this.round(seconds / this.MILLI);
+    },
+
+    /**
+     * @desc Convert milliseconds to seconds.
+     * @function
+     * @param {int} milliseconds
+     * @return {number}
+     * @memberOf MANTICORE.util.math
+     */
+
+    toSeconds(milliseconds) {
+        return milliseconds * this.MILLI;
     }
 };
 

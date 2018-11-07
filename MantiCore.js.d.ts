@@ -1685,6 +1685,8 @@ declare namespace MANTICORE {
             export function intPow(value: number, power: number): number;
             export function framesToSeconds(value: number): number;
             export function secondsToFrames(value: number): number;
+            export function toMilliseconds(seconds: number): number;
+            export function toSeconds(milliseconds: number): number;
         }
 
         export namespace type {
