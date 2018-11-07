@@ -1,7 +1,7 @@
 import Component from "component/Component";
 import UI from "util/UI";
 import Type from "util/Type";
-import PoolModel from "model/PoolModel";
+import Model from "model/Model";
 import Math from "util/Math";
 import Format from "util/Format";
 import Pool from "pool";
@@ -392,12 +392,12 @@ class ComUI extends Component {
 /**
  * @desc Model for save child events.
  * @class
- * @extends MANTICORE.model.PoolModel
+ * @extends MANTICORE.model.Model
  * @private
  * @memberOf MANTICORE.component.ui.ComUI
  */
 
-class ChildEventModel extends PoolModel {
+class ChildEventModel extends Model {
     /**
      *
      * @param {MANTICORE.view.ComponentSprite | MANTICORE.ui.Widget} target

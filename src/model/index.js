@@ -1,5 +1,4 @@
 import Model from "./Model";
-import PoolModel from "./PoolModel";
 
 /**
  * @namespace MANTICORE.model
@@ -7,6 +6,5 @@ import PoolModel from "./PoolModel";
  */
 
 export default {
-    Model,
-    PoolModel
+    Model
 }

@@ -1,14 +1,14 @@
-import PoolModel from "model/PoolModel";
+import Model from "model/Model";
 import Math from "util/Math";
 
 /**
  * @desc Model for store event listener data.
  * @class
  * @memberOf MANTICORE.eventDispatcher
- * @extends MANTICORE.model.PoolModel
+ * @extends MANTICORE.model.Model
  */
 
-class ListenerModel extends PoolModel {
+class ListenerModel extends Model {
     /**
      * @constructor
      * @override

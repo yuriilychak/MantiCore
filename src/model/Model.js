@@ -1,10 +1,13 @@
+import ReusableObject from "memory/ReusableObject";
+
 /**
- * @desc Base realisation of model.
+ * @desc Model that can be used in pool.
  * @class
+ * @extends MANTICORE.memory.ReusableObject
  * @memberOf MANTICORE.model
  */
 
-class Model {
+class Model extends ReusableObject {
 
     /**
      * @constructor
@@ -12,6 +15,7 @@ class Model {
      */
 
     constructor(id) {
+        super();
         /**
          * @type {int}
          * @private

@@ -1036,14 +1036,14 @@ declare namespace MANTICORE {
 
         type InteractiveCallback = (event: MANTICORE.eventDispatcher.EventModel) => void;
 
-        export class EventModel extends MANTICORE.model.PoolModel {
+        export class EventModel extends MANTICORE.model.Model {
             constructor(target: Object, data: any);
 
             data: any;
             target: Object;
         }
 
-        export class ListenerModel extends MANTICORE.model.PoolModel {
+        export class ListenerModel extends MANTICORE.model.Model {
             constructor(event: string, listener: MANTICORE.eventDispatcher.InteractiveCallback, target: Object);
 
             event: string;
@@ -1188,19 +1188,9 @@ declare namespace MANTICORE {
     }
 
     export namespace model {
-        export class Model {
+        export class Model extends MANTICORE.memory.ReusableObject {
             constructor(id: number);
             id: number;
-        }
-
-        export class PoolModel extends MANTICORE.model.Model{
-            constructor(id: number);
-
-            inPool: boolean;
-
-            reuse(...var_args: any[]): void;
-            disuse(): void;
-            kill(): void;
         }
     }
 

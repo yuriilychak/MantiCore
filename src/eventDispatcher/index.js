@@ -1,6 +1,5 @@
 import Repository from "repository/Repository";
 import EventModel from "./EventModel";
-import Pool from "pool";
 import ListenerModel from "./ListenerModel";
 
 /**
@@ -70,7 +69,7 @@ const eventDispatcher = {
             listenerRepo = this._listenerRepo.getElement(type);
         }
 
-        const model = Pool.getObject(ListenerModel, type, listener, target);
+        const model = ListenerModel.create(type, listener, target);
 
         listenerRepo.addElement(model);
 
@@ -138,13 +137,16 @@ const eventDispatcher = {
      */
 
     dispatch: function(type, targetOrEvent = null, data = null) {
+        /**
+         * @type {MANTICORE.eventDispatcher.EventModel}
+         */
         let eventModel;
 
         if (targetOrEvent instanceof EventModel) {
             eventModel = targetOrEvent;
         }
         else {
-            eventModel = Pool.getObject(EventModel, targetOrEvent, data);
+            eventModel = EventModel.create(targetOrEvent, data);
         }
 
         if (this._isEventProcessing) {
