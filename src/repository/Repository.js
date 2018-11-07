@@ -1,4 +1,3 @@
-import Model from "model/Model";
 import Math from "util/Math";
 import Type from "util/Type";
 
@@ -40,7 +39,7 @@ class Repository {
      */
 
     addElement(value, key) {
-        if (value instanceof Model) {
+        if (!Type.isEmpty(value.id)) {
             key = value.id;
         }
 
@@ -81,7 +80,7 @@ class Repository {
      */
 
     updateElement(value, key) {
-        if (value instanceof Model) {
+        if (!Type.isEmpty(value.id)) {
             key = value.id;
         }
         const index = this._getKeyIndex(key);
