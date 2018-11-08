@@ -1,15 +1,14 @@
-import ReusableObject from "memory/ReusableObject";
 import Math from "util/Math";
-import Constant from "constant";
+import Model from "../model/Model";
 
 /**
  * @desc Timer class. Don't us it manually!!! Managed by MANTICORE.timer
  * @class
  * @memberOf MANTICORE.timer
- * @extends MANTICORE.memory.ReusableObject
+ * @extends MANTICORE.model.Model
  */
 
-class Timer extends ReusableObject {
+class Timer extends Model {
     /**
      * @constructor
      * @param {Function} tickCallback - Callback when timer tick.
@@ -21,10 +20,9 @@ class Timer extends ReusableObject {
      * @param {boolean} paused - Is timer paused or start on create.
      * @param {Function} completeCallback - Callback that calls when timer complete (Used by timer manager).
      * @param {Object} completeTarget - Target of complete callback.
-     * @param {int} identifier - Identifier of timer.
      */
 
-    constructor(tickCallback, tickTarget, interval, userData, repeatCount, delay, paused, completeCallback, completeTarget, identifier) {
+    constructor(tickCallback, tickTarget, interval, userData, repeatCount, delay, paused, completeCallback, completeTarget) {
         super();
 
         /**
@@ -89,13 +87,6 @@ class Timer extends ReusableObject {
          */
 
         this._completeTarget = completeTarget;
-
-        /**
-         * @type {int}
-         * @private
-         */
-
-        this._identifier = identifier;
     }
 
     /**
@@ -199,7 +190,6 @@ class Timer extends ReusableObject {
         this._paused = paused;
         this._completeCallback = completeCallback;
         this._completeTarget = completeTarget;
-        this._identifier = identifier;
     }
 
     /**
@@ -214,8 +204,7 @@ class Timer extends ReusableObject {
      */
 
     clearData() {
-        this._completeCallback.call(this._completeTarget, this._identifier);
-        Math.putUniqueId(this._identifier);
+        this._completeCallback.call(this._completeTarget, this.id);
 
         this._completeCallback = null;
         this._completeTarget = null;
@@ -226,7 +215,6 @@ class Timer extends ReusableObject {
         this._repeatCount = 0;
         this._delay = 0;
         this._paused = false;
-        this._identifier = Constant.EMPTY_ID;
 
         super.clearData();
     }
