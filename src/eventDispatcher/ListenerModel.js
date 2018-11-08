@@ -1,5 +1,4 @@
 import Model from "model/Model";
-import Math from "util/Math";
 
 /**
  * @desc Model for store event listener data.
@@ -18,7 +17,7 @@ class ListenerModel extends Model {
      */
 
     constructor (event, listener, target) {
-        super(Math.getUniqueId());
+        super();
 
         /**
          * @desc Name of event that dispatch. Need to remove without errors.
@@ -70,21 +69,31 @@ class ListenerModel extends Model {
      * @public
      * @param {...*} var_args
      */
-    reuse(var_args) {
-        this._event = arguments[0];
-        this._listener = arguments[1];
-        this._target = arguments[2];
+    reuse(event, listener, target) {
+        super.reuse();
+
+
+        this._event = event;
+        this._listener = listener;
+        this._target = target;
     }
 
     /**
-     * @desc Calls by pool when model put in to pool. Don't call it only override.
-     * @method
-     * @public
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
      */
-    disuse() {
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
         this._event = null;
         this._listener = null;
         this._target = null;
+        super.clearData();
     }
 
     /**

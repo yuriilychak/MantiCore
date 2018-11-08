@@ -1,5 +1,13 @@
 import ReusableObject from "memory/ReusableObject";
 import Math from "util/Math";
+import Constant from "constant";
+
+/**
+ * @desc Timer class. Don't us it manually!!! Managed by MANTICORE.timer
+ * @class
+ * @memberOf MANTICORE.timer
+ * @extends MANTICORE.memory.ReusableObject
+ */
 
 class Timer extends ReusableObject {
     /**
@@ -13,7 +21,7 @@ class Timer extends ReusableObject {
      * @param {boolean} paused - Is timer paused or start on create.
      * @param {Function} completeCallback - Callback that calls when timer complete (Used by timer manager).
      * @param {Object} completeTarget - Target of complete callback.
-     * @param {string} identifier - Identifier of timer.
+     * @param {int} identifier - Identifier of timer.
      */
 
     constructor(tickCallback, tickTarget, interval, userData, repeatCount, delay, paused, completeCallback, completeTarget, identifier) {
@@ -83,7 +91,7 @@ class Timer extends ReusableObject {
         this._completeTarget = completeTarget;
 
         /**
-         * @type {string}
+         * @type {int}
          * @private
          */
 
@@ -117,6 +125,110 @@ class Timer extends ReusableObject {
             this._repeatCount === repeatCount &&
             this._delay === Math.toMilliseconds(delay) &&
             this._paused === paused;
+    }
+
+    /**
+     * @desc Start timer.
+     * @method
+     * @public
+     */
+
+    start() {
+
+    }
+
+    /**
+     * @desc Pause timer.
+     * @method
+     * @public
+     */
+
+    pause() {
+        if (this._paused) {
+            return;
+        }
+    }
+
+    /**
+     * @desc Resume timer
+     * @method
+     * @public
+     */
+
+    resume() {
+        if (!this._paused) {
+            return;
+        }
+    }
+
+    /**
+     * @desc Stop timer
+     * @method
+     * @public
+     */
+
+    stop() {
+        this.kill();
+    }
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {Function} tickCallback - Callback when timer tick.
+     * @param {Object} tickTarget - Target of callback.
+     * @param {number} interval - Interval of timer tick.
+     * @param {*} userData - Data that pass to callback on tick.
+     * @param {int} repeatCount - Count of repeat timer.
+     * @param {number} delay - Delay in seconds before timer start.
+     * @param {boolean} paused - Is timer paused or start on create.
+     * @param {Function} completeCallback - Callback that calls when timer complete (Used by timer manager).
+     * @param {Object} completeTarget - Target of complete callback.
+     * @param {int} identifier - Identifier of timer.
+     */
+
+    reuse(tickCallback, tickTarget, interval, userData, repeatCount, delay, paused, completeCallback, completeTarget, identifier) {
+        super.reuse();
+
+        this._tickCallback = tickCallback;
+        this._tickTarget = tickTarget;
+        this._interval = Math.toMilliseconds(interval);
+        this._userData = userData;
+        this._repeatCount = repeatCount;
+        this._delay = Math.toMilliseconds(delay);
+        this._paused = paused;
+        this._completeCallback = completeCallback;
+        this._completeTarget = completeTarget;
+        this._identifier = identifier;
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._completeCallback.call(this._completeTarget, this._identifier);
+        Math.putUniqueId(this._identifier);
+
+        this._completeCallback = null;
+        this._completeTarget = null;
+        this._tickCallback = null;
+        this._tickTarget = null;
+        this._userData = null;
+        this._interval = 0;
+        this._repeatCount = 0;
+        this._delay = 0;
+        this._paused = false;
+        this._identifier = Constant.EMPTY_ID;
+
+        super.clearData();
     }
 
 }

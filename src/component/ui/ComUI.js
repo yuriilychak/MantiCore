@@ -2,9 +2,7 @@ import Component from "component/Component";
 import UI from "util/UI";
 import Type from "util/Type";
 import Model from "model/Model";
-import Math from "util/Math";
 import Format from "util/Format";
-import Pool from "pool";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
 /**
@@ -182,7 +180,7 @@ class ComUI extends Component {
 
         child.updateInteractiveEvent(eventType, event);
         this.listenerManager.addEventListener(event, listener);
-        this._childEvents.push(Pool.getObject(ChildEventModel, child, eventType));
+        this._childEvents.push(ChildEventModel.create(child, eventType));
 
         return true;
     }
@@ -399,12 +397,13 @@ class ComUI extends Component {
 
 class ChildEventModel extends Model {
     /**
-     *
+     * @constructor
      * @param {MANTICORE.view.ComponentSprite | MANTICORE.ui.Widget} target
      * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} event
      */
+
     constructor(target, event) {
-        super(Math.getUniqueId());
+        super();
         /**
          * @type {MANTICORE.view.ComponentSprite|MANTICORE.ui.Widget}
          * @private
@@ -417,6 +416,44 @@ class ChildEventModel extends Model {
         this._event = event;
 
     }
+
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentSprite | MANTICORE.ui.Widget} target
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} event
+     */
+
+    reuse(target, event) {
+        super.reuse();
+        this._target = target;
+        this._event = event;
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._target.updateInteractiveEvent(null);
+        this._target = null;
+        this._event = null;
+        super.clearData();
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @public
@@ -434,13 +471,6 @@ class ChildEventModel extends Model {
 
     get event() {
         return this._event;
-    }
-
-    disuse() {
-        super.disuse();
-        this._target.updateInteractiveEvent(null);
-        this._target = null;
-        this._event = null;
     }
 }
 

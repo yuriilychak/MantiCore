@@ -779,6 +779,7 @@ declare namespace MANTICORE {
         export const FLT_EPSILON: number;
         export const TEMPORARY_ANIMATION_NAME: string;
         export const DEFAULT_NAME: string;
+        export const EMPTY_ID: number;
     }
 
     export namespace enumerator {
@@ -1191,6 +1192,7 @@ declare namespace MANTICORE {
         export class Model extends MANTICORE.memory.ReusableObject {
             constructor(id: number);
             id: number;
+            protected reuseId(): void;
         }
     }
 
@@ -1682,6 +1684,7 @@ declare namespace MANTICORE {
             export function floatToPercent(value: number, isRound?: boolean): number;
             export function percentToFloat(value: number): number;
             export function getUniqueId(): number;
+            export function putUniqueId(id: number): void;
             export function intPow(value: number, power: number): number;
             export function framesToSeconds(value: number): number;
             export function secondsToFrames(value: number): number;

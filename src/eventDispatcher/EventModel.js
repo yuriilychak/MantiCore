@@ -1,5 +1,4 @@
 import Model from "model/Model";
-import Math from "util/Math";
 
 /**
  * @desc Model for store event data.
@@ -17,7 +16,7 @@ class EventModel extends Model {
      */
 
     constructor (target, data) {
-        super(Math.getUniqueId());
+        super();
 
         /**
          * @desc Data of event.
@@ -48,18 +47,26 @@ class EventModel extends Model {
      * @param {...*} var_args
      */
     reuse(var_args) {
+        super.reuse();
         this._target = arguments[0];
         this._data = arguments[1];
     }
 
     /**
-     * @desc Calls by pool when model put in to pool. Don't call it only override.
-     * @method
-     * @public
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
      */
-    disuse() {
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+    clearData() {
         this._target = null;
         this._data = null;
+
+        super.clearData();
     }
 
     /**

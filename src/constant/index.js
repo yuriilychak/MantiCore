@@ -1,8 +1,3 @@
-import OS from "enumerator/system/OS";
-import BROWSER  from "enumerator/system/Browser";
-import CLIENT from "enumerator/system/Client";
-import PLATFORM from "enumerator/system/Platform";
-
 /**
  * @desc Namespace that contain core constants.
  * @namespace MANTICORE.constant
@@ -53,7 +48,18 @@ const constant = {
      * @memberOf MANTICORE.constant
      */
 
-    DEFAULT_NAME: "Untitled"
+    DEFAULT_NAME: "Untitled",
+
+    /**
+     * @desc Number for empty int id.
+     * @type {int}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf MANTICORE.constant
+     */
+
+    EMPTY_ID: -1
 };
 
 export default constant;

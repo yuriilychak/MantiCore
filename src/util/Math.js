@@ -1,4 +1,5 @@
 import Macro from "macro";
+import Constant from "constant";
 
 /**
  * @desc Namespace that contain some math function for fast calculations.
@@ -15,6 +16,14 @@ const math = {
      */
 
     _id: 0,
+
+    /**
+     * @desc Array with id's for reuse.
+     * @type {int[]}
+     * @private
+     */
+
+    _idPool: [],
 
     /**
      * @desc Return sign of value
@@ -375,7 +384,20 @@ const math = {
      */
 
     getUniqueId: function () {
-        return ++this._id;
+        return this._idPool.length !== 0 ? this._idPool.shift() : ++this._id;
+    },
+
+    /**
+     * @desc Save unique id for reuse. Call it only when object put in pool or destroy.
+     * @function
+     * @param {int} id
+     */
+
+    putUniqueId(id) {
+        if (id === Constant.EMPTY_ID || this._idPool.indexOf(id) !== -1) {
+            return;
+        }
+        this._idPool.push(id);
     },
 
     /**
