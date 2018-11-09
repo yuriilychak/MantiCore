@@ -1,6 +1,7 @@
 import Math from "util/Math";
 import Type from "util/Type";
 import Color from "util/Color";
+import Format from "util/Format";
 
 import Macro from "macro";
 import Constant from "constant";
@@ -310,7 +311,7 @@ class ActionTimeLine extends ReusableObject{
         this.loop = loop;
         this._isRunAction = true;
         this._runAnimation(
-            Constant.TEMPORARY_ANIMATION_NAME + Math.getUniqueId(),
+            Constant.TEMPORARY_ANIMATION_NAME + Format.getUniqueId(),
             Pool.getObject(ActionAnimation, action)
         );
     }

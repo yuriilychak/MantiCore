@@ -6,12 +6,6 @@
 
 const format = {
     /**
-     * @type {int}
-     * @private
-     */
-    _eventId: 0,
-
-    /**
      * @desc Add file type to string.
      * @public
      * @function
@@ -67,7 +61,18 @@ const format = {
      */
 
     generateEventName(target, event) {
-        return target.constructor.name + "_" + event + "_" + this.formatNumber(++this._eventId, 4);
+        return target.constructor.name + "_" + event + "_" + this.getUniqueId();
+    },
+
+    /**
+     * @desc Generate unique string id.
+     * @function
+     * @memberOf MANTICORE.util.format
+     * @return {string}
+     */
+
+    getUniqueId() {
+        return Math.random().toString(36).slice(2);
     },
 
     /**

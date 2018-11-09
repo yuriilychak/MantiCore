@@ -1630,6 +1630,7 @@ declare namespace MANTICORE {
 
         }
         export namespace format {
+            export function getUniqueId(): string;
             export function addFileType(value: string, type: MANTICORE.enumerator.FILE_TYPE): string;
             export function formatNumber(value: number | string, numCount: number): string;
             export function replaceAt(targetString: string, index: number, char: string): string;
