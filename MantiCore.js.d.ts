@@ -635,6 +635,14 @@ declare namespace MANTICORE {
         }
     }
 
+    export namespace cache {
+        export namespace fontCache{
+            export function addFont(font: MANTICORE.type.FontData, fontName: string, baseTexture: PIXI.BaseTexture, resolution: number): void;
+            export function addFontSize(fontName: string, size: number): void;
+            export function getFontName(fontName: string, size: number): string;
+        }
+    }
+
     export namespace component {
         namespace callback {
             export type IterateChildren = (child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, index?: number, realIndex?: number)=>void;
@@ -1409,6 +1417,7 @@ declare namespace MANTICORE {
                 text: string;
                 parentTint: number;
 
+                updateText(): void;
                 clone(): MANTICORE.ui.ancillary.OutlineBitmapText;
 
             }
@@ -1422,11 +1431,6 @@ declare namespace MANTICORE {
                 getFrameByState(state: number | string): string | null;
                 setFrameByState(frame: string | null, state: string | number): void;
             }
-        }
-
-        export namespace fontCache{
-            export function addFontSize(fontName: string, size: number): void;
-            export function getFontName(fontName: string, size: number): string;
         }
 
         export namespace parser {
@@ -1469,6 +1473,7 @@ declare namespace MANTICORE {
 
         export class Label extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(fontName: string, size: number);
+            autoSize: boolean;
         }
 
         export class ListView extends MANTICORE.ui.ScrollView{

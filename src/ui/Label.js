@@ -60,6 +60,22 @@ class Label extends BaseLabel {
 
         this._lineHeight = this._label.lineHeight;
 
+        /**
+         * @desc Flag is need to change size of font to size of container.
+         * @type {boolean}
+         * @private
+         */
+
+        this._autoSize = false;
+
+        /**
+         * @desc Size of font.
+         * @type {int}
+         * @private
+         */
+
+        this._fontSize = size;
+
         this._label.maxWidth = this.width;
 
         this.uiType = UI_ELEMENT.LABEL;
@@ -204,6 +220,46 @@ class Label extends BaseLabel {
     }
 
     /**
+     * @desc Update auto size of font.
+     * @method
+     * @private
+     */
+
+    _updateAutoSize() {
+        if (!this._autoSize) {
+            return;
+        }
+
+        this._refreshFontSize(this._fontSize);
+
+        if (this.width >= this._label.width && this.height >= this._label.height) {
+            this._lineHeight = this._label.lineHeight;
+            return;
+        }
+
+        while (this.width < this._label.width || this.height < this._label.height) {
+            this._refreshFontSize(this._label.fontSize - 1);
+        }
+        this._lineHeight = this._label.lineHeight;
+    }
+
+    /**
+     * @desc Refresh font size on auto update.
+     * @method
+     * @private
+     * @param {int} size
+     */
+
+    _refreshFontSize(size) {
+        this._label.fontSize = size;
+        this._label.updateText();
+        if (this._isShadowEnabled) {
+            this._shadow.fontSize = size;
+            this._shadow.updateText();
+        }
+    }
+
+    /**
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -305,10 +361,11 @@ class Label extends BaseLabel {
         }
         this.localized = true;
         this._label.text = value;
-        if (!this._isShadowEnabled) {
-            return;
+        if (this._isShadowEnabled) {
+            this._shadow.text = value;
         }
-        this._shadow.text = value;
+
+        this._updateAutoSize();
     }
 
     /**
@@ -324,11 +381,11 @@ class Label extends BaseLabel {
         super.width = value;
         this._label.maxWidth = this.width;
         this._updateHorizontalPos(this._label);
-        if (!this._isShadowEnabled) {
-            return;
+        if (this._isShadowEnabled) {
+            this._shadow.maxWidth = this.width;
+            this._updateHorizontalPos(this._shadow, this._shadowOffset.x);
         }
-        this._shadow.maxWidth = this.width;
-        this._updateHorizontalPos(this._shadow, this._shadowOffset.x);
+        this._updateAutoSize();
     }
 
     /**
@@ -343,10 +400,10 @@ class Label extends BaseLabel {
     set height(value) {
         super.height = value;
         this._updateVerticalPos(this._label);
-        if (!this._isShadowEnabled) {
-            return;
+        if (this._isShadowEnabled) {
+            this._updateVerticalPos(this._shadow, this._shadowOffset.y);
         }
-        this._updateVerticalPos(this._shadow, this._shadowOffset.y);
+        this._updateAutoSize();
     }
 
     /**
@@ -386,20 +443,23 @@ class Label extends BaseLabel {
      */
 
     get fontSize() {
-        return this._label.fontSize;
+        return this._fontSize;
     }
 
     set fontSize(value) {
-        if (this._label.fontSize === value) {
+        if (this._fontSize === value) {
             return;
         }
-        this._label.fontSize = value;
+        this._fontSize = value;
+
+        this._label.fontSize = this._fontSize;
         this._lineHeight = this._label.lineHeight;
 
-        if (!this._isShadowEnabled) {
-            return;
+        if (this._isShadowEnabled) {
+            this._shadow.fontSize = this._fontSize;
         }
-        this._shadow.fontSize = value;
+
+        this._updateAutoSize();
     }
 
     /**
@@ -418,6 +478,27 @@ class Label extends BaseLabel {
 
     get lineHeight() {
         return this._lineHeight;
+    }
+
+    /**
+     * @desc Flag is need to change size of font to size of container.
+     * @public
+     * @return {boolean}
+     */
+
+    get autoSize() {
+        return this._autoSize;
+    }
+
+
+    set autoSize(value) {
+        if (this._autoSize === value) {
+            return;
+        }
+
+        this._autoSize = value;
+
+        this._updateAutoSize();
     }
 }
 

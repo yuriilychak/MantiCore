@@ -1,7 +1,7 @@
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import Math from "util/Math";
-import FontCache from "ui/fontCache";
+import FontCache from "cache/FontCache";
 import Color from "util/Color";
 import Macro from "macro";
 
@@ -132,6 +132,17 @@ class OutlineBitmapText extends PIXI.Container {
         result.outlineSize = this.outlineSize;
         result.outlineColor = this.outlineColor;
         return result;
+    }
+
+    /**
+     * @desc Update text in current frame. Need for auto size.
+     * @method
+     * @public
+     */
+
+    updateText() {
+        this._label.updateText();
+        this._iterateOutlines(outline => outline.updateText());
     }
 
     /**
@@ -268,7 +279,7 @@ class OutlineBitmapText extends PIXI.Container {
         if (this._label.font.size === value) {
             return;
         }
-        const fontName = FontCache.getFontName(this._fontName, size);
+        const fontName = FontCache.getFontName(this._fontName, value);
         this._label.font.name = fontName;
         this._label.font.size = value;
         this._iterateOutlines(element => {

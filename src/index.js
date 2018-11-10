@@ -2,6 +2,7 @@ import animation from "./animation";
 import boot from "./boot";
 import builder from "./builder";
 import bundle from "./bundle";
+import cache from "./cache";
 import component from "./component";
 import constant from "./constant";
 import enumerator from "./enumerator";
@@ -29,6 +30,7 @@ export {
     boot,
     builder,
     bundle,
+    cache,
     component,
     constant,
     enumerator,

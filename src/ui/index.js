@@ -1,5 +1,4 @@
 import ancillary from "./ancillary/index";
-import fontCache from "./fontCache";
 import parser from "./parser/index";
 import AtlasLabel from "./AtlasLabel";
 import Button from "./Button";
@@ -23,7 +22,6 @@ import Widget from "./Widget";
 
 const ui = {
     ancillary,
-    fontCache,
     parser,
     AtlasLabel,
     Button,

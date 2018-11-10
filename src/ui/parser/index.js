@@ -16,6 +16,7 @@ import Label from "ui/Label";
 import ListView from "ui/ListView";
 import Panel from "ui/Panel";
 import ProgressBar from "ui/ProgressBar";
+import ScrollView from "ui/ScrollView";
 import Slider from "ui/Slider";
 import TextField from "ui/TextField";
 import ToggleButton from "ui/ToggleButton";
@@ -24,7 +25,6 @@ import Widget from "ui/Widget";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import PANEL_GRAPHIC_TYPE from "enumerator/ui/PanelGrphicType";
 import PROGRESS_TYPE from "enumerator/ui/ProgressType";
-import ScrollView from "../ScrollView";
 
 import ActionAnimation from "animation/ActionAnimation";
 import ActionTimeLine from "animation/ActionTimeLine";
@@ -839,6 +839,7 @@ function _createLabel(data, bundle) {
     result.verticalAlign = font.align[1];
     result.text = _getText(data, 1, bundle);
     result.color = _getColor(font.color, bundle);
+    result.autoSize = Type.toBoolean(data.fileData[2]);
     result.localized = false;
 
     if (font.outlineSize > 0) {
