@@ -26,6 +26,50 @@ const math = {
     _idPool: [],
 
     /**
+     * @desc PI number.
+     * @type {number}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf MANTICORE.util.math
+     */
+
+    PI: 3.14159265,
+
+    /**
+     * @desc Half of degree circle need for manipulate with angles.
+     * @type {int}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf MANTICORE.util.math
+     */
+
+    HALF_CIRCLE: 180,
+
+    /**
+     * @desc Max value of byte number. Need for manipulate with colors.
+     * @type {int}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf MANTICORE.util.math
+     */
+
+    MAX_BYTE: 255,
+
+    /**
+     * @desc Milli value. Need to convert seconds to milliseconds and etc.
+     * @type {number}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf MANTICORE.util.math
+     */
+
+    MILLI: 0.001,
+
+    /**
      * @desc Return sign of value
      * @param {number} value
      * @return {int}
@@ -167,50 +211,6 @@ const math = {
 
         return this.round(value * multiplier) / multiplier;
     },
-
-    /**
-     * @desc PI number.
-     * @type {number}
-     * @public
-     * @readonly
-     * @const
-     * @memberOf MANTICORE.util.math
-     */
-
-    PI: 3.14159265,
-
-    /**
-     * @desc Half of degree circle need for manipulate with angles.
-     * @type {int}
-     * @public
-     * @readonly
-     * @const
-     * @memberOf MANTICORE.util.math
-     */
-
-    HALF_CIRCLE: 180,
-
-    /**
-     * @desc Max value of byte number. Need for manipulate with colors.
-     * @type {int}
-     * @public
-     * @readonly
-     * @const
-     * @memberOf MANTICORE.util.math
-     */
-
-    MAX_BYTE: 255,
-
-    /**
-     * @desc Milli value. Need to convert seconds to milliseconds and etc.
-     * @type {number}
-     * @public
-     * @readonly
-     * @const
-     * @memberOf MANTICORE.util.math
-     */
-
-    MILLI: 0.001,
 
     /**
      * @desc Calculate fast sin with low precision.

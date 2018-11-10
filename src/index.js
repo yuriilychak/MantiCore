@@ -14,6 +14,7 @@ import memory from "./memory";
 import model from "./model";
 import pool from "./pool";
 import repository from "./repository";
+import timer from "./timer";
 import ui from "./ui";
 import util from "./util";
 import view from "./view";
@@ -40,6 +41,7 @@ export {
     model,
     pool,
     repository,
+    timer,
     ui,
     util,
     view

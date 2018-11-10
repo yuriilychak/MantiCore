@@ -5,6 +5,9 @@ import CLIENT from "enumerator/system/Client";
 import BROWSER from "enumerator/system/Browser";
 import Logger from "logger";
 import Format from "util/Format";
+import EventDispatcher from "eventDispatcher";
+import SYSTEM_EVENT from "enumerator/SystemEvent";
+import Timer from "timer";
 
 /**
  * @desc Boot section of engine.
@@ -13,6 +16,11 @@ import Format from "util/Format";
  */
 
 export default {
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Version of os that run application.
@@ -114,6 +122,11 @@ export default {
     ACCELEROMETER_ENABLED: false,
 
     /**
+     * PUBLIC FUNCTIONS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc Init engine
      * @function
      * @param {Function} callback
@@ -123,6 +136,30 @@ export default {
     init: function(callback) {
 
         const docEle = document.documentElement;
+
+        /*
+         * SYSTEM LISTENERS
+         * -------------------------------------------------------------------------------------------------------------
+         */
+
+        const browserPrefixes = ["moz", "ms", "o", "webkit"];
+        const prefixCount = browserPrefixes.length;
+        const suffix = "Hidden";
+        let i, prefix;
+        let resultPrefix = "";
+        for (i = 0; i < prefixCount; ++i) {
+            prefix = browserPrefixes[i];
+            if (prefix + suffix in document) {
+                resultPrefix = prefix;
+                break;
+            }
+        }
+
+        document.addEventListener(resultPrefix + "visibilitychange", this._onVisibleChangeHandler.bind(this), false);
+        document.addEventListener("focus", this._onFocusHandler.bind(this), false);
+        document.addEventListener("blur", this._onBlurHandler.bind(this), false);
+
+        Timer.init();
 
         /*
          * CAPABILITIES
@@ -523,5 +560,40 @@ export default {
             Format.replace(template2, "Keyboard enabled", this.KEYBOARD_ENABLED.toString()) +
             Format.replace(template2, "Accelerometer enabled", this.ACCELEROMETER_ENABLED.toString())
         );
+    },
+
+    /**
+     * PRIVATE FUNCTIONS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls when user change tab.
+     * @function
+     * @private
+     */
+
+    _onVisibleChangeHandler: function() {
+        EventDispatcher.dispatch(document.hidden ? SYSTEM_EVENT.HIDDEN : SYSTEM_EVENT.VISIBLE);
+    },
+
+    /**
+     * @desc Calls when user focuse on tab.
+     * @function
+     * @private
+     */
+
+    _onFocusHandler: function () {
+        EventDispatcher.dispatch(SYSTEM_EVENT.FOCUS);
+    },
+
+    /**
+     * @desc Calls when user focus on other window.
+     * @function
+     * @private
+     */
+
+    _onBlurHandler: function () {
+        EventDispatcher.dispatch(SYSTEM_EVENT.BLUR);
     }
 };

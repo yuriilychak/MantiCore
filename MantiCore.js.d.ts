@@ -819,6 +819,13 @@ declare namespace MANTICORE {
             HIDE = "TransitionHide"
         }
 
+        export enum SYSTEM_EVENT {
+            FOCUS = "SYSTEM.FOCUS",
+            BLUR = "SYSTEM.BLUR",
+            VISIBLE = "SYSTEM.VISIBLE",
+            HIDDEN = "SYSTEM.HIDDEN"
+        }
+
         export namespace animation {
             export enum ACTION_EASING {
                 LINEAR = 0,
@@ -1219,6 +1226,16 @@ declare namespace MANTICORE {
             values: any[];
             isEmpty(): boolean;
         }
+    }
+
+    export namespace timer {
+        export const REPEAT_FOREVER: number;
+
+        export function add(tickCallback: Function, tickTarget: Object, interval: number, userData?: any, repeatCount?: number, delay?: number, paused?: boolean): number;
+        export function pause(id: number): boolean;
+        export function start(id: number): boolean;
+        export function resume(id: number): boolean;
+        export function stop(id: number): boolean;
     }
 
     export namespace type {

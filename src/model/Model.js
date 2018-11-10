@@ -91,7 +91,8 @@ class Model extends ReusableObject {
 
     /**
      * @desc Returns id of model.
-     * @type {int}
+     * @public
+     * @returns {int}
      */
 
     get id() {
