@@ -1393,6 +1393,7 @@ declare namespace MANTICORE {
                 verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
                 lineHeight: number;
                 localized: boolean;
+                autoSize: boolean;
 
                 getShadowOffset(): PIXI.Point;
                 setShadowOffset(xOrPoint: number | PIXI.Point, y?: number): void;
@@ -1473,7 +1474,6 @@ declare namespace MANTICORE {
 
         export class Label extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(fontName: string, size: number);
-            autoSize: boolean;
         }
 
         export class ListView extends MANTICORE.ui.ScrollView{

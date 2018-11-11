@@ -40,6 +40,14 @@ class BaseLabel extends Widget {
          */
 
         this._localized = false;
+
+        /**
+         * @desc Flag is need to change size of font to size of container.
+         * @type {boolean}
+         * @private
+         */
+
+        this._autoSize = false;
     }
 
     /**
@@ -120,6 +128,25 @@ class BaseLabel extends Widget {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Flag is need to change size of font to size of container.
+     * @public
+     * @return {boolean}
+     */
+
+    get autoSize() {
+        return this._autoSize;
+    }
+
+
+    set autoSize(value) {
+        if (this._autoSize === value) {
+            return;
+        }
+
+        this._autoSize = value;
+    }
 
     /**
      * @public

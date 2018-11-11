@@ -61,14 +61,6 @@ class Label extends BaseLabel {
         this._lineHeight = this._label.lineHeight;
 
         /**
-         * @desc Flag is need to change size of font to size of container.
-         * @type {boolean}
-         * @private
-         */
-
-        this._autoSize = false;
-
-        /**
          * @desc Size of font.
          * @type {int}
          * @private
@@ -226,7 +218,7 @@ class Label extends BaseLabel {
      */
 
     _updateAutoSize() {
-        if (!this._autoSize) {
+        if (!this.autoSize) {
             return;
         }
 
@@ -487,16 +479,16 @@ class Label extends BaseLabel {
      */
 
     get autoSize() {
-        return this._autoSize;
+        return super.autoSize;
     }
 
 
     set autoSize(value) {
-        if (this._autoSize === value) {
+        if (super.autoSize === value) {
             return;
         }
 
-        this._autoSize = value;
+        super.autoSize = value;
 
         this._updateAutoSize();
     }
