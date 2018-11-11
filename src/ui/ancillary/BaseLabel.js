@@ -48,6 +48,14 @@ class BaseLabel extends Widget {
          */
 
         this._autoSize = false;
+
+        /**
+         * @desc Letter spacing between chars.
+         * @type {number}
+         * @private
+         */
+
+        this._letterSpacing = 0;
     }
 
     /**
@@ -66,6 +74,7 @@ class BaseLabel extends Widget {
         this._verticalAlign = VERTICAL_ALIGN.TOP;
         this._horizontalAlign = HORIZONTAL_ALIGN.LEFT;
         this._localized = false;
+        this._letterSpacing = 0;
     }
 
     /**
@@ -259,6 +268,23 @@ class BaseLabel extends Widget {
         }
         this._verticalAlign = value;
         this.verticalAlignChange(value);
+    }
+
+    /**
+     * @desc Letter spacing of label.
+     * @public
+     * @type {number}
+     */
+
+    get letterSpacing() {
+        return this._letterSpacing;
+    }
+
+    set letterSpacing(value) {
+        if (this._letterSpacing === value) {
+            return;
+        }
+        this._letterSpacing = value;
     }
 
     /**

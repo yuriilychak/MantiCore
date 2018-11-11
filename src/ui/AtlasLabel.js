@@ -51,7 +51,7 @@ class AtlasLabel extends BaseLabel {
         this._fontFrame = AssetUtil.getSpriteFrame(frame);
 
         /**
-         * @type {PIXI.Point}
+         * @type {PIXI.Point | Point}
          * @private
          */
         this._letterDimensions = new PIXI.Point(letterWidth, letterHeight);
@@ -92,6 +92,14 @@ class AtlasLabel extends BaseLabel {
         this._fontSize = letterHeight;
 
         /**
+         * @desc Real font size need to update if auto size enabled.
+         * @type {int}
+         * @private
+         */
+
+        this._realFontSize = letterHeight;
+
+        /**
          * @desc Width of text line. Need to align texts.
          * @type {int}
          * @private
@@ -129,6 +137,7 @@ class AtlasLabel extends BaseLabel {
         this._text = "";
         this._fontName = frame;
         this._fontSize = letterHeight;
+        this._realFontSize = letterHeight;
         this._lineWidth = 0;
         this.verticalAlign = VERTICAL_ALIGN.MIDDLE;
         this.horizontalAlign = HORIZONTAL_ALIGN.CENTER;
@@ -153,6 +162,7 @@ class AtlasLabel extends BaseLabel {
         this._text = null;
         this._fontName = null;
         this._fontSize = 0;
+        this._realFontSize = 0;
         this._lineWidth = 0;
 
         super.clearData();
@@ -193,7 +203,7 @@ class AtlasLabel extends BaseLabel {
 
     _updateAlign() {
         const textLength = this._text.length;
-        const fontProportion = this._fontSize / this._letterDimensions.y;
+        const fontProportion = this._realFontSize / this._letterDimensions.y;
         const letterWidth = Math.round(this._letterDimensions.x * fontProportion);
         let crtChar = 0;
         let posX, posY, i, char, charIndex, charSprite;
@@ -204,11 +214,11 @@ class AtlasLabel extends BaseLabel {
                 break;
             }
             case VERTICAL_ALIGN.MIDDLE: {
-                posY = Math.divPowTwo(this.height - this._fontSize);
+                posY = Math.divPowTwo(this.height - this._realFontSize);
                 break;
             }
             case VERTICAL_ALIGN.BOTTOM: {
-                posY = this.height - this._fontSize;
+                posY = this.height - this._realFontSize;
                 break;
             }
         }
@@ -237,9 +247,65 @@ class AtlasLabel extends BaseLabel {
                 continue;
             }
             charSprite = this._chars[crtChar];
+
             charSprite.position.set(posX, posY);
-            posX += charSprite.width;
+            posX += charSprite.width + this.letterSpacing;
             ++crtChar;
+        }
+    }
+
+    /**
+     * @desc Update font size. Need for auto size.
+     * @method
+     * @private
+     * @param {int} fontSize
+     */
+
+    _updateFontSize(fontSize) {
+        const fontProportion = fontSize / this._letterDimensions.y;
+        const dotWidth = Math.round(this._dotWidth * fontProportion);
+        const letterWidth = Math.round(this._letterDimensions.x * fontProportion);
+        const charCount = this._chars.length;
+        let i, isDot, char;
+
+        for (i = 0; i < charCount; ++i) {
+            char = this._chars[i];
+            isDot = char.texture.frame.width === this._dotWidth;
+            char.height = fontSize;
+            char.width = isDot ? dotWidth : letterWidth;
+        }
+
+        this._updateLineWidth();
+        this._updateAlign();
+    }
+
+    _updateAutoSize() {
+        if (!this.autoSize) {
+            return;
+        }
+
+        this._realFontSize = this._fontSize;
+        this._updateFontSize(this._fontSize);
+
+        if (this.height >= this._realFontSize && this.width >= this._lineWidth) {
+            return;
+        }
+
+        while (this.height < this._realFontSize || this.width < this._lineWidth) {
+            this._updateFontSize(--this._realFontSize);
+        }
+    }
+
+    _updateLineWidth() {
+        const charCount = this._chars.length;
+        const fontProportion = this._realFontSize / this._fontSize;
+
+        for (let i = 0; i < charCount; ++i) {
+            this._lineWidth += this._chars[i].width;
+        }
+
+        if (this.letterSpacing !== 0 && charCount !== 0) {
+            this._lineWidth += this.letterSpacing * (charCount - 1) * fontProportion;
         }
     }
 
@@ -274,16 +340,13 @@ class AtlasLabel extends BaseLabel {
 
         let charCount = this._chars.length;
         let crtChar = 0;
-        let char, charIndex, i, isDot, frame, frameWidth, rect, charSprite;
-
-        this._lineWidth = 0;
+        let char, charIndex, i, isDot, frame, frameWidth, rect, charSprite, charWidth;
 
         for (i = 0; i < textLength; ++i) {
             char = this._text[i];
             charIndex = SYMBOL_LIST.indexOf(char);
 
             if (charIndex === -1) {
-                this._lineWidth += letterWidth;
                 continue;
             }
 
@@ -294,13 +357,11 @@ class AtlasLabel extends BaseLabel {
                 frameWidth, frameHeight
             );
 
-            this._lineWidth += isDot ? dotWidth : letterWidth;
+            charWidth = isDot ? dotWidth : letterWidth;
 
             if (crtChar >= charCount) {
                 frame = new PIXI.Texture(baseTexture, rect);
                 charSprite = PIXI.Sprite.from(frame);
-                charSprite.height = this._fontSize;
-                charSprite.width = isDot ? dotWidth : letterWidth;
                 this.addChild(charSprite);
                 this._chars.push(charSprite);
             }
@@ -308,6 +369,8 @@ class AtlasLabel extends BaseLabel {
                 charSprite = this._chars[crtChar];
                 charSprite.texture.frame = rect;
             }
+            charSprite.height = this._fontSize;
+            charSprite.width = charWidth;
             ++crtChar;
         }
 
@@ -320,7 +383,9 @@ class AtlasLabel extends BaseLabel {
             this._chars.length = charCount;
         }
 
+        this._updateLineWidth();
         this._updateAlign();
+        this._updateAutoSize();
     }
 
     /**
@@ -335,6 +400,7 @@ class AtlasLabel extends BaseLabel {
     set width(value) {
         super.width = value;
         this._updateAlign();
+        this._updateAutoSize();
     }
 
     /**
@@ -349,6 +415,7 @@ class AtlasLabel extends BaseLabel {
     set height(value) {
         super.height = value;
         this._updateAlign();
+        this._updateAutoSize();
     }
 
     /**
@@ -365,21 +432,8 @@ class AtlasLabel extends BaseLabel {
             return;
         }
         this._fontSize = value;
-
-        const fontProportion = this._fontSize / this._letterDimensions.y;
-        const dotWidth = Math.round(this._dotWidth * fontProportion);
-        const letterWidth = Math.round(this._letterDimensions.x * fontProportion);
-        const charCount = this._chars.length;
-        let i, isDot, char;
-
-        for (i = 0; i < charCount; ++i) {
-            char = this._chars[i];
-            isDot = char.texture.frame.width === this._dotWidth;
-            char.height = this._fontSize;
-            char.width = isDot ? dotWidth : letterWidth;
-        }
-
-        this._updateAlign();
+        this._updateFontSize(this._fontSize);
+        this._updateAutoSize();
     }
 
     /**
@@ -398,6 +452,25 @@ class AtlasLabel extends BaseLabel {
 
     get lineHeight() {
         return this._fontSize;
+    }
+
+    /**
+     * @desc Letter spacing of label.
+     * @public
+     * @type {number}
+     */
+
+    get letterSpacing() {
+        return super.letterSpacing;
+    }
+
+    set letterSpacing(value) {
+        if (super.letterSpacing === value) {
+            return;
+        }
+        super.letterSpacing = value;
+        this._updateAlign();
+        this._updateAutoSize();
     }
 }
 

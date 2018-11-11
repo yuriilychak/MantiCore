@@ -1394,6 +1394,7 @@ declare namespace MANTICORE {
                 lineHeight: number;
                 localized: boolean;
                 autoSize: boolean;
+                letterSpacing: number;
 
                 getShadowOffset(): PIXI.Point;
                 setShadowOffset(xOrPoint: number | PIXI.Point, y?: number): void;
@@ -1417,6 +1418,7 @@ declare namespace MANTICORE {
                 lineHeight: number;
                 text: string;
                 parentTint: number;
+                letterSpacing: number;
 
                 updateText(): void;
                 clone(): MANTICORE.ui.ancillary.OutlineBitmapText;

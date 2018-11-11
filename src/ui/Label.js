@@ -492,6 +492,24 @@ class Label extends BaseLabel {
 
         this._updateAutoSize();
     }
+
+    /**
+     * @desc Letter spacing of label.
+     * @public
+     * @type {number}
+     */
+
+    get letterSpacing() {
+        return super.letterSpacing;
+    }
+
+    set letterSpacing(value) {
+        if (super.letterSpacing === value) {
+            return;
+        }
+        super.letterSpacing = value;
+        this._updateAutoSize();
+    }
 }
 
 export default Label;

@@ -501,6 +501,25 @@ class OutlineBitmapText extends PIXI.Container {
 
         this._iterateOutlines(element => element.text = value);
     }
+
+    /**
+     * @desc Letter spacing of label.
+     * @public
+     * @return {number}
+     */
+
+    get letterSpacing() {
+        return this._label.letterSpacing;
+    }
+
+    set letterSpacing(value) {
+        if (this._label.letterSpacing === value) {
+            return;
+        }
+        this._label.letterSpacing = value;
+
+        this._iterateOutlines(outline => outline.letterSpacing = value);
+    }
 }
 
 export default OutlineBitmapText;
