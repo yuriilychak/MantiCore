@@ -238,6 +238,8 @@ class AtlasLabel extends BaseLabel {
             }
         }
 
+        const autoProportion = this._realFontSize / this._fontSize;
+
         for (i = 0; i < textLength; ++i) {
             char = this._text[i];
             charIndex = SYMBOL_LIST.indexOf(char);
@@ -249,7 +251,7 @@ class AtlasLabel extends BaseLabel {
             charSprite = this._chars[crtChar];
 
             charSprite.position.set(posX, posY);
-            posX += charSprite.width + this.letterSpacing;
+            posX += charSprite.width + (this.letterSpacing * autoProportion);
             ++crtChar;
         }
     }
