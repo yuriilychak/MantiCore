@@ -638,6 +638,8 @@ function _createAtlasLabel(data, bundle) {
     const result = AtlasLabel.create(texture, atlasFont.size[0], atlasFont.size[1], atlasFont.dotWidth);
 
     result.text = _getText(data, 1, bundle);
+    result.autoSize = Type.toBoolean(data.fileData[2]);
+    result.letterSpacing = data.fileData[3];
 
     return result;
 }
@@ -840,6 +842,7 @@ function _createLabel(data, bundle) {
     result.text = _getText(data, 1, bundle);
     result.color = _getColor(font.color, bundle);
     result.autoSize = Type.toBoolean(data.fileData[2]);
+    result.letterSpacing = data.fileData[3];
     result.localized = false;
 
     if (font.outlineSize > 0) {
@@ -877,6 +880,8 @@ function _createTextField(data, bundle) {
     result.maxLength = style.maxLength;
     result.passwordMode = style.passwordMode;
     result.passwordChar = bundle.texts[style.passwordChar];
+    result.autoSize = Type.toBoolean(data.fileData[3]);
+    result.letterSpacing = data.fileData[4];
 
     if (style.placeHolderText !== -1) {
         result.placeholderText = bundle.texts[style.placeHolderText];
