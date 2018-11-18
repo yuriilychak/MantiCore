@@ -1244,6 +1244,7 @@ declare namespace MANTICORE {
         export function start(id: number): boolean;
         export function resume(id: number): boolean;
         export function stop(id: number): boolean;
+        export function getTime(): number;
     }
 
     export namespace type {

@@ -94,7 +94,7 @@ export default {
             return timer.id;
         }
 
-        timer.start(this._date.getTime());
+        timer.start(this.getTime());
 
         return timer.id;
     },
@@ -115,7 +115,7 @@ export default {
          * @type {MANTICORE.timer.Timer}
          */
         const timer = this._timers.getElement(id);
-        return timer.pause(this._date.getTime());
+        return timer.pause(this.getTime());
     },
 
     /**
@@ -134,7 +134,7 @@ export default {
          * @type {MANTICORE.timer.Timer}
          */
         const timer = this._timers.getElement(id);
-        return timer.start(this._date.getTime());
+        return timer.start(this.getTime());
     },
 
     /**
@@ -153,7 +153,7 @@ export default {
          * @type {MANTICORE.timer.Timer}
          */
         const timer = this._timers.getElement(id);
-        return timer.resume(this._date.getTime());
+        return timer.resume(this.getTime());
     },
 
     /**
@@ -174,6 +174,17 @@ export default {
         const timer = this._timers.getElement(id);
         timer.stop();
         return true;
+    },
+
+    /**
+     * @desc Returns current time
+     * @function
+     * @public
+     * @return {int}
+     */
+
+    getTime() {
+        return this._date.getTime();
     },
 
     /**
@@ -207,7 +218,7 @@ export default {
          */
         const timers = this._timers.values;
         const timerCount = timers.length;
-        const crtTime = this._date.getTime();
+        const crtTime = this.getTime();
         for (let i = 0; i < timerCount; ++i) {
             timers[i].resume(crtTime);
         }
