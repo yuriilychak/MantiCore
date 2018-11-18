@@ -188,10 +188,13 @@ class Component extends ReusableObject {
      */
 
     get blockEvents() {
-        return this._listenerManager.blockEvents;
+        return this._hasListenerManager ? this._listenerManager.blockEvents : false;
     }
 
     set blockEvents(value) {
+        if (!this._hasListenerManager) {
+            return;
+        }
         this._listenerManager.blockEvents = value;
     }
 
