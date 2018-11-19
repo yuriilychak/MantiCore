@@ -67,17 +67,6 @@ class ComScroller extends Component {
     }
 
     /**
-     * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
-     * @method
-     * @public
-     * @param {MANTICORE.view.ComponentContainer} owner
-     */
-
-    onAdd(owner) {
-        super.onAdd(owner);
-    }
-
-    /**
      * @desc Move inner container to bottom boundary of ScrollView.
      * @method
      * @public
