@@ -1,12 +1,11 @@
 import Panel from "./Panel";
 import Widget from "./Widget";
 import PANEL_GRAPHIC_TYPE from "enumerator/ui/PanelGrphicType";
-import Math from "util/Math";
 import Format from "util/Format";
-import Geometry from "util/Geometry";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Type from "util/Type";
 import SCROLL_DIRECTION from "enumerator/ui/ScrollDirection";
+import ComScroller from "component/ui/ComScroller";
 
 /**
  * @enum {string}
@@ -48,30 +47,6 @@ class ScrollView extends Panel {
         this._innerContainer = Widget.create();
 
         /**
-         * @desc Previous drag pos for update drag.
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-
-        this._prvDragPos = new PIXI.Point(0, 0);
-
-        /**
-         * @desc Zero point. Need for calculate drag position, for don't create every frame.
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-
-        this._zeroPoint = new PIXI.Point(0, 0);
-
-        /**
-         * @desc Inner boundary for scroll. Need to don't calculate every frame.
-         * @type {PIXI.Point | Point}
-         * @private
-         */
-
-        this._innerBoundary = new PIXI.Point(0, 0);
-
-        /**
          * @type {?MANTICORE.ui.Slider}
          * @private
          */
@@ -110,14 +85,6 @@ class ScrollView extends Panel {
         this._eventDragFinish = null;
 
         /**
-         * @desc Direction of scroll.
-         * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
-         * @private
-         */
-
-        this._scrollDirection = SCROLL_DIRECTION.BOTH;
-
-        /**
          * @desc Inner event for drag start.
          * @type {string}
          * @private
@@ -140,6 +107,16 @@ class ScrollView extends Panel {
          */
 
         this._innerEventDragFinish = Format.generateEventName(this, LOCAL_EVENT.DRAG_FINISH);
+
+        /**
+         * @desc Component for update scroll in scroll view.
+         * @type {MANTICORE.component.ui.ComScroller}
+         * @private
+         */
+
+        this._scroller = ComScroller.create();
+
+        this.componentManager.addComponent(this._scroller);
 
         this._initInnerListeners();
 
@@ -164,14 +141,14 @@ class ScrollView extends Panel {
         super.reuse(graphicType, data);
 
         this._innerContainer = Widget.create();
-        this._prvDragPos.set(0, 0);
-        this._zeroPoint.set(0, 0);
-        this._innerBoundary.set(0, 0);
         this._verticalSlider = null;
         this._horizontalSlider = null;
         this._eventDragStart = null;
         this._eventDrag = null;
         this._scrollDirection = SCROLL_DIRECTION.BOTH;
+        this._scroller = ComScroller.create();
+
+        this.componentManager.addComponent(this._scroller);
 
         this._initInnerListeners();
     }
@@ -315,7 +292,7 @@ class ScrollView extends Panel {
      */
 
     jumpToBottom() {
-        this._jumpVertical(1);
+        this._scroller.jumpToBottom();
     }
 
     /**
@@ -325,8 +302,7 @@ class ScrollView extends Panel {
      */
 
     jumpToBottomLeft() {
-        this.jumpToBottom();
-        this.jumpToLeft();
+        this._scroller.jumpToBottomLeft();
     }
 
     /**
@@ -336,8 +312,7 @@ class ScrollView extends Panel {
      */
 
     jumpToBottomRight() {
-        this.jumpToBottom();
-        this.jumpToRight();
+        this._scroller.jumpToBottomRight();
     }
 
     /**
@@ -347,7 +322,7 @@ class ScrollView extends Panel {
      */
 
     jumpToLeft() {
-        this._jumpHorizontal(0);
+        this._scroller.jumpToLeft();
     }
 
     /**
@@ -357,7 +332,7 @@ class ScrollView extends Panel {
      */
 
     jumpToRight() {
-        this._jumpHorizontal(1);
+        this._scroller.jumpToRight();
     }
 
     /**
@@ -367,7 +342,7 @@ class ScrollView extends Panel {
      */
 
     jumpToTop() {
-        this._jumpVertical(0);
+        this._scroller.jumpToTop();
     }
 
     /**
@@ -377,8 +352,7 @@ class ScrollView extends Panel {
      */
 
     jumpToTopLeft() {
-        this.jumpToTop();
-        this.jumpToLeft();
+        this._scroller.jumpToTopLeft();
     }
 
     /**
@@ -388,8 +362,7 @@ class ScrollView extends Panel {
      */
 
     jumpToTopRight() {
-        this.jumpToTop();
-        this.jumpToRight();
+        this._scroller.jumpToTopRight();
     }
 
     /**
@@ -400,8 +373,7 @@ class ScrollView extends Panel {
      */
 
     jumpToPercentBothDirection(percent) {
-        this.jumpToPercentHorizontal(percent);
-        this.jumpToPercentVertical(percent);
+        this._scroller.jumpToPercentBothDirection(percent);
     }
 
     /**
@@ -412,7 +384,7 @@ class ScrollView extends Panel {
      */
 
     jumpToPercentHorizontal(percent) {
-        this._jumpHorizontal(percent);
+        this._scroller.jumpToPercentHorizontal(percent);
     }
 
     /**
@@ -423,7 +395,7 @@ class ScrollView extends Panel {
      */
 
     jumpToPercentVertical(percent) {
-        this._jumpVertical(percent);
+        this._scroller.jumpToPercentVertical(percent);
     }
 
 
@@ -440,15 +412,13 @@ class ScrollView extends Panel {
 
     clearData() {
         this._innerContainer = null;
-        this._prvDragPos.set(0, 0);
-        this._zeroPoint.set(0, 0);
-        this._innerBoundary.set(0, 0);
         this._verticalSlider = null;
         this._horizontalSlider = null;
         this._eventDragStart = null;
         this._eventDrag = null;
         this._eventDragFinish = null;
         this._scrollDirection = SCROLL_DIRECTION.BOTH;
+        this._scroller = null;
 
         super.clearData();
     }
@@ -460,7 +430,7 @@ class ScrollView extends Panel {
      */
 
     isVertical() {
-        return this._scrollDirection === SCROLL_DIRECTION.VERTICAL;
+        return this._scroller.isVertical();
     }
 
     /**
@@ -470,7 +440,7 @@ class ScrollView extends Panel {
      */
 
     isHorizontal() {
-        return this._scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
+        return this._scroller.isHorizontal();
     }
 
     /**
@@ -481,8 +451,7 @@ class ScrollView extends Panel {
 
     onDragStartInnerContainerHandler(event) {
         this.listenerManager.dispatchEvent(this._eventDragStart, event.data);
-        Geometry.sSub(this, this._innerContainer, this._innerBoundary);
-        this._prvDragPos.copy(this._innerContainer.toLocal(event.data.data.global));
+        this._scroller.updateDragStart(event.data.data.global);
     }
 
     /**
@@ -493,37 +462,7 @@ class ScrollView extends Panel {
 
     onDragInnerContainerHandler(event) {
         this.listenerManager.dispatchEvent(this._eventDrag, event.data);
-        const crtDragPos = this._innerContainer.toLocal(event.data.data.global);
-        const nextPosition = Geometry.pRange(
-            Geometry.pRound(
-                Geometry.pAdd(
-                    this._innerContainer.position,
-                    Geometry.pSub(crtDragPos, this._prvDragPos)
-                ),
-                true
-            ),
-            this._innerBoundary,
-            this._zeroPoint,
-            true
-        );
-
-
-        if (this.isVertical()) {
-            nextPosition.x = 0;
-        }
-        else if (this.isHorizontal()) {
-            nextPosition.y = 0;
-        }
-
-        this._innerContainer.position.copy(nextPosition);
-
-        if (!Type.isNull(this._horizontalSlider)) {
-            this._horizontalSlider.progress = Math.toFixed(nextPosition.x / this._innerBoundary.x);
-        }
-
-        if (!Type.isNull(this._verticalSlider)) {
-            this._verticalSlider.progress = Math.toFixed(nextPosition.y / this._innerBoundary.y);
-        }
+        this._scroller.updateDragMove(event.data.data.global);
     }
 
     /**
@@ -543,7 +482,7 @@ class ScrollView extends Panel {
      */
 
     onScrollHorizontalHandler(event) {
-        this._updateScrollDimension(event.data, SCROLL_DIRECTION.HORIZONTAL);
+        this._scroller.updateScrollDimension(event.data, SCROLL_DIRECTION.HORIZONTAL);
     }
 
     /**
@@ -553,7 +492,7 @@ class ScrollView extends Panel {
      */
 
     onScrollVerticalHandler(event) {
-        this._updateScrollDimension(event.data, SCROLL_DIRECTION.VERTICAL);
+        this._scroller.updateScrollDimension(event.data, SCROLL_DIRECTION.VERTICAL);
     }
 
     /**
@@ -586,65 +525,9 @@ class ScrollView extends Panel {
         event = Format.generateEventName(this, eventName);
         nxtSlider.eventScroll = event;
         this.listenerManager.addEventListener(event, handler);
-        this._updateScrollDimension(nxtSlider.progress, direction);
+        this._scroller.updateScrollDimension(nxtSlider.progress, direction);
 
         return nxtSlider;
-    }
-
-    /**
-     * @method
-     * @private
-     * @param {number} progress
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} direction
-     *
-     */
-
-    _updateScrollDimension(progress, direction) {
-        if (direction === SCROLL_DIRECTION.HORIZONTAL) {
-            this._innerContainer.x = Math.round(this._innerBoundary.x * progress);
-        }
-        else {
-            this._innerContainer.y = Math.round(this._innerBoundary.y * progress);
-        }
-    }
-
-    /**
-     * @method
-     * @private
-     * @param {number} percent
-     */
-
-    _jumpVertical(percent) {
-        this._jump(percent, SCROLL_DIRECTION.VERTICAL, SCROLL_DIRECTION.HORIZONTAL);
-    }
-
-    /**
-     * @method
-     * @private
-     * @param {number} percent
-     */
-
-    _jumpHorizontal(percent) {
-        this._jump(percent, SCROLL_DIRECTION.HORIZONTAL, SCROLL_DIRECTION.VERTICAL);
-    }
-
-    /**
-     * @desc Update directions.
-     * @method
-     * @private
-     * @param {number} percent
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} mainDirection
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} checkDirection
-     */
-
-    _jump(percent, mainDirection, checkDirection) {
-        if (this._scrollDirection === checkDirection) {
-            return;
-        }
-        if (percent > 1) {
-            percent = Math.percentToFloat(percent);
-        }
-        this._updateScrollDimension(percent, mainDirection);
     }
 
     /**
@@ -681,7 +564,7 @@ class ScrollView extends Panel {
 
     set width(value) {
         super.width = value;
-        this._innerBoundary.x = this.width - this._innerContainer.width;
+        this._scroller.innerBoundary.x = this.width - this._innerContainer.width;
     }
 
     /**
@@ -695,7 +578,7 @@ class ScrollView extends Panel {
 
     set height(value) {
         super.height = value;
-        this._innerBoundary.y = this.height - this._innerContainer.height;
+        this._scroller.innerBoundary.y = this.height - this._innerContainer.height;
     }
 
     /**
@@ -720,30 +603,11 @@ class ScrollView extends Panel {
      */
 
     get scrollDirection() {
-        return this._scrollDirection;
+        return this._scroller.scrollDirection;
     }
 
     set scrollDirection(value) {
-        if (this._scrollDirection === value) {
-            return;
-        }
-
-        switch (value) {
-            case SCROLL_DIRECTION.VERTICAL: {
-                this.horizontalSlider = null;
-                this._innerContainer.x = 0;
-                break;
-            }
-            case SCROLL_DIRECTION.HORIZONTAL: {
-                this.verticalSlider = null;
-                this._innerContainer.y = 0;
-                break;
-            }
-            default: {
-            }
-        }
-
-        this._scrollDirection = value;
+        this._scroller.scrollDirection = value;
     }
 
     /**
@@ -800,7 +664,7 @@ class ScrollView extends Panel {
 
     set innerWidth(value) {
         this._innerContainer.width = value;
-        this._innerBoundary.x = this.width - this._innerContainer.width;
+        this._scroller.innerBoundary.x = this.width - this._innerContainer.width;
     }
 
     /**
@@ -814,7 +678,7 @@ class ScrollView extends Panel {
 
     set innerHeight(value) {
         this._innerContainer.height = value;
-        this._innerBoundary.y = this.height - this._innerContainer.height;
+        this._scroller.innerBoundary.y = this.height - this._innerContainer.height;
     }
 
     /**
@@ -942,7 +806,6 @@ class ScrollView extends Panel {
         }
         this._eventDragStart = value;
     }
-
 }
 
 export default ScrollView;

@@ -1,29 +1,410 @@
 import SCROLL_DIRECTION from "enumerator/ui/ScrollDirection";
 import Component from "component/Component";
+import Geometry from "util/Geometry";
+import Type from "util/Type";
+import Math from "util/Math";
 
+/**
+ * @desc Class for manipulate with scrolling in list and scroll views.
+ * @class
+ * @extends MANTICORE.component.Component
+ * @memberOf MANTICORE.component.ui
+ */
 
 class ComScroller extends Component {
     constructor() {
         super("ComScroller");
 
         /**
-         * @desc Direction of scroller.
+         * @desc Direction of scroll.
          * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
          * @private
          */
 
-        this._direction = SCROLL_DIRECTION.BOTH;
+        this._scrollDirection = SCROLL_DIRECTION.BOTH;
 
-        this._outOfBoundaryAmount = new PIXI.Point(0, 0);
-        this._autoScrollTargetDelta = new PIXI.Point(0, 0);
-        this._autoScrollStartPosition = new PIXI.Point(0, 0);
-        this._autoScrollBrakingStartPosition = new PIXI.Point(0, 0);
-        this._touchMoveDisplacements = [];
-        this._touchMoveTimeDeltas = [];
-        this._touchMovePreviousTimestamp = 0;
+        /**
+         * @desc Previous drag pos for update drag.
+         * @type {PIXI.Point | Point}
+         * @private
+         */
+
+        this._prvDragPos = new PIXI.Point(0, 0);
+
+        /**
+         * @desc Zero point. Need for calculate drag position, for don't create every frame.
+         * @type {PIXI.Point | Point}
+         * @private
+         */
+
+        this._zeroPoint = new PIXI.Point(0, 0);
+
+        /**
+         * @desc Inner boundary for scroll. Need to don't calculate every frame.
+         * @type {PIXI.Point | Point}
+         * @private
+         */
+
+        this._innerBoundary = new PIXI.Point(0, 0);
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     */
+    reuse() {
+        super.reuse();
+        this._prvDragPos.set(0, 0);
+        this._zeroPoint.set(0, 0);
+        this._innerBoundary.set(0, 0);
+        this._scrollDirection = SCROLL_DIRECTION.BOTH;
+    }
+
+    /**
+     * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
+     * @method
+     * @public
+     * @param {MANTICORE.view.ComponentContainer} owner
+     */
 
     onAdd(owner) {
         super.onAdd(owner);
     }
+
+    /**
+     * @desc Move inner container to bottom boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToBottom() {
+        this._jumpVertical(1);
+    }
+
+    /**
+     * @desc Move inner container to bottom and left boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToBottomLeft() {
+        this.jumpToBottom();
+        this.jumpToLeft();
+    }
+
+    /**
+     * @desc Move inner container to bottom and right boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToBottomRight() {
+        this.jumpToBottom();
+        this.jumpToRight();
+    }
+
+    /**
+     * @desc Move inner container to left boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToLeft() {
+        this._jumpHorizontal(0);
+    }
+
+    /**
+     * @desc Move inner container to right boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToRight() {
+        this._jumpHorizontal(1);
+    }
+
+    /**
+     * @desc Move inner container to top boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToTop() {
+        this._jumpVertical(0);
+    }
+
+    /**
+     * @desc Move inner container to top and left boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToTopLeft() {
+        this.jumpToTop();
+        this.jumpToLeft();
+    }
+
+    /**
+     * @desc Move inner container to top and right boundary of ScrollView.
+     * @method
+     * @public
+     */
+
+    jumpToTopRight() {
+        this.jumpToTop();
+        this.jumpToRight();
+    }
+
+    /**
+     * @desc Move inner container to both direction percent position of ScrollView.
+     * @method
+     * @public
+     * @param {number} percent
+     */
+
+    jumpToPercentBothDirection(percent) {
+        this.jumpToPercentHorizontal(percent);
+        this.jumpToPercentVertical(percent);
+    }
+
+    /**
+     * @desc Move inner container to horizontal percent position of ScrollView.
+     * @method
+     * @public
+     * @param {number} percent
+     */
+
+    jumpToPercentHorizontal(percent) {
+        this._jumpHorizontal(percent);
+    }
+
+    /**
+     * @desc Move inner container to vertical percent position of ScrollView.
+     * @method
+     * @public
+     * @param {number} percent
+     */
+
+    jumpToPercentVertical(percent) {
+        this._jumpVertical(percent);
+    }
+
+    /**
+     * @desc Update drag start event of owner.
+     * @method
+     * @public
+     * @param {PIXI.Point | Point} position
+     */
+
+    updateDragStart(position) {
+        const innerContainer = this.owner.innerContainer;
+        Geometry.sSub(this.owner, innerContainer, this._innerBoundary);
+        this._prvDragPos.copy(innerContainer.toLocal(position));
+    }
+
+    /**
+     * @desc Update drag move event of owner.
+     * @method
+     * @public
+     * @param {PIXI.Point | Point} position
+     */
+
+    updateDragMove(position) {
+        const innerContainer = this.owner.innerContainer;
+        const crtDragPos = innerContainer.toLocal(position);
+        const nextPosition = Geometry.pRange(
+            Geometry.pRound(
+                Geometry.pAdd(
+                    innerContainer.position,
+                    Geometry.pSub(crtDragPos, this._prvDragPos)
+                ),
+                true
+            ),
+            this._innerBoundary,
+            this._zeroPoint,
+            true
+        );
+
+
+        if (this.isVertical()) {
+            nextPosition.x = 0;
+        }
+        else if (this.isHorizontal()) {
+            nextPosition.y = 0;
+        }
+
+        innerContainer.position.copy(nextPosition);
+
+        if (!Type.isNull(this.owner.horizontalSlider)) {
+            this.owner.horizontalSlider.progress = Math.toFixed(nextPosition.x / this._innerBoundary.x);
+        }
+
+        if (!Type.isNull(this.owner.verticalSlider)) {
+            this.owner.verticalSlider.progress = Math.toFixed(nextPosition.y / this._innerBoundary.y);
+        }
+    }
+
+    /**
+     * @method
+     * @public
+     * @returns {boolean}
+     */
+
+    isVertical() {
+        return this._scrollDirection === SCROLL_DIRECTION.VERTICAL;
+    }
+
+    /**
+     * @method
+     * @public
+     * @returns {boolean}
+     */
+
+    isHorizontal() {
+        return this._scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {number} progress
+     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} direction
+     *
+     */
+
+    updateScrollDimension(progress, direction) {
+        if (direction === SCROLL_DIRECTION.HORIZONTAL) {
+            this.owner.innerContainer.x = Math.round(this._innerBoundary.x * progress);
+        }
+        else {
+            this.owner.innerContainer.y = Math.round(this._innerBoundary.y * progress);
+        }
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        this._prvDragPos.set(0, 0);
+        this._zeroPoint.set(0, 0);
+        this._innerBoundary.set(0, 0);
+        this._scrollDirection = SCROLL_DIRECTION.BOTH;
+        super.clearData();
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @private
+     * @param {number} percent
+     */
+
+    _jumpVertical(percent) {
+        this._jump(percent, SCROLL_DIRECTION.VERTICAL, SCROLL_DIRECTION.HORIZONTAL);
+    }
+
+    /**
+     * @method
+     * @private
+     * @param {number} percent
+     */
+
+    _jumpHorizontal(percent) {
+        this._jump(percent, SCROLL_DIRECTION.HORIZONTAL, SCROLL_DIRECTION.VERTICAL);
+    }
+
+    /**
+     * @desc Update directions.
+     * @method
+     * @private
+     * @param {number} percent
+     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} mainDirection
+     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} checkDirection
+     */
+
+    _jump(percent, mainDirection, checkDirection) {
+        if (this._scrollDirection === checkDirection) {
+            return;
+        }
+        if (percent > 1) {
+            percent = Math.percentToFloat(percent);
+        }
+        this.updateScrollDimension(percent, mainDirection);
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+     */
+
+    get scrollDirection() {
+        return this._scrollDirection;
+    }
+
+    set scrollDirection(value) {
+        if (this._scrollDirection === value) {
+            return;
+        }
+
+        switch (value) {
+            case SCROLL_DIRECTION.VERTICAL: {
+                this.horizontalSlider = null;
+                this.owner.innerContainer.x = 0;
+                break;
+            }
+            case SCROLL_DIRECTION.HORIZONTAL: {
+                this.verticalSlider = null;
+                this.owner.innerContainer.y = 0;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
+        this._scrollDirection = value;
+    }
+
+    /**
+     * @desc Inner boundary of scroller.
+     * @public
+     * @type {PIXI.Point | Point}
+     */
+
+    get innerBoundary() {
+        return this._innerBoundary;
+    }
+
+    set innerBoundary(value) {
+        if (this.innerBoundary.equals(value)) {
+            return;
+        }
+
+        this._innerBoundary.copy(value);
+    }
 }
+
+export default ComScroller;
