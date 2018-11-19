@@ -1545,7 +1545,7 @@ declare namespace MANTICORE {
 
             protected isVertical(): boolean;
             protected isHorizontal(): boolean;
-            protected onDownInnerContainerHandler(event: MANTICORE.eventDispatcher.EventModel): void;
+            protected onDragStartInnerContainerHandler(event: MANTICORE.eventDispatcher.EventModel): void;
             protected onDragInnerContainerHandler(event: MANTICORE.eventDispatcher.EventModel): void;
             protected onScrollHorizontalHandler(event: MANTICORE.eventDispatcher.EventModel): void;
             protected onScrollVerticalHandler(event: MANTICORE.eventDispatcher.EventModel): void;

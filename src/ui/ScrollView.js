@@ -17,7 +17,8 @@ import SCROLL_DIRECTION from "enumerator/ui/ScrollDirection";
 
 const LOCAL_EVENT = {
     DRAG: "DRAG_INNER_CONTAINER",
-    DOWN: "DOWN_INNER_CONTAINER",
+    DRAG_START: "DRAG_START_INNER_CONTAINER",
+    DRAG_FINISH: "DRAG_FINISH_INNER_CONTAINER",
     HORIZONTAL_SCROLL: "H_SCROLL",
     VERTICAL_SCROLL: "V_SCROLL"
 };
@@ -48,7 +49,7 @@ class ScrollView extends Panel {
 
         /**
          * @desc Previous drag pos for update drag.
-         * @type {PIXI.Point}
+         * @type {PIXI.Point | Point}
          * @private
          */
 
@@ -56,7 +57,7 @@ class ScrollView extends Panel {
 
         /**
          * @desc Zero point. Need for calculate drag position, for don't create every frame.
-         * @type {PIXI.Point}
+         * @type {PIXI.Point | Point}
          * @private
          */
 
@@ -64,7 +65,7 @@ class ScrollView extends Panel {
 
         /**
          * @desc Inner boundary for scroll. Need to don't calculate every frame.
-         * @type {PIXI.Point}
+         * @type {PIXI.Point | Point}
          * @private
          */
 
@@ -85,12 +86,12 @@ class ScrollView extends Panel {
         this._horizontalSlider = null;
 
         /**
-         * @desc Custom event for down.
+         * @desc Custom event for drag start.
          * @type {?string}
          * @private
          */
 
-        this._eventDown = null;
+        this._eventDragStart = null;
 
         /**
          * @desc Custom event for drag.
@@ -101,6 +102,14 @@ class ScrollView extends Panel {
         this._eventDrag = null;
 
         /**
+         * @desc Custom event for drag finish.
+         * @type {?string}
+         * @private
+         */
+
+        this._eventDragFinish = null;
+
+        /**
          * @desc Direction of scroll.
          * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
          * @private
@@ -108,16 +117,31 @@ class ScrollView extends Panel {
 
         this._scrollDirection = SCROLL_DIRECTION.BOTH;
 
-        const eventDown = Format.generateEventName(this, LOCAL_EVENT.DOWN);
-        const eventDrag = Format.generateEventName(this, LOCAL_EVENT.DRAG);
+        /**
+         * @desc Inner event for drag start.
+         * @type {string}
+         * @private
+         */
 
-        this.listenerManager.addEventListener(eventDrag, this.onDragInnerContainerHandler);
-        this.listenerManager.addEventListener(eventDown, this.onDownInnerContainerHandler);
+        this._innerEventDragStart = Format.generateEventName(this, LOCAL_EVENT.DRAG_START);
 
-        this._innerContainer.eventDrag = eventDrag;
-        this._innerContainer.eventDown = eventDown;
-        this._innerContainer.propagateChildrenEvents = true;
-        this._innerContainer.interactive = true;
+        /**
+         * @desc Inner event for drag.
+         * @type {string}
+         * @private
+         */
+
+        this._innerEventDrag = Format.generateEventName(this, LOCAL_EVENT.DRAG);
+
+        /**
+         * @desc Inner event for drag finish.
+         * @type {string}
+         * @private
+         */
+
+        this._innerEventDragFinish = Format.generateEventName(this, LOCAL_EVENT.DRAG_FINISH);
+
+        this._initInnerListeners();
 
         this.uiType = UI_ELEMENT.SCROLL_VIEW;
 
@@ -145,20 +169,11 @@ class ScrollView extends Panel {
         this._innerBoundary.set(0, 0);
         this._verticalSlider = null;
         this._horizontalSlider = null;
-        this._eventDown = null;
+        this._eventDragStart = null;
         this._eventDrag = null;
         this._scrollDirection = SCROLL_DIRECTION.BOTH;
 
-        const eventDown = Format.generateEventName(this, LOCAL_EVENT.DOWN);
-        const eventDrag = Format.generateEventName(this, LOCAL_EVENT.DRAG);
-
-        this.listenerManager.addEventListener(eventDrag, this.onDragInnerContainerHandler);
-        this.listenerManager.addEventListener(eventDown, this.onDownInnerContainerHandler);
-
-        this._innerContainer.eventDrag = eventDrag;
-        this._innerContainer.eventDown = eventDown;
-        this._innerContainer.propagateChildrenEvents = true;
-        this._innerContainer.interactive = true;
+        this._initInnerListeners();
     }
 
     /**
@@ -430,8 +445,9 @@ class ScrollView extends Panel {
         this._innerBoundary.set(0, 0);
         this._verticalSlider = null;
         this._horizontalSlider = null;
-        this._eventDown = null;
+        this._eventDragStart = null;
         this._eventDrag = null;
+        this._eventDragFinish = null;
         this._scrollDirection = SCROLL_DIRECTION.BOTH;
 
         super.clearData();
@@ -463,8 +479,8 @@ class ScrollView extends Panel {
      * @param {MANTICORE.eventDispatcher.EventModel} event
      */
 
-    onDownInnerContainerHandler(event) {
-        this.listenerManager.dispatchEvent(this._eventDown, event.data);
+    onDragStartInnerContainerHandler(event) {
+        this.listenerManager.dispatchEvent(this._eventDragStart, event.data);
         Geometry.sSub(this, this._innerContainer, this._innerBoundary);
         this._prvDragPos.copy(this._innerContainer.toLocal(event.data.data.global));
     }
@@ -508,7 +524,16 @@ class ScrollView extends Panel {
         if (!Type.isNull(this._verticalSlider)) {
             this._verticalSlider.progress = Math.toFixed(nextPosition.y / this._innerBoundary.y);
         }
+    }
 
+    /**
+     * @method
+     * @protected
+     * @param {MANTICORE.eventDispatcher.EventModel} event
+     */
+
+    onDragFinishInnerContainerHandler(event) {
+        this.listenerManager.dispatchEvent(this._eventDragFinish, event.data);
     }
 
     /**
@@ -620,6 +645,24 @@ class ScrollView extends Panel {
             percent = Math.percentToFloat(percent);
         }
         this._updateScrollDimension(percent, mainDirection);
+    }
+
+    /**
+     * @desc Init inner listeners for drag.
+     * @method
+     * @private
+     */
+
+    _initInnerListeners() {
+        this.listenerManager.addEventListener(this._innerEventDrag, this.onDragInnerContainerHandler);
+        this.listenerManager.addEventListener(this._innerEventDragStart, this.onDragStartInnerContainerHandler);
+        this.listenerManager.addEventListener(this._innerEventDragFinish, this.onDragFinishInnerContainerHandler);
+
+        this._innerContainer.eventDrag = this._innerEventDrag;
+        this._innerContainer.eventDragStart = this._innerEventDragStart;
+        this._innerContainer.eventDragFinish = this._innerEventDragFinish;
+        this._innerContainer.propagateChildrenEvents = true;
+        this._innerContainer.interactive = true;
     }
 
     /**
@@ -793,14 +836,11 @@ class ScrollView extends Panel {
      */
 
     get eventDown() {
-        return this._eventDown;
+        return this._innerContainer.eventOver;
     }
 
     set eventDown(value) {
-        if (this._eventDown === value) {
-            return;
-        }
-        this._eventDown = value;
+        this._innerContainer.eventDown = value;
     }
 
     /**
@@ -877,11 +917,14 @@ class ScrollView extends Panel {
      */
 
     get eventDragFinish() {
-        return this._innerContainer.eventDragFinish;
+        return this._eventDragFinish;
     }
 
     set eventDragFinish(value) {
-        this._innerContainer.eventDragFinish = value;
+        if (this._eventDragFinish === value) {
+            return;
+        }
+        this._eventDragFinish = value;
     }
 
     /**
@@ -890,11 +933,14 @@ class ScrollView extends Panel {
      */
 
     get eventDragStart() {
-        return this._innerContainer.eventDragStart;
+        return this._eventDragStart;
     }
 
     set eventDragStart(value) {
-        this._innerContainer.eventDragStart = value;
+        if (this._eventDragStart === value) {
+            return;
+        }
+        this._eventDragStart = value;
     }
 
 }
