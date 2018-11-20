@@ -244,6 +244,8 @@ function _parseAnimation(element, data, bundle, globalParent) {
      */
     const timeLine = ActionTimeLine.create(element, TIME_LINE.UI);
 
+    timeLine.isResetParameters = true;
+
     let i, animation;
 
     for (i = 0; i < animationCount; ++i) {

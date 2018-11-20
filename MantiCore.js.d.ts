@@ -548,6 +548,7 @@ declare namespace MANTICORE {
             fps: number;
             inherit: boolean;
             loop: boolean;
+            isResetParameters: boolean;
             readonly isEmpty: boolean;
             readonly isPlaying: boolean;
             readonly isRunning: boolean;

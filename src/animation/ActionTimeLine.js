@@ -187,6 +187,14 @@ class ActionTimeLine extends ReusableObject{
 
         this._nestedChildren = null;
 
+        /**
+         * @desc Flag is need to reset dimension to start parameters when run new animation.
+         * @type {boolean}
+         * @private
+         */
+
+        this._isResetParameters = false;
+
         this.refreshStartParameters();
     }
 
@@ -497,6 +505,7 @@ class ActionTimeLine extends ReusableObject{
         this._fps = Macro.FPS;
         this._fpsCoef = 1;
         this._isInherit = false;
+        this._isResetParameters = false;
         this._nestedChildren.length = 0;
         this._nestedChildren = null;
         super.clearData();
@@ -514,7 +523,7 @@ class ActionTimeLine extends ReusableObject{
      */
 
     _setStartParameters() {
-        if (Type.isNull(this._target)) {
+        if (Type.isNull(this._target) || !this._isResetParameters) {
             return;
         }
 
@@ -768,6 +777,23 @@ class ActionTimeLine extends ReusableObject{
             return;
         }
         this._name = value;
+    }
+
+    /**
+     * @desc Flag is need to reset parameters of owner when start new animation.
+     * @public
+     * @return {boolean}
+     */
+
+    get isResetParameters() {
+        return this._isResetParameters;
+    }
+
+    set isResetParameters(value) {
+        if (this._isResetParameters === value) {
+            return;
+        }
+        this._isResetParameters = value;
     }
 }
 
