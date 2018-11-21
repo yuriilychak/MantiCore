@@ -1372,7 +1372,7 @@ declare namespace MANTICORE {
                 titleText: string;
 
                 hasTitle(): boolean;
-                protected changeState(state: number): void;
+                changeState(state: number): void;
                 protected changeEnabledState(state: number): void;
                 protected onEnabledChange(enabled: boolean): void;
                 protected changeStateWithFallback(state: number, fallback: number, isEnabled?: boolean): void;

@@ -65,6 +65,17 @@ class BaseButton extends Widget {
     }
 
     /**
+     * @desc Change frame of button if it exist.
+     * @method
+     * @public
+     * @param {int} state
+     */
+
+    changeState(state) {
+        this.collider.state = state;
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -84,17 +95,6 @@ class BaseButton extends Widget {
         }
 
         super.clearData();
-    }
-
-    /**
-     * @desc Change frame of button if it exist.
-     * @method
-     * @protected
-     * @param {int} state
-     */
-
-    changeState(state) {
-        this.collider.state = state;
     }
 
     /**
