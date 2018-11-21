@@ -586,6 +586,7 @@ declare namespace MANTICORE {
         export const KEYBOARD_ENABLED: boolean;
         export const TOUCHES_ENABLED: boolean;
         export const ACCELEROMETER_ENABLED: boolean;
+        export const TYPED_ARRAY_SUPPORTED: boolean;
 
         export function init(callback: Function);
         export function isMobile(): boolean;

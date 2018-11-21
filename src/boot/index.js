@@ -122,6 +122,15 @@ export default {
     ACCELEROMETER_ENABLED: false,
 
     /**
+     * @desc Flag is typed array such Int8Array are support.
+     * @type {boolean}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    TYPED_ARRAY_SUPPORTED: false,
+
+    /**
      * PUBLIC FUNCTIONS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -170,6 +179,7 @@ export default {
         this.MOUSE_ENABLED = !Type.isUndefined(docEle['onmouseup']);
         this.KEYBOARD_ENABLED = !Type.isUndefined(docEle['onkeyup']);
         this.ACCELEROMETER_ENABLED = Type.toBoolean(Type.setValue(window.DeviceMotionEvent, window.DeviceOrientationEvent));
+        this.TYPED_ARRAY_SUPPORTED = "Uint8ClampedArray" in window; //Cause IE10 don't support this type of arrays.
 
         /*
          * CLIENT
@@ -188,7 +198,7 @@ export default {
                 break;
             }
             case (typeof process !== 'undefined' && process.versions !== null && process.versions.node !== null): {
-                if (!!process.versions.electron) {
+                if (Type.toBoolean(process.versions.electron)) {
                     this.CLIENT = CLIENT.ELECTRON;
                     break;
                 }
