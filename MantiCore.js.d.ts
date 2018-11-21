@@ -1712,6 +1712,7 @@ declare namespace MANTICORE {
             export function percentToFloat(value: number): number;
             export function getUniqueId(): number;
             export function putUniqueId(id: number): void;
+            export function sqrt(value: number): number;
             export function intPow(value: number, power: number): number;
             export function framesToSeconds(value: number): number;
             export function secondsToFrames(value: number): number;

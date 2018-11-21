@@ -1,5 +1,4 @@
 import SCROLL_DIRECTION from "enumerator/ui/ScrollDirection";
-import DIRECTION from "enumerator/Direction";
 import Component from "component/Component";
 import Geometry from "util/Geometry";
 import Type from "util/Type";
@@ -47,30 +46,6 @@ class ComScroller extends Component {
          */
 
         this._innerBoundary = new PIXI.Point(0, 0);
-
-        this._touchMoveDisplacements = null;
-        this._touchMoveTimeDeltas =  null;
-        this._touchMovePreviousTimestamp = 0;
-        this._touchTotalTimeThreshold = 0.5;
-
-        this._autoScrolling = false;
-        this._autoScrollTargetDelta = null;
-        this._autoScrollAttenuate = true;
-        this._autoScrollStartPosition = null;
-        this._autoScrollTotalTime = 0;
-        this._autoScrollAccumulatedTime = 0;
-        this._autoScrollCurrentlyOutOfBoundary = false;
-        this._autoScrollBraking = false;
-        this._autoScrollBrakingStartPosition = null;
-
-        this._bePressed = false;
-
-        this._childFocusCancelOffset = 0;
-
-        this.bounceEnabled = false;
-
-        this._outOfBoundaryAmount = null;
-        this._outOfBoundaryAmountDirty = true;
     }
 
     /**
@@ -255,13 +230,19 @@ class ComScroller extends Component {
 
         innerContainer.position.copy(nextPosition);
 
-        if (!Type.isNull(this.owner.horizontalSlider)) {
-            this.owner.horizontalSlider.progress = Math.toFixed(nextPosition.x / this._innerBoundary.x);
-        }
+        this._upateSliderProgress(this.owner.horizontalSlider, nextPosition.x, this._innerBoundary.x);
+        this._upateSliderProgress(this.owner.verticalSlider, nextPosition.y, this._innerBoundary.y);
+    }
 
-        if (!Type.isNull(this.owner.verticalSlider)) {
-            this.owner.verticalSlider.progress = Math.toFixed(nextPosition.y / this._innerBoundary.y);
-        }
+    /**
+     * @desc Update drag finish event of owner.
+     * @method
+     * @public
+     * @param {PIXI.Point | Point} position
+     */
+
+    updateDragFinish(position) {
+
     }
 
     /**
@@ -364,191 +345,20 @@ class ComScroller extends Component {
         this.updateScrollDimension(percent, mainDirection);
     }
 
-    _processAutoScrolling(deltaTime) {
-        const OUT_OF_BOUNDARY_BREAKING_FACTOR = 0.05;
-        // Make auto scroll shorter if it needs to deaccelerate.
-        const brakingFactor = (this._isNecessaryAutoScrollBrake() ? OUT_OF_BOUNDARY_BREAKING_FACTOR : 1);
+    /**
+     * @desc Update progress of slider if it exist.
+     * @method
+     * @private
+     * @param {MANTICORE.ui.Slider} slider
+     * @param {number} position
+     * @param {number} bound
+     */
 
-        // Elapsed time
-        this._autoScrollAccumulatedTime += deltaTime * (1 / brakingFactor);
-
-        // Calculate the progress percentage
-        let percentage = Math.min(1, this._autoScrollAccumulatedTime / this._autoScrollTotalTime);
-        if (this._autoScrollAttenuate) {
-            percentage -= 1;
-            percentage = Math.intPow(percentage, 5) + 1;
+    _upateSliderProgress(slider, position, bound) {
+        if (Type.isNull(slider)) {
+            return;
         }
-
-        // Calculate the new position
-        let newPosition = Geometry.pAdd(this._autoScrollStartPosition, Geometry.pMult(this._autoScrollTargetDelta, percentage));
-        let reachedEnd = Math.abs(percentage - 1) <= this._getAutoScrollStopEpsilon();
-
-        if (this.bounceEnabled) {
-            // The new position is adjusted if out of boundary
-            newPosition = Geometry.pAdd(this._autoScrollBrakingStartPosition, Geometry.pMult(Geometry.pSub(newPosition, this._autoScrollBrakingStartPosition), brakingFactor));
-        }
-        else {
-            // Don't let go out of boundary
-            const moveDelta = Geometry.pSub(newPosition, this.owner.innerContainer.position.clone());
-            const outOfBoundary = this._getHowMuchOutOfBoundary(moveDelta);
-            if (!this._fltEqualZero(outOfBoundary)) {
-                newPosition.x += outOfBoundary.x;
-                newPosition.y += outOfBoundary.y;
-
-                reachedEnd = true;
-            }
-        }
-
-        // Finish auto scroll if it ended
-        if (reachedEnd) {
-            this._autoScrolling = false;
-            //this._dispatchEvent(ccui.ScrollView.EVENT_AUTOSCROLL_ENDED);
-        }
-
-        this._moveInnerContainer(Geometry.pSub(newPosition, this.owner.innerContainer.position.clone()), reachedEnd);
-    }
-
-    _isNecessaryAutoScrollBrake() {
-        if (this._autoScrollBraking) {
-            return true;
-        }
-
-        if (this._isOutOfBoundary()) {
-            // It just went out of boundary.
-            if (!this._autoScrollCurrentlyOutOfBoundary) {
-                this._autoScrollCurrentlyOutOfBoundary = true;
-                this._autoScrollBraking = true;
-                this._autoScrollBrakingStartPosition = this.owner.innerContainer.position.clone();
-                return true;
-            }
-        }
-        else {
-            this._autoScrollCurrentlyOutOfBoundary = false;
-        }
-        return false;
-    }
-
-    _isOutOfBoundary (dir) {
-        const outOfBoundary = this._getHowMuchOutOfBoundary();
-        if (dir !== undefined) {
-            switch (dir) {
-                case DIRECTION.UP:
-                    return outOfBoundary.y > 0;
-                case DIRECTION.BOTTOM:
-                    return outOfBoundary.y < 0;
-                case DIRECTION.LEFT:
-                    return outOfBoundary.x < 0;
-                case DIRECTION.RIGHT:
-                    return outOfBoundary.x > 0;
-            }
-        }
-        else {
-            return !this._fltEqualZero(outOfBoundary);
-        }
-
-        return false;
-    }
-
-    _getHowMuchOutOfBoundary(addition = new PIXI.Point(0, 0)) {
-
-        if (addition.x === 0 && addition.y === 0 && !this._outOfBoundaryAmountDirty) {
-            return this._outOfBoundaryAmount;
-        }
-
-        const outOfBoundaryAmount = new PIXI.Point(0, 0);
-        /**
-         * @type {MANTICORE.ui.Widget}
-         */
-        const innerContainer = this.owner.innerContainer;
-        const leftBoundary = innerContainer.x + addition.x;
-        const rightBoundary = leftBoundary + innerContainer.width;
-        const topBoundary = innerContainer.y + addition.y;
-        const bottomBoundary = topBoundary + innerContainer.height;
-
-        if (leftBoundary > 0) {
-            outOfBoundaryAmount.x = -leftBoundary;
-        }
-        else if (rightBoundary < this.owner.width) {
-            outOfBoundaryAmount.x = this.owner.width - rightBoundary;
-        }
-
-        if (topBoundary > 0) {
-            outOfBoundaryAmount.y = -topBoundary;
-        }
-        else if (bottomBoundary < this.owner.height) {
-            outOfBoundaryAmount.y = this.owner.height - bottomBoundary;
-        }
-
-        if (addition.x === 0 && addition.y === 0) {
-            this._outOfBoundaryAmount = outOfBoundaryAmount;
-            this._outOfBoundaryAmountDirty = false;
-        }
-        return outOfBoundaryAmount;
-    }
-
-    _fltEqualZero(point) {
-        const eps = 0.0001;
-        return (Math.abs(point.x) <= eps && Math.abs(point.y) <= eps);
-    }
-
-    _getAutoScrollStopEpsilon() {
-        return 0.0001;
-    }
-
-    _moveInnerContainer(deltaMove, canStartBounceBack) {
-        const adjustedMove = this._flattenVectorByDirection(deltaMove);
-
-        this.owner.innerContainer.position.copy(Geometry.pAdd(this.owner.innerContainer.position.clone(), adjustedMove));
-
-        const outOfBoundary = this._getHowMuchOutOfBoundary();
-
-        if (this.bounceEnabled && canStartBounceBack) {
-            this._startBounceBackIfNeeded();
-        }
-    }
-
-    _flattenVectorByDirection(vector) {
-        const result = new PIXI.Point(0, 0);
-        result.x = (this._scrollDirection === SCROLL_DIRECTION.VERTICAL ? 0 : vector.x);
-        result.y = (this._scrollDirection === SCROLL_DIRECTION.HORIZONTAL ? 0 : vector.y);
-        return result;
-    }
-
-    _startBounceBackIfNeeded() {
-        if (!this.bounceEnabled) {
-            return false;
-        }
-        const bounceBackAmount = this._getHowMuchOutOfBoundary();
-        if (this._fltEqualZero(bounceBackAmount)) {
-            return false;
-        }
-
-        const BOUNCE_BACK_DURATION = 1.0;
-        this._startAutoScroll(bounceBackAmount, BOUNCE_BACK_DURATION, true);
-        return true;
-    }
-
-    _startAutoScroll(deltaMove, timeInSec, attenuated) {
-        const adjustedDeltaMove = this._flattenVectorByDirection(deltaMove);
-
-        this._autoScrolling = true;
-        this._autoScrollTargetDelta = adjustedDeltaMove;
-        this._autoScrollAttenuate = attenuated;
-        this._autoScrollStartPosition = this._innerContainer.getPosition();
-        this._autoScrollTotalTime = timeInSec;
-        this._autoScrollAccumulatedTime = 0;
-        this._autoScrollBraking = false;
-        this._autoScrollBrakingStartPosition = cc.p(0, 0);
-
-        // If the destination is also out of boundary of same side, start brake from beggining.
-        const currentOutOfBoundary = this._getHowMuchOutOfBoundary();
-        if (!this._fltEqualZero(currentOutOfBoundary)) {
-            this._autoScrollCurrentlyOutOfBoundary = true;
-            const afterOutOfBoundary = this._getHowMuchOutOfBoundary(adjustedDeltaMove);
-            if (currentOutOfBoundary.x * afterOutOfBoundary.x > 0 || currentOutOfBoundary.y * afterOutOfBoundary.y > 0) {
-                this._autoScrollBraking = true;
-            }
-        }
+        slider.progress = Math.toFixed(position / bound);
     }
 
     /**

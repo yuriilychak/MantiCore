@@ -289,6 +289,18 @@ const math = {
     },
 
     /**
+     * @desc Returns square root of value.
+     * @function
+     * @public
+     * @param {number} value
+     * @return {number}
+     */
+
+    sqrt: function(value) {
+        return Math.sqrt(value);
+    },
+
+    /**
      * @desc Convert degrees to radians
      * @function
      * @param {number} degrees

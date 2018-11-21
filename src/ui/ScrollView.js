@@ -473,6 +473,7 @@ class ScrollView extends Panel {
 
     onDragFinishInnerContainerHandler(event) {
         this.listenerManager.dispatchEvent(this._eventDragFinish, event.data);
+        this._scroller.updateDragFinish(event.data.data.global);
     }
 
     /**
