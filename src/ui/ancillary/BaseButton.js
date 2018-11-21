@@ -76,6 +76,23 @@ class BaseButton extends Widget {
     }
 
     /**
+     * @method
+     * @public
+     * @param {int} state
+     * @param {int} fallback
+     * @param {boolean} [isEnabled] - Is change enabled state.
+     */
+
+    changeStateWithFallback(state, fallback, isEnabled = true) {
+        const nextState = this.collider.hasState(state) ? state : fallback;
+        if (isEnabled) {
+            this.changeEnabledState(nextState);
+            return;
+        }
+        this.changeState(nextState);
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -119,23 +136,6 @@ class BaseButton extends Widget {
      */
 
     onEnabledChange(enabled) {}
-
-    /**
-     * @method
-     * @protected
-     * @param {int} state
-     * @param {int} fallback
-     * @param {boolean} [isEnabled] - Is change enabled state.
-     */
-
-    changeStateWithFallback(state, fallback, isEnabled = true) {
-        const nextState = this.collider.hasState(state) ? state : fallback;
-        if (isEnabled) {
-            this.changeEnabledState(nextState);
-            return;
-        }
-        this.changeState(nextState);
-    }
 
     /**
      * PROPERTIES
