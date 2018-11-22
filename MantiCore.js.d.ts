@@ -1365,7 +1365,7 @@ declare namespace MANTICORE {
 
     export namespace ui {
         export namespace ancillary {
-            export class BaseButton {
+            export class BaseButton extends MANTICORE.ui.Widget {
                 constructor(frame: string, state: number);
 
                 enabled: boolean;
@@ -1381,7 +1381,7 @@ declare namespace MANTICORE {
 
             }
 
-            export class BaseLabel {
+            export class BaseLabel extends MANTICORE.ui.Widget {
                 constructor();
 
                 fontSize: number;
