@@ -690,7 +690,7 @@ declare namespace MANTICORE {
                 verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
                 horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
 
-                refres(): void;
+                refresh(): void;
                 clone(): MANTICORE.component.ui.ComLayout;
             }
 
