@@ -416,8 +416,9 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     _updateTint() {
-        this._realTint = Color.multiply(this._parentTint, this._customTint);;
+        this._realTint = Color.multiply(this._parentTint, this._customTint);
 
+        super.tint = this._realTint;
         const children = this.children;
         const childCount = children.length;
         for (let i = 0; i < childCount; ++i) {
