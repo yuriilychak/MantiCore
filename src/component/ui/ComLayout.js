@@ -116,7 +116,7 @@ class ComLayout extends ComChildIterator {
      * @public
      */
 
-    refreshLayout() {
+    refresh() {
         this._refreshLayout();
     }
 
