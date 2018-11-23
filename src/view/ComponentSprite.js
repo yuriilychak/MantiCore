@@ -138,6 +138,8 @@ class ComponentSprite extends PIXI.Sprite {
          */
 
         this._uiType = UI_ELEMENT.SPRITE;
+
+        this._updateTint();
     }
 
     /**
@@ -416,8 +418,8 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     _updateTint() {
+        if (Type.isUndefined(this._parentTint))
         this._realTint = Color.multiply(this._parentTint, this._customTint);
-
         super.tint = this._realTint;
         const children = this.children;
         const childCount = children.length;
@@ -443,7 +445,7 @@ class ComponentSprite extends PIXI.Sprite {
 
 
     set parentTint(value) {
-        if (this._parentTint === value) {
+        if (Type.isEmpty(value) || this._parentTint === value) {
             return;
         }
         this._parentTint = value;
