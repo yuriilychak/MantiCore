@@ -1,7 +1,6 @@
 import BaseButton from "./ancillary/BaseButton";
 import INTERACTIVE_STATE from "enumerator/ui/InteractiveState";
 import UI_ELEMENT from "enumerator/ui/UIElement";
-import StateSlice9Sprite from "./ancillary/StateSlice9Sprite";
 
 /**
  * @desc realization of button class.

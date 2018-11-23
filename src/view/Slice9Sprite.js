@@ -95,7 +95,7 @@ class Slice9Sprite extends PIXI.Container {
 
         this._isInit = false;
 
-        this.interactiveChildren = false;
+        //this.interactiveChildren = false;
 
         this._collider.name = Constant.COLLIDER_NAME;
         this._collider.renderable = false;
