@@ -119,7 +119,7 @@ const ui = {
             if (isButton && child.name === "txtTitle") {
                 return;
             }
-            this._logHierarchy(child, path, tabCount + 1);
+            this._logHierarchy(child, path, tabCount + 1, maxLevel);
         });
     },
 
