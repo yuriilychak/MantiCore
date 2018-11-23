@@ -290,21 +290,7 @@ class Widget extends ComponentContainer {
      */
 
     onActionUpHandler(event) {
-        if (!this._isInteractiveDown) {
-            return false;
-        }
-        this._iterateUIComponents(component => component.onOwnerUp(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
-        console.log(this._acumOffset.x, this._acumOffset.y);
-        if (this._isInteractiveDrag) {
-            this.onActionDragFinishHandler(event);
-        }
-        else {
-            this.onActionClickHandler(event);
-        }
-        this._isInteractiveDown = false;
-        this._isInteractiveDrag = false;
-        return true;
+        return this._onUpAction(event);
     }
 
     /**
@@ -324,6 +310,7 @@ class Widget extends ComponentContainer {
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DOWN, event);
         this._prevPos.copy(globalPos);
         this._crtPos.copy(globalPos);
+        this._acumOffset.set(0, 0);
         return true;
     }
 
@@ -359,26 +346,7 @@ class Widget extends ComponentContainer {
      */
 
     onActionUpOutsideHandler(event) {
-        if (!this._isInteractiveDown) {
-            return false;
-        }
-        this._iterateUIComponents(component => component.onOwnerUp(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
-        if (this._isInteractiveDrag) {
-            this.onActionDragFinishHandler(event);
-            if (Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON && Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON) {
-                this.onActionClickHandler(event);
-            }
-        }
-        else {
-            this.onActionClickHandler(event);
-        }
-        this._isInteractiveDown = false;
-        this._isInteractiveDrag = false;
-        this._acumOffset.set(0, 0);
-        this._prevPos.set(0, 0);
-        this._crtPos.set(0, 0);
-        return true;
+        return this._onUpAction(event);
     }
 
     /**
@@ -542,6 +510,38 @@ class Widget extends ComponentContainer {
         const event = this._events.getElement(id);
         
         this.listenerManager.dispatchEvent(event, interactiveEvent);
+    }
+
+    /**
+     * @desc Calls when up handler in or out calls.
+     * @method
+     * @private
+     * @param {Object} event
+     * @return {boolean}
+     *
+     */
+
+    _onUpAction(event) {
+        if (!this._isInteractiveDown) {
+            return false;
+        }
+        this._iterateUIComponents(component => component.onOwnerUp(event));
+        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
+        if (this._isInteractiveDrag) {
+            this.onActionDragFinishHandler(event);
+            if (Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON && Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON) {
+                this.onActionClickHandler(event);
+            }
+        }
+        else {
+            this.onActionClickHandler(event);
+        }
+        this._isInteractiveDown = false;
+        this._isInteractiveDrag = false;
+        this._acumOffset.set(0, 0);
+        this._prevPos.set(0, 0);
+        this._crtPos.set(0, 0);
+        return true;
     }
 
     /**
