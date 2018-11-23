@@ -710,7 +710,7 @@ declare namespace MANTICORE {
                 readonly length: number;
 
                 updateData(data: any[]): void;
-                getElement(index: number): MANTICORE.component.ui.ComItem | null;
+                getElement<T extends MANTICORE.component.ui.ComItem>(index: number): T | null;
                 updateElementData(index: number, data: any): boolean;
                 addItem<T extends MANTICORE.view.ComponentContainer>(child: T): void;
                 clone(): MANTICORE.component.ui.ComItemBox;
