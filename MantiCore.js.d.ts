@@ -707,6 +707,7 @@ declare namespace MANTICORE {
                 readonly templateName: string;
                 readonly templateNumCount: number;
                 readonly componentTemplate: MANTICORE.component.ui.ComItem;
+                readonly length: number;
 
                 updateData(data: any[]): void;
                 getElement(index: number): MANTICORE.component.ui.ComItem | null;

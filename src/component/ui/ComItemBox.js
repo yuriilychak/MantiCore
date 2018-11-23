@@ -266,6 +266,16 @@ class ComItemBox extends Component {
     get componentTemplate() {
         return this._componentTemplate;
     }
+
+    /**
+     * @desc Returns item count
+     * @public
+     * @return {number}
+     */
+
+    get length() {
+        return this._items.length;
+    }
 }
 
 export default ComItemBox;
