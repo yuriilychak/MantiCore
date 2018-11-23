@@ -80,6 +80,30 @@ class Widget extends ComponentContainer {
         this._clippingMask = null;
 
         /**
+         * @desc Previous position of action (need to update click).
+         * @type {PIXI.Point}
+         * @private
+         */
+
+        this._prevPos = new PIXI.Point(0, 0);
+
+        /**
+         * @desc Current position of action (need to update click).
+         * @type {PIXI.Point}
+         * @private
+         */
+
+        this._crtPos = new PIXI.Point(0, 0);
+
+        /**
+         * @desc Accumulated offset when touch move. (need to update click).
+         * @type {PIXI.Point}
+         * @private
+         */
+
+        this._acumOffset = new PIXI.Point(0, 0);
+
+        /**
          * @desc Flag is need to propagate evens for children to dispatch for target.
          * @type {boolean}
          * @private
@@ -271,6 +295,7 @@ class Widget extends ComponentContainer {
         }
         this._iterateUIComponents(component => component.onOwnerUp(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
+        console.log(this._acumOffset.x, this._acumOffset.y);
         if (this._isInteractiveDrag) {
             this.onActionDragFinishHandler(event);
         }
@@ -290,12 +315,15 @@ class Widget extends ComponentContainer {
      */
 
     onActionDownHandler(event) {
+        const globalPos = event.data.global;
         if (this._haveInteractiveChildrenAt(this, event.data.global)) {
             return false;
         }
         this._isInteractiveDown = true;
         this._iterateUIComponents(component => component.onOwnerDown(event));
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DOWN, event);
+        this._prevPos.copy(globalPos);
+        this._crtPos.copy(globalPos);
         return true;
     }
 
@@ -338,12 +366,18 @@ class Widget extends ComponentContainer {
         this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
         if (this._isInteractiveDrag) {
             this.onActionDragFinishHandler(event);
+            if (Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON && Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON) {
+                this.onActionClickHandler(event);
+            }
         }
         else {
             this.onActionClickHandler(event);
         }
         this._isInteractiveDown = false;
         this._isInteractiveDrag = false;
+        this._acumOffset.set(0, 0);
+        this._prevPos.set(0, 0);
+        this._crtPos.set(0, 0);
         return true;
     }
 
@@ -355,7 +389,8 @@ class Widget extends ComponentContainer {
      */
 
     onActionMoveHandler(event) {
-        if (!this._isInteractiveDown && !this._isInteractiveOver || this._haveInteractiveChildrenAt(this, event.data.global)) {
+        const globalPos = event.data.global;
+        if (!this._isInteractiveDown && !this._isInteractiveOver || this._haveInteractiveChildrenAt(this, globalPos)) {
             return false;
         }
         if (this._isInteractiveDown && !this._isInteractiveDrag) {
@@ -366,6 +401,9 @@ class Widget extends ComponentContainer {
         if (this._isInteractiveDown) {
             this._iterateUIComponents(component => component.onOwnerDrag(event));
             this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DRAG, event);
+            this._crtPos.copy(globalPos);
+            Geometry.pAdd(this._acumOffset, Geometry.pSub(this._crtPos, this._prevPos), true);
+            this._prevPos.copy(this._crtPos);
         }
         else {
             this._iterateUIComponents(component => component.onOwnerMove(event));

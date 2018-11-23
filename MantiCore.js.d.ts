@@ -790,6 +790,7 @@ declare namespace MANTICORE {
         export const TEMPORARY_ANIMATION_NAME: string;
         export const DEFAULT_NAME: string;
         export const EMPTY_ID: number;
+        export const OFFSET_EPSILON: number;
     }
 
     export namespace enumerator {
@@ -1695,6 +1696,7 @@ declare namespace MANTICORE {
             export const PI: number;
             export const HALF_CIRCLE: number;
             export const MAX_BYTE: number;
+            export function abs(value: number): number;
             export function sign(value: number): number;
             export function binaryIndexOf(element: any, array: any[]): number;
             export function floor(value: number): number;

@@ -124,6 +124,17 @@ const math = {
     },
 
     /**
+     * @desc Return absolute value of number
+     * @function
+     * @param {number} value
+     * @return {number}
+     */
+
+    abs: function (value) {
+        return value * this.sign(value)
+    },
+
+    /**
      * @desc Floor number.
      * @function
      * @param {number} value

@@ -23,6 +23,16 @@ const constant = {
      */
     FLT_EPSILON: 0.0000001192092896,
 
+
+    /**
+     * @desc Epsilon forr detect click and drag actions.
+     * @public
+     * @readonly
+     * @type {number}
+     * @memberOf MANTICORE.constant
+     */
+    OFFSET_EPSILON: 5,
+
     /**
      * @desc Name of temporary animation that run when call runAction.
      * @public
