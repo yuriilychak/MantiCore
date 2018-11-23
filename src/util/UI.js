@@ -40,10 +40,11 @@ const ui = {
      * @public
      * @memberOf MANTICORE.util.ui
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} widget
+     * @param {number} [maxLevel = -1]
      */
 
-    logHierarchy: function(widget) {
-        this._logHierarchy(widget);
+    logHierarchy: function(widget, maxLevel = -1) {
+        this._logHierarchy(widget, null, 0, maxLevel);
     },
 
     /**
@@ -97,10 +98,11 @@ const ui = {
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | PIXI.DisplayObject} widget
      * @param {?string} [parentPath = null]
      * @param {int} [tabCount = 0]
+     * @param {int} [maxLevel = -1]
      */
 
-    _logHierarchy: function(widget, parentPath = null, tabCount = 0) {
-        if (Type.isUndefined(widget.uiType)) {
+    _logHierarchy: function(widget, parentPath = null, tabCount = 0, maxLevel = -1) {
+        if (Type.isUndefined(widget.uiType) || maxLevel === tabCount) {
             return;
         }
 

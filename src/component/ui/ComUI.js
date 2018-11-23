@@ -47,10 +47,11 @@ class ComUI extends Component {
      * @method
      * @public
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @param {number} [maxLevel = -1] - Max level of log hierarchy
      */
 
-    logHierarchy(widget = null) {
-        UI.logHierarchy(Type.isNull(widget) ? this.owner : widget);
+    logHierarchy(widget = null, maxLevel = -1) {
+        UI.logHierarchy(Type.isNull(widget) ? this.owner : widget, maxLevel);
     }
 
     /**
