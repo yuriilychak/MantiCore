@@ -316,6 +316,21 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
+     * @desc Calls when interactive manager emit event.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {Object} event
+     */
+
+    emitInteractiveEvent(eventType, event) {
+        if (!this._hasComponentManager) {
+            return;
+        }
+        this._componentManager.iterateUIComponents(component => component.emitInteractiveEvent(eventType, event));
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

@@ -4,6 +4,7 @@ import Type from "util/Type";
 import Model from "model/Model";
 import Format from "util/Format";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 
 /**
  * @desc Base Class for ui components.
@@ -233,85 +234,14 @@ class ComUI extends Component {
     }
 
     /**
-     * @desc Callback when owner up event emitted.
+     * @desc Calls when interactive manager of owner emit event.
      * @method
      * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
-    onOwnerUp(event) {}
-
-    /**
-     * @desc Callback when owner down event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerDown(event) {}
-
-    /**
-     * @desc Callback when owner over event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerOver(event) {}
-
-    /**
-     * @desc Callback when owner out event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerOut(event) {}
-
-    /**
-     * @desc Callback when owner move event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerMove(event) {}
-
-    /**
-     * @desc Callback when owner drag start event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerDragStart(event) {}
-
-    /**
-     * @desc Callback when owner drag finish event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerDragFinish(event) {}
-
-    /**
-     * @desc Callback when owner drag event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerDrag(event) {}
-
-    /**
-     * @desc Callback when owner click event emitted.
-     * @method
-     * @public
-     * @param {Object} event
-     */
-
-    onOwnerClick(event) {}
+    emitInteractiveEvent(eventType, event) {}
 
     /**
      * @desc Callback that calls when component detach from owner. Don't use it manually. Only override.

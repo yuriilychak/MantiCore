@@ -732,15 +732,7 @@ declare namespace MANTICORE {
 
                 // noinspection JSAnnotator
                 static create(name?: string): MANTICORE.component.ui.ComUI;
-                onOwnerUp(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerDown(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerOver(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerOut(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerMove(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerDragStart(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerDragFinish(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerDrag(event: MANTICORE.eventDispatcher.EventModel): void;
-                onOwnerClick(event: MANTICORE.eventDispatcher.EventModel): void;
+                emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, maxLevel?: number): void;
                 logUnlocalizedFields(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
                 setChildText<T extends PIXI.Container>(text: any, path: string, widget?: T): boolean;
@@ -1687,15 +1679,6 @@ declare namespace MANTICORE {
             public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
 
             protected collider: PIXI.Sprite | MANTICORE.view.Slice9Sprite | MANTICORE.ui.ancillary.StateSlice9Sprite;
-            protected onActionUpHandler(event: Object): boolean;
-            protected onActionDownHandler(event: Object): boolean;
-            protected onActionOverHandler(event: Object): void;
-            protected onActionOutHandler(event: Object): void;
-            protected onActionUpOutsideHandler(event: Object): boolean;
-            protected onActionMoveHandler(event: Object): boolean;
-            protected onActionClickHandler(event: Object): void;
-            protected onActionDragStartHandler(event: Object): void;
-            protected onActionDragFinishHandler(event: Object): void;
         }
     }
 
@@ -1847,6 +1830,7 @@ declare namespace MANTICORE {
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
+            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
 
             protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
             protected onUpdate(dt: number): void;
@@ -1876,6 +1860,7 @@ declare namespace MANTICORE {
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
+            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
 
             protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
             protected onUpdate(dt: number): void;

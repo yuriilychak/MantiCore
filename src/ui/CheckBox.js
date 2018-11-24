@@ -1,6 +1,7 @@
 import Button from "./Button";
 import StateSlice9Sprite from "ui/ancillary/StateSlice9Sprite";
 import INTERACTIVE_STATE from "enumerator/ui/InteractiveState";
+import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 import Math from "../util/Math";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
@@ -68,6 +69,14 @@ class CheckBox extends Button {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
+     * @param {string} upBackFrame
+     * @param {string} upIconFrame
+     * @param {?string} [downBackFrame = null]
+     * @param {?string} [overBackFrame = null]
+     * @param {?string} [disabledBackFrame = null]
+     * @param {?string} [downIconFrame = null]
+     * @param {?string} [overIconFrame = null]
+     * @param {?string} [disableIconFrame = null]
      */
     reuse(
         upBackFrame,
@@ -92,20 +101,25 @@ class CheckBox extends Button {
     }
 
     /**
-     * PROTECTED METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
+     * @desc Calls when interactive manager emit event.
      * @method
-     * @protected
+     * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
-    onActionClickHandler(event) {
+    emitInteractiveEvent(eventType, event) {
+        super.emitInteractiveEvent(eventType, event);
+        if (eventType !== INTERACTIVE_EVENT.CLICK) {
+            return;
+        }
         this.selected = !this.selected;
-        super.onActionClickHandler(event);
     }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Change frame of button if it exist.

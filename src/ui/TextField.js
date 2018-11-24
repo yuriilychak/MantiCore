@@ -5,6 +5,7 @@ import Color from "util/Color";
 import Geometry from "util/Geometry";
 import Format from "util/Format";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 
 /**
  * @type {?HTMLInputElement}
@@ -166,6 +167,35 @@ class TextField extends Label {
     }
 
     /**
+     * @desc Calls when interactive manager emit event.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {Object} event
+     */
+
+    emitInteractiveEvent(eventType, event) {
+        super.emitInteractiveEvent(eventType, event);
+        if (eventType !== INTERACTIVE_EVENT.UP) {
+            return;
+        }
+
+        this._isSelected = true;
+        const x = this.worldTransform.tx;
+        const y = this.worldTransform.ty;
+        const globalSize = this.toGlobal(Geometry.pFromSize(this));
+
+        TextField._updateInputStyle(Format.replace(styleTemplate, x, y, globalSize.y, globalSize.x));
+        input.value = this.text;
+        input.maxLength = this._maxLength === -1 ? MAX_CHAR_COUNT : this._maxLength;
+        input.onblur = this._onInputBlurHandler.bind(this);
+        input.oninput = this._onInputChangeHandler.bind(this);
+        input.focus();
+        TextField._updateInputStyle();
+        this._updateTextTransform();
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -189,30 +219,6 @@ class TextField extends Label {
         this._isSelected = false;
 
         super.clearData();
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionUpHandler(event) {
-        super.onActionUpHandler(event);
-
-        this._isSelected = true;
-        const x = this.worldTransform.tx;
-        const y = this.worldTransform.ty;
-        const globalSize = this.toGlobal(Geometry.pFromSize(this));
-
-        TextField._updateInputStyle(Format.replace(styleTemplate, x, y, globalSize.y, globalSize.x));
-        input.value = this.text;
-        input.maxLength = this._maxLength === -1 ? MAX_CHAR_COUNT : this._maxLength;
-        input.onblur = this._onInputBlurHandler.bind(this);
-        input.oninput = this._onInputChangeHandler.bind(this);
-        input.focus();
-        TextField._updateInputStyle();
-        this._updateTextTransform();
     }
 
     /**

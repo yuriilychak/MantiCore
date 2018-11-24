@@ -1,7 +1,8 @@
 import TOGGLE_INTERACTIVE_STATE from "enumerator/ui/ToggleInteractiveState";
 import BaseButton from "./ancillary/BaseButton";
 import UI_ELEMENT from "enumerator/ui/UIElement";
-import Asset from "../util/Asset";
+import INTERACTIVE_EVENT from "../enumerator/ui/InteractiveEvent";
+import INTERACTIVE_STATE from "../enumerator/ui/InteractiveState";
 
 /**
  * @desc Realization of toggle button class.
@@ -97,69 +98,54 @@ class ToggleButton extends BaseButton {
     }
 
     /**
+     * @desc Calls when interactive manager emit event.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {Object} event
+     */
+
+    emitInteractiveEvent(eventType, event) {
+        super.emitInteractiveEvent(eventType, event);
+        switch (eventType) {
+            case INTERACTIVE_EVENT.UP: {
+                let state, fallback;
+                if (this._isSelected) {
+                    state = TOGGLE_INTERACTIVE_STATE.SELECTED_OVER;
+                    fallback = TOGGLE_INTERACTIVE_STATE.SELECTED_UP;
+                }
+                else {
+                    state = TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER;
+                    fallback = TOGGLE_INTERACTIVE_STATE.DESELECTED_UP;
+                }
+                this.changeStateWithFallback(state, fallback);
+                break;
+            }
+            case INTERACTIVE_EVENT.DOWN: {
+                this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN, TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN);
+
+                if (!this.enabled) {
+                    return;
+                }
+
+                this.selected = !this.selected;
+                break;
+            }
+            case INTERACTIVE_EVENT.OVER: {
+                this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_OVER, TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER);
+                break;
+            }
+            case INTERACTIVE_EVENT.OUT: {
+                this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_UP, TOGGLE_INTERACTIVE_STATE.DESELECTED_UP);
+                break;
+            }
+        }
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionUpHandler(event) {
-        super.onActionUpHandler(event);
-        let state, fallback;
-        if (this._isSelected) {
-            state = TOGGLE_INTERACTIVE_STATE.SELECTED_OVER;
-            fallback = TOGGLE_INTERACTIVE_STATE.SELECTED_UP;
-        }
-        else {
-            state = TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER;
-            fallback = TOGGLE_INTERACTIVE_STATE.DESELECTED_UP;
-        }
-        this.changeStateWithFallback(state, fallback);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionDownHandler(event) {
-        super.onActionDownHandler(event);
-
-        this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN, TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN);
-
-        if (!this.enabled) {
-            return true;
-        }
-
-        this.selected = !this.selected;
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionOverHandler(event) {
-        super.onActionOverHandler(event);
-        this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_OVER, TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionOutHandler(event) {
-        super.onActionOutHandler(event);
-        this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_UP, TOGGLE_INTERACTIVE_STATE.DESELECTED_UP);
-    }
 
     /**
      * @desc Calls when button change enable.

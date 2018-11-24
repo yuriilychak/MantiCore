@@ -1,7 +1,6 @@
 import ComponentContainer from "view/ComponentContainer";
 import Type from "util/Type";
 import Math from "util/Math";
-import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 import Slice9Sprite from "view/Slice9Sprite";
 import Asset from "util/Asset";
 import UI_ELEMENT from "enumerator/ui/UIElement";
@@ -107,55 +106,6 @@ class Widget extends ComponentContainer {
     }
 
     /**
-     * @desc Calls when interactive manager emit event.
-     * @method
-     * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
-     * @param {Object} event
-     */
-
-    emitInteractiveEvent(eventType, event) {
-        switch (eventType) {
-            case INTERACTIVE_EVENT.CLICK: {
-                this.onActionClickHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.UP: {
-                this.onActionUpHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.DOWN: {
-                this.onActionDownHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.OVER: {
-                this.onActionOverHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.OUT: {
-                this.onActionOutHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.MOVE: {
-                this.onActionMoveHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.DRAG_START: {
-                this.onActionDragStartHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.DRAG: {
-                this.onActionDragHandler(event);
-                break;
-            }
-            case INTERACTIVE_EVENT.DRAG_FINIS: {
-                this.onActionDragFinishHandler(event);
-                break;
-            }
-        }
-    }
-
-    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -174,113 +124,9 @@ class Widget extends ComponentContainer {
     }
 
     /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionUpHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerUp(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionDownHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerDown(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionOverHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerOver(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionOutHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerOut(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionMoveHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerMove(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionClickHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerClick(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionDragHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerDrag(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionDragStartHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerDragStart(event));
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionDragFinishHandler(event) {
-        this._iterateUIComponents(component => component.onOwnerDragFinish(event));
-    }
-
-    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Function for iterate ui components.
-     * @method
-     * @param {MANTICORE.view.callback.IterateComponent} callback
-     * @private
-     */
-
-    _iterateUIComponents(callback) {
-        if (!this.hasComponentManager) {
-            return;
-        }
-        this.componentManager.iterateUIComponents(callback);
-    }
 
     /**
      * @desc Is currently widget clipped.

@@ -1,5 +1,6 @@
 import BaseButton from "./ancillary/BaseButton";
 import INTERACTIVE_STATE from "enumerator/ui/InteractiveState";
+import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
 /**
@@ -52,54 +53,39 @@ class Button extends BaseButton {
     }
 
     /**
+     * @desc Calls when interactive manager emit event.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {Object} event
+     */
+
+    emitInteractiveEvent(eventType, event) {
+        super.emitInteractiveEvent(eventType, event);
+        switch (eventType) {
+            case INTERACTIVE_EVENT.UP: {
+                this.changeStateWithFallback(INTERACTIVE_STATE.OVER, INTERACTIVE_STATE.UP);
+                break;
+            }
+            case INTERACTIVE_EVENT.DOWN: {
+                this.changeEnabledState(INTERACTIVE_STATE.DOWN);
+                break;
+            }
+            case INTERACTIVE_EVENT.OVER: {
+                this.changeEnabledState(INTERACTIVE_STATE.OVER);
+                break;
+            }
+            case INTERACTIVE_EVENT.OUT: {
+                this.changeEnabledState(INTERACTIVE_STATE.UP);
+                break;
+            }
+        }
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionUpHandler(event) {
-        super.onActionUpHandler(event);
-        this.changeStateWithFallback(INTERACTIVE_STATE.OVER, INTERACTIVE_STATE.UP);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     * @returns {boolean}
-     */
-
-    onActionDownHandler(event) {
-        super.onActionDownHandler(event);
-        this.changeEnabledState(INTERACTIVE_STATE.DOWN);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionOverHandler(event) {
-        super.onActionOverHandler(event);
-        this.changeEnabledState(INTERACTIVE_STATE.OVER);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     */
-
-    onActionOutHandler(event) {
-        super.onActionOutHandler(event);
-        this.changeEnabledState(INTERACTIVE_STATE.UP);
-    }
 
     /**
      * @desc Calls when button change enable.
