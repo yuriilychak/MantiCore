@@ -2,7 +2,6 @@ import TOGGLE_INTERACTIVE_STATE from "enumerator/ui/ToggleInteractiveState";
 import BaseButton from "./ancillary/BaseButton";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import INTERACTIVE_EVENT from "../enumerator/ui/InteractiveEvent";
-import INTERACTIVE_STATE from "../enumerator/ui/InteractiveState";
 
 /**
  * @desc Realization of toggle button class.
