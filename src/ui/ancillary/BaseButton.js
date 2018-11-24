@@ -34,6 +34,9 @@ class BaseButton extends Widget {
          */
 
         this._title = null;
+        console.log("BUTTON");
+        this.interactive = true;
+
     }
 
     /**

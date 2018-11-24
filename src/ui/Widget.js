@@ -119,21 +119,6 @@ class Widget extends ComponentContainer {
 
         super.addChild(this._collider);
 
-        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
-        const handlers = [
-            this.onActionDownHandler,
-            this.onActionUpHandler,
-            this.onActionUpOutsideHandler,
-            this.onActionOverHandler,
-            this.onActionOutHandler,
-            this.onActionMoveHandler,
-        ];
-        const listenerCount = events.length;
-
-        for (let i = 0; i < listenerCount; ++i) {
-            this.on(events[i], handlers[i], this);
-        }
-
         this.uiType = UI_ELEMENT.WIDGET;
 
         this._collider.name = Constant.COLLIDER_NAME;
@@ -145,7 +130,7 @@ class Widget extends ComponentContainer {
      */
 
     /**
-     * @desc Set slice of colider if it slice9 sprite.
+     * @desc Set slice of collider if it slice9 sprite.
      * @method
      * @public
      * @param {int} leftSlice
@@ -224,21 +209,6 @@ class Widget extends ComponentContainer {
         }
 
         super.addChild(this._collider);
-
-        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
-        const handlers = [
-            this.onActionDownHandler,
-            this.onActionUpHandler,
-            this.onActionUpOutsideHandler,
-            this.onActionOverHandler,
-            this.onActionOutHandler,
-            this.onActionMoveHandler,
-        ];
-        const listenerCount = events.length;
-
-        for (let i = 0; i < listenerCount; ++i) {
-            this.on(events[i], handlers[i], this);
-        }
         this._collider.name = Constant.COLLIDER_NAME;
     }
 
@@ -548,6 +518,46 @@ class Widget extends ComponentContainer {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Returns is object interactive
+     * @public
+     * @return {boolean}
+     */
+
+    get interactive() {
+        return super.interactive;
+    }
+
+    set interactive(value) {
+        if (super.interactive === value) {
+            return;
+        }
+        super.interactive = value;
+
+        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
+        const handlers = [
+            this.onActionDownHandler,
+            this.onActionUpHandler,
+            this.onActionUpOutsideHandler,
+            this.onActionOverHandler,
+            this.onActionOutHandler,
+            this.onActionMoveHandler,
+        ];
+        const listenerCount = events.length;
+
+        let i;
+        if (value) {
+            for (i = 0; i < listenerCount; ++i) {
+                this.on(events[i], handlers[i], this);
+            }
+        }
+        else {
+            for (i = 0; i < listenerCount; ++i) {
+                this.off(events[i], handlers[i], this);
+            }
+        }
+    }
 
     /**
      * @desc Flag is use clipping mask for element.
