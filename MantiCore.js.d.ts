@@ -670,6 +670,8 @@ declare namespace MANTICORE {
                 eventDragStart: string | null;
                 eventDragFinish: string | null;
 
+                // noinspection JSAnnotator
+                static create(): MANTICORE.component.ui.ComChildListener;
                 clone(): MANTICORE.component.ui.ComChildListener;
             }
 
@@ -690,6 +692,8 @@ declare namespace MANTICORE {
                 verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
                 horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
 
+                // noinspection JSAnnotator
+                static create(): MANTICORE.component.ui.ComLayout;
                 refresh(): void;
                 clone(): MANTICORE.component.ui.ComLayout;
             }
@@ -697,6 +701,8 @@ declare namespace MANTICORE {
             export class ComItem extends MANTICORE.component.ui.ComUI {
                 constructor();
 
+                // noinspection JSAnnotator
+                static create(): MANTICORE.component.ui.ComItem;
                 updateData(data: any): void;
                 clone(): MANTICORE.component.ui.ComItem;
             }
@@ -709,6 +715,8 @@ declare namespace MANTICORE {
                 readonly componentTemplate: MANTICORE.component.ui.ComItem;
                 readonly length: number;
 
+                // noinspection JSAnnotator
+                static create(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number): MANTICORE.component.ui.ComItemBox;
                 updateData(data: any[]): void;
                 getElement<T extends MANTICORE.component.ui.ComItem>(index: number): T | null;
                 updateElementData(index: number, data: any): boolean;
@@ -722,6 +730,8 @@ declare namespace MANTICORE {
 
                 listenInteractions: boolean;
 
+                // noinspection JSAnnotator
+                static create(name?: string): MANTICORE.component.ui.ComUI;
                 onOwnerUp(event: MANTICORE.eventDispatcher.EventModel): void;
                 onOwnerDown(event: MANTICORE.eventDispatcher.EventModel): void;
                 onOwnerOver(event: MANTICORE.eventDispatcher.EventModel): void;
@@ -745,6 +755,8 @@ declare namespace MANTICORE {
 
             export class ComUIElement extends MANTICORE.component.ui.ComUI {
                 constructor(elementName: string, bundleName?: string, owner?: MANTICORE.view.ComponentContainer);
+                // noinspection JSAnnotator
+                static create(elementName: string, bundleName?: string, owner?: MANTICORE.view.ComponentContainer): MANTICORE.component.ui.ComUIElement;
                 clone(): MANTICORE.component.ui.ComUIElement;
             }
         }
@@ -754,6 +766,8 @@ declare namespace MANTICORE {
 
             childCount: number;
 
+            // noinspection JSAnnotator
+            static create(name?: string): MANTICORE.component.ComChildIterator;
             hasChildren(): void;
             iterateChildren(callback: MANTICORE.component.callback.IterateChildren): void;
             clone(): MANTICORE.component.ComChildIterator;
@@ -773,6 +787,8 @@ declare namespace MANTICORE {
             readonly hasListenerManager: boolean;
             readonly listenerManager: MANTICORE.manager.ListenerManager;
 
+            // noinspection JSAnnotator
+            static create(name?: string): MANTICORE.component.Component;
             hasOwner(): boolean;
             onAdd(owner: MANTICORE.view.ComponentContainer): void;
             onRemove(): void;
@@ -1448,6 +1464,8 @@ declare namespace MANTICORE {
 
         export class AtlasLabel extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(frame: string, letterWidth: number, letterHeight: number, dotWidth: number);
+            // noinspection JSAnnotator
+            static create(frame: string, letterWidth: number, letterHeight: number, dotWidth: number): MANTICORE.ui.AtlasLabel;
         }
 
         export class Button extends MANTICORE.ui.ancillary.BaseButton {
@@ -1458,6 +1476,8 @@ declare namespace MANTICORE {
             overFrame: string | null;
             disabledFrame: string | null;
 
+            // noinspection JSAnnotator
+            static create(upFrame: string, downFrame?: string, overFrame?: string, disabledFrame?: string): MANTICORE.ui.Button;
             protected onActionUpHandler(event: Object): boolean;
             protected onActionDownHandler(event: Object): boolean;
             protected onActionOverHandler(event: Object): void;
@@ -1468,8 +1488,28 @@ declare namespace MANTICORE {
         }
 
         export class CheckBox extends MANTICORE.ui.ancillary.BaseButton {
-            constructor();
+            constructor(
+                upBackFrame: string,
+                upIconFrame: string,
+                downBackFrame?: string,
+                overBackFrame?: string,
+                disabledBackFrame?: string,
+                downIconFrame?: string,
+                overIconFrame?: string,
+                disableIconFrame?: string
+            );
 
+            // noinspection JSAnnotator
+            static create(
+                upBackFrame: string,
+                upIconFrame: string,
+                downBackFrame?: string,
+                overBackFrame?: string,
+                disabledBackFrame?: string,
+                downIconFrame?: string,
+                overIconFrame?: string,
+                disableIconFrame?: string
+            ): MANTICORE.ui.CheckBox;
             icon: MANTICORE.ui.ancillary.StateSlice9Sprite;
             selected: boolean;
 
@@ -1478,10 +1518,14 @@ declare namespace MANTICORE {
 
         export class ImageView {
             constructor(frameName: string);
+            // noinspection JSAnnotator
+            static create(frameName: string): MANTICORE.ui.ImageView;
         }
 
         export class Label extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(fontName: string, size: number);
+            // noinspection JSAnnotator
+            static create(fontName: string, size: number): MANTICORE.ui.Label;
         }
 
         export class ListView extends MANTICORE.ui.ScrollView{
@@ -1507,6 +1551,8 @@ declare namespace MANTICORE {
             innerPadding: PIXI.ObservablePoint;
             outerPadding: PIXI.ObservablePoint;
 
+            // noinspection JSAnnotator
+            static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ListView;
         }
 
         export class ProgressBar extends Widget {
@@ -1515,6 +1561,9 @@ declare namespace MANTICORE {
             progress: number;
             type: MANTICORE.enumerator.ui.PROGRESS_TYPE;
             frameName: string;
+
+            // noinspection JSAnnotator
+            static create(frameLink: string, direction?: MANTICORE.enumerator.DIRECTION, type?: MANTICORE.enumerator.ui.PROGRESS_TYPE): MANTICORE.ui.ProgressBar;
         }
 
         export class Panel extends MANTICORE.ui.Widget{
@@ -1524,6 +1573,9 @@ declare namespace MANTICORE {
             backgroundAlpha: number;
             readonly panelType: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE;
             setType(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): void;
+
+            // noinspection JSAnnotator
+            static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.Panel;
         }
 
         export class ScrollView extends MANTICORE.ui.Widget {
@@ -1535,6 +1587,9 @@ declare namespace MANTICORE {
             innerContainer: MANTICORE.ui.Widget;
             innerWidth: number;
             innerHeight: number;
+
+            // noinspection JSAnnotator
+            static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ScrollView;
 
             jumpToBottom(): void;
             jumpToBottomLeft(): void;
@@ -1566,6 +1621,8 @@ declare namespace MANTICORE {
             progress: number;
             enabled: boolean;
 
+            // noinspection JSAnnotator
+            static create(ball: MANTICORE.ui.Widget, direction?: MANTICORE.enumerator.DIRECTION, progressFrame?: string): MANTICORE.ui.Slider;
             hasProgressBar(): boolean;
         }
 
@@ -1582,6 +1639,8 @@ declare namespace MANTICORE {
             placeholderText: string;
             color: number;
 
+            // noinspection JSAnnotator
+            static create(fontName: string, size: number): MANTICORE.ui.TextField;
             protected onActionUpHandler(event: Object): boolean;
         }
 
@@ -1589,6 +1648,8 @@ declare namespace MANTICORE {
             constructor(dUpFrame: string, sUpFrame: string, sDownFrame?: string, dDownFrame?: string, dOverFrame?: string, sOverFrame?: string, dDisabledFrame?: string, sDisabledFrame?: string);
             selected: boolean;
 
+            // noinspection JSAnnotator
+            static create(dUpFrame: string, sUpFrame: string, sDownFrame?: string, dDownFrame?: string, dOverFrame?: string, sOverFrame?: string, dDisabledFrame?: string, sDisabledFrame?: string): MANTICORE.ui.ToggleButton;
             protected onEnabledChange(enabled: boolean): void;
 
         }
@@ -1613,6 +1674,8 @@ declare namespace MANTICORE {
             eventDragStart: string | null;
             propagateChildrenEvents: boolean;
 
+            // noinspection JSAnnotator
+            static create(collider?: PIXI.Sprite | MANTICORE.view.Slice9Sprite): MANTICORE.ui.Widget;
             public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
             public getInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT): string;
             public updateInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, name?: string): void;

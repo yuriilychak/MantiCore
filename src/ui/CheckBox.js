@@ -11,6 +11,17 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
  */
 
 class CheckBox extends Button {
+    /**
+     * @constructor
+     * @param {string} upBackFrame
+     * @param {string} upIconFrame
+     * @param {?string} [downBackFrame = null]
+     * @param {?string} [overBackFrame = null]
+     * @param {?string} [disabledBackFrame = null]
+     * @param {?string} [downIconFrame = null]
+     * @param {?string} [overIconFrame = null]
+     * @param {?string} [disableIconFrame = null]
+     */
     constructor (
         upBackFrame,
         upIconFrame,
