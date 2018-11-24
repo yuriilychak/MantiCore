@@ -26,13 +26,6 @@ class Slice9Sprite extends PIXI.Container {
         super();
 
         /**
-         * @type {PIXI.Sprite}
-         * @private
-         */
-
-        this._collider = Asset.createWhiteSprite();
-
-        /**
          * @desc anchor point of sprite.
          * @type {PIXI.ObservablePoint | ObservablePoint}
          * @private
@@ -95,12 +88,8 @@ class Slice9Sprite extends PIXI.Container {
 
         this._isInit = false;
 
-        //this.interactiveChildren = false;
-
-        this._collider.name = Constant.COLLIDER_NAME;
-        this._collider.renderable = false;
-
-        this.addChild(this._collider);
+        this.interactiveChildren = false;
+        this.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
 
         const elementCount = Slice9Sprite.ELEMMENT_COUNT * Slice9Sprite.ELEMMENT_COUNT;
 
@@ -446,7 +435,8 @@ class Slice9Sprite extends PIXI.Container {
             indices = [3, 4, 5];
             positionLink = "x";
             useRowIndex = true;
-            this._collider.width = value;
+            this.hitArea.width = value;
+            this.hitArea.x = -Math.round(this._anchor.x * this.hitArea.width);
         }
         else {
             minBoundary = this._slice[2];
@@ -454,7 +444,8 @@ class Slice9Sprite extends PIXI.Container {
             indices = [1, 4, 7];
             positionLink = "y";
             useRowIndex = false;
-            this._collider.height = value;
+            this.hitArea.height = value;
+            this.hitArea.y = -Math.round(this._anchor.y * this.hitArea.height);
         }
 
         const middleDimension = value - minBoundary - maxBoundary;
@@ -535,8 +526,7 @@ class Slice9Sprite extends PIXI.Container {
                     sprite = PIXI.Sprite.from(frameTexture);
                     sprite.tint = this._realTint;
                     sprite.interactive = false;
-                    sprite.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
-                    this.addChildAt(sprite, 0);
+                    this.addChild(sprite);
                     this._frames[index] = sprite;
                 }
                 else {
@@ -546,7 +536,6 @@ class Slice9Sprite extends PIXI.Container {
 
                     sprite.texture.frame = rect;
                     sprite.interactive = false;
-                    sprite.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
                 }
 
                 if (!this._isInit) {
@@ -560,8 +549,10 @@ class Slice9Sprite extends PIXI.Container {
             this._updateDimension(height, "height");
             return;
         }
-        this._collider.width = width;
-        this._collider.height = height;
+        this.hitArea.width = width;
+        this.hitArea.height = height;
+        this.hitArea.x = -Math.round(this._anchor.x * this.hitArea.width);
+        this.hitArea.y = -Math.round(this._anchor.y * this.hitArea.height);
     }
 
     /**
@@ -590,7 +581,8 @@ class Slice9Sprite extends PIXI.Container {
      */
 
     _onAnchorPointUpdate() {
-        this._collider.anchor.set(this._anchor.x, this._anchor.y);
+        this.hitArea.x = -Math.round(this._anchor.x * this.hitArea.width);
+        this.hitArea.y = -Math.round(this._anchor.y * this.hitArea.height);
         const hPosition = this._generatePositions(this.width, this._anchor.x, this._slice[0],  this._slice[1]);
         const vPosition = this._generatePositions(this.height, this._anchor.y, this._slice[2],  this._slice[3]);
         this._iterateFrames((frame, index, row, col) => {
