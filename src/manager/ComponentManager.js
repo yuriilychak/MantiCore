@@ -239,6 +239,7 @@ class ComponentManager extends BaseManager {
 
     clearData() {
         this.removeAllComponents();
+        super.clearData();
     }
 
     /**

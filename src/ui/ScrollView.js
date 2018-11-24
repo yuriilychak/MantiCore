@@ -123,6 +123,8 @@ class ScrollView extends Panel {
         this.uiType = UI_ELEMENT.SCROLL_VIEW;
 
         super.addChild(this._innerContainer);
+
+        this._innerContainer.interactive = true;
     }
 
     /**
@@ -542,10 +544,10 @@ class ScrollView extends Panel {
         this.listenerManager.addEventListener(this._innerEventDragStart, this.onDragStartInnerContainerHandler);
         this.listenerManager.addEventListener(this._innerEventDragFinish, this.onDragFinishInnerContainerHandler);
 
-        this._innerContainer.eventDrag = this._innerEventDrag;
-        this._innerContainer.eventDragStart = this._innerEventDragStart;
-        this._innerContainer.eventDragFinish = this._innerEventDragFinish;
-        this._innerContainer.propagateChildrenEvents = true;
+        this._innerContainer.interactionManager.eventDrag = this._innerEventDrag;
+        this._innerContainer.interactionManager.eventDragStart = this._innerEventDragStart;
+        this._innerContainer.interactionManager.eventDragFinish = this._innerEventDragFinish;
+        this._innerContainer.interactionManager.propagateChildrenEvents = true;
         this._innerContainer.interactive = true;
     }
 
@@ -684,128 +686,11 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @type {?string}
+     * @return {MANTICORE.manager.InteractionManager}
      */
 
-    get eventUp() {
-        return this._innerContainer.eventUp;
-    }
-
-    set eventUp(value) {
-        this._innerContainer.eventUp = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDown() {
-        return this._innerContainer.eventOver;
-    }
-
-    set eventDown(value) {
-        this._innerContainer.eventDown = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventOver() {
-        return this._innerContainer.eventOver;
-    }
-
-    set eventOver(value) {
-        this._innerContainer.eventOver = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventOut() {
-        return this._innerContainer.eventOut;
-    }
-
-    set eventOut(value) {
-        this._innerContainer.eventOut = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventMove() {
-        return this._innerContainer.eventMove;
-    }
-
-    set eventMove(value) {
-        this._innerContainer.eventMove = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDrag() {
-        return this._eventDrag;
-    }
-
-    set eventDrag(value) {
-        if (this._eventDrag === value) {
-            return;
-        }
-        this._eventDrag = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventClick() {
-        return this._innerContainer.eventClick;
-    }
-
-    set eventClick(value) {
-        this._innerContainer.eventClick = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDragFinish() {
-        return this._eventDragFinish;
-    }
-
-    set eventDragFinish(value) {
-        if (this._eventDragFinish === value) {
-            return;
-        }
-        this._eventDragFinish = value;
-    }
-
-    /**
-     * @public
-     * @type {?string}
-     */
-
-    get eventDragStart() {
-        return this._eventDragStart;
-    }
-
-    set eventDragStart(value) {
-        if (this._eventDragStart === value) {
-            return;
-        }
-        this._eventDragStart = value;
+    get interactionManager() {
+        return this._innerContainer.interactionManager;
     }
 }
 

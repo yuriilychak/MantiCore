@@ -13,6 +13,7 @@ import ListenerManager from "manager/ListenerManager";
 import Type from "../util/Type";
 
 import Pool from "pool";
+import InteractionManager from "../manager/InteractionManager";
 
 /**
  * @desc Class that implements composite pattern for sprite;
@@ -54,6 +55,13 @@ class ComponentSprite extends PIXI.Sprite {
         this._animationManager = null;
 
         /**
+         * @desc Class for manipulate with interactions.
+         * @type {MANTICORE.manager.InteractionManager}
+         * @private
+         */
+        this._interactionManager = null;
+
+        /**
          * @desc Flag is animation manager init.
          * @type {boolean}
          * @private
@@ -76,6 +84,14 @@ class ComponentSprite extends PIXI.Sprite {
          */
 
         this._hasListenerManager = false;
+
+        /**
+         * @desc Flag is interaction manager init.
+         * @type {boolean}
+         * @private
+         */
+
+        this._hasInteractionManager = false;
 
         /**
          * @desc Flag is container marked for update;
@@ -324,12 +340,14 @@ class ComponentSprite extends PIXI.Sprite {
     clearData() {
         this.isUpdate = false;
 
+        this.interactive = false;
         this._parentTint = Color.COLORS.WHITE;
         super.tint = Color.COLORS.WHITE;
 
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
         this._animationManager = this._killManager(this._animationManager);
+        this._interactionManager = this._killManager(this._interactionManager);
 
         this._hasListenerManager = false;
         this._hasComponentManager = false;
@@ -437,6 +455,27 @@ class ComponentSprite extends PIXI.Sprite {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Returns is object interactive
+     * @public
+     * @return {boolean}
+     */
+
+    get interactive() {
+        return super.interactive;
+    }
+
+    set interactive(value) {
+        if (super.interactive === value) {
+            return;
+        }
+        super.interactive = value;
+
+        if (value || this._hasInteractionManager) {
+            this.interactionManager.interactive = value;
+        }
+    }
 
     /**
      * @desc Real tint of parent element.
@@ -658,6 +697,20 @@ class ComponentSprite extends PIXI.Sprite {
     }
 
     /**
+     * @desc Link to listener manager.
+     * @public
+     * @return {MANTICORE.manager.InteractionManager}
+     */
+
+    get interactionManager() {
+        if (!this._hasInteractionManager) {
+            this._hasInteractionManager = true;
+            this._interactionManager = InteractionManager.create(this);
+        }
+        return this._interactionManager;
+    }
+
+    /**
      * @desc Flag is view has animation manager.
      * @public
      * @return {boolean}
@@ -685,6 +738,16 @@ class ComponentSprite extends PIXI.Sprite {
 
     get hasListenerManager() {
         return this._hasListenerManager;
+    }
+
+    /**
+     * @desc Flag is view has interaction manager.
+     * @public
+     * @return {MANTICORE.manager.InteractionManager}
+     */
+
+    get hasInteractionManager() {
+        return this._interactionManager;
     }
 }
 

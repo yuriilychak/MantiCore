@@ -1175,6 +1175,25 @@ declare namespace MANTICORE {
             removeAllComponents(): void;
         }
 
+        export class InteractionManager extends MANTICORE.manager.BaseManager {
+            constructor(owner: MANTICORE.component.Component);
+
+            interactive: boolean;
+            eventUp: string | null;
+            eventDown: string | null;
+            eventOver: string | null;
+            eventOut: string | null;
+            eventMove: string | null;
+            eventDrag: string | null;
+            eventClick: string | null;
+            eventDragFinish: string | null;
+            eventDragStart: string | null;
+            propagateChildrenEvents: boolean;
+
+            public getInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT): string;
+            public updateInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, name?: string): void;
+        }
+
         export class LayoutSizeManager extends MANTICORE.manager.BaseManager {
             constructor(owner: MANTICORE.component.Component);
 
@@ -1662,23 +1681,10 @@ declare namespace MANTICORE {
             anchor: PIXI.ObservablePoint;
             flipX: boolean;
             flipY: boolean;
-            isDrag: boolean;
-            eventUp: string | null;
-            eventDown: string | null;
-            eventOver: string | null;
-            eventOut: string | null;
-            eventMove: string | null;
-            eventDrag: string | null;
-            eventClick: string | null;
-            eventDragFinish: string | null;
-            eventDragStart: string | null;
-            propagateChildrenEvents: boolean;
 
             // noinspection JSAnnotator
             static create(collider?: PIXI.Sprite | MANTICORE.view.Slice9Sprite): MANTICORE.ui.Widget;
             public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
-            public getInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT): string;
-            public updateInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, name?: string): void;
 
             protected collider: PIXI.Sprite | MANTICORE.view.Slice9Sprite | MANTICORE.ui.ancillary.StateSlice9Sprite;
             protected onActionUpHandler(event: Object): boolean;
@@ -1830,9 +1836,11 @@ declare namespace MANTICORE {
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
             readonly listenerManager: MANTICORE.manager.ListenerManager;
+            readonly interactionManager: MANTICORE.manager.InteractionManager;
             readonly hasAnimationManager: boolean;
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
+            readonly hasInteractionManager: boolean;
 
             static create<T extends MANTICORE.view.ComponentContainer>(...var_args: any[]): T;
             public reuse(...var_args: any[]): void;
@@ -1857,9 +1865,11 @@ declare namespace MANTICORE {
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
             readonly listenerManager: MANTICORE.manager.ListenerManager;
+            readonly interactionManager: MANTICORE.manager.InteractionManager;
             readonly hasAnimationManager: boolean;
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
+            readonly hasInteractionManager: boolean;
 
             static create<T extends MANTICORE.view.ComponentSprite>(...var_args: any[]): T;
             public reuse(...var_args: any[]): void;

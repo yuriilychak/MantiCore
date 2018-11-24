@@ -195,13 +195,10 @@ class TextField extends Label {
      * @method
      * @protected
      * @param {Object} event
-     * @returns {boolean}
      */
 
     onActionUpHandler(event) {
-        if (!super.onActionUpHandler(event)) {
-            return false;
-        }
+        super.onActionUpHandler(event);
 
         this._isSelected = true;
         const x = this.worldTransform.tx;
@@ -216,7 +213,6 @@ class TextField extends Label {
         input.focus();
         TextField._updateInputStyle();
         this._updateTextTransform();
-        return true;
     }
 
     /**

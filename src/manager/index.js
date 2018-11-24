@@ -1,6 +1,7 @@
 import AnimationManager from "./AnimationManager";
 import BaseManager from "./BaseManager";
 import ComponentManager from "./ComponentManager";
+import InteractionManager from "./InteractionManager";
 import LayoutSizeManager from "./LayoutSizeManager";
 import ListenerManager from "./ListenerManager";
 
@@ -14,6 +15,7 @@ export default {
     AnimationManager,
     BaseManager,
     ComponentManager,
+    InteractionManager,
     LayoutSizeManager,
     ListenerManager
 }

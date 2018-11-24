@@ -132,7 +132,7 @@ class ComChildListener extends ComChildIterator {
         let i, event;
         for (i = 0; i < eventCount; ++i) {
             event = events[i];
-            child.updateInteractiveEvent(event, this._events.getElement(event));
+            child.interactionManager.updateInteractiveEvent(event, this._events.getElement(event));
         }
     }
 
@@ -151,7 +151,7 @@ class ComChildListener extends ComChildIterator {
         let i, event;
         for (i = 0; i < eventCount; ++i) {
             event = events[i];
-            child.updateInteractiveEvent(event, null);
+            child.interactionManager.updateInteractiveEvent(event, null);
         }
         child.blockEvents = false;
     }
@@ -169,7 +169,7 @@ class ComChildListener extends ComChildIterator {
             if (!(child instanceof Widget)) {
                 return;
             }
-            child.updateInteractiveEvent(id, name);
+            child.interactionManager.updateInteractiveEvent(id, name);
         });
         const isEventEmpty = Type.isNull(name);
         if (this._events.hasElement(id)) {

@@ -2,7 +2,6 @@ import ComponentContainer from "view/ComponentContainer";
 import Type from "util/Type";
 import Math from "util/Math";
 import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
-import Repository from "repository/Repository";
 import Slice9Sprite from "view/Slice9Sprite";
 import Asset from "util/Asset";
 import UI_ELEMENT from "enumerator/ui/UIElement";
@@ -35,41 +34,10 @@ class Widget extends ComponentContainer {
 
         /**
          * @desc anchor point of widget.
-         * @type {PIXI.ObservablePoint}
+         * @type {PIXI.ObservablePoint | ObservablePoint}
          * @private
          */
         this._anchor = new PIXI.ObservablePoint(this._onAnchorPointUpdate, this);
-
-        /**
-         * @desc Flag is currently widget drag.
-         * @type {boolean}
-         * @private
-         */
-
-        this._isInteractiveDrag = false;
-
-        /**
-         * @desc Flag is currently widget down.
-         * @type {boolean}
-         * @private
-         */
-
-        this._isInteractiveDown = false;
-
-        /**
-         * @desc Flag is Interactive in view.
-         * @type {boolean}
-         * @private
-         */
-
-        this._isInteractiveOver = false;
-
-        /**
-         * @type {MANTICORE.repository.Repository}
-         * @private
-         */
-
-        this._events = new Repository();
 
         /**
          * @desc Clipping mask.
@@ -78,38 +46,6 @@ class Widget extends ComponentContainer {
          */
 
         this._clippingMask = null;
-
-        /**
-         * @desc Previous position of action (need to update click).
-         * @type {PIXI.Point}
-         * @private
-         */
-
-        this._prevPos = new PIXI.Point(0, 0);
-
-        /**
-         * @desc Current position of action (need to update click).
-         * @type {PIXI.Point}
-         * @private
-         */
-
-        this._crtPos = new PIXI.Point(0, 0);
-
-        /**
-         * @desc Accumulated offset when touch move. (need to update click).
-         * @type {PIXI.Point}
-         * @private
-         */
-
-        this._acumOffset = new PIXI.Point(0, 0);
-
-        /**
-         * @desc Flag is need to propagate evens for children to dispatch for target.
-         * @type {boolean}
-         * @private
-         */
-
-        this._propagateChildrenEvent = false;
 
         if (this._collider instanceof PIXI.Sprite) {
             this._collider.width = 100;
@@ -147,44 +83,6 @@ class Widget extends ComponentContainer {
     }
 
     /**
-     * @desc Returns interactive event.
-     * @method
-     * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} id
-     * @returns {string}
-     */
-
-    getInteractiveEvent(id) {
-        return this._events.getElement(id);
-    }
-
-    /**
-     * @desc Add or remove event from repository. DON'T USE IT MANUALLY!!!
-     * @method
-     * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} id
-     * @param {?string} [name = null] - name of event for dispatch.
-     */
-
-    updateInteractiveEvent(id, name = null) {
-        const isEventEmpty = Type.isNull(name);
-        if (this._events.hasElement(id)) {
-            if (isEventEmpty) {
-                this._events.removeElement(id);
-                return;
-            }
-            this._events.updateElement(name, id);
-            return;
-        }
-
-        if (isEventEmpty) {
-            return;
-        }
-
-        this._events.addElement(name, id);
-    }
-
-    /**
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
@@ -196,11 +94,7 @@ class Widget extends ComponentContainer {
         this._collider = collider;
 
         this._anchor.set(0, 0);
-        this._isInteractiveDrag = false;
-        this._isInteractiveDown = false;
-        this._isInteractiveOver = false;
         this._clippingMask = null;
-        this._propagateChildrenEvent = false;
 
         if (this._collider instanceof PIXI.Sprite) {
             this._collider.width = 100;
@@ -210,6 +104,55 @@ class Widget extends ComponentContainer {
 
         super.addChild(this._collider);
         this._collider.name = Constant.COLLIDER_NAME;
+    }
+
+    /**
+     * @desc Calls when interactive manager emit event.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {Object} event
+     */
+
+    emitInteractiveEvent(eventType, event) {
+        switch (eventType) {
+            case INTERACTIVE_EVENT.CLICK: {
+                this.onActionClickHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.UP: {
+                this.onActionUpHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.DOWN: {
+                this.onActionDownHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.OVER: {
+                this.onActionOverHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.OUT: {
+                this.onActionOutHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.MOVE: {
+                this.onActionMoveHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.DRAG_START: {
+                this.onActionDragStartHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.DRAG: {
+                this.onActionDragHandler(event);
+                break;
+            }
+            case INTERACTIVE_EVENT.DRAG_FINIS: {
+                this.onActionDragFinishHandler(event);
+                break;
+            }
+        }
     }
 
     /**
@@ -226,29 +169,7 @@ class Widget extends ComponentContainer {
     clearData() {
         this._collider = null;
         this._anchor.set(0, 0);
-        this._isInteractiveDrag = false;
-        this._isInteractiveDown = false;
-        this._isInteractiveOver = false;
-        this._events.clear(true);
         this._clippingMask = null;
-        this._propagateChildrenEvent = false;
-
-
-        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
-        const handlers = [
-            this.onActionDownHandler,
-            this.onActionUpHandler,
-            this.onActionUpOutsideHandler,
-            this.onActionOverHandler,
-            this.onActionOutHandler,
-            this.onActionMoveHandler,
-        ];
-        const listenerCount = events.length;
-
-        for (let i = 0; i < listenerCount; ++i) {
-            this.off(events[i], handlers[i], this);
-        }
-
         super.clearData();
     }
 
@@ -256,32 +177,20 @@ class Widget extends ComponentContainer {
      * @method
      * @protected
      * @param {Object} event
-     * @returns {boolean}
      */
 
     onActionUpHandler(event) {
-        return this._onUpAction(event);
+        this._iterateUIComponents(component => component.onOwnerUp(event));
     }
 
     /**
      * @method
      * @protected
      * @param {Object} event
-     * @returns {boolean}
      */
 
     onActionDownHandler(event) {
-        const globalPos = event.data.global;
-        if (this._haveInteractiveChildrenAt(this, event.data.global)) {
-            return false;
-        }
-        this._isInteractiveDown = true;
         this._iterateUIComponents(component => component.onOwnerDown(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DOWN, event);
-        this._prevPos.copy(globalPos);
-        this._crtPos.copy(globalPos);
-        this._acumOffset.set(0, 0);
-        return true;
     }
 
     /**
@@ -291,9 +200,7 @@ class Widget extends ComponentContainer {
      */
 
     onActionOverHandler(event) {
-        this._isInteractiveOver = true;
         this._iterateUIComponents(component => component.onOwnerOver(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.OVER, event);
     }
 
     /**
@@ -303,52 +210,17 @@ class Widget extends ComponentContainer {
      */
 
     onActionOutHandler(event) {
-        this._isInteractiveOver = false;
         this._iterateUIComponents(component => component.onOwnerOut(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.OUT, event);
     }
 
     /**
      * @method
      * @protected
      * @param {Object} event
-     * @returns {boolean}
-     */
-
-    onActionUpOutsideHandler(event) {
-        return this._onUpAction(event);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     * @returns {boolean}
      */
 
     onActionMoveHandler(event) {
-        const globalPos = event.data.global;
-        if (!this._isInteractiveDown && !this._isInteractiveOver || this._haveInteractiveChildrenAt(this, globalPos)) {
-            return false;
-        }
-        if (this._isInteractiveDown && !this._isInteractiveDrag) {
-                this._isInteractiveDrag = true;
-                this.onActionDragStartHandler(event);
-        }
-
-        if (this._isInteractiveDown) {
-            this._iterateUIComponents(component => component.onOwnerDrag(event));
-            this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DRAG, event);
-            this._crtPos.copy(globalPos);
-            Geometry.pAdd(this._acumOffset, Geometry.pSub(this._crtPos, this._prevPos), true);
-            this._prevPos.copy(this._crtPos);
-        }
-        else {
-            this._iterateUIComponents(component => component.onOwnerMove(event));
-            this._dispatchInteractiveEvent(INTERACTIVE_EVENT.MOVE, event);
-        }
-
-        return true;
+        this._iterateUIComponents(component => component.onOwnerMove(event));
     }
 
     /**
@@ -359,8 +231,16 @@ class Widget extends ComponentContainer {
 
     onActionClickHandler(event) {
         this._iterateUIComponents(component => component.onOwnerClick(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
+    }
 
+    /**
+     * @method
+     * @protected
+     * @param {Object} event
+     */
+
+    onActionDragHandler(event) {
+        this._iterateUIComponents(component => component.onOwnerDrag(event));
     }
 
     /**
@@ -371,7 +251,6 @@ class Widget extends ComponentContainer {
 
     onActionDragStartHandler(event) {
         this._iterateUIComponents(component => component.onOwnerDragStart(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, event);
     }
 
     /**
@@ -382,7 +261,6 @@ class Widget extends ComponentContainer {
 
     onActionDragFinishHandler(event) {
         this._iterateUIComponents(component => component.onOwnerDragFinish(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, event);
     }
 
     /**
@@ -415,40 +293,6 @@ class Widget extends ComponentContainer {
     }
 
     /**
-     * @param {Object} target
-     * @param {PIXI.Point} point
-     * @private
-     */
-
-    _haveInteractiveChildrenAt(target, point) {
-
-        if (this._propagateChildrenEvent) {
-            return false;
-        }
-
-        const childrenCount = target.children.length;
-        let i, child, pos;
-
-        if (!this.interactiveChildren) {
-            return false;
-        }
-
-        for (i = 0; i < childrenCount; ++i) {
-            child = target.children[i];
-            if (child.interactive) {
-                pos = child.toLocal(point);
-                if (pos.x > 0 && pos.y > 0 && pos.x < child.width && pos.y < child.height) {
-                    return true;
-                }
-            }
-            if (this._haveInteractiveChildrenAt(child, point)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * @desc Calls when anchor point change.
      * @method
      * @private
@@ -465,99 +309,11 @@ class Widget extends ComponentContainer {
         ));
     }
 
-    /**
-     * @method
-     * @private
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} id
-     * @param {Object} interactiveEvent
-     */
-
-    _dispatchInteractiveEvent(id, interactiveEvent) {
-        if (!this.interactive || !this._events.hasElement(id)) {
-            return;
-        }
-
-        const event = this._events.getElement(id);
-        
-        this.listenerManager.dispatchEvent(event, interactiveEvent);
-    }
-
-    /**
-     * @desc Calls when up handler in or out calls.
-     * @method
-     * @private
-     * @param {Object} event
-     * @return {boolean}
-     *
-     */
-
-    _onUpAction(event) {
-        if (!this._isInteractiveDown) {
-            return false;
-        }
-        this._iterateUIComponents(component => component.onOwnerUp(event));
-        this._dispatchInteractiveEvent(INTERACTIVE_EVENT.UP, event);
-        if (this._isInteractiveDrag) {
-            this.onActionDragFinishHandler(event);
-            if (Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON && Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON) {
-                this.onActionClickHandler(event);
-            }
-        }
-        else {
-            this.onActionClickHandler(event);
-        }
-        this._isInteractiveDown = false;
-        this._isInteractiveDrag = false;
-        this._acumOffset.set(0, 0);
-        this._prevPos.set(0, 0);
-        this._crtPos.set(0, 0);
-        return true;
-    }
 
     /**
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Returns is object interactive
-     * @public
-     * @return {boolean}
-     */
-
-    get interactive() {
-        return super.interactive;
-    }
-
-    set interactive(value) {
-        if (super.interactive === value) {
-            return;
-        }
-        super.interactive = value;
-
-        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
-        const handlers = [
-            this.onActionDownHandler,
-            this.onActionUpHandler,
-            this.onActionUpOutsideHandler,
-            this.onActionOverHandler,
-            this.onActionOutHandler,
-            this.onActionMoveHandler,
-        ];
-        const listenerCount = events.length;
-
-        let i;
-        if (value) {
-            for (i = 0; i < listenerCount; ++i) {
-                this.on(events[i], handlers[i], this);
-            }
-        }
-        else {
-            for (i = 0; i < listenerCount; ++i) {
-                this.off(events[i], handlers[i], this);
-            }
-        }
-    }
 
     /**
      * @desc Flag is use clipping mask for element.
@@ -689,151 +445,6 @@ class Widget extends ComponentContainer {
         }
 
         this.scale.y = this.scale.y * -1;
-    }
-
-    /**
-     * @desc Flag is currently ui element in drag mode.
-     * @public
-     * @readonly
-     * @type {boolean}
-     */
-
-    get isDrag() {
-        return this._isInteractiveDrag;
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventUp() {
-        return this._events.getElement(INTERACTIVE_EVENT.UP);
-    }
-
-    set eventUp(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.UP, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDown() {
-        return this._events.getElement(INTERACTIVE_EVENT.DOWN);
-    }
-
-    set eventDown(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DOWN, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventOver() {
-        return this._events.getElement(INTERACTIVE_EVENT.OVER);
-    }
-
-    set eventOver(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.OVER, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventOut() {
-        return this._events.getElement(INTERACTIVE_EVENT.OUT);
-    }
-
-    set eventOut(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.OUT, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventMove() {
-        return this._events.getElement(INTERACTIVE_EVENT.MOVE);
-    }
-
-    set eventMove(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.MOVE, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDrag() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG);
-    }
-
-    set eventDrag(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventClick() {
-        return this._events.getElement(INTERACTIVE_EVENT.CLICK);
-    }
-
-    set eventClick(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.CLICK, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDragFinish() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG_FINIS);
-    }
-
-    set eventDragFinish(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, value);
-    }
-
-    /**
-     * @public
-     * @type {string | null}
-     */
-
-    get eventDragStart() {
-        return this._events.getElement(INTERACTIVE_EVENT.DRAG_START);
-    }
-
-    set eventDragStart(value) {
-        this.updateInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, value);
-    }
-
-    /**
-     * @desc Is need to propagate child events. If true interactive events dispatch only for up child.
-     * @public
-     * @type {boolean}
-     */
-
-    get propagateChildrenEvents() {
-        return this._propagateChildrenEvent;
-    }
-
-    set propagateChildrenEvents(value) {
-        if (this._propagateChildrenEvent === value) {
-            return;
-        }
-        this._propagateChildrenEvent = value;
     }
 
     /**

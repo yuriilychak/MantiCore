@@ -79,7 +79,7 @@ class Slider extends Widget {
         this._ball.name = "btnBall";
         this._ball.anchor.set(0.5);
         this._ball.interactive = true;
-        this._ball.eventDrag = this._eventDrag;
+        this._ball.interactionManager.eventDrag = this._eventDrag;
 
         if (this.hasProgressBar()) {
             this.addChild(this._progressBar);
@@ -119,7 +119,7 @@ class Slider extends Widget {
         this._ball.name = "btnBall";
         this._ball.anchor.set(0.5);
         this._ball.interactive = true;
-        this._ball.eventDrag = this._eventDrag;
+        this._ball.interactionManager.eventDrag = this._eventDrag;
 
         if (this.hasProgressBar()) {
             this.addChild(this._progressBar);

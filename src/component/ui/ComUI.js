@@ -179,7 +179,7 @@ class ComUI extends Component {
 
         const event = Format.generateEventName(this, "CHILD_EVENT");
 
-        child.updateInteractiveEvent(eventType, event);
+        child.interactionManager.updateInteractiveEvent(eventType, event);
         this.listenerManager.addEventListener(event, listener);
         this._childEvents.push(ChildEventModel.create(child, eventType));
 
@@ -445,7 +445,7 @@ class ChildEventModel extends Model {
      */
 
     clearData() {
-        this._target.updateInteractiveEvent(null);
+        this._target.interactionManager.updateInteractiveEvent(null);
         this._target = null;
         this._event = null;
         super.clearData();

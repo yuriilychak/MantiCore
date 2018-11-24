@@ -108,10 +108,7 @@ class ToggleButton extends BaseButton {
      */
 
     onActionUpHandler(event) {
-        if (!super.onActionUpHandler(event)) {
-            return false;
-        }
-
+        super.onActionUpHandler(event);
         let state, fallback;
         if (this._isSelected) {
             state = TOGGLE_INTERACTIVE_STATE.SELECTED_OVER;
@@ -122,20 +119,16 @@ class ToggleButton extends BaseButton {
             fallback = TOGGLE_INTERACTIVE_STATE.DESELECTED_UP;
         }
         this.changeStateWithFallback(state, fallback);
-        return true;
     }
 
     /**
      * @method
      * @protected
      * @param {Object} event
-     * @returns {boolean}
      */
 
     onActionDownHandler(event) {
-        if (!super.onActionDownHandler(event)) {
-            return false;
-        }
+        super.onActionDownHandler(event);
 
         this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN, TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN);
 
@@ -144,7 +137,6 @@ class ToggleButton extends BaseButton {
         }
 
         this.selected = !this.selected;
-        return true;
     }
 
     /**
@@ -167,21 +159,6 @@ class ToggleButton extends BaseButton {
     onActionOutHandler(event) {
         super.onActionOutHandler(event);
         this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_UP, TOGGLE_INTERACTIVE_STATE.DESELECTED_UP);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     * @returns {boolean}
-     */
-
-    onActionUpOutsideHandler(event) {
-        if (!super.onActionUpOutsideHandler(event)) {
-            return false;
-        }
-        this._changeEnabledState(TOGGLE_INTERACTIVE_STATE.SELECTED_UP, TOGGLE_INTERACTIVE_STATE.DESELECTED_UP);
-        return true;
     }
 
     /**

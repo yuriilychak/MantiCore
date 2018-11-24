@@ -60,15 +60,11 @@ class Button extends BaseButton {
      * @method
      * @protected
      * @param {Object} event
-     * @returns {boolean}
      */
 
     onActionUpHandler(event) {
-        if (!super.onActionUpHandler(event)) {
-            return false;
-        }
+        super.onActionUpHandler(event);
         this.changeStateWithFallback(INTERACTIVE_STATE.OVER, INTERACTIVE_STATE.UP);
-        return true;
     }
 
     /**
@@ -79,11 +75,8 @@ class Button extends BaseButton {
      */
 
     onActionDownHandler(event) {
-        if (!super.onActionDownHandler(event)) {
-            return false;
-        }
+        super.onActionDownHandler(event);
         this.changeEnabledState(INTERACTIVE_STATE.DOWN);
-        return true;
     }
 
     /**
@@ -106,21 +99,6 @@ class Button extends BaseButton {
     onActionOutHandler(event) {
         super.onActionOutHandler(event);
         this.changeEnabledState(INTERACTIVE_STATE.UP);
-    }
-
-    /**
-     * @method
-     * @protected
-     * @param {Object} event
-     * @returns {boolean}
-     */
-
-    onActionUpOutsideHandler(event) {
-        if (!super.onActionUpOutsideHandler(event)) {
-            return false;
-        }
-        this.changeEnabledState(INTERACTIVE_STATE.UP);
-        return true;
     }
 
     /**

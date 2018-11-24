@@ -124,6 +124,7 @@ class ListenerManager extends BaseManager {
     clearData() {
         this.removeAllEventListeners();
         this._blockEvents = false;
+        super.clearData();
     }
 
     /**

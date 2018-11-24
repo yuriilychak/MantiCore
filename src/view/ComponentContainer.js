@@ -8,6 +8,7 @@ import Color from "util/Color";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import AnimationManager from "manager/AnimationManager";
+import InteractionManager from "manager/InteractionManager";
 
 import Pool from "pool";
 
@@ -50,6 +51,13 @@ class ComponentContainer extends PIXI.Container {
         this._animationManager = null;
 
         /**
+         * @desc Class for manipulate with interactions.
+         * @type {MANTICORE.manager.InteractionManager}
+         * @private
+         */
+        this._interactionManager = null;
+
+        /**
          * @desc Flag is animation manager init.
          * @type {boolean}
          * @private
@@ -72,6 +80,14 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._hasListenerManager = false;
+
+        /**
+         * @desc Flag is interaction manager init.
+         * @type {boolean}
+         * @private
+         */
+
+        this._hasInteractionManager = false;
 
         /**
          * @desc Flag is container marked for update;
@@ -313,12 +329,14 @@ class ComponentContainer extends PIXI.Container {
     clearData() {
         this.isUpdate = false;
 
+        this.interactive = false;
         this._parentTint = Color.COLORS.WHITE;
         this._customTint = Color.COLORS.WHITE;
 
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
         this._animationManager = this._killManager(this._animationManager);
+        this._interactionManager = this._killManager(this._interactionManager);
 
         this._hasListenerManager = false;
         this._hasComponentManager = false;
@@ -420,6 +438,27 @@ class ComponentContainer extends PIXI.Container {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Returns is object interactive
+     * @public
+     * @return {boolean}
+     */
+
+    get interactive() {
+        return super.interactive;
+    }
+
+    set interactive(value) {
+        if (super.interactive === value) {
+            return;
+        }
+        super.interactive = value;
+
+        if (value || this._hasInteractionManager) {
+            this.interactionManager.interactive = value;
+        }
+    }
 
     /**
      * @desc Real tint of parent element.
@@ -645,6 +684,20 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
+     * @desc Link to listener manager.
+     * @public
+     * @return {MANTICORE.manager.InteractionManager}
+     */
+
+    get interactionManager() {
+        if (!this._hasInteractionManager) {
+            this._hasInteractionManager = true;
+            this._interactionManager = InteractionManager.create(this);
+        }
+        return this._interactionManager;
+    }
+
+    /**
      * @desc Flag is view has animation manager.
      * @public
      * @return {boolean}
@@ -672,6 +725,16 @@ class ComponentContainer extends PIXI.Container {
 
     get hasListenerManager() {
         return this._hasListenerManager;
+    }
+
+    /**
+     * @desc Flag is view has interaction manager.
+     * @public
+     * @return {MANTICORE.manager.InteractionManager}
+     */
+
+    get hasInteractionManager() {
+        return this._interactionManager;
     }
 }
 
