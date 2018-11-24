@@ -1811,6 +1811,7 @@ declare namespace MANTICORE {
         export class Scene extends PIXI.Container{
             constructor(comTransitionShow?: MANTICORE.component.Component, comTransitionHide?: MANTICORE.component.Component);
 
+            static create<T extends MANTICORE.view.Scene>(comTransitionShow?: MANTICORE.component.Component, comTransitionHide?: MANTICORE.component.Component): T;
             public show(): void;
             public hide(): void;
 
@@ -1832,6 +1833,8 @@ declare namespace MANTICORE {
             frameName: string;
             slice: number[];
             protected  readonly realTint: number;
+
+            static create<T extends MANTICORE.view.Slice9Sprite>(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): T;
         }
     }
 }
