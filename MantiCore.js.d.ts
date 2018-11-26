@@ -748,6 +748,8 @@ declare namespace MANTICORE {
                 isVertical(): boolean;
                 isHorizontal(): boolean;
                 updateScrollDimension(progress: number, direction: MANTICORE.enumerator.ui.SCROLL_DIRECTION): void;
+                // noinspection JSAnnotator
+                static create(): MANTICORE.component.ui.ComScroller;
             }
 
             export class ComUI extends MANTICORE.component.Component {
