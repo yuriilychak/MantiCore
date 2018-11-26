@@ -692,6 +692,20 @@ class ScrollView extends Panel {
     get interactionManager() {
         return this._innerContainer.interactionManager;
     }
+
+    /**
+     * @desc Flag is bounce enabled for scroll view.
+     * @public
+     * @return {boolean}
+     */
+
+    get bounceEnabled() {
+        return this._scroller.bounceEnabled;
+    }
+
+    set bounceEnabled(value) {
+        this._scroller.bounceEnabled = value;
+    }
 }
 
 export default ScrollView;

@@ -724,6 +724,31 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.component.ui.ComItemBox;
             }
 
+            export class ComScroller extends MANTICORE.component.Component {
+                constructor();
+
+                scrollDirection: MANTICORE.enumerator.ui.SCROLL_DIRECTION;
+                innerBoundary: PIXI.Point;
+                bounceEnabled: boolean;
+
+                jumpToBottom(): void;
+                jumpToBottomLeft(): void;
+                jumpToBottomRight(): void;
+                jumpToLeft(): void;
+                jumpToRight(): void;
+                jumpToTop(): void;
+                jumpToTopLeft(): void;
+                jumpToTopRight(): void;
+                jumpToPercentBothDirection(percent: number): void;
+                jumpToPercentHorizontal(percent: number): void;
+                jumpToPercentVertical(percent: number): void;
+                updateDragStart(position: PIXI.Point): void;
+                updateDragMove(position: PIXI.Point): void;
+                updateDragFinish(position: PIXI.Point): void;
+                isVertical(): boolean;
+                isHorizontal(): boolean;
+                updateScrollDimension(progress: number, direction: MANTICORE.enumerator.ui.SCROLL_DIRECTION): void;
+            }
 
             export class ComUI extends MANTICORE.component.Component {
                 constructor(name?: string);
@@ -1598,6 +1623,7 @@ declare namespace MANTICORE {
             innerContainer: MANTICORE.ui.Widget;
             innerWidth: number;
             innerHeight: number;
+            bounceEnabled: boolean;
 
             // noinspection JSAnnotator
             static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ScrollView;

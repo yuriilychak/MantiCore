@@ -4,8 +4,9 @@ import Geometry from "util/Geometry";
 import Type from "util/Type";
 import Math from "util/Math";
 import TIME_LINE from "enumerator/animation/TimeLine";
-import MoveTo from "../../animation/action/MoveTo";
-import EaseQuadraticInOut from "../../animation/easing/EaseQuadraticInOut";
+import MoveTo from "animation/action/MoveTo";
+import EaseQuadraticInOut from "animation/easing/EaseQuadraticInOut";
+import EaseQuadraticOut from "animation/easing/EaseQuadraticOut";
 
 /**
  * @desc Class for manipulate with scrolling in list and scroll views.
@@ -55,7 +56,15 @@ class ComScroller extends Component {
          * @type {boolean}
          * @private
          */
-        this._bounceEnabled = true;
+        this._bounceEnabled = false;
+
+        /**
+         * @desc Offset for calculate dumping.
+         * @type {PIXI.Point | Point}
+         * @private
+         */
+
+        this._offset = new PIXI.Point();
     }
 
     /**
@@ -229,18 +238,20 @@ class ComScroller extends Component {
     updateDragMove(position) {
         const innerContainer = this.owner.innerContainer;
         const innerPos = innerContainer.position;
-        const difference = Geometry.pSub(innerContainer.toLocal(position), this._prvDragPos, true);
-        const interpolatedPos = Geometry.pRound(Geometry.pAdd(innerPos, difference), true);
+        this._offset.copy(Geometry.pSub(innerContainer.toLocal(position), this._prvDragPos, true));
+        const interpolatedPos = Geometry.pRound(Geometry.pAdd(innerPos, this._offset), true);
         const boundPos = Geometry.pRange(interpolatedPos, this._innerBoundary, this._zeroPoint);
         let resultPos;
 
         if (this.isVertical()) {
             boundPos.x = 0;
             interpolatedPos.x = 0;
+            this._offset.x = 0;
         }
         else if (this.isHorizontal()) {
             boundPos.y = 0;
             interpolatedPos.y = 0;
+            this._offset.y = 0;
         }
 
         if (this._bounceEnabled && !interpolatedPos.equals(boundPos)) {
@@ -248,9 +259,9 @@ class ComScroller extends Component {
             const bound = Geometry.pMult(Geometry.pFromSize(this.owner), 0.3);
             const coef = new PIXI.Point(
                 dif.x > bound.x || this.isVertical() ? 0 : Math.intPow(1 - dif.x / bound.x, 5),
-                dif.y > bound.y || this.isHorizontal() ? 0 : Math.intPow(1 - dif.y / bound.y, 5),
+                dif.y > bound.y || this.isHorizontal() ? 0 : Math.intPow(1 - dif.y / bound.y, 5)
             );
-            resultPos = Geometry.pAdd(Geometry.pCompMult(coef, difference, true), innerPos, true);
+            resultPos = Geometry.pAdd(Geometry.pCompMult(coef, this._offset, true), innerPos, true);
         }
         else {
             resultPos = boundPos;
@@ -277,6 +288,13 @@ class ComScroller extends Component {
             if (!boundPos.equals(crtPos)) {
                 const action = MoveTo.create(0.5, boundPos);
                 action.ease = EaseQuadraticInOut.create();
+                innerContainer.animationManager.runAction(action, false, 0, TIME_LINE.SCROLL_VIEW);
+            }
+            else {
+                Geometry.pMult(this._offset, 8, true);
+                const endPos = Geometry.pRange(Geometry.pAdd(crtPos, this._offset), this._innerBoundary, this._zeroPoint);
+                const action = MoveTo.create(0.5, endPos);
+                action.ease = EaseQuadraticOut.create();
                 innerContainer.animationManager.runAction(action, false, 0, TIME_LINE.SCROLL_VIEW);
             }
         }
@@ -334,7 +352,9 @@ class ComScroller extends Component {
         this._prvDragPos.set(0, 0);
         this._zeroPoint.set(0, 0);
         this._innerBoundary.set(0, 0);
+        this._offset.set(0, 0);
         this._scrollDirection = SCROLL_DIRECTION.BOTH;
+        this.bounceEnabled = false;
         super.clearData();
     }
 
@@ -452,6 +472,31 @@ class ComScroller extends Component {
         }
 
         this._innerBoundary.copy(value);
+    }
+
+    /**
+     * @desc Flag is bounce enabled.
+     * @public
+     * @return {boolean}
+     */
+
+    get bounceEnabled() {
+        return this._bounceEnabled;
+    }
+
+    set bounceEnabled(value) {
+        if (this._bounceEnabled === value) {
+            return;
+        }
+        this._bounceEnabled = value;
+
+        if (!this._bounceEnabled && this.hasOwner()) {
+            const innerContainerPos = this.owner.innerContainer.position;
+            this.owner.innerContainer.animationManager.stopTimeLine(TIME_LINE.SCROLL_VIEW);
+            Geometry.pRange(innerContainerPos, this._innerBoundary, this._zeroPoint, true);
+            this._upateSliderProgress(this.owner.horizontalSlider, innerContainerPos.x, this._innerBoundary.x);
+            this._upateSliderProgress(this.owner.verticalSlider, innerContainerPos.y, this._innerBoundary.y);
+        }
     }
 }
 

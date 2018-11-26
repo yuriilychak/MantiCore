@@ -666,6 +666,7 @@ function _createScrollView(data, bundle) {
     result.innerWidth = content.dimensions[2];
     result.innerHeight = content.dimensions[3];
     result.scrollDirection = data.fileData[4];
+    result.bounceEnabled = Type.toBoolean(data.fileData[5]);
     result.clipping = data.clipped;
 
     _parseSlice9(result, data);
@@ -695,6 +696,7 @@ function _createListView(data, bundle) {
     result.scrollDirection = data.fileData[4];
     result.outerPadding.set(data.fileData[5]);
     result.innerPadding.set(data.fileData[5]);
+    result.bounceEnabled = Type.toBoolean(data.fileData[6]);
     result.clipping = data.clipped;
 
     _parseSlice9(result, data);
