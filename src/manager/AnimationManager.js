@@ -145,7 +145,7 @@ class AnimationManager extends BaseManager {
         /**
          * @type {MANTICORE.animation.ActionTimeLine}
          */
-        const actionTimeLine = !Type.isNull(timeLine) ? timeLine : Pool.getObject(ActionTimeLine, this.owner, name);
+        const actionTimeLine = !Type.isNull(timeLine) ? timeLine : ActionTimeLine.create(this.owner, name);
         const eventIds = this._events.keys;
         const eventCount = eventIds.length;
         let eventId, i;

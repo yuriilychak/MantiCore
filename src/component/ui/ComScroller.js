@@ -3,6 +3,9 @@ import Component from "component/Component";
 import Geometry from "util/Geometry";
 import Type from "util/Type";
 import Math from "util/Math";
+import TIME_LINE from "enumerator/animation/TimeLine";
+import MoveTo from "../../animation/action/MoveTo";
+import EaseQuadraticInOut from "../../animation/easing/EaseQuadraticInOut";
 
 /**
  * @desc Class for manipulate with scrolling in list and scroll views.
@@ -59,6 +62,18 @@ class ComScroller extends Component {
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @method
+     * @public
+     * @param {MANTICORE.ui.ScrollView} owner
+     */
+
+    onAdd(owner) {
+        super.onAdd(owner);
+
+        owner.innerContainer.animationManager.addTimeLine(TIME_LINE.SCROLL_VIEW);
+    }
 
     /**
      * @desc Calls by pool when object get from pool. Don't call it only override.
@@ -213,62 +228,37 @@ class ComScroller extends Component {
 
     updateDragMove(position) {
         const innerContainer = this.owner.innerContainer;
-        if (!this._bounceEnabled) {
-            const crtDragPos = innerContainer.toLocal(position);
-            const nextPosition = Geometry.pRange(
-                Geometry.pRound(
-                    Geometry.pAdd(
-                        innerContainer.position,
-                        Geometry.pSub(crtDragPos, this._prvDragPos)
-                    ),
-                    true
-                ),
-                this._innerBoundary,
-                this._zeroPoint,
-                true
+        const innerPos = innerContainer.position;
+        const difference = Geometry.pSub(innerContainer.toLocal(position), this._prvDragPos, true);
+        const interpolatedPos = Geometry.pRound(Geometry.pAdd(innerPos, difference), true);
+        const boundPos = Geometry.pRange(interpolatedPos, this._innerBoundary, this._zeroPoint);
+        let resultPos;
+
+        if (this.isVertical()) {
+            boundPos.x = 0;
+            interpolatedPos.x = 0;
+        }
+        else if (this.isHorizontal()) {
+            boundPos.y = 0;
+            interpolatedPos.y = 0;
+        }
+
+        if (this._bounceEnabled && !interpolatedPos.equals(boundPos)) {
+            const dif = Geometry.pAbs(Geometry.pSub(innerPos, boundPos), true);
+            const bound = Geometry.pMult(Geometry.pFromSize(this.owner), 0.3);
+            const coef = new PIXI.Point(
+                dif.x > bound.x || this.isVertical() ? 0 : Math.intPow(1 - dif.x / bound.x, 5),
+                dif.y > bound.y || this.isHorizontal() ? 0 : Math.intPow(1 - dif.y / bound.y, 5),
             );
-
-
-            if (this.isVertical()) {
-                nextPosition.x = 0;
-            }
-            else if (this.isHorizontal()) {
-                nextPosition.y = 0;
-            }
-
-            innerContainer.position.copy(nextPosition);
-
-            this._upateSliderProgress(this.owner.horizontalSlider, nextPosition.x, this._innerBoundary.x);
-            this._upateSliderProgress(this.owner.verticalSlider, nextPosition.y, this._innerBoundary.y);
+            resultPos = Geometry.pAdd(Geometry.pCompMult(coef, difference, true), innerPos, true);
         }
         else {
-            const crtDragPos = innerContainer.toLocal(position);
-            const difference = Geometry.pSub(crtDragPos, this._prvDragPos);
-            const tempPos = Geometry.pRound(
-                Geometry.pAdd(
-                    innerContainer.position,
-                    difference
-                ),
-                true
-            );
-            const nextPosition = Geometry.pRange(tempPos, this._innerBoundary, this._zeroPoint);
-
-            if (!tempPos.equals(nextPosition)) {
-            }
-
-            if (this.isVertical()) {
-                tempPos.x = 0;
-            }
-            else if (this.isHorizontal()) {
-                tempPos.y = 0;
-            }
-
-            innerContainer.position.copy(tempPos);
-
-            this._upateSliderProgress(this.owner.horizontalSlider, tempPos.x, this._innerBoundary.x);
-            this._upateSliderProgress(this.owner.verticalSlider, tempPos.y, this._innerBoundary.y);
+            resultPos = boundPos;
         }
 
+        innerContainer.position.copy(Geometry.pRound(resultPos));
+        this._upateSliderProgress(this.owner.horizontalSlider, boundPos.x, this._innerBoundary.x);
+        this._upateSliderProgress(this.owner.verticalSlider, boundPos.y, this._innerBoundary.y);
     }
 
     /**
@@ -279,7 +269,17 @@ class ComScroller extends Component {
      */
 
     updateDragFinish(position) {
+        if (this._bounceEnabled) {
+            const innerContainer = this.owner.innerContainer;
+            const crtPos = innerContainer.position;
+            const boundPos = Geometry.pRange(crtPos, this._innerBoundary, this._zeroPoint);
 
+            if (!boundPos.equals(crtPos)) {
+                const action = MoveTo.create(0.5, boundPos);
+                action.ease = EaseQuadraticInOut.create();
+                innerContainer.animationManager.runAction(action, false, 0, TIME_LINE.SCROLL_VIEW);
+            }
+        }
     }
 
     /**

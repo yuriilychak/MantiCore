@@ -215,6 +215,21 @@ const geometry = {
     },
 
     /**
+     * @desc Return abs of point.
+     * @function
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
+     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     */
+
+    pAbs: function(p, isIn = false) {
+        const x = Math.abs(p.x);
+        const y = Math.abs(p.y);
+        return this._pGenResult(p, x, y, isIn);
+    },
+
+    /**
      * @desc Invert point.
      * @function
      * @public
