@@ -46,6 +46,13 @@ class ComScroller extends Component {
          */
 
         this._innerBoundary = new PIXI.Point(0, 0);
+
+        /**
+         * @desc Flag is bounce effects enabled.
+         * @type {boolean}
+         * @private
+         */
+        this._bounceEnabled = true;
     }
 
     /**
@@ -206,32 +213,62 @@ class ComScroller extends Component {
 
     updateDragMove(position) {
         const innerContainer = this.owner.innerContainer;
-        const crtDragPos = innerContainer.toLocal(position);
-        const nextPosition = Geometry.pRange(
-            Geometry.pRound(
+        if (!this._bounceEnabled) {
+            const crtDragPos = innerContainer.toLocal(position);
+            const nextPosition = Geometry.pRange(
+                Geometry.pRound(
+                    Geometry.pAdd(
+                        innerContainer.position,
+                        Geometry.pSub(crtDragPos, this._prvDragPos)
+                    ),
+                    true
+                ),
+                this._innerBoundary,
+                this._zeroPoint,
+                true
+            );
+
+
+            if (this.isVertical()) {
+                nextPosition.x = 0;
+            }
+            else if (this.isHorizontal()) {
+                nextPosition.y = 0;
+            }
+
+            innerContainer.position.copy(nextPosition);
+
+            this._upateSliderProgress(this.owner.horizontalSlider, nextPosition.x, this._innerBoundary.x);
+            this._upateSliderProgress(this.owner.verticalSlider, nextPosition.y, this._innerBoundary.y);
+        }
+        else {
+            const crtDragPos = innerContainer.toLocal(position);
+            const difference = Geometry.pSub(crtDragPos, this._prvDragPos);
+            const tempPos = Geometry.pRound(
                 Geometry.pAdd(
                     innerContainer.position,
-                    Geometry.pSub(crtDragPos, this._prvDragPos)
+                    difference
                 ),
                 true
-            ),
-            this._innerBoundary,
-            this._zeroPoint,
-            true
-        );
+            );
+            const nextPosition = Geometry.pRange(tempPos, this._innerBoundary, this._zeroPoint);
 
+            if (!tempPos.equals(nextPosition)) {
+            }
 
-        if (this.isVertical()) {
-            nextPosition.x = 0;
+            if (this.isVertical()) {
+                tempPos.x = 0;
+            }
+            else if (this.isHorizontal()) {
+                tempPos.y = 0;
+            }
+
+            innerContainer.position.copy(tempPos);
+
+            this._upateSliderProgress(this.owner.horizontalSlider, tempPos.x, this._innerBoundary.x);
+            this._upateSliderProgress(this.owner.verticalSlider, tempPos.y, this._innerBoundary.y);
         }
-        else if (this.isHorizontal()) {
-            nextPosition.y = 0;
-        }
 
-        innerContainer.position.copy(nextPosition);
-
-        this._upateSliderProgress(this.owner.horizontalSlider, nextPosition.x, this._innerBoundary.x);
-        this._upateSliderProgress(this.owner.verticalSlider, nextPosition.y, this._innerBoundary.y);
     }
 
     /**

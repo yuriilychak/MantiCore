@@ -4,7 +4,6 @@ import Type from "util/Type";
 import Model from "model/Model";
 import Format from "util/Format";
 import UI_ELEMENT from "enumerator/ui/UIElement";
-import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 
 /**
  * @desc Base Class for ui components.
