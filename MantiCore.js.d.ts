@@ -1109,7 +1109,7 @@ declare namespace MANTICORE {
     }
 
     export namespace launcher {
-        export function initApp(resolution: MANTICORE.enumerator.RESOLUTION, bgColor?: number): void;
+        export function initApp(startScene: MANTICORE.view.Scene, resolution: MANTICORE.enumerator.RESOLUTION, bgColor?: number): void;
         export function getApp(): PIXI.Application;
         export function runScene(scene: MANTICORE.view.Scene): void;
 
