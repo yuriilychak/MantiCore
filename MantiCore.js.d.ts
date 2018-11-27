@@ -1772,6 +1772,11 @@ declare namespace MANTICORE {
             export function pInvert(p: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pRange(p: PIXI.Point | PIXI.ObservablePoint, pLeft: PIXI.Point | PIXI.ObservablePoint, pRight: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pEqual(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): boolean;
+            export function pDot(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): number;
+            export function pCross(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): number;
+            export function pLengthSQ(p: PIXI.Point | PIXI.ObservablePoint): number;
+            export function pLength(p: PIXI.Point | PIXI.ObservablePoint): number;
+            export function pDistance(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): number;
 
         }
         export namespace math {

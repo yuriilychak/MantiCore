@@ -245,6 +245,64 @@ const geometry = {
     },
 
     /**
+     * @desc Calculates dot product of two points.
+     * @function
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint} p1
+     * @param {PIXI.Point | PIXI.ObservablePoint} p2
+     * @return {number}
+     */
+    pDot: function (p1, p2) {
+    return p1.x * p2.x + p1.y * p2.y;
+    },
+
+    /**
+     * @desc Calculates cross product of two points.
+     * @function
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint} p1
+     * @param {PIXI.Point | PIXI.ObservablePoint} p2
+     * @return {number}
+     */
+    pCross: function (p1, p2) {
+        return p1.x * p2.y - p1.y * p2.x;
+    },
+
+    /**
+     * @desc Calculates the square length of a cc.Point (not calling sqrt() )
+     * @function
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint} p
+     * @return {number}
+     */
+    pLengthSQ: function (p) {
+        return this.pDot(p, p);
+    },
+
+    /**
+     * @desc Calculates distance between point an origin
+     * @function
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint} p
+     * @return {number}
+     */
+    pLength: function (p) {
+        return Math.sqrt(this.pLengthSQ(p));
+    },
+
+    /**
+     * @desc Calculates the distance between two points
+     * @function
+     * @public
+     * @param {PIXI.Point | PIXI.ObservablePoint} p1
+     * @param {PIXI.Point | PIXI.ObservablePoint} p2
+     * @return {number}
+     */
+    pDistance: function (p1, p2) {
+        return this.pLength(this.pSub(p1, p2));
+    },
+
+    /**
      * @desc Generate result for point transformation.
      * @private
      * @memberOf MANTICORE.util.geometry
