@@ -13,6 +13,12 @@ class ComItem extends ComUI {
      */
     constructor() {
         super("ComItem");
+        /**
+         * @desc Index of item
+         * @type {int}
+         * @private
+         */
+        this._index = -1;
     }
 
     /**
@@ -39,6 +45,28 @@ class ComItem extends ComUI {
      */
 
     updateData(data) {}
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Index of item
+     * @public
+     * @return {int}
+     */
+
+    get index() {
+        return this._index;
+    }
+
+    set index(value) {
+        if (this._index === value) {
+            return;
+        }
+        this._index = value;
+    }
 }
 
 export default ComItem;

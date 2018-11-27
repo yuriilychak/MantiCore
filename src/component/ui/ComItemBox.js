@@ -119,6 +119,7 @@ class ComItemBox extends Component {
             return;
         }
         this._items.push(component);
+        component.index = this._items.length;
         child.name = this._getItemName(this._items.length - this._startIndex);
         this.owner.addChild(child);
     }
@@ -139,7 +140,8 @@ class ComItemBox extends Component {
             if (child === null) {
                 break;
             }
-            component = new this._componentTemplate();
+            component = this._componentTemplate.create();
+            component.index = index - this._startIndex;
             if (child.componentManager.addComponent(component)) {
                 this._items.push(component);
             }
@@ -180,6 +182,7 @@ class ComItemBox extends Component {
             }
 
             if (index !== -1) {
+                item.index = i - 1;
                 owner.name = this._getItemName(i - 1);
                 continue;
             }
