@@ -613,7 +613,7 @@ class ComponentContainer extends PIXI.Container {
      */
 
     get blockEvents() {
-        return this._blockEvents;
+        return this._blockEvents || (this._hasListenerManager && this._listenerManager.blockEvents);
     }
 
     set blockEvents(value) {
@@ -706,6 +706,7 @@ class ComponentContainer extends PIXI.Container {
         if (!this._hasListenerManager) {
             this._hasListenerManager = true;
             this._listenerManager = ListenerManager.create(this);
+            this._listenerManager.blockEvents = this._blockEvents;
         }
         return this._listenerManager;
     }

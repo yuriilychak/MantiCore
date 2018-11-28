@@ -197,7 +197,7 @@ class Component extends ReusableObject {
      */
 
     get blockEvents() {
-        return this._blockEvents;
+        return this._blockEvents || (this._hasListenerManager && this._listenerManager.blockEvents);
     }
 
     set blockEvents(value) {
@@ -289,6 +289,7 @@ class Component extends ReusableObject {
         if (!this._hasListenerManager) {
             this._hasListenerManager = true;
             this._listenerManager = ListenerManager.create(this);
+            this._listenerManager.blockEvents = this._blockEvents;
         }
         return this._listenerManager;
     }
