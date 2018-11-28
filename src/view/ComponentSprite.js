@@ -4,16 +4,17 @@ import Asset from "util/Asset";
 import Geometry from "util/Geometry";
 import Math from "util/Math";
 import Color from "util/Color";
+import Type from "util/Type";
 
 import UI_ELEMENT from "enumerator/ui/UIElement";
 
 import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
-import Type from "../util/Type";
+import InteractionManager from "manager/InteractionManager";
 
 import Pool from "pool";
-import InteractionManager from "../manager/InteractionManager";
+import Constant from "constant";
 
 /**
  * @desc Class that implements composite pattern for sprite;
@@ -347,6 +348,23 @@ class ComponentSprite extends PIXI.Sprite {
             return;
         }
         this._componentManager.iterateUIComponents(component => component.emitInteractiveEvent(eventType, event));
+    }
+
+    /**
+     * @desc Do layout for element.
+     * @method
+     * @public
+     */
+
+    doLayout() {
+        if (!this._hasComponentManager || !this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
+            return;
+        }
+        /**
+         * @type {MANTICORE.component.ui.ComUILayout}
+         */
+        const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
+        layout.refresh();
     }
 
     /**

@@ -105,6 +105,18 @@ class ComponentManager extends BaseManager {
     }
 
     /**
+     * @desc Returns is manager has component.
+     * @method
+     * @public
+     * @param {string} name
+     * @returns {boolean}
+     */
+
+    hasComponent(name) {
+        return this._componentRepo.hasElement(name);
+    }
+
+    /**
      * @desc Remove component from container;
      * @method
      * @public

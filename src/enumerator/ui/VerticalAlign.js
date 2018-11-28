@@ -5,9 +5,10 @@
  */
 
 const VERTICAL_ALIGN = {
-    TOP: 0,
-    MIDDLE: 1,
-    BOTTOM: 2
+    NONE: 0,
+    TOP: 1,
+    MIDDLE: 2,
+    BOTTOM: 3
 };
 
 export default  VERTICAL_ALIGN;

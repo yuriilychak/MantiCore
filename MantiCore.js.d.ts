@@ -779,6 +779,32 @@ declare namespace MANTICORE {
                 static create(elementName: string, bundleName?: string, owner?: MANTICORE.view.ComponentContainer): MANTICORE.component.ui.ComUIElement;
                 clone(): MANTICORE.component.ui.ComUIElement;
             }
+
+            export class ComUILayout extends MANTICORE.component.Component {
+                constructor();
+
+                percentSize: PIXI.Point;
+                isPercentSize: boolean;
+                isPercentPosX: boolean;
+                percentPosX: number;
+                isPercentPosY: boolean;
+                percentPosY: number;
+                horizontalEdge: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
+                verticalEdge: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
+                leftMargin: number;
+                rightMargin: number;
+                topMargin: number;
+                bottomMargin: number;
+                isPercentWidth: boolean;
+                percentWidth: number;
+                isPercentHeight: boolean;
+                percentHeight: number;
+                isStretchWidth: boolean;
+                isStretchHeight: boolean;
+                percentOnly: boolean;
+
+                refresh(): void;
+            }
         }
 
         export class ComChildIterator extends MANTICORE.component.Component {
@@ -822,6 +848,7 @@ declare namespace MANTICORE {
 
     export namespace constant {
         export const COLLIDER_NAME: string;
+        export const COM_UI_LAYOUT_NAME: string;
         export const MAIN_ATLAS_NAME: string;
         export const FLT_EPSILON: number;
         export const TEMPORARY_ANIMATION_NAME: string;
@@ -999,9 +1026,10 @@ declare namespace MANTICORE {
 
         export namespace ui {
             export enum HORIZONTAL_ALIGN {
-                LEFT = 0,
-                CENTER = 1,
-                RIGHT = 2
+                NONE = 0,
+                LEFT = 1,
+                CENTER = 2,
+                RIGHT = 3
             }
 
             export enum INTERACTIVE_EVENT {
@@ -1076,9 +1104,10 @@ declare namespace MANTICORE {
             }
 
             export enum VERTICAL_ALIGN {
-                TOP = 0,
-                MIDDLE = 1,
-                BOTTOM = 2
+                NONE = 0,
+                TOP = 1,
+                MIDDLE = 2,
+                BOTTOM = 3
             }
         }
 
@@ -1190,6 +1219,7 @@ declare namespace MANTICORE {
             visibleAction(visible: boolean): void;
             addComponent(component: MANTICORE.component.Component): boolean;
             addComponents(components: any[]): void;
+            hasComponent(name: string): boolean;
             getComponent(name: string): MANTICORE.component.Component | null;
             removeComponent(name: string): boolean;
             removeAllComponents(): void;
@@ -1866,6 +1896,7 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
             public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+            public doLayout(): void;
 
             protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
             protected onUpdate(dt: number): void;
@@ -1896,6 +1927,7 @@ declare namespace MANTICORE {
             public kill(): void;
             public destroy(): void;
             public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+            public doLayout(): void;
 
             protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
             protected onUpdate(dt: number): void;

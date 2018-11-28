@@ -5,9 +5,10 @@
  */
 
 const HORIZONTAL_ALIGN = {
-    LEFT: 0,
-    CENTER: 1,
-    RIGHT: 2
+    NONE: 0,
+    LEFT: 1,
+    CENTER: 2,
+    RIGHT: 3
 };
 
 export default  HORIZONTAL_ALIGN;

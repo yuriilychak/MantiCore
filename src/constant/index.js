@@ -15,6 +15,15 @@ const constant = {
     COLLIDER_NAME: "imgCollider",
 
     /**
+     * @desc Name of component for update layout.
+     * @type {string}
+     * @public
+     * @readonly
+     * @memberOf MANTICORE.constant
+     */
+    COM_UI_LAYOUT_NAME: "ComUILayout",
+
+    /**
      * @desc Min duration of animation.
      * @public
      * @readonly

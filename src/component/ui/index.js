@@ -5,6 +5,7 @@ import ComLayout from "./ComLayout";
 import ComScroller from "./ComScroller";
 import ComUI from "./ComUI";
 import ComUIElement from "./ComUIElement";
+import ComUILayout from "./ComUILayout";
 
 /**
  * @desc Namespace that contains all ui components.
@@ -19,5 +20,6 @@ export default {
     ComLayout,
     ComScroller,
     ComUI,
-    ComUIElement
+    ComUIElement,
+    ComUILayout
 }

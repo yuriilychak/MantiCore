@@ -11,6 +11,7 @@ import AnimationManager from "manager/AnimationManager";
 import InteractionManager from "manager/InteractionManager";
 
 import Pool from "pool";
+import Constant from "constant";
 
 /**
  * @desc Class that implements composite pattern;
@@ -336,6 +337,23 @@ class ComponentContainer extends PIXI.Container {
             return;
         }
         this._componentManager.iterateUIComponents(component => component.emitInteractiveEvent(eventType, event));
+    }
+
+    /**
+     * @desc Do layout for element.
+     * @method
+     * @public
+     */
+
+    doLayout() {
+        if (!this._hasComponentManager || !this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
+            return;
+        }
+        /**
+         * @type {MANTICORE.component.ui.ComUILayout}
+         */
+        const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
+        layout.refresh();
     }
 
     /**
