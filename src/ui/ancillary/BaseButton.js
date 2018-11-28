@@ -159,7 +159,7 @@ class BaseButton extends Widget {
         }
 
         this._isEnabled = value;
-        this.blockEvents = value;
+        this.blockEvents = !value;
         this.onEnabledChange(this._isEnabled);
     }
 
