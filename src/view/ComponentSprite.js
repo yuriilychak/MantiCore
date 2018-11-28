@@ -155,6 +155,14 @@ class ComponentSprite extends PIXI.Sprite {
 
         this._uiType = UI_ELEMENT.SPRITE;
 
+        /**
+         * @desc Flag is need to block event dispatch.
+         * @type {boolean}
+         * @private
+         */
+
+        this._blockEvents = false;
+
         this._updateTint();
     }
 
@@ -585,10 +593,17 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     get blockEvents() {
-        return this._listenerManager.blockEvents;
+        return this._blockEvents;
     }
 
     set blockEvents(value) {
+        if (this._blockEvents === value) {
+            return;
+        }
+        this._blockEvents = value;
+        if (!this._hasListenerManager) {
+            return;
+        }
         this._listenerManager.blockEvents = value;
     }
 

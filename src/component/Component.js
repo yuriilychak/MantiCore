@@ -70,6 +70,14 @@ class Component extends ReusableObject {
          */
 
         this._hasListenerManager = false;
+
+        /**
+         * @desc Flag is need to block event dispatch.
+         * @type {boolean}
+         * @private
+         */
+
+        this._blockEvents = false;
     }
 
     /**
@@ -183,15 +191,20 @@ class Component extends ReusableObject {
      */
 
     /**
+     * @desc Flag is need to block events dispatching for view.
      * @public
      * @type {boolean}
      */
 
     get blockEvents() {
-        return this._hasListenerManager ? this._listenerManager.blockEvents : false;
+        return this._blockEvents;
     }
 
     set blockEvents(value) {
+        if (this._blockEvents === value) {
+            return;
+        }
+        this._blockEvents = value;
         if (!this._hasListenerManager) {
             return;
         }

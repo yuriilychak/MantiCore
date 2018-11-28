@@ -150,6 +150,14 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._uiType = UI_ELEMENT.CONTAINER;
+
+        /**
+         * @desc Flag is need to block event dispatch.
+         * @type {boolean}
+         * @private
+         */
+
+        this._blockEvents = false;
     }
 
     /**
@@ -605,10 +613,14 @@ class ComponentContainer extends PIXI.Container {
      */
 
     get blockEvents() {
-        return this._hasListenerManager && this._listenerManager.blockEvents;
+        return this._blockEvents;
     }
 
     set blockEvents(value) {
+        if (this._blockEvents === value) {
+            return;
+        }
+        this._blockEvents = value;
         if (!this._hasListenerManager) {
             return;
         }
