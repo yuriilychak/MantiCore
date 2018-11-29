@@ -207,6 +207,10 @@ class ComUILayout extends Component {
                 break;
         }
 
+        if (this.owner.componentManager.hasComponent(Constant.COM_LAYOUT)) {
+            this.owner.componentManager.getComponent(Constant.COM_LAYOUT).refresh();
+        }
+
         /*if(this.owner instanceof ccui.PageView){
             locOwner.forceDoLayout();
 

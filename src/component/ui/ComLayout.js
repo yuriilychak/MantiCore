@@ -1,5 +1,6 @@
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
+import Constant from "constant";
 import Geometry from "util/Geometry";
 import LayoutSizeManager from "manager/LayoutSizeManager";
 import ComChildIterator from "component/ComChildIterator";
@@ -17,7 +18,7 @@ class ComLayout extends ComChildIterator {
      * @constructor
      */
     constructor() {
-        super("ComLayout");
+        super(Constant.COM_LAYOUT);
 
         /**
          * @desc Manager for manipulate with owner size.

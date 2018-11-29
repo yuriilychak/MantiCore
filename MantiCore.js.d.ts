@@ -851,6 +851,7 @@ declare namespace MANTICORE {
     export namespace constant {
         export const COLLIDER_NAME: string;
         export const COM_UI_LAYOUT_NAME: string;
+        export const COM_LAYOUT: string;
         export const MAIN_ATLAS_NAME: string;
         export const FLT_EPSILON: number;
         export const TEMPORARY_ANIMATION_NAME: string;
