@@ -639,12 +639,7 @@ class ComponentSprite extends PIXI.Sprite {
         if (this._inPool === value) {
             return;
         }
-        this._listenerManager.inPool = value;
-        this._componentManager.inPool = value;
-        const childCount = this.children;
-        for (let i = 0; i < childCount; ++i) {
-            this.children[i].inPool = value;
-        }
+        this._inPool = value;
     }
 
     /**
