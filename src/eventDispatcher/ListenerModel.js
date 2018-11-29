@@ -57,7 +57,7 @@ class ListenerModel extends Model {
      */
 
     dispatch(data = null) {
-        if (this._target.inPool) {
+        if (this._target.inPool || this._target.blockEvents) {
             return;
         }
         this._listener.call(this._target, data);
