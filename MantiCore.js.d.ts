@@ -1645,6 +1645,7 @@ declare namespace MANTICORE {
             static create(frameLink: string, direction?: MANTICORE.enumerator.DIRECTION, type?: MANTICORE.enumerator.ui.PROGRESS_TYPE): MANTICORE.ui.ProgressBar;
         }
 
+        // @ts-ignore
         export class Panel extends MANTICORE.ui.Widget{
             constructor(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
 

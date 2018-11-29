@@ -207,22 +207,6 @@ class ComUILayout extends Component {
                 break;
         }
 
-        const children = this.owner.children;
-        const childCount = children.length;
-        let i, child, layoutComponent;
-
-        for (i = 0; i < childCount; ++i) {
-            child = children[i];
-            if (!child.hasComponentManager || !child.componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
-                continue;
-            }
-            layoutComponent = child.componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
-            if (Type.isNull(layoutComponent)) {
-                continue;
-            }
-            layoutComponent.refresh();
-        }
-
         /*if(this.owner instanceof ccui.PageView){
             locOwner.forceDoLayout();
 

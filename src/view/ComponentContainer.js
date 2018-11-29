@@ -346,14 +346,23 @@ class ComponentContainer extends PIXI.Container {
      */
 
     doLayout() {
-        if (!this._hasComponentManager || !this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
-            return;
+        if (this._hasComponentManager && this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
+            /**
+             * @type {MANTICORE.component.ui.ComUILayout}
+             */
+            const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
+            layout.refresh();
         }
-        /**
-         * @type {MANTICORE.component.ui.ComUILayout}
-         */
-        const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
-        layout.refresh();
+        const children = this.children;
+        const childCount = children.length;
+        let i, child;
+        for (i = 0; i < childCount; ++i) {
+            child = children[i];
+            if (!child.doLayout) {
+                continue;
+            }
+            child.doLayout();
+        }
     }
 
     /**

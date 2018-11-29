@@ -234,7 +234,7 @@ const math = {
      */
 
     randInt: function(max, min = 0) {
-        return this.floor(Math.random() * (max - min) + min);
+        return this.floor(Math.random() * (max + 1 - min) + min);
     },
 
     /**
