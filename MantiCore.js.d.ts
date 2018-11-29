@@ -708,6 +708,7 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.component.ui.ComItem;
             }
 
+            // @ts-ignore
             class ComItemBox extends MANTICORE.component.Component {
                 constructor(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number);
                 readonly startIndex: number;
@@ -819,6 +820,7 @@ declare namespace MANTICORE {
             clone(): MANTICORE.component.ComChildIterator;
         }
 
+        // @ts-ignore
         export class Component extends MANTICORE.memory.ReusableObject {
             constructor(name?: string);
 

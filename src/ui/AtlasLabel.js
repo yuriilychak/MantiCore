@@ -130,7 +130,7 @@ class AtlasLabel extends BaseLabel {
      */
     reuse(frame, letterWidth, letterHeight, dotWidth) {
         super.reuse();
-
+        console.log("REUSE");
         this._fontFrame = AssetUtil.getSpriteFrame(frame);
         this._letterDimensions.set(letterWidth, letterHeight);
         this._dotWidth = dotWidth;
@@ -155,6 +155,7 @@ class AtlasLabel extends BaseLabel {
      */
 
     clearData() {
+        console.log("CLEAR DATA");
         this._fontFrame = null;
         this._letterDimensions.set(0, 0);
         this._dotWidth = 0;
@@ -302,6 +303,8 @@ class AtlasLabel extends BaseLabel {
         const charCount = this._chars.length;
         const fontProportion = this._realFontSize / this._fontSize;
 
+        this._lineWidth = 0;
+
         for (let i = 0; i < charCount; ++i) {
             this._lineWidth += this._chars[i].width;
         }
@@ -382,7 +385,7 @@ class AtlasLabel extends BaseLabel {
             for (i = crtChar; i < charCount; ++i) {
                 this.removeChild(this._chars[i]);
             }
-            this._chars.length = charCount;
+            this._chars.length = crtChar;
         }
 
         this._updateLineWidth();

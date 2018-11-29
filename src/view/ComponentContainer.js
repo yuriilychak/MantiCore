@@ -490,6 +490,16 @@ class ComponentContainer extends PIXI.Container {
      */
 
     /**
+     * @desc Returns anchor point.
+     * @public
+     * @return {PIXI.Point}
+     */
+
+    get anchor() {
+        return new PIXI.Point(0, 0);
+    }
+
+    /**
      * @desc Returns is object interactive
      * @public
      * @return {boolean}
