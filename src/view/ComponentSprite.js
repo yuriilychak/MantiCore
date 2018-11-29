@@ -394,7 +394,7 @@ class ComponentSprite extends PIXI.Sprite {
         this._hasComponentManager = false;
         this._hasAnimationManager = false;
 
-        const children = this.children;
+        const children = this.children.slice(0);
         const childCount = children.length;
         let i, child;
 
