@@ -159,6 +159,11 @@
  * @property {boolean} visible - Is element visible.
  * @property {int} alpha - Alpha channel of element.
  * @property {MANTICORE.type.AnimationData[] | null} animations - Animations that use element.
+ * @property {boolean[] | null } stretch - is stretch enabled.
+ * @property {MANTICORE.enumerator.ui.VERTICAL_ALIGN[] | MANTICORE.enumerator.ui.HORIZONTAL_ALIGN[] | null} edge - Edge of element.
+ * @property {boolean[] | null} percent - Is percent enabled.
+ * @property {int[] | null} preDimensions - Percent dimension of element.
+ * @property {int[] | null} margin - Margin of element;
  */
 
 /**

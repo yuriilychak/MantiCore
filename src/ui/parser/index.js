@@ -46,6 +46,8 @@ import Spawn from "animation/action/Spawn";
 import Easing from "animation/easing";
 import FrameChange from "animation/action/FrameChange";
 
+import ComUILayout from "component/ui/ComUILayout";
+
 /**
  * @function
  * @private
@@ -135,6 +137,7 @@ function parseChild (parent, data, bundle, globalParent) {
 
     _parseWidgetData(result, data, bundle);
     _parseAnimation(result, data, bundle, globalParent);
+    _parseLayout(result, data);
 
     if (Type.isNull(parent)) {
         globalParent = result;
@@ -570,6 +573,57 @@ function _createEasing(easeData) {
     }
 
     return null;
+}
+
+/**
+ * @param {MANTICORE.ui.Widget} element
+ * @param {MANTICORE.type.ElementData} data
+ * @private
+ */
+
+function _parseLayout(element, data) {
+    const marginExist = !Type.isNull(data.margin);
+    const percentExist = !Type.isNull(data.percent);
+    const edgeExist = !Type.isNull(data.edge);
+    const stretchExist = !Type.isNull(data.stretch);
+
+    if (!marginExist && !percentExist && !edgeExist && !stretchExist) {
+        return;
+    }
+    /**
+     * @type {MANTICORE.component.ui.ComUILayout}
+     */
+    const layout = ComUILayout.create();
+
+    if (marginExist) {
+        layout.leftMargin = data.margin[0];
+        layout.rightMargin = data.margin[1];
+        layout.topMargin = data.margin[2];
+        layout.bottomMargin = data.margin[3];
+    }
+
+    if (percentExist) {
+        layout.percentPosX = Math.percentToFloat(data.preDimensions[0]);
+        layout.percentPosY = Math.percentToFloat(data.preDimensions[1]);
+        layout.percentWidth = Math.percentToFloat(data.preDimensions[2]);
+        layout.percentHeight = Math.percentToFloat(data.preDimensions[3]);
+        layout.isPercentPosX = data.percent[0];
+        layout.isPercentPosY = data.percent[1];
+        layout.isPercentWidth = data.percent[2];
+        layout.isPercentHeight = data.percent[3];
+    }
+
+    if (edgeExist) {
+        layout.horizontalEdge = data.edge[0];
+        layout.verticalEdge = data.edge[1];
+    }
+
+    if (stretchExist) {
+        layout.isStretchWidth = data.stretch[0];
+        layout.isStretchHeight = data.stretch[1];
+    }
+
+    element.componentManager.addComponent(layout);
 }
 
 /**

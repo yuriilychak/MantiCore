@@ -1430,13 +1430,18 @@ declare namespace MANTICORE {
             clipped: boolean;
             content: MANTICORE.type.ElementData;
             dimensions: number[];
+            edge: MANTICORE.enumerator.ui.VERTICAL_ALIGN[] | MANTICORE.enumerator.ui.HORIZONTAL_ALIGN[] | null;
             fileData: number[];
             flip: boolean[];
             interactive: boolean;
+            margin: number[] | null;
             name: number;
+            percent: boolean[] | null;
+            preDimensions: number[] | null;
             rotation: number[];
             scale: number[];
             slice9: number[];
+            stretch: boolean[] | null;
             type: MANTICORE.enumerator.ui.UI_ELEMENT;
             tint: number;
             visible: boolean;
