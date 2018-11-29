@@ -224,6 +224,20 @@ const math = {
     },
 
     /**
+     * @desc Returns random int in range
+     * @function
+     * @public
+     * @param {int} max
+     * @param {int} [min = 0]
+     * @memberOf MANTICORE.util.math
+     * @return {int}
+     */
+
+    randInt: function(max, min = 0) {
+        return this.floor(Math.random() * (max - min) + min);
+    },
+
+    /**
      * @desc Calculate fast sin with low precision.
      * @function
      * @param {number} angle

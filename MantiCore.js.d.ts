@@ -1536,12 +1536,14 @@ declare namespace MANTICORE {
             export function parseElement(name: string, link: string): MANTICORE.ui.Widget;
         }
 
+        // @ts-ignore
         export class AtlasLabel extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(frame: string, letterWidth: number, letterHeight: number, dotWidth: number);
             // noinspection JSAnnotator
             static create(frame: string, letterWidth: number, letterHeight: number, dotWidth: number): MANTICORE.ui.AtlasLabel;
         }
 
+        // @ts-ignore
         export class Button extends MANTICORE.ui.ancillary.BaseButton {
             constructor(upFrame: string, downFrame?: string, overFrame?: string, disabledFrame?: string);
 
@@ -1561,6 +1563,7 @@ declare namespace MANTICORE {
 
         }
 
+        // @ts-ignore
         export class CheckBox extends MANTICORE.ui.ancillary.BaseButton {
             constructor(
                 upBackFrame: string,
@@ -1596,6 +1599,7 @@ declare namespace MANTICORE {
             static create(frameName: string): MANTICORE.ui.ImageView;
         }
 
+        // @ts-ignore
         export class Label extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(fontName: string, size: number);
             // noinspection JSAnnotator
@@ -1629,6 +1633,7 @@ declare namespace MANTICORE {
             static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ListView;
         }
 
+        // @ts-ignore
         export class ProgressBar extends Widget {
             constructor(frameLink: string, direction?: MANTICORE.enumerator.DIRECTION, type?: MANTICORE.enumerator.ui.PROGRESS_TYPE);
             direction: MANTICORE.enumerator.DIRECTION;
@@ -1652,6 +1657,7 @@ declare namespace MANTICORE {
             static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.Panel;
         }
 
+        // @ts-ignore
         export class ScrollView extends MANTICORE.ui.Widget {
             constructor(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
 
@@ -1686,6 +1692,7 @@ declare namespace MANTICORE {
             protected onScrollVerticalHandler(event: MANTICORE.eventDispatcher.EventModel): void;
         }
 
+        // @ts-ignore
         export class Slider extends MANTICORE.ui.Widget {
             constructor(ball: MANTICORE.ui.Widget, direction?: MANTICORE.enumerator.DIRECTION, progressFrame?: string);
 
@@ -1719,6 +1726,7 @@ declare namespace MANTICORE {
             protected onActionUpHandler(event: Object): boolean;
         }
 
+        // @ts-ignore
         export class ToggleButton extends MANTICORE.ui.ancillary.BaseButton{
             constructor(dUpFrame: string, sUpFrame: string, sDownFrame?: string, dDownFrame?: string, dOverFrame?: string, sOverFrame?: string, dDisabledFrame?: string, sDisabledFrame?: string);
             selected: boolean;
@@ -1729,6 +1737,7 @@ declare namespace MANTICORE {
 
         }
 
+        // @ts-ignore
         export class Widget extends MANTICORE.view.ComponentContainer {
             constructor(collider?: PIXI.Sprite | MANTICORE.view.Slice9Sprite);
 
@@ -1845,6 +1854,7 @@ declare namespace MANTICORE {
             export function secondsToFrames(value: number): number;
             export function toMilliseconds(seconds: number): number;
             export function toSeconds(milliseconds: number): number;
+            export function randInt(max: number, min?: number): number;
         }
 
         export namespace type {
