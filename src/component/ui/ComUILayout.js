@@ -174,7 +174,7 @@ class ComUILayout extends Component {
                 if (this._isPercentHeight || this._isStretchHeight) {
                     this._updatePercentHeight();
                 }
-                this._updateTopPos();
+                this._updateBottomPos();
                 break;
             }
 
@@ -185,7 +185,7 @@ class ComUILayout extends Component {
                 if (this._isPercentHeight || this._isStretchHeight) {
                     this._updatePercentHeight();
                 }
-                this._updateBottomPos();
+                this._updateTopPos();
                 break;
             }
             case VERTICAL_ALIGN.MIDDLE: {
@@ -324,7 +324,7 @@ class ComUILayout extends Component {
      */
 
     _updateBottomPos() {
-        this.owner.y = Math.round(this.owner.parent.height - (this._margin[2] + (1 - this.owner.anchor.y) * this.owner.height));
+        this.owner.y = Math.round(this.owner.parent.height - (this._margin[3] + (1 - this.owner.anchor.y) * this.owner.height));
     }
 
     /**
