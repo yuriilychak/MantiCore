@@ -1,4 +1,6 @@
 import Model from "model/Model";
+import Type from "util/Type";
+import Logger from "logger";
 
 /**
  * @desc Model for store event listener data.
@@ -60,6 +62,10 @@ class ListenerModel extends Model {
         if (this._target.inPool || this._target.blockEvents) {
             return;
         }
+        if (Type.isEmpty(this._listener)) {
+            Logger.engineWarn(1, this._event);
+            return;
+        }
         this._listener.call(this._target, data);
     }
 
@@ -67,7 +73,9 @@ class ListenerModel extends Model {
      * @desc Calls by pool when model get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {string} event
+     * @param {Function} listener
+     * @param {Object} target
      */
     reuse(event, listener, target) {
         super.reuse();

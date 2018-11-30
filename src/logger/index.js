@@ -1,5 +1,7 @@
 import Macro from "macro";
 import ENGINE_MODE from "enumerator/EngineMode";
+import WARNING from "message/Warning";
+import Format from "util/Format";
 
 /**
  * @desc Namespace for log information to console.
@@ -45,5 +47,33 @@ export default {
             return;
         }
         console.error(...arguments);
+    },
+
+    /**
+     * @desc Local warning for engine problems.
+     * @function
+     * @public
+     * @param {...*} var_args
+     */
+    engineWarn(var_args) {
+        let message;
+        switch (arguments.length) {
+            case 0: {
+                message = WARNING.W_00;
+                break;
+            }
+            case 1: {
+                message = WARNING["W_" + Format.formatNumber(arguments[0], 2)];
+                break;
+            }
+            default: {
+                const arrayArgs = Array.from(arguments);
+                const [warnIndex, ...args] = arrayArgs;
+                const warnTemplate = WARNING["W_" + Format.formatNumber(warnIndex, 2)];
+                message = Format.replace(warnTemplate, ...args);
+                break;
+            }
+        }
+        this.warn(message);
     }
 }
