@@ -3,8 +3,6 @@ import Color from "util/Color";
 import Timer from "timer";
 import Boot from "boot";
 
-let application = null;
-
 /**
  * @desc Contains all basic functional for manipulate with application
  * @namespace MANTICORE.launcher
@@ -12,6 +10,15 @@ let application = null;
  */
 
 export default {
+
+    /**
+     * @desc Application that use game.
+     * @memberOf MANTICORE.launcher
+     * @type {?PIXI.Application | Application}
+     * @private
+     */
+    _app: null,
+
     /**
      * @desc create application with parameters.
      * @function
@@ -45,9 +52,9 @@ export default {
                     height = 480;
                 }
             }
-            application = new PIXI.Application(width, height, {backgroundColor: bgColor});
-            document.body.appendChild(application.view);
-            Timer.enterFrameTimer = application.ticker;
+            this._app = new PIXI.Application(width, height, {backgroundColor: bgColor});
+            document.body.appendChild(this._app.view);
+            Timer.enterFrameTimer = this._app.ticker;
 
             MANTICORE.launcher.runScene(new startScene());
         });
@@ -60,7 +67,7 @@ export default {
      * @returns {PIXI.Application}
      */
     getApp() {
-        return application;
+        return this._app;
     },
 
     /**
@@ -71,7 +78,7 @@ export default {
      */
 
     runScene(scene) {
-        application.stage.addChild(scene);
+        this._app.stage.addChild(scene);
         scene.show();
     }
 };
