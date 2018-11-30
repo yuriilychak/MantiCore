@@ -302,6 +302,7 @@ class ComponentSprite extends PIXI.Sprite {
      * @public
      */
     disuse() {
+        this.parentTint = Color.COLORS.WHITE;
         this.tint = Color.COLORS.WHITE;
         this.scale.set(1);
         this.anchor.set(0, 0);
