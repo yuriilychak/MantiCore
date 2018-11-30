@@ -292,6 +292,8 @@ class ComponentSprite extends PIXI.Sprite {
      */
     reuse(frameName) {
         this.texture = Asset.getSpriteFrame(frameName);
+        this._isUpdate = false;
+        this.inPool = false;
     }
 
     /**

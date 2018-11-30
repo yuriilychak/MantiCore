@@ -216,7 +216,7 @@ const pool = {
         const elements = this._pool.getElement(pid);
         const object = elements.pop();
 
-        if (object.reuse && reuseArguments.length !== 0) {
+        if (object.reuse) {
             object.reuse(...reuseArguments);
         }
 

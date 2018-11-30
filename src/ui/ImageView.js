@@ -19,6 +19,21 @@ class ImageView extends Widget {
 
         this.uiType = UI_ELEMENT.IMAGE_VIEW;
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {string} frameName - Frame name of sprite.
+     */
+    reuse(frameName) {
+        super.reuse(new Slice9Sprite(frameName));
+    }
 }
 
 export default ImageView;
