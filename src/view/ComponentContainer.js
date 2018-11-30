@@ -289,6 +289,11 @@ class ComponentContainer extends PIXI.Container {
      * @public
      */
     disuse() {
+        this.tint = Color.COLORS.WHITE;
+        this.scale.set(1);
+        this.anchor.set(0, 0);
+        this.visible = true;
+        this.rotation = 0;
         this.inPool = true;
         this.clearData();
         this.parent.removeChild(this);
@@ -497,6 +502,9 @@ class ComponentContainer extends PIXI.Container {
 
     get anchor() {
         return new PIXI.Point(0, 0);
+    }
+
+    set anchor(value) {
     }
 
     /**
