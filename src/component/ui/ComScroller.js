@@ -216,6 +216,32 @@ class ComScroller extends Component {
     }
 
     /**
+     * @method
+     * @public
+     * @param {number} percent
+     * @param {number} time
+     */
+
+    scrollToPercentHorizontal(percent, time){
+        if (this.isVertical()) {
+            return;
+        }
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {number} percent
+     * @param {number} time
+     */
+
+    scrollToPercentVertical(percent, time){
+        if (this.isHorizontal()) {
+            return;
+        }
+    }
+
+    /**
      * @desc Update drag start event of owner.
      * @method
      * @public
@@ -329,11 +355,14 @@ class ComScroller extends Component {
      */
 
     updateScrollDimension(progress, direction) {
+        const innerContainer = this.owner.innerContainer;
         if (direction === SCROLL_DIRECTION.HORIZONTAL) {
-            this.owner.innerContainer.x = Math.round(this._innerBoundary.x * progress);
+            innerContainer.x = Math.round(this._innerBoundary.x * progress);
+            this._upateSliderProgress(this.owner.horizontalSlider, innerContainer.x, this._innerBoundary.x);
         }
         else {
-            this.owner.innerContainer.y = Math.round(this._innerBoundary.y * progress);
+            innerContainer.y = Math.round(this._innerBoundary.y * progress);
+            this._upateSliderProgress(this.owner.verticalSlider, innerContainer.y, this._innerBoundary.y);
         }
     }
 

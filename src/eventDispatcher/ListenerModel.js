@@ -80,7 +80,6 @@ class ListenerModel extends Model {
     reuse(event, listener, target) {
         super.reuse();
 
-
         this._event = event;
         this._listener = listener;
         this._target = target;
