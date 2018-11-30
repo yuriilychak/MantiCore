@@ -536,8 +536,8 @@ class ComponentSprite extends PIXI.Sprite {
         return this._parentTint;
     }
 
-
     set parentTint(value) {
+        console.log("Test",value);
         if (Type.isEmpty(value) || this._parentTint === value) {
             return;
         }
