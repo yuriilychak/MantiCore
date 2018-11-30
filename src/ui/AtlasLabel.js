@@ -130,7 +130,6 @@ class AtlasLabel extends BaseLabel {
      */
     reuse(frame, letterWidth, letterHeight, dotWidth) {
         super.reuse();
-        console.log("REUSE");
         this._fontFrame = AssetUtil.getSpriteFrame(frame);
         this._letterDimensions.set(letterWidth, letterHeight);
         this._dotWidth = dotWidth;
@@ -155,7 +154,6 @@ class AtlasLabel extends BaseLabel {
      */
 
     clearData() {
-        console.log("CLEAR DATA");
         this._fontFrame = null;
         this._letterDimensions.set(0, 0);
         this._dotWidth = 0;

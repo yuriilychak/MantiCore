@@ -109,6 +109,12 @@ const color = {
      */
 
     multiply(color1, color2) {
+        if (color1 === this.COLORS.WHITE) {
+            return color2;
+        }
+        else if (color2 === this.COLORS.WHITE) {
+            return color1;
+        }
         const rgb1 = this.intToRgb(color1);
         const rgb2 = this.intToRgb(color2);
         const result = [];

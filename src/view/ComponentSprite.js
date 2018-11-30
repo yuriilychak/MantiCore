@@ -302,12 +302,6 @@ class ComponentSprite extends PIXI.Sprite {
      * @public
      */
     disuse() {
-        this.parentTint = Color.COLORS.WHITE;
-        this.tint = Color.COLORS.WHITE;
-        this.scale.set(1);
-        this.anchor.set(0, 0);
-        this.visible = true;
-        this.rotation = 0;
         this.inPool = true;
         this.clearData();
         this.parent.removeChild(this);
@@ -389,6 +383,12 @@ class ComponentSprite extends PIXI.Sprite {
     clearData() {
         this.isUpdate = false;
 
+        this.parentTint = Color.COLORS.WHITE;
+        this.tint = Color.COLORS.WHITE;
+        this.scale.set(1);
+        this.anchor.set(0, 0);
+        this.visible = true;
+        this.rotation = 0;
         this.interactive = false;
         this._parentTint = Color.COLORS.WHITE;
         super.tint = Color.COLORS.WHITE;
@@ -486,12 +486,9 @@ class ComponentSprite extends PIXI.Sprite {
 
     _updateTint() {
         if (Type.isUndefined(this._parentTint)) {
-            this._realTint = Color.multiply(this._parentTint, this._customTint);
+            this._parentTint = Color.COLORS.WHITE;
         }
-        else {
-            this._realTint = this._customTint;
-        }
-
+        this._realTint = Color.multiply(this._parentTint, this._customTint);
         super.tint = this._realTint;
         const children = this.children;
         const childCount = children.length;
@@ -537,7 +534,6 @@ class ComponentSprite extends PIXI.Sprite {
     }
 
     set parentTint(value) {
-        console.log("Test",value);
         if (Type.isEmpty(value) || this._parentTint === value) {
             return;
         }
@@ -565,8 +561,11 @@ class ComponentSprite extends PIXI.Sprite {
         return this._customTint;
     }
 
-
     set tint(value) {
+        if (Type.isUndefined(this._customTint)) {
+            this._tint = value;
+            return;
+        }
         if (this._customTint === value) {
             return;
         }

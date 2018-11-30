@@ -289,12 +289,6 @@ class ComponentContainer extends PIXI.Container {
      * @public
      */
     disuse() {
-        this.parentTint = Color.COLORS.WHITE;
-        this.tint = Color.COLORS.WHITE;
-        this.scale.set(1);
-        this.anchor.set(0, 0);
-        this.visible = true;
-        this.rotation = 0;
         this.inPool = true;
         this.clearData();
         this.parent.removeChild(this);
@@ -385,6 +379,12 @@ class ComponentContainer extends PIXI.Container {
     clearData() {
         this.isUpdate = false;
 
+        this.parentTint = Color.COLORS.WHITE;
+        this.tint = Color.COLORS.WHITE;
+        this.scale.set(1);
+        this.anchor.set(0, 0);
+        this.visible = true;
+        this.rotation = 0;
         this.interactive = false;
         this._parentTint = Color.COLORS.WHITE;
         this._customTint = Color.COLORS.WHITE;
@@ -443,11 +443,14 @@ class ComponentContainer extends PIXI.Container {
      */
 
     updateChildTint(child) {
-        if (!Type.isUndefined(child.parentTint)) {
+        if (child.parentTint || child.parentTint === 0) {
+            if (child.parentTint === this._realTint) {
+                return;
+            }
             child.parentTint = this._realTint;
             return;
         }
-        if (Type.isUndefined(child.tint)) {
+        if ((!child.tint && child.tint !== 0) || child.tint === this._realTint) {
             return;
         }
         child.tint = this._realTint;
@@ -481,7 +484,7 @@ class ComponentContainer extends PIXI.Container {
      */
 
     _updateTint() {
-        this._realTint = Color.multiply(this._parentTint, this._customTint);;
+        this._realTint = Color.multiply(this._parentTint, this._customTint);
 
         const children = this.children;
         const childCount = children.length;
