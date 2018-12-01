@@ -124,6 +124,21 @@ const geometry = {
     },
 
     /**
+     * @desc Divide two points.
+     * @memberOf MANTICORE.util.geometry
+     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
+     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
+     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     */
+
+    pCompDiv: function (p1, p2, isIn = false) {
+        const x = p1.x / p2.x;
+        const y = p1.y / p2.y;
+        return this._pGenResult(p1, x, y, isIn);
+    },
+
+    /**
      * @desc Return two maximum values from points.
      * @memberOf MANTICORE.util.geometry
      * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1

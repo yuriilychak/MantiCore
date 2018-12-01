@@ -1645,6 +1645,7 @@ declare namespace MANTICORE {
 
             // noinspection JSAnnotator
             static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ListView;
+            scrollToItem(time: number, index: number): void;
         }
 
         // @ts-ignore
@@ -1835,6 +1836,7 @@ declare namespace MANTICORE {
             export function pAdd(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pMult(p: PIXI.Point | PIXI.ObservablePoint, multiplier: number, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pCompMult(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
+            export function pCompDiv(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pMax(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pMin(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
             export function pNeg(p: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;

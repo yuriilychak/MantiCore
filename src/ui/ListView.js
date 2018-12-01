@@ -6,6 +6,8 @@ import SCROLL_DIRECTION from "enumerator/ui/ScrollDirection";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
+import Type from "util/Type";
+import Geometry from "util/Geometry";
 
 /**
  * @class
@@ -77,6 +79,32 @@ class ListView extends ScrollView {
 
         this._layout.horizontalAlign = HORIZONTAL_ALIGN.CENTER;
         this._layout.verticalAlign = VERTICAL_ALIGN.MIDDLE;
+    }
+
+    /**
+     * @desc
+     * @method
+     * @public
+     * @param {number} time
+     * @param {int} index
+     */
+
+    scrollToItem(time, index) {
+        const item = this.innerContainer.getChildAt(index);
+        if (Type.isNull(item)) {
+            return;
+        }
+        const itemSize = Geometry.pFromSize(item);
+        const itemLeftBottomPos = Geometry.pSub(
+            item.position,
+            Geometry.pCompMult(
+                itemSize,
+                item.anchor
+            )
+        );
+        const itemCenterPos = Geometry.pAdd(itemLeftBottomPos, Geometry.pMult(itemSize, 0.5));
+        const scrollPercent = Geometry.pCompDiv(itemCenterPos, Geometry.pFromSize(this.innerContainer), true);
+        this.scrollToPercentBoth(time, scrollPercent.x, scrollPercent.y);
     }
 
     /**

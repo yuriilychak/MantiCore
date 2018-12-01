@@ -677,8 +677,8 @@ class ComScroller extends Component {
             const innerContainerPos = this.owner.innerContainer.position;
             this.owner.innerContainer.animationManager.stopTimeLine(TIME_LINE.SCROLL_VIEW);
             Geometry.pRange(innerContainerPos, this._innerBoundary, this._zeroPoint, true);
-            this._updateSliderProgress(this.owner.horizontalSlider, innerContainerPos.x/this._innerBoundary.x);
-            this._updateSliderProgress(this.owner.verticalSlider, innerContainerPos.y/this._innerBoundary.y);
+            this._updateSliderProgress(this.owner.horizontalSlider, innerContainerPos.x / this._innerBoundary.x);
+            this._updateSliderProgress(this.owner.verticalSlider, innerContainerPos.y / this._innerBoundary.y);
         }
     }
 }
