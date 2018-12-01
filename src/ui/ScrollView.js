@@ -402,6 +402,131 @@ class ScrollView extends Panel {
 
 
     /**
+     * @desc Scroll inner container to top.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToLeft(time) {
+        this._scroller.scrollToLeft(time);
+    }
+
+    /**
+     * @desc Scroll inner container to top.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToRight(time) {
+        this._scroller.scrollToRight(time);
+    }
+
+    /**
+     * @desc Scroll inner container to top.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToTop(time) {
+        this._scroller.scrollToTop(time);
+    }
+
+    /**
+     * @desc Scroll inner container to bottom.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToBottom(time) {
+        this._scroller.scrollToBottom(time);
+    }
+
+    /**
+     * @desc Scroll inner container to top left.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToTopLeft(time) {
+        this._scroller.scrollToTopLeft(time);
+    }
+
+    /**
+     * @desc Scroll inner container to top left.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToTopRight(time) {
+        this._scroller.scrollToTopRight(time);
+    }
+
+    /**
+     * @desc Scroll inner container to bottom left.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToBottomLeft(time) {
+        this._scroller.scrollToBottomLeft(time);
+    }
+
+    /**
+     * @desc Scroll inner container to bottom right.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToBottomRight(time) {
+        this._scroller.scrollToBottomRight(time);
+    }
+
+    /**
+     * @desc Scroll to percent inner container in horizontal direction.
+     * @method
+     * @public
+     * @param {number} time
+     * @param {number} percent
+     */
+
+    scrollToPercentHorizontal(time, percent) {
+        this._scroller.scrollToPercentHorizontal(time, percent);
+    }
+
+    /**
+     * @desc Scroll to percent inner container in vertical direction.
+     * @method
+     * @public
+     * @param {number} time
+     * @param {number} percent
+     */
+
+    scrollToPercentVertical(time, percent) {
+        this._scroller.scrollToPercentVertical(time, percent);
+    }
+
+    /**
+     * @desc Scroll to percent inner container in vertical direction.
+     * @method
+     * @public
+     * @param {number} time
+     * @param {number} percentH
+     * @param {number} [percentV]
+     */
+
+    scrollToPercentBoth(time, percentH, percentV) {
+        this._scroller.scrollToPercentBoth(...arguments);
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

@@ -216,29 +216,170 @@ class ComScroller extends Component {
     }
 
     /**
+     * @desc Scroll inner container to top.
      * @method
      * @public
-     * @param {number} percent
      * @param {number} time
      */
 
-    scrollToPercentHorizontal(percent, time){
-        if (this.isVertical()) {
-            return;
-        }
+    scrollToLeft(time) {
+        this.scrollToPercentHorizontal(time, 0);
     }
 
     /**
+     * @desc Scroll inner container to top.
      * @method
      * @public
-     * @param {number} percent
      * @param {number} time
      */
 
-    scrollToPercentVertical(percent, time){
+    scrollToRight(time) {
+        this.scrollToPercentHorizontal(time, 1);
+    }
+
+    /**
+     * @desc Scroll inner container to top.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToTop(time) {
+        this.scrollToPercentVertical(time, 0);
+    }
+
+    /**
+     * @desc Scroll inner container to bottom.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToBottom(time) {
+        this.scrollToPercentVertical(time, 1);
+    }
+
+    /**
+     * @desc Scroll inner container to top left.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToTopLeft(time) {
+        this.scrollToPercentBoth(time, 0, 0);
+    }
+
+    /**
+     * @desc Scroll inner container to top left.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToTopRight(time) {
+        this.scrollToPercentBoth(time, 1, 0);
+    }
+
+    /**
+     * @desc Scroll inner container to bottom left.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToBottomLeft(time) {
+        this.scrollToPercentBoth(time, 0, 1);
+    }
+
+    /**
+     * @desc Scroll inner container to bottom right.
+     * @method
+     * @public
+     * @param {number} time
+     */
+
+    scrollToBottomRight(time) {
+        this.scrollToPercentBoth(time, 0, 1);
+    }
+
+    /**
+     * @desc Scroll to percent inner container in horizontal direction.
+     * @method
+     * @public
+     * @param {number} time
+     * @param {number} percent
+     */
+
+    scrollToPercentHorizontal(time, percent){
+        if (this.isVertical()) {
+            return;
+        }
+        if (percent > 1) {
+            percent = Math.percentToFloat(percent);
+        }
+        const endPos = Math.round(this._innerBoundary.x * percent);
+        this._runScrollAction(time, endPos, this._innerBoundary.y);
+        //TODO Add scroll animation to slider.
+        this._updateSliderProgress(this.owner.horizontalSlider, percent);
+    }
+
+    /**
+     * @desc Scroll to percent inner container in vertical direction.
+     * @method
+     * @public
+     * @param {number} time
+     * @param {number} percent
+     */
+
+    scrollToPercentVertical(time, percent){
         if (this.isHorizontal()) {
             return;
         }
+        if (percent > 1) {
+            percent = Math.percentToFloat(percent);
+        }
+        const endPos = Math.round(this._innerBoundary.y * percent);
+        this._runScrollAction(time, this._innerBoundary.x, endPos);
+        //TODO Add scroll animation to slider.
+        this._updateSliderProgress(this.owner.verticalSlider, percent);
+    }
+
+    /**
+     * @desc Scroll to percent inner container in vertical direction.
+     * @method
+     * @public
+     * @param {number} time
+     * @param {number} percentH
+     * @param {number} [percentV]
+     */
+
+    scrollToPercentBoth(time, percentH, percentV){
+        if (arguments.length === 2 ) {
+            percentV = percentH;
+        }
+        if (this.isHorizontal()) {
+            this.scrollToPercentHorizontal(time, percentH);
+            return;
+        }
+        if (this.isVertical()) {
+            this.scrollToPercentVertical(time, percentV);
+        }
+
+        if (percentH > 1) {
+            percentH = Math.percentToFloat(percentH);
+        }
+
+        if (percentV > 1) {
+            percentV = Math.percentToFloat(percentV);
+        }
+        const endPosX = Math.round(this._innerBoundary.x * percentH);
+        const endPosY = Math.round(this._innerBoundary.y * percentV);
+
+        this._runScrollAction(time, endPosX, endPosY);
+        //TODO Add scroll animation to slider.
+        this._updateSliderProgress(this.owner.horizontalSlider, percentH);
+        this._updateSliderProgress(this.owner.verticalSlider, percentV);
     }
 
     /**
@@ -294,8 +435,8 @@ class ComScroller extends Component {
         }
 
         innerContainer.position.copy(Geometry.pRound(resultPos));
-        this._upateSliderProgress(this.owner.horizontalSlider, boundPos.x, this._innerBoundary.x);
-        this._upateSliderProgress(this.owner.verticalSlider, boundPos.y, this._innerBoundary.y);
+        this._updateSliderProgress(this.owner.horizontalSlider, boundPos.x / this._innerBoundary.x);
+        this._updateSliderProgress(this.owner.verticalSlider, boundPos.y / this._innerBoundary.y);
     }
 
     /**
@@ -310,18 +451,15 @@ class ComScroller extends Component {
             const innerContainer = this.owner.innerContainer;
             const crtPos = innerContainer.position;
             const boundPos = Geometry.pRange(crtPos, this._innerBoundary, this._zeroPoint);
+            const scrollTime = 0.5;
 
             if (!boundPos.equals(crtPos)) {
-                const action = MoveTo.create(0.5, boundPos);
-                action.ease = EaseQuadraticInOut.create();
-                innerContainer.animationManager.runAction(action, false, 0, TIME_LINE.SCROLL_VIEW);
+                this._runScrollAction(scrollTime, boundPos.x, boundPos.y);
             }
             else {
                 Geometry.pMult(this._offset, 8, true);
                 const endPos = Geometry.pRange(Geometry.pAdd(crtPos, this._offset), this._innerBoundary, this._zeroPoint);
-                const action = MoveTo.create(0.5, endPos);
-                action.ease = EaseQuadraticOut.create();
-                innerContainer.animationManager.runAction(action, false, 0, TIME_LINE.SCROLL_VIEW);
+                this._runScrollAction(scrollTime, endPos.x, endPos.y, EaseQuadraticOut.create());
             }
         }
     }
@@ -358,11 +496,11 @@ class ComScroller extends Component {
         const innerContainer = this.owner.innerContainer;
         if (direction === SCROLL_DIRECTION.HORIZONTAL) {
             innerContainer.x = Math.round(this._innerBoundary.x * progress);
-            this._upateSliderProgress(this.owner.horizontalSlider, innerContainer.x, this._innerBoundary.x);
+            this._updateSliderProgress(this.owner.horizontalSlider, innerContainer.x / this._innerBoundary.x);
         }
         else {
             innerContainer.y = Math.round(this._innerBoundary.y * progress);
-            this._upateSliderProgress(this.owner.verticalSlider, innerContainer.y, this._innerBoundary.y);
+            this._updateSliderProgress(this.owner.verticalSlider, innerContainer.y / this._innerBoundary.y);
         }
     }
 
@@ -436,15 +574,31 @@ class ComScroller extends Component {
      * @method
      * @private
      * @param {MANTICORE.ui.Slider} slider
-     * @param {number} position
-     * @param {number} bound
+     * @param {number} percent
      */
 
-    _upateSliderProgress(slider, position, bound) {
+    _updateSliderProgress(slider, percent) {
         if (Type.isNull(slider)) {
             return;
         }
-        slider.progress = Math.toFixed(position / bound);
+        slider.progress = Math.toFixed(percent);
+    }
+
+    /**
+     * @desc Apply animated scroll to inner container
+     * @method
+     * @private
+     * @param {number} time
+     * @param {int} x
+     * @param {int} y
+     * @param {MANTICORE.animation.easing.EaseBase} [ease]
+     */
+
+    _runScrollAction(time, x, y, ease = EaseQuadraticOut.create()) {
+        const innerContainer = this.owner.innerContainer;
+        const action = MoveTo.create(time, new PIXI.Point(x, y));
+        action.ease = ease;
+        innerContainer.animationManager.runAction(action, false, 0, TIME_LINE.SCROLL_VIEW);
     }
 
     /**
@@ -523,8 +677,8 @@ class ComScroller extends Component {
             const innerContainerPos = this.owner.innerContainer.position;
             this.owner.innerContainer.animationManager.stopTimeLine(TIME_LINE.SCROLL_VIEW);
             Geometry.pRange(innerContainerPos, this._innerBoundary, this._zeroPoint, true);
-            this._upateSliderProgress(this.owner.horizontalSlider, innerContainerPos.x, this._innerBoundary.x);
-            this._upateSliderProgress(this.owner.verticalSlider, innerContainerPos.y, this._innerBoundary.y);
+            this._updateSliderProgress(this.owner.horizontalSlider, innerContainerPos.x/this._innerBoundary.x);
+            this._updateSliderProgress(this.owner.verticalSlider, innerContainerPos.y/this._innerBoundary.y);
         }
     }
 }

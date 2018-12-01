@@ -744,6 +744,17 @@ declare namespace MANTICORE {
                 jumpToPercentBothDirection(percent: number): void;
                 jumpToPercentHorizontal(percent: number): void;
                 jumpToPercentVertical(percent: number): void;
+                scrollToLeft(time: number): void;
+                scrollToRight(time: number): void;
+                scrollToTop(time: number): void;
+                scrollToBottom(time: number): void;
+                scrollToTopLeft(time: number): void;
+                scrollToTopRight(time: number): void;
+                scrollToBottomLeft(time: number): void;
+                scrollToBottomRight(time: number): void;
+                scrollToPercentHorizontal(time: number, percent: number): void;
+                scrollToPercentVertical(time: number, percent: number): void;
+                scrollToPercentBoth(time: number, percentH: number, percentV?: number): void;
                 updateDragStart(position: PIXI.Point): void;
                 updateDragMove(position: PIXI.Point): void;
                 updateDragFinish(position: PIXI.Point): void;
@@ -1687,6 +1698,17 @@ declare namespace MANTICORE {
             jumpToPercentBothDirection(percent: number): void;
             jumpToPercentHorizontal(percent: number): void;
             jumpToPercentVertical(percent: number): void;
+            scrollToLeft(time: number): void;
+            scrollToRight(time: number): void;
+            scrollToTop(time: number): void;
+            scrollToBottom(time: number): void;
+            scrollToTopLeft(time: number): void;
+            scrollToTopRight(time: number): void;
+            scrollToBottomLeft(time: number): void;
+            scrollToBottomRight(time: number): void;
+            scrollToPercentHorizontal(time: number, percent: number): void;
+            scrollToPercentVertical(time: number, percent: number): void;
+            scrollToPercentBoth(time: number, percentH: number, percentV?: number): void;
 
             protected isVertical(): boolean;
             protected isHorizontal(): boolean;
