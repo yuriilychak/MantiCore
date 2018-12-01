@@ -1,3 +1,5 @@
+import atlasCache from "./AtlasCache";
+import bundleCache from "./BundleCache";
 import fontCache from "./FontCache";
 
 /**
@@ -7,5 +9,7 @@ import fontCache from "./FontCache";
  */
 
 export default {
+    atlasCache,
+    bundleCache,
     fontCache
 };

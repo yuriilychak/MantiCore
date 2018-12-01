@@ -1,7 +1,7 @@
 import BaseBundle from "./BaseBundle";
 import BUNDLE_TYPE from "enumerator/BundleType";
-import TextureAtlas from "bundle/ancillary/TextureAtlas";
 import FontCache from "cache/FontCache";
+import AtlasCache from "cache/AtlasCache";
 import Constant from "constant";
 
 /**
@@ -19,11 +19,6 @@ class AssetBundle extends BaseBundle {
     constructor (data) {
         super(data);
 
-        this.type = BUNDLE_TYPE.ASSET;
-
-        const atlases = data.atlases;
-        const atlasCount = atlases.length;
-
         /**
          * @desc Array with information about textures that use bundle.
          * @type {MANTICORE.bundle.bundle.LinkedTexture[]}
@@ -34,11 +29,113 @@ class AssetBundle extends BaseBundle {
 
         /**
          * @desc Array with texture atlases that use bundle.
-         * @type {MANTICORE.bundle.ancillary.TextureAtlas[]}
+         * @type {string[]}
          * @private
          */
 
-        this._textureAtlases = [];
+        this._atlases = [];
+
+        /**
+         * @desc Array with fonts that use bundle.
+         * @type {string[]}
+         * @private
+         */
+
+        this._fonts = [];
+
+        this.type = BUNDLE_TYPE.ASSET;
+
+        this._init(data);
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {Object} data
+     */
+    reuse(data) {
+        this._init(data);
+        super.reuse(data);
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {PIXI.BaseTexture} baseTexture
+     * @param {MANTICORE.type.AtlasInfo} atlas
+     */
+
+    generateTextureAtlas(baseTexture, atlas) {
+        const atlasName = this.data.name + "_" + atlas.name;
+
+        this._atlases.push(atlasName);
+
+        AtlasCache.add(atlasName, baseTexture, atlas, this.data);
+
+        if (atlas.name !== Constant.MAIN_ATLAS_NAME) {
+            return;
+        }
+        const fonts = this.data.fontData;
+        const fontCount = fonts.length;
+        const resolution = 1;
+
+        let i, fontName;
+
+        for (i = 0; i < fontCount; ++i) {
+            fontName = this.data.fonts[i];
+            this._fonts.push(fontName);
+            FontCache.add(fonts[i], fontName, baseTexture, resolution);
+        }
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        const fontCount = this._fonts.length;
+        const atlasCount = this._atlases.length;
+        let i;
+        for (i = 0; i < fontCount; ++i) {
+            FontCache.remove(this._fonts[i]);
+        }
+        for (i = 0; i < atlasCount; ++i) {
+            AtlasCache.remove(this._atlases[i]);
+        }
+
+        this._fonts.length = 0;
+        this._atlases.length = 0;
+        this._linkedTextures.length = 0;
+        super.clearData();
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @private
+     * @param {MANTICORE.type.AssetBundle} data
+     */
+
+    _init(data) {
+        const atlases = data.atlases;
+        const atlasCount = atlases.length;
 
         let i, images, atlas;
 
@@ -51,32 +148,6 @@ class AssetBundle extends BaseBundle {
                 isLoaded: false,
                 atlas: atlas
             });
-        }
-    }
-
-    /**
-     * PUBLIC METHODS
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * @method
-     * @public
-     * @param {PIXI.BaseTexture} baseTexture
-     * @param {MANTICORE.type.AtlasInfo} atlas
-     */
-
-    generateTextureAtlas(baseTexture, atlas) {
-        this._textureAtlases.push(new TextureAtlas(baseTexture, atlas, this.data));
-        if (atlas.name !== Constant.MAIN_ATLAS_NAME) {
-            return;
-        }
-        const fonts = this.data.fontData;
-        const fontCount = fonts.length;
-        const resolution = 1;
-
-        for (let i = 0; i < fontCount; ++i) {
-            FontCache.addFont(fonts[i], this.data.fonts[i], baseTexture, resolution);
         }
     }
 

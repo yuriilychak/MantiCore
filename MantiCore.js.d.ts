@@ -627,21 +627,25 @@ declare namespace MANTICORE {
                 atlas: MANTICORE.type.AtlasInfo;
             }
         }
-
-        export namespace bundleCache {
-            export function addAssetBundle(data: MANTICORE.type.AssetBundle): MANTICORE.bundle.bundle.AssetBundle | null;
-            export function getAssetBundle(name: string): MANTICORE.bundle.bundle.AssetBundle | null;
-        }
         export namespace middleware {
             export function bundleParser(resource: MANTICORE.loader.LoaderResource, next: MANTICORE.loader.LoaderCallback): void;
         }
     }
 
     export namespace cache {
+        export namespace atlasCache{
+            export function add(name: string, baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo, bundle: MANTICORE.type.AssetBundle): void;
+            export function remove(fontName: string): boolean;
+        }
+        export namespace bundleCache {
+            export function addAssetBundle(data: MANTICORE.type.AssetBundle): MANTICORE.bundle.bundle.AssetBundle | null;
+            export function getAssetBundle(name: string): MANTICORE.bundle.bundle.AssetBundle | null;
+            export function removeAssetBundle(name: string): boolean;
+        }
         export namespace fontCache{
-            export function addFont(font: MANTICORE.type.FontData, fontName: string, baseTexture: PIXI.BaseTexture, resolution: number): void;
-            export function removeFont(fontName: string): boolean;
-            export function getFontName(fontName: string, size: number): string;
+            export function add(font: MANTICORE.type.FontData, fontName: string, baseTexture: PIXI.BaseTexture, resolution: number): void;
+            export function remove(fontName: string): boolean;
+            export function getName(fontName: string, size: number): string;
         }
     }
 

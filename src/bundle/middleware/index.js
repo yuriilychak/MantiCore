@@ -3,7 +3,7 @@ import Format from "util/Format";
 import Macro from "macro";
 import BUNDLE_TYPE from "enumerator/BundleType";
 import FILE_TYPE from "enumerator/FileType";
-import BundleCache from "bundle/BundleCache";
+import BundleCache from "cache/BundleCache";
 
 /**
  * @desc Middlewares for load end generate bundles.

@@ -27,6 +27,8 @@ class BaseBundle extends ReusableObject {
          */
 
         this._type = BUNDLE_TYPE.NONE;
+
+        this.reusable = true;
     }
 
     /**

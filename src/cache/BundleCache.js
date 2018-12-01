@@ -1,10 +1,10 @@
 import Repository from "repository/Repository";
-import AssetBundle from "./bundle/AssetBundle";
+import AssetBundle from "bundle/bundle/AssetBundle";
 
 /**
  * @desc Cache to store bundles.
  * @namespace bundleCache
- * @memberOf MANTICORE.bundle
+ * @memberOf MANTICORE.cache
  */
 
 export default {
@@ -48,5 +48,17 @@ export default {
 
     getAssetBundle: function(name) {
         return this._assetBundles.getElement(name);
+    },
+
+    /**
+     * @desc Remove asset bundle from cache.
+     * @function
+     * @public
+     * @param {string} name
+     * @returns {boolean}
+     */
+
+    removeAssetBundle: function(name) {
+        return this._assetBundles.removeElement(name);
     }
 };

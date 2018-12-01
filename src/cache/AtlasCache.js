@@ -1,13 +1,59 @@
+import Repository from "repository/Repository";
 import Math from "util/Math";
 import Type from "util/Type";
+import ReusableObject from "../memory/ReusableObject";
 
 /**
- * @desc Class for manipulate with atlases.
- * @class
- * @memberOf MANTICORE.bundle.ancillary
+ * @desc Namespace for manipulate with atlases.
+ * @namespace fontCache
+ * @memberOf MANTICORE.cache
  */
 
-class TextureAtlas {
+export default {
+    /**
+     * @desc Repository that contain atlases.
+     * @type {MANTICORE.repository.Repository}
+     * @private
+     */
+
+    _atlases: new Repository(),
+
+    /**
+     * @desc Add atlas to cache.
+     * @function
+     * @public
+     * @param {string} name
+     * @param {PIXI.BaseTexture} baseTexture
+     * @param {MANTICORE.type.AtlasInfo} atlas
+     * @param {MANTICORE.type.AssetBundle} bundle
+     */
+
+    add(name, baseTexture, atlas, bundle) {
+        this._atlases.addElement(new TextureAtlas(baseTexture, atlas, bundle), name);
+    },
+
+    /**
+     * @desc Remove atlas from cache.
+     * @function
+     * @public
+     * @param {string} name
+     * @returns {boolean}
+     */
+
+    remove(name) {
+        return this._atlases.removeElement(name, true);
+    }
+}
+
+
+/**
+ * @desc Class for manipulate with atlases. Don't create it manually.
+ * @class
+ * @memberOf MANTICORE.cache.fontCache
+ * @extends MANTICORE.memory.ReusableObject
+ */
+
+class TextureAtlas extends ReusableObject{
     /**
      * @constructor
      * @param {PIXI.BaseTexture} baseTexture
@@ -16,12 +62,14 @@ class TextureAtlas {
      */
 
     constructor(baseTexture, atlas, bundle) {
+        super();
+
         /**
          * @desc Reference to the source texture.
-         * @type {PIXI.BaseTexture}
+         * @type {?PIXI.BaseTexture}
          * @private
          */
-        this._baseTexture = baseTexture;
+        this._baseTexture = null;
 
         /**
          * @desc Array with frames that use atlas.
@@ -31,20 +79,83 @@ class TextureAtlas {
         this._frames = [];
 
         /**
-         * @desc Source file for atlas
-         * @type {MANTICORE.type.AtlasInfo}
-         * @private
-         */
-
-        this._source = atlas;
-
-        const scale = this._source.scale;
-
-        /**
          *
          * @type {number}
          * @private
          */
+        this._resolution = 1;
+
+        this._init(baseTexture, atlas, bundle);
+
+        this.reusable = true;
+    }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls by pool when object get from pool. Don't call it only override.
+     * @method
+     * @public
+     * @param {PIXI.BaseTexture} baseTexture
+     * @param {MANTICORE.type.AtlasInfo} atlas
+     * @param {MANTICORE.type.AssetBundle} bundle
+     */
+    reuse(baseTexture, atlas, bundle) {
+        this._init(baseTexture, atlas, bundle);
+        super.reuse();
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Clear data before disuse and destroy.
+     * @method
+     * @protected
+     */
+
+    clearData() {
+        const frameCount = this._frames.length;
+
+        for (let i = 0; i < frameCount; ++i) {
+            PIXI.Texture.removeFromCache(this._frames[i]);
+        }
+
+        this._frames = [];
+
+        PIXI.Texture.removeFromCache(this._baseTexture);
+
+        this._baseTexture = null;
+
+        this._resolution = 1;
+
+        super.clearData();
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Initialize texture
+     * @method
+     * @private
+     * @param {PIXI.BaseTexture} baseTexture
+     * @param {MANTICORE.type.AtlasInfo} atlas
+     * @param {MANTICORE.type.AssetBundle} bundle
+     */
+
+    _init(baseTexture, atlas, bundle) {
+        this._baseTexture = baseTexture;
+
+        const scale = atlas.scale;
+
         this._resolution = PIXI.utils.getResolutionOfUrl(this._baseTexture.imageUrl, null);
 
         if (Type.isNull(this._resolution)) {
@@ -58,7 +169,7 @@ class TextureAtlas {
             this._baseTexture.update();
         }
 
-        const frames = this._source.frames;
+        const frames = atlas.frames;
         const frameCount = frames.length;
         let i, frame, sourceSize, textureFrame, dimensions;
 
@@ -160,5 +271,3 @@ class TextureAtlas {
         return result.length !== 0 ? result : null;
     }
 }
-
-export default TextureAtlas;

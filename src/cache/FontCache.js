@@ -3,13 +3,14 @@ import Math from "util/Math";
 import Type from "util/Type";
 
 /**
- * @desc Namespace for manipulate with font sizes and change them.
+ * @desc Namespace for manipulate with fonts.
  * @namespace fontCache
- * @memberOf MANTICORE.ui
+ * @memberOf MANTICORE.cache
  */
 
 export default {
     /**
+     * @desc Repository that contain font sizes, for set correct size.
      * @type {MANTICORE.repository.Repository}
      * @private
      */
@@ -32,7 +33,7 @@ export default {
      * @param {number} resolution
      */
 
-    addFont: function(font, fontName, baseTexture, resolution) {
+    add: function(font, fontName, baseTexture, resolution) {
         const fontData = {};
         const res = PIXI.utils.getResolutionOfUrl(baseTexture.imageUrl, resolution);
 
@@ -86,7 +87,18 @@ export default {
         nameSplit = fontData.font.split("_");
 
         if (nameSplit.length === 2) {
-            this._addFontSize(nameSplit[0], parseInt(nameSplit[1], 10));
+            const localName = nameSplit[0];
+            const localSize = parseInt(nameSplit[1], 10);
+            let sizes;
+            if (!this._fontSizes.hasElement(localName)) {
+                sizes = [];
+                this._fontSizes.addElement(sizes, localName);
+            }
+            else {
+                sizes = this._fontSizes.getElement(localName);
+            }
+            sizes.push(localSize);
+            sizes.sort();
         }
     },
 
@@ -97,7 +109,7 @@ export default {
      * @returns {boolean}
      */
 
-    removeFont(name) {
+    remove(name) {
         const index = Math.binaryIndexOf(name, this._font);
 
         if (index === -1) {
@@ -131,27 +143,6 @@ export default {
     },
 
     /**
-     * @desc Add font sizes to cache
-     * @function
-     * @private
-     * @param {string} fontName
-     * @param {int} size
-     */
-
-    _addFontSize: function(fontName, size) {
-        let sizes;
-        if (!this._fontSizes.hasElement(fontName)) {
-            sizes = [];
-            this._fontSizes.addElement(sizes, fontName);
-        }
-        else {
-            sizes = this._fontSizes.getElement(fontName);
-        }
-        sizes.push(size);
-        sizes.sort();
-    },
-
-    /**
      * @desc Return font name by size and default name.
      * @function
      * @param {string} fontName
@@ -159,7 +150,7 @@ export default {
      * @return {string}
      */
 
-    getFontName: function (fontName, size) {
+    getName: function (fontName, size) {
         if (!this._fontSizes.hasElement(fontName)) {
             return fontName;
         }

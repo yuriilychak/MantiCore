@@ -28,7 +28,7 @@ class OutlineBitmapText extends PIXI.Container {
 
         this._fontName = fontName;
 
-        fontName = FontCache.getFontName(this._fontName, size);
+        fontName = FontCache.getName(this._fontName, size);
 
         /**
          * @desc Label that contain text.
@@ -261,7 +261,7 @@ class OutlineBitmapText extends PIXI.Container {
         if (this._label.font.name === value) {
             return;
         }
-        const fontName = FontCache.getFontName(value, this._label.font.size);
+        const fontName = FontCache.getName(value, this._label.font.size);
         this._label.font.name = fontName;
         this._iterateOutlines(element => element.font.name = fontName);
     }
@@ -279,7 +279,7 @@ class OutlineBitmapText extends PIXI.Container {
         if (this._label.font.size === value) {
             return;
         }
-        const fontName = FontCache.getFontName(this._fontName, value);
+        const fontName = FontCache.getName(this._fontName, value);
         this._label.font.name = fontName;
         this._label.font.size = value;
         this._iterateOutlines(element => {

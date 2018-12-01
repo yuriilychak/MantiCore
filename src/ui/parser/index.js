@@ -4,7 +4,7 @@ import Color from "util/Color";
 
 import Logger from "logger";
 
-import BundleCache from "bundle/BundleCache";
+import BundleCache from "cache/BundleCache";
 
 import AtlasLabel from "ui/AtlasLabel";
 import Button from "ui/Button";
