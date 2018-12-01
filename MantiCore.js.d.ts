@@ -640,7 +640,7 @@ declare namespace MANTICORE {
     export namespace cache {
         export namespace fontCache{
             export function addFont(font: MANTICORE.type.FontData, fontName: string, baseTexture: PIXI.BaseTexture, resolution: number): void;
-            export function addFontSize(fontName: string, size: number): void;
+            export function removeFont(fontName: string): boolean;
             export function getFontName(fontName: string, size: number): string;
         }
     }

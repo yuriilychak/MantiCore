@@ -1,4 +1,6 @@
 import Repository from "repository/Repository";
+import Math from "util/Math";
+import Type from "util/Type";
 
 /**
  * @desc Namespace for manipulate with font sizes and change them.
@@ -12,6 +14,13 @@ export default {
      * @private
      */
     _fontSizes: new Repository(),
+
+    /**
+     * @desc Array with font names.
+     * @type {string[]}
+     * @private
+     */
+    _fonts: [],
 
     /**
      * @desc Add font to cache
@@ -77,19 +86,59 @@ export default {
         nameSplit = fontData.font.split("_");
 
         if (nameSplit.length === 2) {
-            this.addFontSize(nameSplit[0], parseInt(nameSplit[1], 10));
+            this._addFontSize(nameSplit[0], parseInt(nameSplit[1], 10));
         }
+    },
+
+    /**
+     * @function
+     * @public
+     * @param {string} name
+     * @returns {boolean}
+     */
+
+    removeFont(name) {
+        const index = Math.binaryIndexOf(name, this._font);
+
+        if (index === -1) {
+            return false;
+        }
+
+        delete BitmapText.fonts[name];
+
+        const sizes = this._fontSizes.getElement(name);
+
+        if (Type.isNull(sizes)) {
+            return true;
+        }
+
+        const sizeCount = sizes.length;
+        let sizeName, i, sizeIndex;
+
+        for (i = 0; i < sizeCount; ++i) {
+            sizeName = name + "_" + sizes[i];
+            sizeIndex = Math.binaryIndexOf(sizeName, this._font);
+            if (sizeIndex !== -1) {
+                this._fonts.splice(sizeIndex, 1);
+            }
+
+            delete BitmapText.fonts[sizeName];
+        }
+
+        this._fontSizes.removeElement(name);
+
+        return true;
     },
 
     /**
      * @desc Add font sizes to cache
      * @function
-     * @public
+     * @private
      * @param {string} fontName
      * @param {int} size
      */
 
-    addFontSize: function(fontName, size) {
+    _addFontSize: function(fontName, size) {
         let sizes;
         if (!this._fontSizes.hasElement(fontName)) {
             sizes = [];
