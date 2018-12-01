@@ -647,6 +647,14 @@ declare namespace MANTICORE {
             export function remove(fontName: string): boolean;
             export function getName(fontName: string, size: number): string;
         }
+
+        export namespace localizationCache {
+            export function add(lang: string, data: Object): boolean;
+            export function remove(lang: string): boolean;
+            export function getCurrentLang(): string;
+            export function setCurrentLang(value: string): boolean;
+            export function getLocale(key: string): string;
+        }
     }
 
     export namespace component {
@@ -780,6 +788,7 @@ declare namespace MANTICORE {
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, maxLevel?: number): void;
                 logUnlocalizedFields(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
                 setChildText<T extends PIXI.Container>(text: any, path: string, widget?: T): boolean;
+                localize<T extends PIXI.Container>(key: string, path: string, widget?: T): boolean;
                 getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
                 addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T;
                 addChildListener<T extends PIXI.Container>(listener: MANTICORE.eventDispatcher.InteractiveCallback, eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
@@ -916,7 +925,8 @@ declare namespace MANTICORE {
             FOCUS = "SYSTEM.FOCUS",
             BLUR = "SYSTEM.BLUR",
             VISIBLE = "SYSTEM.VISIBLE",
-            HIDDEN = "SYSTEM.HIDDEN"
+            HIDDEN = "SYSTEM.HIDDEN",
+            LOCALE_CHANGE = "SYSTEM.LOCALE_CHANGE"
         }
 
         export namespace animation {

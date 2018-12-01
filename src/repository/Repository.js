@@ -189,6 +189,10 @@ class Repository {
      */
 
     _killElement(element) {
+        if (element instanceof Repository) {
+            element.clear(true);
+            return;
+        }
         if (!Type.isObject(element) || Type.isUndefined(element.kill)) {
             return;
         }

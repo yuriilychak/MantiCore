@@ -4,6 +4,7 @@ import Type from "util/Type";
 import Model from "model/Model";
 import Format from "util/Format";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import LocalizationCache from "cache/LocalizationCache";
 
 /**
  * @desc Base Class for ui components.
@@ -122,6 +123,28 @@ class ComUI extends Component {
                 return false;
             }
         }
+    }
+
+    /**
+     * @desc Set locale of label or button.
+     * @public
+     * @param {string} key - Key in localization.
+     * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @returns {boolean}
+     */
+
+    localize(key, path, widget = null) {
+        let locale = LocalizationCache.getLocale(key);
+        const argumentCount = arguments.length;
+        if (arguments.length > 3) {
+            const values = [];
+            for (let i = 3; i < argumentCount; ++i) {
+                values.push(arguments[i]);
+            }
+            locale = Format.replace(locale, ...values);
+        }
+        return this.setChildText(locale, path, widget);
     }
 
     /**

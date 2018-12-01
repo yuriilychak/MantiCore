@@ -82,7 +82,7 @@ class ListView extends ScrollView {
     }
 
     /**
-     * @desc
+     * @desc Scroll inner container to item.
      * @method
      * @public
      * @param {number} time
