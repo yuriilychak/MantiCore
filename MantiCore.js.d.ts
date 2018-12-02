@@ -522,6 +522,60 @@ declare namespace MANTICORE {
             }
         }
 
+        export namespace timeLine {
+            export class ActionTimeLine extends MANTICORE.animation.timeLine.BaseTimeLine{
+                constructor(target: PIXI.DisplayObject, name);
+
+                inherit: boolean;
+                isResetParameters: boolean;
+                readonly isDone: boolean;
+
+                clone(): MANTICORE.animation.timeLine.ActionTimeLine;
+                addNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+                removeNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+
+                refreshStartParameters(): void;
+                addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
+                removeAnimation(name: string): boolean;
+                removeAllAnimations(): void;
+
+                runAction(action: MANTICORE.animation.action.Action, loop?: boolean): void;
+            }
+
+            export class BaseTimeLine extends MANTICORE.memory.ReusableObject{
+                constructor(target: PIXI.DisplayObject, name);
+
+                name: string;
+                fps: number;
+                loop: boolean;
+                protected readonly fpsCoef;
+                protected runningName;
+                protected target: PIXI.DisplayObject;
+                readonly isEmpty: boolean;
+                readonly isPlaying: boolean;
+                readonly isRunning: boolean;
+                readonly duration: number;
+
+                hasAnimation(name: string): boolean;
+                isPlay(animationName: string): boolean;
+                play(name: string, loop?: boolean): boolean;
+                pause(): void;
+                resume(): void;
+                update(dt: number): void;
+                stop(): boolean;
+                setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT, event: string | null);
+
+                protected runAnimation(name: string): void;
+                protected playAnimation(): void;
+                protected clearRunningAnimation(): boolean;
+                protected dispatchEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT): void;
+            }
+
+            export class SpineTimeLine extends MANTICORE.animation.timeLine.BaseTimeLine{
+                constructor(target: PIXI.DisplayObject, name);
+            }
+        }
+
         export class ActionAnimation extends MANTICORE.memory.ReusableObject {
             constructor(action: MANTICORE.animation.action.ActionInterval);
 
@@ -539,38 +593,6 @@ declare namespace MANTICORE {
             stop(): void;
             update(dt: number): void;
             clone(): MANTICORE.animation.ActionAnimation;
-        }
-
-        export class ActionTimeLine extends MANTICORE.memory.ReusableObject{
-            constructor(target: PIXI.DisplayObject, name);
-
-            name: string;
-            fps: number;
-            inherit: boolean;
-            loop: boolean;
-            isResetParameters: boolean;
-            readonly isEmpty: boolean;
-            readonly isPlaying: boolean;
-            readonly isRunning: boolean;
-            readonly isDone: boolean;
-            readonly duration: number;
-
-            clone(): MANTICORE.animation.ActionTimeLine;
-            addNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-            removeNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-            setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT, event: string | null);
-            refreshStartParameters(): void;
-            addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
-            removeAnimation(name: string): boolean;
-            removeAllAnimations(): void;
-            hasAnimation(name: string): boolean;
-            play(name: string, loop?: boolean): boolean;
-            stop(): boolean;
-            runAction(action: MANTICORE.animation.action.Action, loop?: boolean): void;
-            pause(): void;
-            resume(): void;
-            update(dt: number): void;
-            isPlay(animationName: string): boolean;
         }
     }
 
@@ -1230,8 +1252,8 @@ declare namespace MANTICORE {
             public resume(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
 
             public refreshTimeLines(): void;
-            public addTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE, timeLine?: any): boolean;
-            public getTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): MANTICORE.animation.ActionTimeLine | null;
+            public addTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE, timeLine?: MANTICORE.animation.timeLine.BaseTimeLine): boolean;
+            public getTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): MANTICORE.animation.timeLine.BaseTimeLine | null;
             public pauseTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public resumeTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public removeTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;

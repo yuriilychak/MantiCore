@@ -1,7 +1,4 @@
 import Timer from "timer";
-
-import Asset from "util/Asset";
-import Geometry from "util/Geometry";
 import Math from "util/Math";
 import Color from "util/Color";
 import Type from "util/Type";
@@ -16,6 +13,8 @@ import InteractionManager from "manager/InteractionManager";
 import Pool from "pool";
 import Constant from "constant";
 import SpineCache from "cache/SpineCache";
+import TIME_LINE from "enumerator/animation/TimeLine";
+import SpineTimeLine from "animation/timeLine/SpineTimeLine";
 
 /**
  * @desc Class that implements composite pattern for spine;
@@ -165,6 +164,8 @@ class ComponentSpine extends PIXI.spine.Spine {
 
         this._blockEvents = false;
 
+        this.animationManager.addTimeLine(TIME_LINE.SPINE, SpineTimeLine.create(this, TIME_LINE.SPINE));
+
         this._updateTint();
     }
 
@@ -283,10 +284,10 @@ class ComponentSpine extends PIXI.spine.Spine {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {string} frameName - Link to sprite frame.
+     * @param {string} skeletonName - Link to sprite frame.
      */
-    reuse(frameName) {
-        this.texture = Asset.getSpriteFrame(frameName);
+    reuse(skeletonName) {
+        this.spineData = SpineCache.getSkeleton(skeletonName);
         this._isUpdate = false;
         this.inPool = false;
     }

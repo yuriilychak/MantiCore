@@ -1,43 +1,32 @@
-import Math from "util/Math";
 import Type from "util/Type";
 import Color from "util/Color";
 import Format from "util/Format";
 
-import Macro from "macro";
-import Constant from "constant";
-import Pool from "pool";
-import EventDispatcher from "eventDispatcher";
+import Constant from "constant/index";
+import Pool from "pool/index";
 
 import Repository from "repository/Repository";
 
-import ActionAnimation from "./ActionAnimation";
-import ReusableObject from "memory/ReusableObject";
+import ActionAnimation from "animation/ActionAnimation";
 
 import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
+import BaseTimeLine from "./BaseTimeLine";
 
 /**
  * @desc Class for manipulate with animated actions and listen their event.
  * @class
- * @memberOf MANTICORE.animation
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf MANTICORE.animation.timeLine
+ * @extends MANTICORE.animation.timeLine.BaseTimeLine
  */
 
-class ActionTimeLine extends ReusableObject{
+class ActionTimeLine extends BaseTimeLine {
     /**
      * @constructor
      * @param {PIXI.DisplayObject} target
      * @param {string} name
      */
     constructor(target, name) {
-        super();
-
-        /**
-         * @desc Name of time line.
-         * @type {string}
-         * @private
-         */
-
-        this._name = name;
+        super(target, name);
 
         /**
          * @desc action that currently run
@@ -47,64 +36,11 @@ class ActionTimeLine extends ReusableObject{
         this._runningAnimation = null;
 
         /**
-         * @desc Name of running action.
-         * @type {?string}
-         * @private
-         */
-
-        this._runningName = null;
-
-        /**
          * @type {MANTICORE.repository.Repository}
          * @private
          */
 
         this._animations = new Repository();
-
-        /**
-         * @desc Flag is currently action running
-         * @type {boolean}
-         * @private
-         */
-
-        this._isRunning = false;
-
-        /**
-         * @type {boolean}
-         * @private
-         */
-        this._isPlaying = false;
-
-        /**
-         * @desc Target of animation.
-         * @type {PIXI.DisplayObject}
-         * @private
-         */
-
-        this._target = target;
-
-        /**
-         * @type {int}
-         * @private
-         */
-
-        this._fps = Macro.FPS;
-
-        /**
-         * @desc Coef for calculate animation time. When fps not default.
-         * @type {number}
-         * @private
-         */
-
-        this._fpsCoef = 1;
-
-        /**
-         * @desc Is need to loop animation.
-         * @type {boolean}
-         * @private
-         */
-
-        this._isLoop = false;
 
         /**
          * @desc Is calls animation in children.
@@ -172,14 +108,6 @@ class ActionTimeLine extends ReusableObject{
         this._startVisible = true;
 
         /**
-         * @desc Events that dispatch time line.
-         * @type {MANTICORE.repository.Repository}
-         * @private
-         */
-
-        this._events = new Repository();
-
-        /**
          * @desc Children that need to run inherited animation.
          * @type {?MANTICORE.view.ComponentContainer[]}
          * @private
@@ -210,16 +138,16 @@ class ActionTimeLine extends ReusableObject{
      */
 
     refreshStartParameters() {
-        if (Type.isNull(this._target)) {
+        if (Type.isNull(this.target)) {
             return;
         }
-        this._startPosition.copy(this._target.position);
-        this._startScale.copy(this._target.scale);
-        this._startSkew.copy(this._target.skew);
-        this._startTint = Type.setValue(this._target.tint, Color.COLORS.WHITE);
-        this._startAlpha = this._target.alpha;
-        this._startRotation = this._target.rotation;
-        this._startVisible = this._target.visible;
+        this._startPosition.copy(this.target.position);
+        this._startScale.copy(this.target.scale);
+        this._startSkew.copy(this.target.skew);
+        this._startTint = Type.setValue(this.target.tint, Color.COLORS.WHITE);
+        this._startAlpha = this.target.alpha;
+        this._startRotation = this.target.rotation;
+        this._startVisible = this.target.visible;
     }
 
     /**
@@ -254,8 +182,7 @@ class ActionTimeLine extends ReusableObject{
      */
 
     removeAllAnimations() {
-        this._isPlaying = false;
-        this._isRunning = false;
+        this.stop();
         this._animations.clear(true);
     }
 
@@ -281,16 +208,8 @@ class ActionTimeLine extends ReusableObject{
      */
 
     play(name, loop = false) {
-        this._clearRunningAnimation();
-        if (!this._animations.hasElement(name)) {
-            return false;
-        }
-
-        this.loop = loop;
-        this._isRunAction = false;
-        this._runAnimation(name, this._animations.getElement(name));
-
-        return true;
+        this.clearRunningAnimation();
+        return super.play(name, loop);
     }
 
     /**
@@ -301,9 +220,8 @@ class ActionTimeLine extends ReusableObject{
      */
 
     stop() {
-        this._dispatchEvent(TIME_LINE_EVENT.STOP);
-        this._iterateNestedChildren(child => child.animationManager.stop(this._runningName, this._name));
-        return this._clearRunningAnimation();
+        this._iterateNestedChildren(child => child.animationManager.stop(this.runningName, this.name));
+        return super.stop();
     }
 
     /**
@@ -314,13 +232,11 @@ class ActionTimeLine extends ReusableObject{
      */
 
     runAction(action, loop = false) {
-        this._clearRunningAnimation();
-
+        this.clearRunningAnimation();
         this.loop = loop;
-        this._isRunAction = true;
-        this._runAnimation(
+        this.runAnimation(
             Constant.TEMPORARY_ANIMATION_NAME + Format.getUniqueId(),
-            Pool.getObject(ActionAnimation, action)
+            ActionAnimation.create(action)
         );
     }
 
@@ -331,12 +247,11 @@ class ActionTimeLine extends ReusableObject{
      */
 
     pause() {
-        if (!this._isRunning) {
+        if (!this.isRunning) {
             return;
         }
-        this._isPlaying = false;
-        this._iterateNestedChildren(child => child.animationManager.pause(this._runningName, this._name));
-        this._dispatchEvent(TIME_LINE_EVENT.PAUSE);
+        this._iterateNestedChildren(child => child.animationManager.pause(this.runningName, this.name));
+        super.pause();
     }
 
     /**
@@ -346,12 +261,11 @@ class ActionTimeLine extends ReusableObject{
      */
 
     resume() {
-        if (!this._isRunning) {
+        if (!this.isRunning) {
             return;
         }
-        this._isPlaying = true;
-        this._iterateNestedChildren(child => child.animationManager.resume(this._runningName, this._name));
-        this._dispatchEvent(TIME_LINE_EVENT.RESUME);
+        this._iterateNestedChildren(child => child.animationManager.resume(this.runningName, this.name));
+        super.resume();
     }
 
     /**
@@ -362,18 +276,18 @@ class ActionTimeLine extends ReusableObject{
      */
 
     update(dt) {
-        if (!this._isPlaying) {
+        if (!this.isPlaying) {
             return;
         }
-        this._runningAnimation.update(dt * this._fpsCoef);
+        this._runningAnimation.update(dt * this.fpsCoef);
         if (this._runningAnimation.isDone) {
-            if (this._isLoop) {
-                this._dispatchEvent(TIME_LINE_EVENT.END);
-                this._playAnimation();
+            if (this.loop) {
+                this.dispatchEvent(TIME_LINE_EVENT.END);
+                this.playAnimation();
             }
             else {
-                this._dispatchEvent(TIME_LINE_EVENT.COMPLETE);
-                this._clearRunningAnimation();
+                this.dispatchEvent(TIME_LINE_EVENT.COMPLETE);
+                this.clearRunningAnimation();
             }
         }
     }
@@ -386,8 +300,6 @@ class ActionTimeLine extends ReusableObject{
      */
     reuse(target) {
         super.reuse(target);
-        this._target = target;
-
         this.refreshStartParameters();
     }
 
@@ -400,31 +312,7 @@ class ActionTimeLine extends ReusableObject{
      */
 
     isPlay(animationName) {
-        return this._runningName === animationName;
-    }
-
-    /**
-     * @desc Set event in repository.
-     * @method
-     * @public
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
-     * @param {?string} event
-     */
-
-    setEvent(eventId, event) {
-        const hasEvent = this._events.hasElement(eventId);
-        if (Type.isNull(event)) {
-            if (!hasEvent) {
-                return;
-            }
-            this._events.removeElement(eventId);
-            return;
-        }
-        if (hasEvent) {
-            this._events.updateElement(event, eventId);
-            return;
-        }
-        this._events.addElement(event, eventId);
+        return this.runningName === animationName;
     }
 
     /**
@@ -478,10 +366,10 @@ class ActionTimeLine extends ReusableObject{
         /**
          * @type {MANTICORE.animation.ActionTimeLine}
          */
-        const result = ActionTimeLine.create(this._target);
-        result.fps = this._fps;
+        const result = ActionTimeLine.create(this.target);
+        result.fps = this.fps;
         result.inherit = this._isInherit;
-        result.loop = this._isLoop;
+        result.loop = this.loop;
         return result;
     }
 
@@ -497,18 +385,66 @@ class ActionTimeLine extends ReusableObject{
      */
 
     clearData() {
-        this._name = Constant.DEFAULT_NAME;
-        this._events.clear();
-        this._clearRunningAnimation();
         this._animations.clear(true);
-        this._target = null;
-        this._fps = Macro.FPS;
-        this._fpsCoef = 1;
         this._isInherit = false;
         this._isResetParameters = false;
         this._nestedChildren.length = 0;
         this._nestedChildren = null;
         super.clearData();
+    }
+
+    /**
+     * @desc run animation after init.
+     * @method
+     * @protected
+     * @param {string} name
+     * @param {MANTICORE.animation.ActionAnimation} [animation = null]
+     */
+
+    runAnimation(name, animation = null) {
+        this._isRunAction = !Type.isNull(animation);
+        this._runningAnimation = this._isRunAction ? animation : this._animations.getElement(name);
+        super.runAnimation(name);
+        this._isRunAction = false;
+    }
+
+    /**
+     * @desc Play animation after init.
+     * @method
+     * @protected
+     */
+
+    playAnimation() {
+        this._setStartParameters();
+        this._runningAnimation.play(this.target);
+        if (this._isRunAction || !this._isInherit) {
+            return;
+        }
+
+        this._iterateNestedChildren(child => child.animationManager.play(this.runningName, this.name));
+        super.playAnimation();
+    }
+
+    /**
+     * @desc Clear currently running animation if it exist.
+     * @method
+     * @protected
+     * @returns {boolean}
+     */
+
+    clearRunningAnimation() {
+        if (!super.clearRunningAnimation()) {
+            return false;
+        }
+
+        if (!this._animations.hasElement(this.runningName)) {
+            this._runningAnimation.kill();
+        }
+
+        this._isRunAction = false;
+        this._runningAnimation = null;
+
+        return true;
     }
 
     /**
@@ -523,93 +459,17 @@ class ActionTimeLine extends ReusableObject{
      */
 
     _setStartParameters() {
-        if (Type.isNull(this._target) || !this._isResetParameters) {
+        if (Type.isNull(this.target) || !this._isResetParameters) {
             return;
         }
 
-        this._target.position.copy(this._startPosition);
-        this._target.scale.copy(this._startScale);
-        this._target.skew.copy(this._startSkew);
-        this._target.tint = this._startTint;
-        this._target.alpha = this._startAlpha;
-        this._target.rotation = this._startRotation;
-        this._target.visible = this._startVisible;
-    }
-
-    /**
-     * @desc run animation after init.
-     * @method
-     * @private
-     * @param {string} name
-     * @param {MANTICORE.animation.ActionAnimation} animation
-     */
-
-    _runAnimation(name, animation) {
-        this._runningName = name;
-        this._runningAnimation = animation;
-
-        this._playAnimation();
-        this._isPlaying = true;
-        this._isRunning = true;
-        this._isRunAction = false;
-    }
-
-    /**
-     * @desc Clear currently running animation if it exist.
-     * @method
-     * @private
-     * @returns {boolean}
-     */
-
-    _clearRunningAnimation() {
-        if (this.isEmpty) {
-            return false;
-        }
-
-        if (!this._animations.hasElement(this._runningName)) {
-            this._runningAnimation.kill();
-        }
-
-        this._isRunAction = false;
-        this._isLoop = false;
-        this._runningName = null;
-        this._runningAnimation = null;
-        this._isPlaying = false;
-        this._isRunning = false;
-
-        return true;
-    }
-
-    /**
-     * @desc Play animation after init.
-     * @method
-     * @private
-     */
-
-    _playAnimation() {
-        this._setStartParameters();
-        this._runningAnimation.play(this._target);
-        if (this._isRunAction || !this._isInherit) {
-            return;
-        }
-
-        this._iterateNestedChildren(child => child.animationManager.play(this._runningName, this._name));
-
-        this._dispatchEvent(TIME_LINE_EVENT.START);
-    }
-
-    /**
-     * @desc Dispatch animation event if it exist.
-     * @method
-     * @private
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
-     */
-
-    _dispatchEvent(eventId) {
-        if (!this._events.hasElement(eventId) || Type.isNull(this._runningAnimation)) {
-            return;
-        }
-        EventDispatcher.dispatch(this._events.getElement(eventId), this, this._runningName);
+        this.target.position.copy(this._startPosition);
+        this.target.scale.copy(this._startScale);
+        this.target.skew.copy(this._startSkew);
+        this.target.tint = this._startTint;
+        this.target.alpha = this._startAlpha;
+        this.target.rotation = this._startRotation;
+        this.target.visible = this._startVisible;
     }
 
     /**
@@ -651,56 +511,6 @@ class ActionTimeLine extends ReusableObject{
      */
 
     /**
-     * @desc Fps of time-line
-     * @public
-     * @returns {number}
-     */
-
-    get fps() {
-        return this._fps;
-    }
-
-    set fps(value) {
-        if (this._fps === value) {
-            return;
-        }
-
-        this._fps = value;
-
-        this._fpsCoef = Math.framesToSeconds(this._fps);
-    }
-
-    /**
-     * @desc Returns is time-line currently empty.
-     * @public
-     * @returns {boolean}
-     */
-
-    get isEmpty() {
-        return Type.isNull(this._runningAnimation);
-    }
-
-    /**
-     * @desc Flag is animation play on time-line (in pause return false).
-     * @public
-     * @returns {boolean}
-     */
-
-    get isPlaying() {
-        return this._isPlaying;
-    }
-
-    /**
-     * @desc Flag is currently some animation running (paused or not).
-     * @public
-     * @returns {boolean}
-     */
-
-    get isRunning() {
-        return this._isRunning;
-    }
-
-    /**
      * @desc Returns is action that use time-line complete.
      * @public
      * @returns {boolean}
@@ -718,23 +528,6 @@ class ActionTimeLine extends ReusableObject{
 
     get duration() {
         return !this.isEmpty ? this._runningAnimation.duration : 0;
-    }
-
-    /**
-     * @desc Returns is animation need to loop
-     * @public
-     * @return {boolean}
-     */
-
-    get loop() {
-        return this._isLoop;
-    }
-
-    set loop(value) {
-        if (this._isLoop === value) {
-            return;
-        }
-        this._isLoop = value;
     }
 
     /**
@@ -762,22 +555,6 @@ class ActionTimeLine extends ReusableObject{
         }
     }
 
-    /**
-     * @desc Name of time line
-     * @public
-     * @return {string}
-     */
-
-    get name() {
-        return this._name;
-    }
-
-    set name(value) {
-        if (this._name === value) {
-            return;
-        }
-        this._name = value;
-    }
 
     /**
      * @desc Flag is need to reset parameters of owner when start new animation.

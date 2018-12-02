@@ -1,6 +1,6 @@
 import BaseManager from "./BaseManager";
 import Repository from "repository/Repository";
-import ActionTimeLine from "animation/ActionTimeLine";
+import ActionTimeLine from "animation/timeLine/ActionTimeLine";
 import ActionAnimation from "animation/ActionAnimation";
 import TIME_LINE from "enumerator/animation/TimeLine";
 import Type from "util/Type";
@@ -31,7 +31,7 @@ class AnimationManager extends BaseManager {
 
         /**
          * @desc Array with active time-lines to update.
-         * @type {MANTICORE.animation.ActionTimeLine[]}
+         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
          * @private
          */
 
@@ -134,7 +134,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {MANTICORE.animation.ActionTimeLine} [timeLine = null]
+     * @param {MANTICORE.animation.timeLine.BaseTimeLine} [timeLine = null]
      * @return {boolean}
      */
 
@@ -143,7 +143,7 @@ class AnimationManager extends BaseManager {
             return false;
         }
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {MANTICORE.animation.timeLine.BaseTimeLine}
          */
         const actionTimeLine = !Type.isNull(timeLine) ? timeLine : ActionTimeLine.create(this.owner, name);
         const eventIds = this._events.keys;
@@ -181,7 +181,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string | MANTICORE.enumerator.animation.TIME_LINE} name
-     * @return {MANTICORE.animation.ActionTimeLine | null}
+     * @return {MANTICORE.animation.timeLine.BaseTimeLine | null}
      */
 
     getTimeLine(name) {
@@ -443,7 +443,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @private
-     * @param {MANTICORE.animation.ActionTimeLine} timeLine
+     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
      */
 
     static _canStop(timeLine) {
@@ -453,7 +453,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @private
-     * @param {MANTICORE.animation.ActionTimeLine} timeLine
+     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
      */
 
     static _canPause(timeLine) {
@@ -463,7 +463,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @private
-     * @param {MANTICORE.animation.ActionTimeLine} timeLine
+     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
      */
 
     static _canResume(timeLine) {
@@ -476,7 +476,7 @@ class AnimationManager extends BaseManager {
      * @private
      * @param {string} animationName
      * @param {string | MANTICORE.enumerator.animation.TIME_LINE} timeLineName
-     * @returns {MANTICORE.animation.ActionTimeLine}
+     * @returns {MANTICORE.animation.timeLine.BaseTimeLine}
      */
 
     _findTimeLine(animationName, timeLineName) {
@@ -503,7 +503,7 @@ class AnimationManager extends BaseManager {
      * @desc Remove time line from active.
      * @method
      * @private
-     * @param {MANTICORE.animation.ActionTimeLine} timeLine
+     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
      * @private
      */
 
@@ -527,7 +527,7 @@ class AnimationManager extends BaseManager {
      * @desc Add time line for update
      * @method
      * @private
-     * @param {MANTICORE.animation.ActionTimeLine} timeLine
+     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
      * @private
      */
 

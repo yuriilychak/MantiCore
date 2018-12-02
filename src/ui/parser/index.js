@@ -27,7 +27,7 @@ import PANEL_GRAPHIC_TYPE from "enumerator/ui/PanelGrphicType";
 import PROGRESS_TYPE from "enumerator/ui/ProgressType";
 
 import ActionAnimation from "animation/ActionAnimation";
-import ActionTimeLine from "animation/ActionTimeLine";
+import ActionTimeLine from "animation/timeLine/ActionTimeLine";
 import TIME_LINE from "enumerator/animation/TimeLine";
 import ACTION_TYPE from "enumerator/animation/ActionType";
 import ACTION_EASING from "enumerator/animation/ActionEasing";
