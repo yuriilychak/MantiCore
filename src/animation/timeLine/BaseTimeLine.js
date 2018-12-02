@@ -72,6 +72,13 @@ class BaseTimeLine extends ReusableObject{
         this._fps = Macro.FPS;
 
         /**
+         * @type {number}
+         * @private
+         */
+
+        this._fpsCoef = 1;
+
+        /**
          * @desc Events that dispatch time line.
          * @type {MANTICORE.repository.Repository}
          * @private
@@ -127,6 +134,7 @@ class BaseTimeLine extends ReusableObject{
      */
 
     play(name, loop = false) {
+        this.clearRunningAnimation();
         if (!this.hasAnimation(name)) {
             return false;
         }

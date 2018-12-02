@@ -1,13 +1,11 @@
 import Type from "util/Type";
 import Color from "util/Color";
 import Format from "util/Format";
-
-import Constant from "constant/index";
-import Pool from "pool/index";
+import Constant from "constant";
 
 import Repository from "repository/Repository";
 
-import ActionAnimation from "animation/ActionAnimation";
+import ActionAnimation from "../ActionAnimation";
 
 import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
 import BaseTimeLine from "./BaseTimeLine";
@@ -19,7 +17,7 @@ import BaseTimeLine from "./BaseTimeLine";
  * @extends MANTICORE.animation.timeLine.BaseTimeLine
  */
 
-class ActionTimeLine extends BaseTimeLine {
+class ActionTimeLine extends BaseTimeLine{
     /**
      * @constructor
      * @param {PIXI.DisplayObject} target
@@ -199,20 +197,6 @@ class ActionTimeLine extends BaseTimeLine {
     }
 
     /**
-     * @desc start time line.
-     * @method
-     * @public
-     * @param {string} name - Play animation with name.
-     * @param {boolean} [loop = false] -
-     * @returns {boolean}
-     */
-
-    play(name, loop = false) {
-        this.clearRunningAnimation();
-        return super.play(name, loop);
-    }
-
-    /**
      * @desc Stop time-line
      * @method
      * @public
@@ -233,6 +217,7 @@ class ActionTimeLine extends BaseTimeLine {
 
     runAction(action, loop = false) {
         this.clearRunningAnimation();
+
         this.loop = loop;
         this.runAnimation(
             Constant.TEMPORARY_ANIMATION_NAME + Format.getUniqueId(),
@@ -303,17 +288,6 @@ class ActionTimeLine extends BaseTimeLine {
         this.refreshStartParameters();
     }
 
-    /**
-     * @desc Returns is time line currently play animation.
-     * @method
-     * @public
-     * @param {string} animationName
-     * @returns {boolean}
-     */
-
-    isPlay(animationName) {
-        return this.runningName === animationName;
-    }
 
     /**
      * @desc Enable child for use in inherited animation.
@@ -385,6 +359,7 @@ class ActionTimeLine extends BaseTimeLine {
      */
 
     clearData() {
+        this.clearRunningAnimation();
         this._animations.clear(true);
         this._isInherit = false;
         this._isResetParameters = false;
@@ -398,14 +373,39 @@ class ActionTimeLine extends BaseTimeLine {
      * @method
      * @protected
      * @param {string} name
-     * @param {MANTICORE.animation.ActionAnimation} [animation = null]
+     * @param {MANTICORE.animation.ActionAnimation} [animation]
      */
 
     runAnimation(name, animation = null) {
         this._isRunAction = !Type.isNull(animation);
-        this._runningAnimation = this._isRunAction ? animation : this._animations.getElement(name);
+        this.runningName = name;
+        this._runningAnimation = this._isRunAction  ? animation : this._animations.getElement(name);
+
         super.runAnimation(name);
+        this.playAnimation();
         this._isRunAction = false;
+    }
+
+    /**
+     * @desc Clear currently running animation if it exist.
+     * @method
+     * @protected
+     * @returns {boolean}
+     */
+
+    clearRunningAnimation() {
+        if (this.isEmpty) {
+            return false;
+        }
+
+        if (!this._animations.hasElement(this.runningName)) {
+            this._runningAnimation.kill();
+        }
+
+        this._isRunAction = false;
+        super.clearRunningAnimation();
+        this._runningAnimation = null;
+        return true;
     }
 
     /**
@@ -422,29 +422,8 @@ class ActionTimeLine extends BaseTimeLine {
         }
 
         this._iterateNestedChildren(child => child.animationManager.play(this.runningName, this.name));
+
         super.playAnimation();
-    }
-
-    /**
-     * @desc Clear currently running animation if it exist.
-     * @method
-     * @protected
-     * @returns {boolean}
-     */
-
-    clearRunningAnimation() {
-        if (!super.clearRunningAnimation()) {
-            return false;
-        }
-
-        if (!this._animations.hasElement(this.runningName)) {
-            this._runningAnimation.kill();
-        }
-
-        this._isRunAction = false;
-        this._runningAnimation = null;
-
-        return true;
     }
 
     /**
@@ -554,7 +533,6 @@ class ActionTimeLine extends BaseTimeLine {
             this._nestedChildren = null;
         }
     }
-
 
     /**
      * @desc Flag is need to reset parameters of owner when start new animation.
