@@ -167,6 +167,18 @@ class ComponentContainer extends PIXI.Container {
      */
 
     /**
+     * @desc Static constructor of reusable object
+     * @method
+     * @static
+     * @param var_args
+     * @return {*}
+     */
+
+    static create(var_args) {
+        return Pool.getObject(this, ...arguments);
+    }
+
+    /**
      * @method
      * @public
      * @override

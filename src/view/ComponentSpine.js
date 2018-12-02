@@ -18,7 +18,7 @@ import Constant from "constant";
 import SpineCache from "cache/SpineCache";
 
 /**
- * @desc Class that implements composite pattern for sprite;
+ * @desc Class that implements composite pattern for spine;
  * @class
  * @extends PIXI.spine.Spine
  * @memberOf MANTICORE.view
@@ -174,6 +174,18 @@ class ComponentSpine extends PIXI.spine.Spine {
      */
 
     /**
+     * @desc Static constructor of reusable object
+     * @method
+     * @static
+     * @param var_args
+     * @return {*}
+     */
+
+    static create(var_args) {
+        return Pool.getObject(this, ...arguments);
+    }
+
+    /**
      * @method
      * @public
      * @override
@@ -184,14 +196,10 @@ class ComponentSpine extends PIXI.spine.Spine {
     addChild(var_args) {
         const argumentCount = arguments.length;
         const result = [];
-        const offset = Geometry.pCompMult(Geometry.pFromSize(this), this.anchor);
-        const scale = Geometry.pInvert(this.scale);
         let i, child;
         for (i = 0; i < argumentCount; ++i) {
             child = arguments[i];
-            Geometry.pSub(child.position, offset, true);
             this.updateChildTint(child);
-            child.scale.copy(scale);
             result.push(super.addChild(child));
         }
         if (this._hasComponentManager) {
@@ -212,8 +220,6 @@ class ComponentSpine extends PIXI.spine.Spine {
     addChildAt(child, index) {
         const result = super.addChildAt(child, index);
         this.updateChildTint(child);
-        Geometry.pSub(child.position, Geometry.pCompMult(Geometry.pFromSize(this), this.anchor), true);
-        child.scale.copy(Geometry.pInvert(this.scale));
         if (this._hasComponentManager) {
             this._componentManager.addChildrenAction([result]);
         }
