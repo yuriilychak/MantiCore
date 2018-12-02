@@ -2,6 +2,7 @@ import atlasCache from "./AtlasCache";
 import bundleCache from "./BundleCache";
 import fontCache from "./FontCache";
 import localizationCache from "./LocalizationCache";
+import spineCache from "./SpineCache";
 
 /**
  * @desc Contains caches for some file types.
@@ -13,5 +14,6 @@ export default {
     atlasCache,
     bundleCache,
     fontCache,
-    localizationCache
+    localizationCache,
+    spineCache
 };

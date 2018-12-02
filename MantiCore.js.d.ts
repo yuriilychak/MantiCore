@@ -614,6 +614,7 @@ declare namespace MANTICORE {
                 readonly linkedTextures: MANTICORE.bundle.bundle.LinkedTexture[];
 
                 generateTextureAtlas(baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo): void;
+                atlasLoadComplete(): void;
 
             }
             export class BaseBundle extends MANTICORE.memory.ReusableObject{
@@ -654,6 +655,12 @@ declare namespace MANTICORE {
             export function getCurrentLang(): string;
             export function setCurrentLang(value: string): boolean;
             export function getLocale(key: string): string;
+        }
+
+        export namespace spineCache {
+            export function add(name: string, data: Object): void;
+            export function remove(name: string): boolean;
+            export function getSkeleton(name: string): PIXI.spine.core.SkeletonData;
         }
     }
 
@@ -1128,7 +1135,9 @@ declare namespace MANTICORE {
                 ATLAS_LABEL = 13,
                 TEXT_FIELD = 14,
                 SCROLL_VIEW = 15,
-                LIST_VIEW = 16
+                LIST_VIEW = 16,
+                PAGE_VIEW = 17,
+                SPINE = 18
             }
 
             export enum VERTICAL_ALIGN {
@@ -1393,6 +1402,8 @@ declare namespace MANTICORE {
             fonts: string[];
             fontStyles: MANTICORE.type.FontStyle[];
             name: string;
+            skeletonNames: string[];
+            skeletons: Object[];
             texts: string[];
             textures: number[];
             textureParts: string[];

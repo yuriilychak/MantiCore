@@ -2,6 +2,7 @@ import BaseBundle from "./BaseBundle";
 import BUNDLE_TYPE from "enumerator/BundleType";
 import FontCache from "cache/FontCache";
 import AtlasCache from "cache/AtlasCache";
+import SpineCache from "cache/SpineCache";
 import Constant from "constant";
 
 /**
@@ -42,6 +43,14 @@ class AssetBundle extends BaseBundle {
          */
 
         this._fonts = [];
+
+        /**
+         * @desc Array with skeletons that use bundle.
+         * @type {string[]}
+         * @private
+         */
+
+        this._skeletons = [];
 
         this.type = BUNDLE_TYPE.ASSET;
 
@@ -95,6 +104,23 @@ class AssetBundle extends BaseBundle {
     }
 
     /**
+     * @desc Calls when all atlases updated.
+     * @method
+     * @public
+     */
+
+    atlasLoadComplete() {
+        const skeletonNames = this.data.skeletonNames;
+        const skeletons = this.data.skeletons;
+        const skeletonCount = skeletonNames.length;
+
+        for (let i = 0; i < skeletonCount; ++i) {
+            this._skeletons.push(skeletonNames[i]);
+            SpineCache.add(skeletonNames[i], skeletons[i]);
+        }
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -108,6 +134,7 @@ class AssetBundle extends BaseBundle {
     clearData() {
         const fontCount = this._fonts.length;
         const atlasCount = this._atlases.length;
+        const skeletonCount = this._skeletons.length;
         let i;
         for (i = 0; i < fontCount; ++i) {
             FontCache.remove(this._fonts[i]);
@@ -115,10 +142,14 @@ class AssetBundle extends BaseBundle {
         for (i = 0; i < atlasCount; ++i) {
             AtlasCache.remove(this._atlases[i]);
         }
+        for (i = 0; i < skeletonCount; ++i) {
+            SpineCache.remove(this._skeletons[i]);
+        }
 
         this._fonts.length = 0;
         this._atlases.length = 0;
         this._linkedTextures.length = 0;
+        this._skeletons.length = 0;
         super.clearData();
     }
 

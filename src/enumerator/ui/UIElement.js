@@ -22,7 +22,9 @@ const UI_ELEMENT = {
     ATLAS_LABEL: 13,
     TEXT_FIELD: 14,
     SCROLL_VIEW: 15,
-    LIST_VIEW: 16
+    LIST_VIEW: 16,
+    PAGE_VIEW: 17,
+    SPINE: 18
 };
 
 export default UI_ELEMENT;

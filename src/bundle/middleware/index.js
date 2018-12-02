@@ -77,6 +77,7 @@ const middleware = {
             ++index;
 
             if (index === textureCount) {
+                bundle.atlasLoadComplete();
                 next();
                 return;
             }

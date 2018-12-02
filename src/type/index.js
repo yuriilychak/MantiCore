@@ -38,6 +38,8 @@
  * @property {MANTICORE.enumerator.BUNDLE_TYPE} bundleType - Type of  bundle that load.
  * @property {MANTICORE.type.FontData[]} fontData - Array with information about fonts.
  * @property {string[]} animationNames - Name of animations that use bundle.
+ * @property {string[]} skeletonNames - Name of skeletons that use bundle.
+ * @property {Object[]} skeletons - Skeletons that use bundle.
  */
 
 /**

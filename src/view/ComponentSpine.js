@@ -1,34 +1,39 @@
 import Timer from "timer";
-import UI_ELEMENT from "enumerator/ui/UIElement";
 
-import Type from "util/Type";
+import Asset from "util/Asset";
+import Geometry from "util/Geometry";
 import Math from "util/Math";
 import Color from "util/Color";
+import Type from "util/Type";
 
+import UI_ELEMENT from "enumerator/ui/UIElement";
+
+import AnimationManager from "manager/AnimationManager";
 import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
-import AnimationManager from "manager/AnimationManager";
 import InteractionManager from "manager/InteractionManager";
 
 import Pool from "pool";
 import Constant from "constant";
+import SpineCache from "cache/SpineCache";
 
 /**
- * @desc Class that implements composite pattern;
+ * @desc Class that implements composite pattern for sprite;
  * @class
- * @extends PIXI.Container
+ * @extends PIXI.spine.Spine
  * @memberOf MANTICORE.view
  */
 
-class ComponentContainer extends PIXI.Container {
+class ComponentSpine extends PIXI.spine.Spine {
     /**
      * @constructor
+     * @param {string} skeletonName - Link to skeleton.
      */
-    constructor() {
-        super();
+    constructor(skeletonName) {
+        super(SpineCache.getSkeleton(skeletonName));
 
         /**
-         * @desc Storage of components.
+         * @desc Manager of components.
          * @type {?MANTICORE.manager.ComponentManager}
          * @private
          */
@@ -36,8 +41,8 @@ class ComponentContainer extends PIXI.Container {
         this._componentManager = null;
 
         /**
-         * @desc Storage of listeners.
-         * @type {?MANTICORE.manager.ListenerManager}
+         * @desc Manager of listeners.
+         * @type {MANTICORE.manager.ListenerManager}
          * @private
          */
 
@@ -150,7 +155,7 @@ class ComponentContainer extends PIXI.Container {
          * @private
          */
 
-        this._uiType = UI_ELEMENT.CONTAINER;
+        this._uiType = UI_ELEMENT.SPINE;
 
         /**
          * @desc Flag is need to block event dispatch.
@@ -159,6 +164,8 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._blockEvents = false;
+
+        this._updateTint();
     }
 
     /**
@@ -177,10 +184,14 @@ class ComponentContainer extends PIXI.Container {
     addChild(var_args) {
         const argumentCount = arguments.length;
         const result = [];
+        const offset = Geometry.pCompMult(Geometry.pFromSize(this), this.anchor);
+        const scale = Geometry.pInvert(this.scale);
         let i, child;
         for (i = 0; i < argumentCount; ++i) {
             child = arguments[i];
+            Geometry.pSub(child.position, offset, true);
             this.updateChildTint(child);
+            child.scale.copy(scale);
             result.push(super.addChild(child));
         }
         if (this._hasComponentManager) {
@@ -201,6 +212,8 @@ class ComponentContainer extends PIXI.Container {
     addChildAt(child, index) {
         const result = super.addChildAt(child, index);
         this.updateChildTint(child);
+        Geometry.pSub(child.position, Geometry.pCompMult(Geometry.pFromSize(this), this.anchor), true);
+        child.scale.copy(Geometry.pInvert(this.scale));
         if (this._hasComponentManager) {
             this._componentManager.addChildrenAction([result]);
         }
@@ -264,9 +277,10 @@ class ComponentContainer extends PIXI.Container {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {...*} var_args
+     * @param {string} frameName - Link to sprite frame.
      */
-    reuse(var_args) {
+    reuse(frameName) {
+        this.texture = Asset.getSpriteFrame(frameName);
         this._isUpdate = false;
         this.inPool = false;
     }
@@ -334,23 +348,14 @@ class ComponentContainer extends PIXI.Container {
      */
 
     doLayout() {
-        if (this._hasComponentManager && this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
-            /**
-             * @type {MANTICORE.component.ui.ComUILayout}
-             */
-            const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
-            layout.refresh();
+        if (!this._hasComponentManager || !this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
+            return;
         }
-        const children = this.children;
-        const childCount = children.length;
-        let i, child;
-        for (i = 0; i < childCount; ++i) {
-            child = children[i];
-            if (!child.doLayout) {
-                continue;
-            }
-            child.doLayout();
-        }
+        /**
+         * @type {MANTICORE.component.ui.ComUILayout}
+         */
+        const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
+        layout.refresh();
     }
 
     /**
@@ -375,7 +380,7 @@ class ComponentContainer extends PIXI.Container {
         this.rotation = 0;
         this.interactive = false;
         this._parentTint = Color.COLORS.WHITE;
-        this._customTint = Color.COLORS.WHITE;
+        super.tint = Color.COLORS.WHITE;
 
         this._componentManager = this._killManager(this._componentManager);
         this._listenerManager = this._killManager(this._listenerManager);
@@ -431,14 +436,11 @@ class ComponentContainer extends PIXI.Container {
      */
 
     updateChildTint(child) {
-        if (child.parentTint || child.parentTint === 0) {
-            if (child.parentTint === this._realTint) {
-                return;
-            }
+        if (!Type.isUndefined(child.parentTint)) {
             child.parentTint = this._realTint;
             return;
         }
-        if ((!child.tint && child.tint !== 0) || child.tint === this._realTint) {
+        if (Type.isUndefined(child.tint)) {
             return;
         }
         child.tint = this._realTint;
@@ -472,8 +474,11 @@ class ComponentContainer extends PIXI.Container {
      */
 
     _updateTint() {
+        if (Type.isUndefined(this._parentTint)) {
+            this._parentTint = Color.COLORS.WHITE;
+        }
         this._realTint = Color.multiply(this._parentTint, this._customTint);
-
+        super.tint = this._realTint;
         const children = this.children;
         const childCount = children.length;
         for (let i = 0; i < childCount; ++i) {
@@ -485,19 +490,6 @@ class ComponentContainer extends PIXI.Container {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
-
-    /**
-     * @desc Returns anchor point.
-     * @public
-     * @return {PIXI.Point}
-     */
-
-    get anchor() {
-        return new PIXI.Point(0, 0);
-    }
-
-    set anchor(value) {
-    }
 
     /**
      * @desc Returns is object interactive
@@ -530,9 +522,8 @@ class ComponentContainer extends PIXI.Container {
         return this._parentTint;
     }
 
-
     set parentTint(value) {
-        if (this._parentTint === value) {
+        if (Type.isEmpty(value) || this._parentTint === value) {
             return;
         }
         this._parentTint = value;
@@ -559,50 +550,16 @@ class ComponentContainer extends PIXI.Container {
         return this._customTint;
     }
 
-
     set tint(value) {
+        if (Type.isUndefined(this._customTint)) {
+            this._tint = value;
+            return;
+        }
         if (this._customTint === value) {
             return;
         }
         this._customTint = value;
         this._updateTint();
-    }
-
-    /**
-     * @desc Returns is container marked for update.
-     * @public
-     * @type {boolean}
-     */
-
-    get isUpdate() {
-        return this._isUpdate;
-    }
-
-    set isUpdate(value) {
-        if (this._isUpdate === value) {
-            return;
-        }
-
-        this._isUpdate = value;
-
-
-        if (this._isUpdate) {
-            Timer.enterFrameTimer.add(this.onUpdate, this);
-            return;
-        }
-
-        Timer.enterFrameTimer.remove(this.onUpdate, this);
-    }
-
-    /**
-     * @desc Flag is element destroyed.
-     * @readonly
-     * @public
-     * @return {boolean}
-     */
-
-    get isDestroyed() {
-        return this._isDestroyed;
     }
 
     /**
@@ -620,7 +577,7 @@ class ComponentContainer extends PIXI.Container {
         }
         super.visible = value;
 
-        if (Type.isEmpty(this._componentManager)) {
+        if (!this._hasComponentManager) {
             return;
         }
         this._componentManager.visibleAction(this.visible);
@@ -665,6 +622,7 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
+     * @desc Flag is view currently in pool.
      * @public
      * @type {boolean}
      */
@@ -681,7 +639,6 @@ class ComponentContainer extends PIXI.Container {
     }
 
     /**
-     * @desc Type of ui element (Widget, ComponentContainer, Button etc.).
      * @public
      * @readonly
      * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
@@ -691,11 +648,47 @@ class ComponentContainer extends PIXI.Container {
         return this._uiType;
     }
 
+
     set uiType(value) {
         if (this._uiType === value) {
             return;
         }
         this._uiType = value;
+    }
+
+    /**
+     * @desc Returns is container marked for update.
+     * @type {boolean}
+     */
+
+    get isUpdate() {
+        return this._isUpdate;
+    }
+
+    set isUpdate(value) {
+        if (this._isUpdate === value) {
+            return;
+        }
+
+        this._isUpdate = value;
+
+        if (this._isUpdate) {
+            Timer.enterFrameTimer.add(this.onUpdate, this);
+            return;
+        }
+
+        Timer.enterFrameTimer.remove(this.onUpdate, this);
+    }
+
+    /**
+     * @desc Flag is element destroyed.
+     * @readonly
+     * @public
+     * @return {boolean}
+     */
+
+    get isDestroyed() {
+        return this._isDestroyed;
     }
 
     /**
@@ -798,4 +791,4 @@ class ComponentContainer extends PIXI.Container {
     }
 }
 
-export default ComponentContainer;
+export default ComponentSpine;
