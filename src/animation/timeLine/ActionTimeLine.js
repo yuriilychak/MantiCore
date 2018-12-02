@@ -359,12 +359,12 @@ class ActionTimeLine extends BaseTimeLine {
     /**
      * @method
      * @public
-     * @return {MANTICORE.animation.ActionTimeLine}
+     * @return {MANTICORE.animation.timeLine.ActionTimeLine}
      */
 
     clone() {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {MANTICORE.animation.timeLine.ActionTimeLine}
          */
         const result = ActionTimeLine.create(this.target);
         result.fps = this.fps;
