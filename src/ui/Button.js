@@ -2,6 +2,7 @@ import BaseButton from "./ancillary/BaseButton";
 import INTERACTIVE_STATE from "enumerator/ui/InteractiveState";
 import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import Boot from "boot";
 
 /**
  * @desc realization of button class.
@@ -24,7 +25,9 @@ class Button extends BaseButton {
         super(upFrame, INTERACTIVE_STATE.UP);
 
         this.collider.addState(downFrame, INTERACTIVE_STATE.DOWN);
-        this.collider.addState(overFrame, INTERACTIVE_STATE.OVER);
+        if (Boot.isDesktop()) {
+            this.collider.addState(overFrame, INTERACTIVE_STATE.OVER);
+        }
         this.collider.addState(disabledFrame, INTERACTIVE_STATE.DISABLED);
 
         this.uiType = UI_ELEMENT.BUTTON;

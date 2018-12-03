@@ -1,10 +1,11 @@
 import BaseManager from "./BaseManager";
 import Repository from "repository/Repository";
-import Type from "../util/Type";
+import Type from "util/Type";
 import INTERACTIVE_EVENT from "../enumerator/ui/InteractiveEvent";
-import Geometry from "../util/Geometry";
-import Math from "../util/Math";
-import Constant from "../constant";
+import Geometry from "util/Geometry";
+import Math from "util/Math";
+import Constant from "constant";
+import Boot from "boot";
 
 /**
  * @desc Class for manipulate with view interactions.
@@ -500,15 +501,28 @@ class InteractionManager extends BaseManager {
         }
         this._interactive = value;
 
-        const events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
-        const handlers = [
-            this._onActionDownHandler,
-            this._onActionUpHandler,
-            this._onActionUpOutsideHandler,
-            this._onActionOverHandler,
-            this._onActionOutHandler,
-            this._onActionMoveHandler,
-        ];
+
+        let events, handlers;
+        if (Boot.isDesktop()) {
+            events = ["pointerdown", "pointerup", "pointerupoutside", "pointerover", "pointerout", "pointermove"];
+            handlers = [
+                this._onActionDownHandler,
+                this._onActionUpHandler,
+                this._onActionUpOutsideHandler,
+                this._onActionOverHandler,
+                this._onActionOutHandler,
+                this._onActionMoveHandler,
+            ];
+        }
+        else {
+            events = ["pointerdown", "pointerup", "pointerupoutside", "pointermove"];
+            handlers = [
+                this._onActionDownHandler,
+                this._onActionUpHandler,
+                this._onActionUpOutsideHandler,
+                this._onActionMoveHandler,
+            ];
+        }
         const listenerCount = events.length;
 
         let i;

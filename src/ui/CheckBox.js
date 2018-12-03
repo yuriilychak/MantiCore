@@ -4,6 +4,7 @@ import INTERACTIVE_STATE from "enumerator/ui/InteractiveState";
 import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 import Math from "../util/Math";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import Boot from "boot";
 
 /**
  * @class
@@ -42,7 +43,9 @@ class CheckBox extends Button {
         this._icon = new StateSlice9Sprite(upIconFrame, INTERACTIVE_STATE.UP);
 
         this._icon.addState(downIconFrame, INTERACTIVE_STATE.DOWN);
-        this._icon.addState(overIconFrame, INTERACTIVE_STATE.OVER);
+        if (Boot.isDesktop()) {
+            this._icon.addState(overIconFrame, INTERACTIVE_STATE.OVER);
+        }
         this._icon.addState(disableIconFrame, INTERACTIVE_STATE.DISABLED);
         this._icon.name = "imgCheck";
 
