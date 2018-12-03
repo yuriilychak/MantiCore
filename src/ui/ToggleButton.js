@@ -93,11 +93,15 @@ class ToggleButton extends BaseButton {
         this._isSelected = false;
 
         this.collider.addState(dDownFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_DOWN);
-        this.collider.addState(dOverFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER);
+        if (Boot.isDesktop()) {
+            this.collider.addState(dOverFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_OVER);
+        }
         this.collider.addState(dDisabledFrame, TOGGLE_INTERACTIVE_STATE.DESELECTED_DISABLED);
         this.collider.addState(sUpFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_UP);
         this.collider.addState(sDownFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_DOWN);
-        this.collider.addState(sOverFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_OVER);
+        if (Boot.isDesktop()) {
+            this.collider.addState(sOverFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_OVER);
+        }
         this.collider.addState(sDisabledFrame, TOGGLE_INTERACTIVE_STATE.SELECTED_DISABLED);
     }
 

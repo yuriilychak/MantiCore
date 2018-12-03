@@ -51,7 +51,9 @@ class Button extends BaseButton {
         super.reuse(upFrame, INTERACTIVE_STATE.UP);
 
         this.collider.addState(downFrame, INTERACTIVE_STATE.DOWN);
-        this.collider.addState(overFrame, INTERACTIVE_STATE.OVER);
+        if (Boot.isDesktop()) {
+            this.collider.addState(overFrame, INTERACTIVE_STATE.OVER);
+        }
         this.collider.addState(disabledFrame, INTERACTIVE_STATE.DISABLED);
     }
 
