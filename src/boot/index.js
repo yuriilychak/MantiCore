@@ -8,6 +8,7 @@ import Format from "util/Format";
 import EventDispatcher from "eventDispatcher";
 import SYSTEM_EVENT from "enumerator/SystemEvent";
 import Timer from "timer";
+import TEXTURE_FORMAT from "enumerator/TextureFormat";
 
 /**
  * @desc Boot section of engine.
@@ -129,6 +130,15 @@ export default {
      */
 
     TYPED_ARRAY_SUPPORTED: false,
+
+    /**
+     * @desc Format of textures that support device.
+     * @type {MANTICORE.enumerator.TEXTURE_FORMAT[]}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    SUPPORTED_FORMATS: [TEXTURE_FORMAT.PNG],
 
     /**
      * PUBLIC FUNCTIONS
@@ -515,7 +525,15 @@ export default {
             }
         }
 
-        callback();
+        const webP = new Image();
+
+        webP.src = 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wA' + 'iMwAgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA';
+        webP.onload = webP.onerror = () => {
+            if (webP.height === 2) {
+                this.SUPPORTED_FORMATS.push(TEXTURE_FORMAT.WEB_P);
+            }
+            callback();
+        };
     },
 
     /**
@@ -568,7 +586,8 @@ export default {
             Format.replace(template2, "Mouse enabled", this.MOUSE_ENABLED.toString()) +
             Format.replace(template2, "Touches enabled", this.TOUCHES_ENABLED.toString()) +
             Format.replace(template2, "Keyboard enabled", this.KEYBOARD_ENABLED.toString()) +
-            Format.replace(template2, "Accelerometer enabled", this.ACCELEROMETER_ENABLED.toString())
+            Format.replace(template2, "Accelerometer enabled", this.ACCELEROMETER_ENABLED.toString()) +
+            Format.replace(template2, "Supported texture formats", JSON.stringify(this.SUPPORTED_FORMATS))
         );
     },
 

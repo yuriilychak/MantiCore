@@ -550,6 +550,16 @@ class ActionTimeLine extends BaseTimeLine{
         }
         this._isResetParameters = value;
     }
+
+    /**
+     * @desc List of animation names of time line.
+     * @public
+     * @returns {string[]}
+     */
+
+    get animations() {
+        return this._animations.keys;
+    }
 }
 
 /**

@@ -440,6 +440,16 @@ class BaseTimeLine extends ReusableObject{
     get duration() {
         return 0;
     }
+
+    /**
+     * @desc List of animation names of time line.
+     * @public
+     * @returns {string[]}
+     */
+
+    get animations() {
+        return [];
+    }
 }
 
 

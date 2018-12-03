@@ -551,6 +551,7 @@ declare namespace MANTICORE {
                 protected readonly fpsCoef;
                 protected runningName;
                 protected target: PIXI.DisplayObject;
+                readonly animations: string;
                 readonly isEmpty: boolean;
                 readonly isPlaying: boolean;
                 readonly isRunning: boolean;
@@ -609,6 +610,7 @@ declare namespace MANTICORE {
         export const TOUCHES_ENABLED: boolean;
         export const ACCELEROMETER_ENABLED: boolean;
         export const TYPED_ARRAY_SUPPORTED: boolean;
+        export const SUPPORTED_FORMATS: MANTICORE.enumerator.TEXTURE_FORMAT[];
 
         export function init(callback: Function);
         export function isMobile(): boolean;
@@ -958,6 +960,16 @@ declare namespace MANTICORE {
             LOCALE_CHANGE = "SYSTEM.LOCALE_CHANGE"
         }
 
+        export enum TEXTURE_FORMAT {
+            PNG = 0,
+            WEB_P = 1,
+            DDS = 2,
+            ATC = 3,
+            ASTC = 4,
+            PVR = 5,
+            ETC1 = 6
+        }
+
         export namespace animation {
             export enum ACTION_EASING {
                 LINEAR = 0,
@@ -1241,6 +1253,7 @@ declare namespace MANTICORE {
             eventResume: string;
             eventStop: string;
             eventComplete: string;
+            readonly animations: { [key:string]:string; };
 
             public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;

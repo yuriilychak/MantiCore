@@ -5,6 +5,7 @@ import FILE_TYPE from "./FileType";
 import RESOLUTION from "./Resolution";
 import SCENE_TRANSITION from "./SceneTransition";
 import SYSTEM_EVENT from "./SystemEvent";
+import TEXTURE_FORMAT from  "./TextureFormat";
 import animation from "./animation";
 import system from "./system";
 import ui from "./ui/index";
@@ -24,5 +25,6 @@ export default {
     FILE_TYPE,
     RESOLUTION,
     SCENE_TRANSITION,
-    SYSTEM_EVENT
+    SYSTEM_EVENT,
+    TEXTURE_FORMAT
 }

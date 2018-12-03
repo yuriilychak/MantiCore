@@ -183,6 +183,25 @@ class SpineTimeLine extends BaseTimeLine {
         }
         current.loop = super.loop;
     }
+
+    /**
+     * @desc List of animation names of time line.
+     * @public
+     * @returns {string[]}
+     */
+
+    get animations() {
+        const result = [];
+        if (Type.isNull(this.target)) {
+            return result;
+        }
+        const animations = this.target.spineData.animations;
+        const animationCount = animations.length;
+        for (let i = 0; i < animationCount; ++i) {
+            result.push(animations[i].name);
+        }
+        return result;
+    }
 }
 
 export default SpineTimeLine;

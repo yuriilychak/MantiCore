@@ -677,6 +677,28 @@ class AnimationManager extends BaseManager {
     set eventComplete(value) {
         this._setEvent(TIME_LINE_EVENT.COMPLETE, value);
     }
+
+    /**
+     * @desc Animation names sorted by time lines.
+     * @public
+     * @returns {Object.<string, string>}
+     */
+
+    get animations() {
+        const result = {};
+        /**
+         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+         */
+        const timeLines = this._timeLines.values;
+        const timeLineCount = timeLines.length;
+        let i, timeLine;
+
+        for (i = 0; i < timeLineCount; ++i) {
+            timeLine = timeLines[i];
+            result[timeLine.name] = timeLine.animations;
+        }
+        return result;
+    }
 }
 
 export default AnimationManager;
