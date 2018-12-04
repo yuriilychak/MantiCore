@@ -346,7 +346,7 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     emitInteractiveEvent(eventType, event) {
-        if (!this._hasComponentManager) {
+        if (!this._hasComponentManager || this.blockEvents) {
             return;
         }
         this._componentManager.iterateUIComponents(component => component.emitInteractiveEvent(eventType, event));
