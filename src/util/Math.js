@@ -446,6 +446,8 @@ const math = {
 
     intPow: function(value, power) {
         if (power < 0) return 1 / this.intPow(value, -power);
+        const numSplit = value.toString().split(".");
+        let fixedNum = (numSplit.length === 2 ? numSplit[1].length : 0) * power;
         let b = value, result = 1;
         while (power > 0) {
             if ((power & 1) !== 0) {
@@ -454,7 +456,7 @@ const math = {
             power >>= 1;
             b *= b;
         }
-        return result;
+        return fixedNum === 0 ? result : parseFloat(result.toFixed(fixedNum));
     },
 
     /**

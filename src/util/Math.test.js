@@ -38,6 +38,14 @@ test('Math.floor', () => {
     expect(Math.floor(0.2)).toBe(0);
 });
 
+test('Math.intPow', () => {
+    expect(Math.intPow(0, 3)).toBe(0);
+    expect(Math.intPow(2.5, 2)).toBe(6.25);
+    expect(Math.intPow(-2, 2)).toBe(4);
+    expect(Math.intPow(-3, 3)).toBe(-27);
+    expect(Math.intPow(0.2, 2)).toBe(0.04);
+});
+
 test('Math.multPowTwo', () => {
     expect(Math.multPowTwo(2.9999)).toBe(4);
     expect(Math.multPowTwo(4, 2)).toBe(16);
@@ -65,3 +73,18 @@ test('Math.toFixed', () => {
     expect(Math.toFixed(0)).toBe(0);
     expect(Math.toFixed(-1)).toBe(-1);
 });
+
+test('Math.toSeconds', () => {
+    expect(Math.toSeconds(8)).toBe(0.008);
+    expect(Math.toSeconds(25390)).toBe(25.39);
+    expect(Math.toSeconds(0)).toBe(0);
+    expect(Math.toSeconds(1000)).toBe(1);
+});
+
+test('Math.toMilliseconds', () => {
+    expect(Math.toMilliseconds(2.9999)).toBe(3000);
+    expect(Math.toMilliseconds(2.999)).toBe(2999);
+    expect(Math.toMilliseconds(0)).toBe(0);
+    expect(Math.toMilliseconds(1)).toBe(1000);
+});
+
