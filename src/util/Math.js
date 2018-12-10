@@ -143,7 +143,7 @@ const math = {
      */
 
     floor: function (value) {
-        return ~~value;
+        return (value - (value >= 0 ? 0 : 0.5)) << 0;
     },
 
     /**
@@ -155,7 +155,7 @@ const math = {
      */
 
     round: function(value) {
-        return ~~(value + 0.5 * this.sign(value));
+        return (value + (value >= 0 ? 0.5 : -0.499999)) << 0;
     },
 
     /**
@@ -167,9 +167,8 @@ const math = {
      */
 
     ceil: function(value) {
-        const floored = ~~value;
-        const valSign = this.sign(value);
-        return floored === value ? value : floored + valSign;
+        const floored = this.floor(value);
+        return floored === value ? value : floored + 1;
     },
 
     /**

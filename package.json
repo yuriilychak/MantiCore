@@ -4,7 +4,8 @@
   "description": "Game engine based on PIXI.js renderer.",
   "private": true,
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,6 +16,9 @@
     "js",
     "ui"
   ],
+  "jest": {
+    "moduleDirectories": ["node_modules", "src"]
+  },
   "author": "Yurii Lychak",
   "license": "MIT",
   "bugs": {
@@ -41,6 +45,9 @@
     "webpack-cli": "^3.1.2"
   },
   "devDependencies": {
-    "extract-text-webpack-plugin": "^4.0.0-beta.0"
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "jest": "^23.6.0"
   }
 }
