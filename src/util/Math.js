@@ -94,7 +94,7 @@ const math = {
     },
 
     /**
-     * @desc Performs a binary search on the host array.
+     * @desc Performs a binary search on the host array. (Array must be sorted).
      * @function
      * @param {*} element - The item to search for within the array.
      * @param {Array} array - Array for search.
@@ -219,7 +219,7 @@ const math = {
             multiplier *= 10;
         }
 
-        return this.round(value * multiplier) / multiplier;
+        return (value * multiplier << 0) / multiplier;
     },
 
     /**

@@ -17,7 +17,10 @@
     "ui"
   ],
   "jest": {
-    "moduleDirectories": ["node_modules", "src"]
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
   },
   "author": "Yurii Lychak",
   "license": "MIT",
@@ -31,6 +34,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/runtime": "^7.1.2",
     "@otris/jsdoc-tsd": "^1.0.4",
+    "@types/jest": "^23.3.10",
     "@types/pixi.js": "^4.8.2",
     "babel-loader": "^8.0.4",
     "jsdoc": "^3.5.5",
