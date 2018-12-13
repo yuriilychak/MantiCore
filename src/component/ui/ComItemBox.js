@@ -199,6 +199,20 @@ class ComItemBox extends Component {
     }
 
     /**
+     * @desc Iterate items with callback.
+     * @method
+     * @public
+     * @param {Function} callback
+     */
+
+    iterateItems(callback) {
+        const itemCount = this._items.length;
+        for (let i = 0; i < itemCount; ++i) {
+            callback(this._items[i], i);
+        }
+    }
+
+    /**
      * @desc Clone component
      * @method
      * @public

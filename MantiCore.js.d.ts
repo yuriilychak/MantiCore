@@ -762,6 +762,7 @@ declare namespace MANTICORE {
 
                 // noinspection JSAnnotator
                 static create(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number): MANTICORE.component.ui.ComItemBox;
+                iterateItems(callback: Function): void;
                 updateData(data: any[]): void;
                 getElement<T extends MANTICORE.component.ui.ComItem>(index: number): T | null;
                 updateElementData(index: number, data: any): boolean;
