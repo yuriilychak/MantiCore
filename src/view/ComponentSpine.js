@@ -382,7 +382,8 @@ class ComponentSpine extends PIXI.spine.Spine {
         this.parentTint = Color.COLORS.WHITE;
         this.tint = Color.COLORS.WHITE;
         this.scale.set(1);
-        this.anchor.set(0, 0);
+        //this.anchor.set(0, 0);
+        this.position.set(0, 0);
         this.visible = true;
         this.rotation = 0;
         this.interactive = false;

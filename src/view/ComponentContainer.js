@@ -384,6 +384,7 @@ class ComponentContainer extends PIXI.Container {
         this.scale.set(1);
         this.anchor.set(0, 0);
         this.visible = true;
+        this.position.set(0, 0);
         this.rotation = 0;
         this.interactive = false;
         this._parentTint = Color.COLORS.WHITE;
