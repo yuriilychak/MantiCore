@@ -1,6 +1,8 @@
 import Type from "util/Type";
 import Format from "util/Format";
+import TEXTURE_FORMAT from "enumerator/TextureFormat";
 import Macro from "macro";
+import Boot from "boot";
 import BUNDLE_TYPE from "enumerator/BundleType";
 import FILE_TYPE from "enumerator/FileType";
 import BundleCache from "cache/BundleCache";
@@ -60,7 +62,7 @@ const middleware = {
             parentResource: resource,
         };
 
-        const textureFormat = Macro.USE_WEB_P_FALLBACK ? FILE_TYPE.WEB_P : FILE_TYPE.PNG;
+        const textureFormat = Macro.USE_WEB_P_FALLBACK && Boot.SUPPORTED_FORMATS.indexOf(TEXTURE_FORMAT.WEB_P) ? FILE_TYPE.WEB_P : FILE_TYPE.PNG;
         let index = 0;
         let loadPath = Format.changeBaseName(url, Format.addFileType(textures[index].name, textureFormat));
 
