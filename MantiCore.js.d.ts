@@ -1668,8 +1668,37 @@ declare namespace MANTICORE {
             protected onActionClickHandler(event: Object): void;
         }
 
-        export class ImageView {
+        export class ImageView extends MANTICORE.view.Slice9Sprite{
             constructor(frameName: string);
+
+            reusable: boolean;
+            blockEvents: boolean;
+            inPool: boolean;
+            uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
+            isUpdate: boolean;
+            tint: number;
+            parentTint: number;
+            protected  readonly realTint: number;
+            readonly isDestroyed: boolean;
+            readonly animationManager: MANTICORE.manager.AnimationManager;
+            readonly componentManager: MANTICORE.manager.ComponentManager;
+            readonly listenerManager: MANTICORE.manager.ListenerManager;
+            readonly interactionManager: MANTICORE.manager.InteractionManager;
+            readonly hasAnimationManager: boolean;
+            readonly hasComponentManager: boolean;
+            readonly hasListenerManager: boolean;
+            readonly hasInteractionManager: boolean;
+
+            static create<T extends MANTICORE.view.ComponentContainer>(...var_args: any[]): T;
+            public reuse(...var_args: any[]): void;
+            public disuse(): void;
+            public kill(): void;
+            public destroy(): void;
+            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+            public doLayout(): void;
+
+            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected onUpdate(dt: number): void;
             // noinspection JSAnnotator
             static create(frameName: string): MANTICORE.ui.ImageView;
         }
