@@ -141,6 +141,18 @@ class BaseButton extends Widget {
     onEnabledChange(enabled) {}
 
     /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    _dispatchEnabledEvent() {
+        if (!this.hasInteractionManager) {
+            return;
+        }
+        this.interactionManager.emitInteractiveEvent(INTERACTIVE_EVENT.ENABLED_CHANGE, this._isEnabled);
+    }
+
+    /**
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -160,10 +172,13 @@ class BaseButton extends Widget {
         }
         this._isEnabled = value;
         this.onEnabledChange(this._isEnabled);
-        if (this.hasInteractionManager) {
-            this.interactionManager.emitInteractiveEvent(INTERACTIVE_EVENT.ENABLED_CHANGE, this._isEnabled);
+        if (!this._isEnabled) {
+            this._dispatchEnabledEvent();
         }
         this.blockEvents = !value;
+        if (this._isEnabled) {
+            this._dispatchEnabledEvent();
+        }
     }
 
     /**
