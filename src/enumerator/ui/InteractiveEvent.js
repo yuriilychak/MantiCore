@@ -14,7 +14,8 @@ const INTERACTIVE_EVENT = {
     DRAG: 5,
     CLICK: 6,
     DRAG_FINIS: 7,
-    DRAG_START: 8
+    DRAG_START: 8,
+    ENABLED_CHANGE: 9
 };
 
 export default INTERACTIVE_EVENT;

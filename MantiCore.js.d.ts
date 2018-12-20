@@ -1111,7 +1111,8 @@ declare namespace MANTICORE {
                 DRAG = 5,
                 CLICK = 6,
                 DRAG_FINIS = 7,
-                DRAG_START = 8
+                DRAG_START = 8,
+                ENABLED_CHANGE = 9
             }
 
             export enum INTERACTIVE_STATE {
@@ -1313,6 +1314,7 @@ declare namespace MANTICORE {
             eventDragStart: string | null;
             propagateChildrenEvents: boolean;
 
+            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event?: any): void;
             public getInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT): string;
             public updateInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, name?: string): void;
         }

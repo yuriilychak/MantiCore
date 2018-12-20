@@ -138,6 +138,19 @@ class InteractionManager extends BaseManager {
     }
 
     /**
+     * @desc Calls when interactive manager emit event.
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {*} [event]
+     */
+
+    emitInteractiveEvent(eventType, event = null) {
+        this.owner.emitInteractiveEvent(eventType, event);
+        this._dispatchInteractiveEvent(eventType, event);
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -240,7 +253,7 @@ class InteractionManager extends BaseManager {
             return false;
         }
         this._isInteractiveDown = true;
-        this._emitInteractiveEvent(INTERACTIVE_EVENT.DOWN, event);
+        this.emitInteractiveEvent(INTERACTIVE_EVENT.DOWN, event);
         this._prevPos.copy(globalPos);
         this._crtPos.copy(globalPos);
         this._acumOffset.set(0, 0);
@@ -255,7 +268,7 @@ class InteractionManager extends BaseManager {
 
     _onActionOverHandler(event) {
         this._isInteractiveOver = true;
-        this._emitInteractiveEvent(INTERACTIVE_EVENT.OVER, event);
+        this.emitInteractiveEvent(INTERACTIVE_EVENT.OVER, event);
     }
 
     /**
@@ -266,7 +279,7 @@ class InteractionManager extends BaseManager {
 
     _onActionOutHandler(event) {
         this._isInteractiveOver = false;
-        this._emitInteractiveEvent(INTERACTIVE_EVENT.OUT, event);
+        this.emitInteractiveEvent(INTERACTIVE_EVENT.OUT, event);
     }
 
     /**
@@ -292,17 +305,17 @@ class InteractionManager extends BaseManager {
         }
         if (this._isInteractiveDown && !this._isInteractiveDrag) {
             this._isInteractiveDrag = true;
-            this._emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, event);
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, event);
         }
 
         if (this._isInteractiveDown) {
-            this._emitInteractiveEvent(INTERACTIVE_EVENT.DRAG, event);
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG, event);
             this._crtPos.copy(globalPos);
             Geometry.pAdd(this._acumOffset, Geometry.pSub(this._crtPos, this._prevPos), true);
             this._prevPos.copy(this._crtPos);
             return
         }
-        this._emitInteractiveEvent(INTERACTIVE_EVENT.MOVE, event);
+        this.emitInteractiveEvent(INTERACTIVE_EVENT.MOVE, event);
     }
 
     /**
@@ -316,34 +329,21 @@ class InteractionManager extends BaseManager {
         if (!this._isInteractiveDown) {
             return;
         }
-        this._emitInteractiveEvent(INTERACTIVE_EVENT.UP, event);
+        this.emitInteractiveEvent(INTERACTIVE_EVENT.UP, event);
         if (this._isInteractiveDrag) {
-            this._emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, event);
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, event);
             if (Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON && Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON) {
-                this._emitInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
+                this.emitInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
             }
         }
         else {
-            this._emitInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
         }
         this._isInteractiveDown = false;
         this._isInteractiveDrag = false;
         this._acumOffset.set(0, 0);
         this._prevPos.set(0, 0);
         this._crtPos.set(0, 0);
-    }
-
-    /**
-     * @desc Calls when interactive manager emit event.
-     * @method
-     * @private
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
-     * @param {Object} event
-     */
-
-    _emitInteractiveEvent(eventType, event) {
-        this.owner.emitInteractiveEvent(eventType, event);
-        this._dispatchInteractiveEvent(eventType, event);
     }
 
     /**

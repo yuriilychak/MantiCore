@@ -1,6 +1,7 @@
 import Type from "util/Type";
 import Widget from "ui/Widget";
 import StateSlice9Sprite from "./StateSlice9Sprite";
+import INTERACTIVE_EVENT from "../../enumerator/ui/InteractiveEvent";
 
 /**
  * @desc basee class for buttons and toggle buttons.
@@ -157,10 +158,13 @@ class BaseButton extends Widget {
         if (this._isEnabled === value) {
             return;
         }
-
         this._isEnabled = value;
         this.blockEvents = !value;
         this.onEnabledChange(this._isEnabled);
+        if (!this.hasInteractionManager) {
+            return;
+        }
+        this.interactionManager.emitInteractiveEvent(INTERACTIVE_EVENT.ENABLED_CHANGE, this._isEnabled);
     }
 
     /**
