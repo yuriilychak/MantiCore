@@ -29,7 +29,7 @@ export default {
         }
         const atlas = new PIXI.spine.core.TextureAtlas();
         const skins = data.skins;
-        let skinKey, skin, slotKey, slot, frame;
+        let skinKey, skin, slotKey, slot, frame, frameName;
         const frames = {};
 
         for (skinKey in skins) {
@@ -37,10 +37,12 @@ export default {
             for (slotKey in skin) {
                 slot = skin[slotKey];
                 for (frame in slot) {
-                    frames[frame] = Asset.getSpriteFrame(frame);
+                    frameName = slot[frame]["path"] ? slot[frame]["path"] : frame;
+                    frames[frameName] = Asset.getSpriteFrame(frameName);
                 }
             }
         }
+
 
         atlas.addTextureHash(frames, false);
 
