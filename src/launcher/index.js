@@ -59,12 +59,11 @@ export default {
      * @desc create application with parameters.
      * @function
      * @memberOf MANTICORE.launcher
-     * @param {MANTICORE.view.Scene} startScene
      * @param {MANTICORE.enumerator.RESOLUTION | int[]} resolution
      * @param {MANTICORE.launcher.AppConfig} [config = {}]
      * @param {Function} [onComplete]
      */
-    initApp: function (parentContainer, startScene, resolution, config = {}, onComplete = null) {
+    initApp: function (parentContainer, resolution, config = {}, onComplete = null) {
         Boot.init(() => {
             if (Type.isArray(resolution)) {
                 this._designResolution.set(resolution[0], resolution[1]);
@@ -102,7 +101,6 @@ export default {
             if (!Type.isNull(onComplete)) {
                 onComplete();
             }
-            MANTICORE.launcher.runScene(new startScene());
         });
     },
 

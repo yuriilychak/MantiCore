@@ -1224,7 +1224,7 @@ declare namespace MANTICORE {
         export const appResolution: PIXI.Point;
         export const canvasResolution: PIXI.Point;
 
-        export function initApp(parentContainer: HTMLElement, startScene: MANTICORE.view.Scene, resolution: MANTICORE.enumerator.RESOLUTION, config?: MANTICORE.launcher.AppConfig, onComplete?: Function): void;
+        export function initApp(parentContainer: HTMLElement, resolution: MANTICORE.enumerator.RESOLUTION, config?: MANTICORE.launcher.AppConfig, onComplete?: Function): void;
         export function runScene(scene: MANTICORE.view.Scene): void;
         export function resize(width: number, height: number);
 
