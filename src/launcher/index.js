@@ -150,7 +150,7 @@ export default {
             this._appResolution.x = Math.ceil(this._canvasResolution.x / vProportion);
         }
 
-        const scale = Math.min(this._canvasResolution.x / this._designResolution.x, this._canvasResolution.y / this._designResolution.y;
+        const scale = Math.min(this._canvasResolution.x / this._designResolution.x, this._canvasResolution.y / this._designResolution.y);
         const renderWidth = this._canvasResolution.x > this._canvasResolution.y ? this._designResolution.x : this._designResolution.y;
         const renderHeight = this._canvasResolution.x > this._canvasResolution.y ? this._designResolution.x : this._designResolution.y;
         this._app.renderer.resize(renderWidth, renderHeight);
