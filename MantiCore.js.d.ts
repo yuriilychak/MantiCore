@@ -1087,6 +1087,12 @@ declare namespace MANTICORE {
                 SEARCH_BOT = 16
             }
 
+            export enum ORIENTATION {
+                AUTO = 0,
+                PORTRAIT = 1,
+                LANDSCAPE = 2
+            }
+
             export enum PLATFORM {
                 UNKNOWN = 0,
                 DESKTOP = 1,
@@ -1212,10 +1218,35 @@ declare namespace MANTICORE {
     }
 
     export namespace launcher {
-        export function initApp(startScene: MANTICORE.view.Scene, resolution: MANTICORE.enumerator.RESOLUTION, bgColor?: number): void;
-        export function getApp(): PIXI.Application;
-        export function runScene(scene: MANTICORE.view.Scene): void;
+        export const app: PIXI.Application;
+        export let orientation: MANTICORE.enumerator.system.ORIENTATION;
+        export const designResolution: PIXI.Point;
+        export const appResolution: PIXI.Point;
+        export const canvasResolution: PIXI.Point;
 
+        export function initApp(parentContainer: HTMLElement, startScene: MANTICORE.view.Scene, resolution: MANTICORE.enumerator.RESOLUTION, config?: MANTICORE.launcher.AppConfig, onComplete?: Function): void;
+        export function runScene(scene: MANTICORE.view.Scene): void;
+        export function resize(width: number, height: number);
+
+        export interface AppConfig {
+            autoStart?: boolean;
+            width?: number;
+            height?: number;
+            view?: HTMLCanvasElement;
+            transparent?: boolean;
+            autoDensity?: boolean;
+            antialias?: boolean;
+            preserveDrawingBuffer?: boolean;
+            resolution?: number;
+            forceCanvas?: boolean;
+            backgroundColor?: number;
+            clearBeforeRender?: boolean;
+            forceFXAA?: boolean;
+            powerPreference?: string;
+            sharedTicker?: boolean;
+            sharedLoader?: boolean;
+            resizeTo?: Window | HTMLElement;
+        }
     }
 
     export namespace loader {

@@ -116,7 +116,7 @@ class Follow extends Action {
             return false;
         }
 
-        const app = Launcher.getApp();
+        const app = Launcher.app;
         rect = Type.setValue(rect, new PIXI.Rectangle(0, 0, 0, 0));
 
         this._followedDisplayObject = followedDisplayObject;

@@ -1,5 +1,6 @@
 import BROWSER from "./Browser";
 import CLIENT from "./Client";
+import ORIENTATION from "./Orientation";
 import OS from "./OS";
 import PLATFORM from "./Platform";
 
@@ -13,5 +14,6 @@ export default {
     BROWSER,
     CLIENT,
     OS,
+    ORIENTATION,
     PLATFORM
 }
