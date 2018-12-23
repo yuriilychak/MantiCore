@@ -3,6 +3,7 @@ import Math from "util/Math";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import Geometry from "../util/Geometry";
+import Point from "geometry/Point";
 
 /**
  * @desc Namespace that contain builders for layout.
@@ -29,9 +30,9 @@ export default {
         const outerPadding = component.outerPadding;
         const verticalAlign = component.verticalAlign;
         const horizontalAlign = component.horizontalAlign;
-        const childSize = new PIXI.Point(0, 0);
-        const maxDimensions = new PIXI.Point(0, 0);
-        const offset = new PIXI.Point(0, 0);
+        const childSize = Point.create(0, 0);
+        const maxDimensions = Point.create(0, 0);
+        const offset = Point.create(0, 0);
         let containerDimension, itemDimension, dimCoef, hMult,vMult;
 
         component.iterateChildren(child => child.scale.set(1));
@@ -137,32 +138,32 @@ export default {
      * @private
      * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.component.ui.ComLayout} component
-     * @param {PIXI.Point | Point} offset
-     * @param {PIXI.Point | Point | PIXI.ObservablePoint} padding
+     * @param {MANTICORE.geometry.Point} offset
+     * @param {MANTICORE.geometry.Point} padding
      * @param {int} dimCoef
      * @param {int} hMult
      * @param {int} vMult
      */
 
     _alignChildren: function(component, offset, padding, dimCoef, hMult, vMult) {
-        const zeroPoint = new PIXI.Point(0, 0);
-        const childSize = new PIXI.Point(0, 0);
-        const childOffset = new PIXI.Point(0, 0);
-        const anchor = new PIXI.Point(0, 0);
-        const position = new PIXI.Point(0, 0);
-        const dimMult = new PIXI.Point(hMult, vMult);
-        const sizeDif = new PIXI.Point(0, 0);
-        const offsetMult = new PIXI.Point(vMult, hMult);
+        const zeroPoint = Point.create(0, 0);
+        const childSize = Point.create(0, 0);
+        const childOffset = Point.create(0, 0);
+        const anchor = Point.create(0, 0);
+        const position = Point.create(0, 0);
+        const dimMult = Point.create(hMult, vMult);
+        const sizeDif = Point.create(0, 0);
+        const offsetMult = Point.create(vMult, hMult);
 
         component.iterateChildren(child => {
             Geometry.pMult(Geometry.pFromSize(child, childSize), child.scale.x, true);
 
-            childOffset.copy(childSize);
+            childOffset.copyFrom(childSize);
             this._getChildAnchor(child, zeroPoint, anchor);
             Geometry.pCompMult(childOffset, anchor, true);
 
-            position.copy(offset);
-            sizeDif.copy(childSize);
+            position.copyFrom(offset);
+            sizeDif.copyFrom(childSize);
 
             child.position.copy(
                 Geometry.pSub(
@@ -249,12 +250,12 @@ export default {
      * @private
      * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.view.ComponentSprite | MANTICORE.view.ComponentContainer} child
-     * @param {PIXI.Point | Point} zeroPoint
-     * @param {PIXI.Point | Point} outPoint
+     * @param {MANTICORE.geometry.Point} zeroPoint
+     * @param {MANTICORE.geometry.Point} outPoint
      */
 
     _getChildAnchor(child, zeroPoint, outPoint) {
-        outPoint.copy(Type.setValue(child.anchor, Type.setValue(child.pivot, zeroPoint)));
+        outPoint.copyFrom(Type.setValue(child.anchor, Type.setValue(child.pivot, zeroPoint)));
     },
 
     /**
@@ -263,12 +264,12 @@ export default {
      * @private
      * @memberOf MANTICORE.builder.layoutBuilder
      * @param {MANTICORE.component.ui.ComLayout} component
-     * @param {PIXI.Point | Point} outPoint
+     * @param {MANTICORE.geometry.Point} outPoint
      */
 
     _getMaxChildrenDimensions: function (component, outPoint) {
         outPoint.set(0, 0);
-        const tempPoint = new PIXI.Point(0, 0);
+        const tempPoint = Point.create(0, 0);
         component.iterateChildren(child => Geometry.pMax(outPoint, Geometry.pFromSize(child, tempPoint)));
     }
 };

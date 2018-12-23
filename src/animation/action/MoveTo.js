@@ -1,5 +1,6 @@
 import MoveBy from "./MoveBy";
 import Type from "../../util/Type";
+import Point from "geometry/Point";
 
 /**
  * @desc Moves a Node object to the position x,y. x and y are absolute coordinates by modifying its position property. <br/>
@@ -9,7 +10,7 @@ import Type from "../../util/Type";
  * @extends MANTICORE.animation.action.ActionInterval
  * @memberOf MANTICORE.animation.action
  * @example
- * const actionBy = new MoveTo(2, new PIXI.Point(80, 80));
+ * const actionBy = new MoveTo(2, new MANTICORE.geometry.Point(80, 80));
  */
 
 class MoveTo extends MoveBy {
@@ -17,23 +18,23 @@ class MoveTo extends MoveBy {
     /**
      * @constructor
      * @param {number} duration duration in seconds
-     * @param {PIXI.Point | number} position
+     * @param {MANTICORE.geometry.Point | number} position
      * @param {number} [y]
      */
 
     constructor(duration, position, y) {
         super(duration, position, y);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._endPosition = new PIXI.Point(0, 0);
+        this._endPosition = Point.create(0, 0);
 
         if(Type.isNumber(position)) {
             this._endPosition.set(position, y);
         }
         else {
-            this._endPosition.copy(position);
+            this._endPosition.copyFrom(position);
         }
     }
 
@@ -71,7 +72,7 @@ class MoveTo extends MoveBy {
      * @method
      * @public
      * @param {number} duration duration in seconds
-     * @param {PIXI.Point | number} position
+     * @param {MANTICORE.geometry.Point | number} position
      * @param {number} [y]
      */
 
@@ -82,7 +83,7 @@ class MoveTo extends MoveBy {
             this._endPosition.set(position, y);
         }
         else {
-            this._endPosition.copy(position);
+            this._endPosition.copyFrom(position);
         }
     }
 

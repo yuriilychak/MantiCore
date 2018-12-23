@@ -1,7 +1,6 @@
 import SkewTo from "./SkewTo";
 import Geometry from "util/Geometry";
-import Spawn from "./Spawn";
-import Math from "../../util/Math";
+import Point from "geometry/Point";
 
 /**
  * @desc Skews a Node object by skewX and skewY degrees.Relative to its property modification.
@@ -26,11 +25,11 @@ class SkewBy extends SkewTo{
     constructor(t, sx, sy) {
         super(t, sx, sy);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._skew = new PIXI.Point(sx, sy);
+        this._skew = Point.create(sx, sy);
     }
 
     /**
@@ -53,8 +52,8 @@ class SkewBy extends SkewTo{
 
     startWithTarget(target) {
         super.startWithTarget(target);
-        this.delta.copy(this._skew);
-        this.endPoint.copy(Geometry.pAdd(this.startPoint, this.delta));
+        this.delta.copyFrom(this._skew);
+        this.endPoint.copyFrom(Geometry.pAdd(this.startPoint, this.delta));
     }
 
     /**

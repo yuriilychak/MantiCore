@@ -1,5 +1,6 @@
 import Math from "./Math";
 import Type from "./Type";
+import Point from "geometry/Point";
 
 /**
  * @desc Namespace for manipulate with geometry objects.
@@ -16,11 +17,11 @@ const geometry = {
      * @param {PIXI.Container | Object} size - Size to convert
      * @param {number} size.width - Size to convert
      * @param {number} size.height - Size to convert
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} [inPoint] - Point for store result.
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @param {MANTICORE.geometry.Point | Point} [inPoint] - Point for store result.
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
-    pFromSize: function(size, inPoint = new PIXI.Point(0, 0)) {
+    pFromSize: function(size, inPoint = Point.create(0, 0)) {
         inPoint.set(Type.setValue(size.width, 0), Type.setValue(size.height, 0));
         return inPoint;
     },
@@ -32,11 +33,11 @@ const geometry = {
      * @param {PIXI.Container | Object} size - Size to convert
      * @param {number} size.width - Size to convert
      * @param {number} size.height - Size to convert
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} [inPoint] - Point for store result.
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @param {MANTICORE.geometry.Point | Point} [inPoint] - Point for store result.
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
-    pHalfSize: function(size, inPoint = new PIXI.Point(0, 0)) {
+    pHalfSize: function(size, inPoint = Point.create(0, 0)) {
         inPoint.set(
             Math.divPowTwo(Type.setValue(size.width, 0)),
             Math.divPowTwo(Type.setValue(size.height, 0))
@@ -54,11 +55,11 @@ const geometry = {
      * @param {number} size1.height - Size to convert
      * @param {number} size2.width - Size to convert
      * @param {number} size2.height - Size to convert
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} [inPoint] - Point for store result.
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @param {MANTICORE.geometry.Point | Point} [inPoint] - Point for store result.
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
-    sSub: function(size1, size2, inPoint = new PIXI.Point(0, 0)) {
+    sSub: function(size1, size2, inPoint = Point.create(0, 0)) {
         inPoint.set(size1.width - size2.width, size1.height - size2.height);
         return inPoint;
     },
@@ -66,10 +67,10 @@ const geometry = {
     /**
      * @desc Subtract points.
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {MANTICORE.geometry.Point | Point} p1
+     * @param {MANTICORE.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pSub: function(p1, p2, isIn = false) {
@@ -81,10 +82,10 @@ const geometry = {
     /**
      * @desc Add points.
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {MANTICORE.geometry.Point | Point} p1
+     * @param {MANTICORE.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pAdd: function(p1, p2, isIn = false) {
@@ -96,10 +97,10 @@ const geometry = {
     /**
      * @desc Multiply point to number.
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {MANTICORE.geometry.Point | Point} p
      * @param {number} multiplier
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pMult: function(p, multiplier, isIn = false) {
@@ -111,10 +112,10 @@ const geometry = {
     /**
      * @desc Multiply two points.
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {MANTICORE.geometry.Point | Point} p1
+     * @param {MANTICORE.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pCompMult: function (p1, p2, isIn = false) {
@@ -126,10 +127,10 @@ const geometry = {
     /**
      * @desc Divide two points.
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {MANTICORE.geometry.Point | Point} p1
+     * @param {MANTICORE.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pCompDiv: function (p1, p2, isIn = false) {
@@ -141,10 +142,10 @@ const geometry = {
     /**
      * @desc Return two maximum values from points.
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {MANTICORE.geometry.Point | Point} p1
+     * @param {MANTICORE.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pMax: function (p1, p2, isIn = false) {
@@ -156,10 +157,10 @@ const geometry = {
     /**
      * @desc Return two minimum values from points.
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {MANTICORE.geometry.Point | Point} p1
+     * @param {MANTICORE.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pMin: function (p1, p2, isIn = false) {
@@ -171,9 +172,9 @@ const geometry = {
     /**
      * @function
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {MANTICORE.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
     
     pNeg: function (p, isIn = false) {
@@ -186,9 +187,9 @@ const geometry = {
      * @function
      * @public
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {MANTICORE.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pRound: function(p, isIn = false) {
@@ -202,11 +203,11 @@ const geometry = {
      * @function
      * @public
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} pLeft
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} pRight
+     * @param {MANTICORE.geometry.Point | Point} p
+     * @param {MANTICORE.geometry.Point | Point} pLeft
+     * @param {MANTICORE.geometry.Point | Point} pRight
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pRange: function(p, pLeft, pRight, isIn = false) {
@@ -220,8 +221,8 @@ const geometry = {
      * @function
      * @public
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p2
+     * @param {MANTICORE.geometry.Point | Point} p1
+     * @param {MANTICORE.geometry.Point | Point} p2
      * @returns {boolean}
      */
 
@@ -233,9 +234,9 @@ const geometry = {
      * @desc Return abs of point.
      * @function
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {MANTICORE.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pAbs: function(p, isIn = false) {
@@ -248,9 +249,9 @@ const geometry = {
      * @desc Invert point.
      * @function
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {MANTICORE.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     pInvert: function(p, isIn = false) {
@@ -263,8 +264,8 @@ const geometry = {
      * @desc Calculates dot product of two points.
      * @function
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint} p2
+     * @param {MANTICORE.geometry.Point} p1
+     * @param {MANTICORE.geometry.Point} p2
      * @return {number}
      */
     pDot: function (p1, p2) {
@@ -275,8 +276,8 @@ const geometry = {
      * @desc Calculates cross product of two points.
      * @function
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint} p2
+     * @param {MANTICORE.geometry.Point} p1
+     * @param {MANTICORE.geometry.Point} p2
      * @return {number}
      */
     pCross: function (p1, p2) {
@@ -287,7 +288,7 @@ const geometry = {
      * @desc Calculates the square length of a cc.Point (not calling sqrt() )
      * @function
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} p
+     * @param {MANTICORE.geometry.Point} p
      * @return {number}
      */
     pLengthSQ: function (p) {
@@ -298,7 +299,7 @@ const geometry = {
      * @desc Calculates distance between point an origin
      * @function
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} p
+     * @param {MANTICORE.geometry.Point} p
      * @return {number}
      */
     pLength: function (p) {
@@ -309,8 +310,8 @@ const geometry = {
      * @desc Calculates the distance between two points
      * @function
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} p1
-     * @param {PIXI.Point | PIXI.ObservablePoint} p2
+     * @param {MANTICORE.geometry.Point} p1
+     * @param {MANTICORE.geometry.Point} p2
      * @return {number}
      */
     pDistance: function (p1, p2) {
@@ -321,11 +322,11 @@ const geometry = {
      * @desc Generate result for point transformation.
      * @private
      * @memberOf MANTICORE.util.geometry
-     * @param {PIXI.Point | PIXI.ObservablePoint | Point} p
+     * @param {MANTICORE.geometry.Point | Point} p
      * @param {number} x
      * @param {number} y
      * @param {boolean} isIn
-     * @returns {PIXI.Point | PIXI.ObservablePoint | Point}
+     * @returns {MANTICORE.geometry.Point | Point}
      */
 
     _pGenResult(p, x, y, isIn) {
@@ -333,7 +334,7 @@ const geometry = {
             p.set(x, y);
             return p;
         }
-        return new PIXI.Point(x, y);
+        return Point.create(x, y);
     }
 };
 

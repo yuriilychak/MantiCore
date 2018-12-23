@@ -395,7 +395,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {PIXI.ObservablePoint}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get innerPadding() {
@@ -408,7 +408,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {PIXI.ObservablePoint}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get outerPadding() {

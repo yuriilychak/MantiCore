@@ -4,6 +4,7 @@ import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import Math from "util/Math";
 import Constant from "constant";
+import Point from "geometry/Point";
 
 /**
  * @desc Class for manipulate with layouts.
@@ -55,15 +56,15 @@ class ComUILayout extends Component {
          */
         this._isStretchHeight = false;
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._percentPos = new PIXI.Point(0, 0);
+        this._percentPos = Point.create(0, 0);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._percentSize = new PIXI.Point(0, 0);
+        this._percentSize = Point.create(0, 0);
         /**
          * @type {boolean}
          * @private
@@ -414,7 +415,7 @@ class ComUILayout extends Component {
     /**
      * @desc Percent size of element.
      * @public
-     * @return {PIXI.Point}
+     * @return {MANTICORE.geometry.Point}
      */
 
     get percentSize() {
@@ -422,7 +423,7 @@ class ComUILayout extends Component {
     }
 
     set percentSize(value) {
-        this._percentSize.copy(value);
+        this._percentSize.copyFrom(value);
     }
 
     /**

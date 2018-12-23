@@ -4,6 +4,7 @@ import Type from "util/Type";
 import OutlineBitmapText from "./ancillary/OutlineBitmapText";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Color from "util/Color";
+import Point from "geometry/Point";
 
 /**
  * @desc Class for manipulate with bitmap fonts.
@@ -39,7 +40,7 @@ class Label extends BaseLabel {
 
         /**
          * @desc offset of shadow;
-         * @type {?PIXI.Point}
+         * @type {?MANTICORE.geometry.Point}
          * @private
          */
 
@@ -101,7 +102,7 @@ class Label extends BaseLabel {
     /**
      * @method
      * @public
-     * @return {PIXI.Point}
+     * @return {MANTICORE.geometry.Point}
      */
 
     getShadowOffset() {
@@ -111,7 +112,7 @@ class Label extends BaseLabel {
     /**
      * @method
      * @public
-     * @param {int | PIXI.Point} xOrPoint
+     * @param {int | MANTICORE.geometry.Point} xOrPoint
      * @param {int} [y]
      */
 
@@ -415,7 +416,7 @@ class Label extends BaseLabel {
         this._isShadowEnabled = value;
 
         if (this._isShadowEnabled) {
-            this._shadowOffset = new PIXI.Point(0, 0);
+            this._shadowOffset = Point.create(0, 0);
             this._shadow = this._label.clone();
             this.addChildAt(this._shadow, 1);
             this._shadow.color = this._shadow.outlineColor = Color.COLORS.WHITE;

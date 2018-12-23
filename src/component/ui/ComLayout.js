@@ -5,6 +5,7 @@ import Geometry from "util/Geometry";
 import LayoutSizeManager from "manager/LayoutSizeManager";
 import ComChildIterator from "component/ComChildIterator";
 import LayoutBuilder from "builder/LayoutBuilder";
+import Point from "geometry/Point";
 
 /**
  * @desc Component for align children in container.
@@ -54,19 +55,22 @@ class ComLayout extends ComChildIterator {
 
         /**
          * @desc Inner padding between items.
-         * @type {PIXI.ObservablePoint | ObservablePoint}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._innerPadding = new PIXI.ObservablePoint(this._onInnerPaddingChangeHandler, this);
+        this._innerPadding = Point.create();
 
         /**
          * @desc Outer padding in owner.
-         * @type {PIXI.ObservablePoint | ObservablePoint}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._outerPadding = new PIXI.ObservablePoint(this._onOuterPaddingChangeHandler, this);
+        this._outerPadding = Point.create();
+
+        this._innerPadding.initChangeCallback(this._onInnerPaddingChangeHandler, this);
+        this._outerPadding.initChangeCallback(this._onOuterPaddingChangeHandler, this);
 
         this.listenChildren = true;
     }
@@ -322,7 +326,7 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @type {PIXI.ObservablePoint}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get innerPadding() {
@@ -333,12 +337,12 @@ class ComLayout extends ComChildIterator {
         if (Geometry.pEqual(this._innerPadding, value)) {
             return;
         }
-        this._innerPadding.copy(value);
+        this._innerPadding.copyFrom(value);
     }
 
     /**
      * @public
-     * @type {PIXI.ObservablePoint}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get outerPadding() {
@@ -349,7 +353,7 @@ class ComLayout extends ComChildIterator {
         if (Geometry.pEqual(this._outerPadding, value)) {
             return;
         }
-        this._outerPadding.copy(value);
+        this._outerPadding.copyFrom(value);
     }
 
     /**

@@ -13,6 +13,8 @@ import InteractionManager from "manager/InteractionManager";
 import Pool from "pool";
 import Constant from "constant";
 
+import Point from "geometry/Point";
+
 /**
  * @desc Class that implements composite pattern;
  * @class
@@ -502,11 +504,11 @@ class ComponentContainer extends PIXI.Container {
     /**
      * @desc Returns anchor point.
      * @public
-     * @return {PIXI.Point}
+     * @return {MANTICORE.geometry.Point}
      */
 
     get anchor() {
-        return new PIXI.Point(0, 0);
+        return Point.create(0, 0);
     }
 
     set anchor(value) {

@@ -1,5 +1,6 @@
 import JumpBy from "./JumpBy";
 import Type from "../../util/Type";
+import Point from "geometry/Point";
 
 /**
  * @desc Moves a Node object to a parabolic position simulating a jump movement by modifying it's position property. <br />
@@ -8,7 +9,7 @@ import Type from "../../util/Type";
  * @extends MANTICORE.animation.action.JumpBy
  * @memberOf MANTICORE.animation.action
  * @example
- * const actionTo = new JumpTo(2, new PIXI.Point(300, 0), 50, 4);
+ * const actionTo = new JumpTo(2, new MANTICORE.geometry.Point(300, 0), 50, 4);
  * const actionTo = new JumpTo(2, 300, 0, 50, 4);
  */
 
@@ -17,7 +18,7 @@ class JumpTo extends JumpBy {
     /**
      * @constructor
      * @param {number} duration
-     * @param {PIXI.Point|number} position
+     * @param {MANTICORE.geometry.Point|number} position
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]
@@ -27,16 +28,16 @@ class JumpTo extends JumpBy {
         super(duration, position, y, height, jumps);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._endPosition = new PIXI.Point(0, 0);
+        this._endPosition = Point.create(0, 0);
 
         if(Type.isNumber(position)) {
             this._endPosition.set(position, y);
         }
         else {
-            this._endPosition.copy(position);
+            this._endPosition.copyFrom(position);
         }
     }
 
@@ -76,7 +77,7 @@ class JumpTo extends JumpBy {
      * @method
      * @public
      * @param {number} duration
-     * @param {PIXI.Point|number} position
+     * @param {MANTICORE.geometry.Point|number} position
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]
@@ -89,7 +90,7 @@ class JumpTo extends JumpBy {
             this._endPosition.set(position, y);
         }
         else {
-            this._endPosition.copy(position);
+            this._endPosition.copyFrom(position);
         }
     }
 

@@ -4,6 +4,7 @@ import Math from "util/Math";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import Point from "geometry/Point";
 
 /**
  * @desc Chars of dots.
@@ -51,10 +52,10 @@ class AtlasLabel extends BaseLabel {
         this._fontFrame = AssetUtil.getSpriteFrame(frame);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._letterDimensions = new PIXI.Point(letterWidth, letterHeight);
+        this._letterDimensions = Point.create(letterWidth, letterHeight);
 
         /**
          * @type {int}

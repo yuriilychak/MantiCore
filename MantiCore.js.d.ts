@@ -42,10 +42,10 @@ declare namespace MANTICORE {
             }
 
             export class BezierBy extends MANTICORE.animation.action.ActionInterval{
-                constructor(duration: number, controlPoints: PIXI.Point[]);
+                constructor(duration: number, controlPoints: MANTICORE.geometry.Point[]);
 
-                protected readonly startPoint: PIXI.Point;
-                protected readonly config: PIXI.Point[];
+                protected readonly startPoint: MANTICORE.geometry.Point;
+                protected readonly config: MANTICORE.geometry.Point[];
 
                 clone(): MANTICORE.animation.action.BezierBy;
                 reverse(): MANTICORE.animation.action.BezierBy;
@@ -72,40 +72,40 @@ declare namespace MANTICORE {
             }
 
             export class CardinalSpline extends MANTICORE.animation.action.ActionInterval {
-                protected static cardinalSplineAt(p0: PIXI.Point, p1: PIXI.Point, p2: PIXI.Point, p3: PIXI.Point, tension: number, t: number): PIXI.Point;
-                protected static getControlPointAt(controlPoints: PIXI.Point[], pos: number): PIXI.Point;
-                protected static reverseControlPoints(controlPoints: PIXI.Point[]): PIXI.Point[];
-                protected static cloneControlPoints(controlPoints: PIXI.Point[]): PIXI.Point[];
+                protected static cardinalSplineAt(p0: MANTICORE.geometry.Point, p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, p3: MANTICORE.geometry.Point, tension: number, t: number): MANTICORE.geometry.Point;
+                protected static getControlPointAt(controlPoints: MANTICORE.geometry.Point[], pos: number): MANTICORE.geometry.Point;
+                protected static reverseControlPoints(controlPoints: MANTICORE.geometry.Point[]): MANTICORE.geometry.Point[];
+                protected static cloneControlPoints(controlPoints: MANTICORE.geometry.Point[]): MANTICORE.geometry.Point[];
             }
 
             export class CardinalSplineBy extends MANTICORE.animation.action.CardinalSplineTo {
-                constructor(duration: number, points: PIXI.Point[], tension?: number);
+                constructor(duration: number, points: MANTICORE.geometry.Point[], tension?: number);
 
                 clone(): MANTICORE.animation.action.CardinalSplineBy;
                 reverse(): MANTICORE.animation.action.CardinalSplineBy;
-                updatePosition(newPos: PIXI.Point): void;
+                updatePosition(newPos: MANTICORE.geometry.Point): void;
             }
 
             export class CardinalSplineTo extends MANTICORE.animation.action.CardinalSpline {
-                constructor(duration: number, points: PIXI.Point[], tension?: number);
+                constructor(duration: number, points: MANTICORE.geometry.Point[], tension?: number);
 
-                points: PIXI.Point[];
+                points: MANTICORE.geometry.Point[];
                 protected readonly tension: number;
-                protected previousPosition: PIXI.Point;
+                protected previousPosition: MANTICORE.geometry.Point;
 
                 clone(): MANTICORE.animation.action.CardinalSplineTo;
                 reverse(): MANTICORE.animation.action.CardinalSplineTo;
-                updatePosition(newPos: PIXI.Point | PIXI.ObservablePoint): void;
+                updatePosition(newPos: MANTICORE.geometry.Point): void;
             }
 
             export class CatmullRomBy extends MANTICORE.animation.action.CardinalSplineBy {
-                constructor(duration: number, points: PIXI.Point[]);
+                constructor(duration: number, points: MANTICORE.geometry.Point[]);
 
                 clone(): MANTICORE.animation.action.CatmullRomBy;
             }
 
             export class CatmullRomTo extends MANTICORE.animation.action.CardinalSplineTo {
-                constructor(duration: number, points: PIXI.Point[]);
+                constructor(duration: number, points: MANTICORE.geometry.Point[]);
 
                 clone(): MANTICORE.animation.action.CatmullRomTo;
             }
@@ -173,40 +173,40 @@ declare namespace MANTICORE {
             }
 
             export class JumpBy extends MANTICORE.animation.action.ActionInterval {
-                constructor(duration: number, position: PIXI.Point | number, y: number, height: number, jumps?: number);
+                constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number);
 
                 clone(): MANTICORE.animation.action.JumpBy;
                 reverse(): MANTICORE.animation.action.JumpBy;
 
                 protected readonly height: number;
                 protected readonly jumps: number;
-                protected readonly delta: PIXI.Point;
-                protected readonly startPoint: PIXI.Point;
+                protected readonly delta: MANTICORE.geometry.Point;
+                protected readonly startPoint: MANTICORE.geometry.Point;
             }
 
             export class JumpTo extends MANTICORE.animation.action.JumpBy {
-                constructor(duration: number, position: PIXI.Point | number, y: number, height: number, jumps?: number);
+                constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number);
 
                 clone(): MANTICORE.animation.action.JumpTo;
             }
 
             export class MoveBy extends MANTICORE.animation.action.ActionInterval {
-                constructor(duration: number, deltaPos: PIXI.Point | number, deltaY?: number);
+                constructor(duration: number, deltaPos: MANTICORE.geometry.Point | number, deltaY?: number);
 
-                protected readonly delta: PIXI.Point;
+                protected readonly delta: MANTICORE.geometry.Point;
 
                 clone(): MANTICORE.animation.action.MoveBy;
                 reverse(): MANTICORE.animation.action.MoveBy;
             }
 
             export class MoveTo extends MANTICORE.animation.action.MoveBy {
-                constructor(duration: number, position: PIXI.Point | number, y: number);
+                constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number);
 
                 clone(): MANTICORE.animation.action.MoveTo;
             }
 
             export class Place extends MANTICORE.animation.action.ActionInstant {
-                constructor(x: PIXI.Point | number, y?: number);
+                constructor(x: MANTICORE.geometry.Point | number, y?: number);
 
                 clone(): MANTICORE.animation.action.Place;
                 reverse(): MANTICORE.animation.action.Place;
@@ -215,9 +215,9 @@ declare namespace MANTICORE {
             export class PointAction extends MANTICORE.animation.action.ActionInterval{
                 constructor(duration: number, x: number, y?:number);
 
-                protected readonly startPoint: PIXI.Point;
-                protected readonly endPoint: PIXI.Point;
-                protected readonly delta: PIXI.Point;
+                protected readonly startPoint: MANTICORE.geometry.Point;
+                protected readonly endPoint: MANTICORE.geometry.Point;
+                protected readonly delta: MANTICORE.geometry.Point;
             }
 
             export class RemoveSelf extends MANTICORE.animation.action.ActionInstant {
@@ -580,9 +580,9 @@ declare namespace MANTICORE {
         export class ActionAnimation extends MANTICORE.memory.ReusableObject {
             constructor(action: MANTICORE.animation.action.ActionInterval);
 
-            positionOffset: PIXI.Point;
-            scaleOffset: PIXI.Point;
-            skewOffset: PIXI.Point;
+            positionOffset: MANTICORE.geometry.Point;
+            scaleOffset: MANTICORE.geometry.Point;
+            skewOffset: MANTICORE.geometry.Point;
             rotationOffset: number;
             tint: number;
             alpha: number;
@@ -731,8 +731,8 @@ declare namespace MANTICORE {
                 maxHeight: number;
                 contentWidth: number;
                 contentHeight: number;
-                innerPadding: PIXI.ObservablePoint;
-                outerPadding: PIXI.ObservablePoint;
+                innerPadding: MANTICORE.geometry.Point;
+                outerPadding: MANTICORE.geometry.Point;
                 verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
                 horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
 
@@ -775,7 +775,7 @@ declare namespace MANTICORE {
                 constructor();
 
                 scrollDirection: MANTICORE.enumerator.ui.SCROLL_DIRECTION;
-                innerBoundary: PIXI.Point;
+                innerBoundary: MANTICORE.geometry.Point;
                 bounceEnabled: boolean;
 
                 jumpToBottom(): void;
@@ -800,9 +800,9 @@ declare namespace MANTICORE {
                 scrollToPercentHorizontal(time: number, percent: number): void;
                 scrollToPercentVertical(time: number, percent: number): void;
                 scrollToPercentBoth(time: number, percentH: number, percentV?: number): void;
-                updateDragStart(position: PIXI.Point): void;
-                updateDragMove(position: PIXI.Point): void;
-                updateDragFinish(position: PIXI.Point): void;
+                updateDragStart(position: MANTICORE.geometry.Point): void;
+                updateDragMove(position: MANTICORE.geometry.Point): void;
+                updateDragFinish(position: MANTICORE.geometry.Point): void;
                 isVertical(): boolean;
                 isHorizontal(): boolean;
                 updateScrollDimension(progress: number, direction: MANTICORE.enumerator.ui.SCROLL_DIRECTION): void;
@@ -841,7 +841,7 @@ declare namespace MANTICORE {
             export class ComUILayout extends MANTICORE.component.Component {
                 constructor();
 
-                percentSize: PIXI.Point;
+                percentSize: MANTICORE.geometry.Point;
                 isPercentSize: boolean;
                 isPercentPosX: boolean;
                 percentPosX: number;
@@ -1258,9 +1258,9 @@ declare namespace MANTICORE {
     export namespace launcher {
         export const app: PIXI.Application;
         export let orientation: MANTICORE.enumerator.system.ORIENTATION;
-        export const designResolution: PIXI.Point;
-        export const appResolution: PIXI.Point;
-        export const canvasResolution: PIXI.Point;
+        export const designResolution: MANTICORE.geometry.Point;
+        export const appResolution: MANTICORE.geometry.Point;
+        export const canvasResolution: MANTICORE.geometry.Point;
 
         export function initApp(parentContainer: HTMLElement, resolution: MANTICORE.enumerator.RESOLUTION, config?: MANTICORE.launcher.AppConfig, onComplete?: Function): void;
         export function runScene(scene: MANTICORE.view.Scene): void;
@@ -1638,8 +1638,8 @@ declare namespace MANTICORE {
                 autoSize: boolean;
                 letterSpacing: number;
 
-                getShadowOffset(): PIXI.Point;
-                setShadowOffset(xOrPoint: number | PIXI.Point, y?: number): void;
+                getShadowOffset(): MANTICORE.geometry.Point;
+                setShadowOffset(xOrPoint: number | MANTICORE.geometry.Point, y?: number): void;
                 protected horizontalAlignChange(value: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN): void;
                 protected verticalAlignChange(value: MANTICORE.enumerator.ui.VERTICAL_ALIGN): void;
 
@@ -1647,7 +1647,7 @@ declare namespace MANTICORE {
 
             export class OutlineBitmapText extends PIXI.Container {
                 constructor(fontName: string, size: number);
-                anchor: PIXI.Point;
+                anchor: MANTICORE.geometry.Point;
                 maxWidth: number;
                 fontName: string;
                 fontSize: number;
@@ -1801,8 +1801,8 @@ declare namespace MANTICORE {
 
             slider: MANTICORE.ui.Slider;
 
-            innerPadding: PIXI.ObservablePoint;
-            outerPadding: PIXI.ObservablePoint;
+            innerPadding: MANTICORE.geometry.Point;
+            outerPadding: MANTICORE.geometry.Point;
 
             // noinspection JSAnnotator
             static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ListView;
@@ -1931,7 +1931,7 @@ declare namespace MANTICORE {
 
             clipping: boolean;
             tint: number;
-            anchor: PIXI.ObservablePoint;
+            anchor: MANTICORE.geometry.Point;
             flipX: boolean;
             flipY: boolean;
 
@@ -1990,27 +1990,27 @@ declare namespace MANTICORE {
 
         }
         export namespace geometry {
-            export function pFromSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: PIXI.Point | PIXI.ObservablePoint): PIXI.Point | PIXI.ObservablePoint;
-            export function pHalfSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: PIXI.Point | PIXI.ObservablePoint): PIXI.Point | PIXI.ObservablePoint;
-            export function sSub(size1: PIXI.Container | PIXI.Rectangle, size2: PIXI.Container | PIXI.Rectangle, inPoint?: PIXI.Point | PIXI.ObservablePoint): PIXI.Point | PIXI.ObservablePoint;
-            export function pSub(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pAdd(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pMult(p: PIXI.Point | PIXI.ObservablePoint, multiplier: number, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pCompMult(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pCompDiv(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pMax(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pMin(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pNeg(p: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pAbs(p: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pRound(p: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pInvert(p: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pRange(p: PIXI.Point | PIXI.ObservablePoint, pLeft: PIXI.Point | PIXI.ObservablePoint, pRight: PIXI.Point | PIXI.ObservablePoint, isIn?: boolean): PIXI.Point | PIXI.ObservablePoint;
-            export function pEqual(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): boolean;
-            export function pDot(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): number;
-            export function pCross(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): number;
-            export function pLengthSQ(p: PIXI.Point | PIXI.ObservablePoint): number;
-            export function pLength(p: PIXI.Point | PIXI.ObservablePoint): number;
-            export function pDistance(p1: PIXI.Point | PIXI.ObservablePoint, p2: PIXI.Point | PIXI.ObservablePoint): number;
+            export function pFromSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: MANTICORE.geometry.Point): MANTICORE.geometry.Point;
+            export function pHalfSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: MANTICORE.geometry.Point): MANTICORE.geometry.Point;
+            export function sSub(size1: PIXI.Container | PIXI.Rectangle, size2: PIXI.Container | PIXI.Rectangle, inPoint?: MANTICORE.geometry.Point): MANTICORE.geometry.Point;
+            export function pSub(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pAdd(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pMult(p: MANTICORE.geometry.Point, multiplier: number, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pCompMult(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pCompDiv(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pMax(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pMin(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pNeg(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pAbs(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pRound(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pInvert(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pRange(p: MANTICORE.geometry.Point, pLeft: MANTICORE.geometry.Point, pRight: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
+            export function pEqual(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): boolean;
+            export function pDot(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): number;
+            export function pCross(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): number;
+            export function pLengthSQ(p: MANTICORE.geometry.Point): number;
+            export function pLength(p: MANTICORE.geometry.Point): number;
+            export function pDistance(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): number;
 
         }
         export namespace math {
@@ -2188,7 +2188,7 @@ declare namespace MANTICORE {
             constructor(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number);
             tint: number;
             parentTint: number;
-            anchor: PIXI.ObservablePoint;
+            anchor: MANTICORE.geometry.Point;
             leftSlice: number;
             rightSlice: number;
             topSlice: number;

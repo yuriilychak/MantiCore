@@ -2,6 +2,7 @@ import Widget from "ui/Widget";
 import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import Color from "util/Color";
+import Point from "geometry/Point";
 
 /**
  * @desc Base class for labels.
@@ -80,17 +81,17 @@ class BaseLabel extends Widget {
     /**
      * @method
      * @public
-     * @return {PIXI.Point}
+     * @return {MANTICORE.geometry.Point}
      */
 
     getShadowOffset() {
-        return new PIXI.Point();
+        return Point.create();
     }
 
     /**
      * @method
      * @public
-     * @param {int | PIXI.Point} xOrPoint
+     * @param {int | MANTICORE.geometry.Point} xOrPoint
      * @param {int} [y]
      */
 

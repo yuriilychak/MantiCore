@@ -6,6 +6,7 @@ import Geometry from "util/Geometry";
 import Math from "util/Math";
 import Constant from "constant";
 import Boot from "boot";
+import Point from "geometry/Point";
 
 /**
  * @desc Class for manipulate with view interactions.
@@ -55,27 +56,27 @@ class InteractionManager extends BaseManager {
 
         /**
          * @desc Previous position of action (need to update click).
-         * @type {PIXI.Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._prevPos = new PIXI.Point(0, 0);
+        this._prevPos = Point.create(0, 0);
 
         /**
          * @desc Current position of action (need to update click).
-         * @type {PIXI.Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._crtPos = new PIXI.Point(0, 0);
+        this._crtPos = Point.create(0, 0);
 
         /**
          * @desc Accumulated offset when touch move. (need to update click).
-         * @type {PIXI.Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._acumOffset = new PIXI.Point(0, 0);
+        this._acumOffset = Point.create(0, 0);
 
         /**
          * @desc Flag is need to propagate evens for children to dispatch for target.
@@ -181,7 +182,7 @@ class InteractionManager extends BaseManager {
 
     /**
      * @param {Object} target
-     * @param {PIXI.Point} point
+     * @param {MANTICORE.geometry.Point} point
      * @private
      */
 
@@ -254,8 +255,8 @@ class InteractionManager extends BaseManager {
         }
         this._isInteractiveDown = true;
         this.emitInteractiveEvent(INTERACTIVE_EVENT.DOWN, event);
-        this._prevPos.copy(globalPos);
-        this._crtPos.copy(globalPos);
+        this._prevPos.copyFrom(globalPos);
+        this._crtPos.copyFrom(globalPos);
         this._acumOffset.set(0, 0);
         return true;
     }
@@ -310,9 +311,9 @@ class InteractionManager extends BaseManager {
 
         if (this._isInteractiveDown) {
             this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG, event);
-            this._crtPos.copy(globalPos);
+            this._crtPos.copyFrom(globalPos);
             Geometry.pAdd(this._acumOffset, Geometry.pSub(this._crtPos, this._prevPos), true);
-            this._prevPos.copy(this._crtPos);
+            this._prevPos.copyFrom(this._crtPos);
             return
         }
         this.emitInteractiveEvent(INTERACTIVE_EVENT.MOVE, event);

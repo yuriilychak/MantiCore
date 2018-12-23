@@ -9,6 +9,7 @@ import ActionAnimation from "../ActionAnimation";
 
 import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
 import BaseTimeLine from "./BaseTimeLine";
+import Point from "geometry/Point";
 
 /**
  * @desc Class for manipulate with animated actions and listen their event.
@@ -57,25 +58,25 @@ class ActionTimeLine extends BaseTimeLine{
         this._isRunAction = false;
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._startPosition = new PIXI.Point(0, 0);
+        this._startPosition = Point.create(0, 0);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._startScale = new PIXI.Point(0, 0);
+        this._startScale = Point.create(0, 0);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._startSkew = new PIXI.Point(0, 0);
+        this._startSkew = Point.create(0, 0);
 
         /**
          * @type {number}
@@ -139,9 +140,9 @@ class ActionTimeLine extends BaseTimeLine{
         if (Type.isNull(this.target)) {
             return;
         }
-        this._startPosition.copy(this.target.position);
-        this._startScale.copy(this.target.scale);
-        this._startSkew.copy(this.target.skew);
+        this._startPosition.copyFrom(this.target.position);
+        this._startScale.copyFrom(this.target.scale);
+        this._startSkew.copyFrom(this.target.skew);
         this._startTint = Type.setValue(this.target.tint, Color.COLORS.WHITE);
         this._startAlpha = this.target.alpha;
         this._startRotation = this.target.rotation;

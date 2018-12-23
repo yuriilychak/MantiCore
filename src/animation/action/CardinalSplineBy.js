@@ -1,5 +1,6 @@
 import CardinalSplineTo from "./CardinalSplineTo";
 import Geometry from "util/Geometry";
+import Point from "geometry/Point";
 
 /**
  * @desc BCreate cardinal spline action for move display object.
@@ -12,16 +13,16 @@ class CardinalSplineBy extends CardinalSplineTo {
     /**
      * @constructor
      * @param {number} duration
-     * @param {PIXI.Point[]} points
+     * @param {MANTICORE.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
     constructor(duration, points, tension = 0) {
         super(duration, points, tension);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._startPosition = new PIXI.Point(0, 0);
+        this._startPosition = Point.create(0, 0);
 
     }
 
@@ -90,11 +91,11 @@ class CardinalSplineBy extends CardinalSplineTo {
      * @desc update position of target
      * @method
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} newPos
+     * @param {MANTICORE.geometry.Point} newPos
      */
     updatePosition(newPos) {
         const nextPos = Geometry.pAdd(newPos, this._startPosition);
-        this.previousPosition.copy(nextPos);
+        this.previousPosition.copyFrom(nextPos);
         this.target.position.copy(nextPos);
     }
 
@@ -103,7 +104,7 @@ class CardinalSplineBy extends CardinalSplineTo {
      * @method
      * @public
      * @param {number} duration
-     * @param {PIXI.Point[]} points
+     * @param {MANTICORE.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
 

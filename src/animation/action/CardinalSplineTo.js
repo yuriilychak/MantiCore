@@ -1,4 +1,5 @@
 import CardinalSpline from "./CardinalSpline";
+import Point from "geometry/Point";
 
 /**
  * @desc BCreate cardinal spline action for move display object.
@@ -11,14 +12,14 @@ class CardinalSplineTo extends CardinalSpline {
     /**
      * @constructor
      * @param {number} duration
-     * @param {PIXI.Point[]} points
+     * @param {MANTICORE.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
     constructor(duration, points, tension = 0) {
         super(duration);
         /**
          * @desc Array of control points.
-         * @type {PIXI.Point[]}
+         * @type {MANTICORE.geometry.Point[]}
          * @private
          */
         this._points = points.slice(0);
@@ -33,23 +34,23 @@ class CardinalSplineTo extends CardinalSpline {
          */
         this._tension = tension;
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._previousPosition = new PIXI.Point();
+        this._previousPosition = Point.create();
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._accumulatedDiff = new PIXI.Point();
+        this._accumulatedDiff = Point.create();
 
         /**
          * @desc Point for calculate accumulation. Need to don't create every frame.
-         * @type {PIXI.Point[] | Point}
+         * @type {MANTICORE.geometry.Point[] | Point}
          * @private
          */
 
-        this._stackPoint = new PIXI.Point();
+        this._stackPoint = Point.create();
     }
 
     /**
@@ -113,11 +114,11 @@ class CardinalSplineTo extends CardinalSpline {
      * @desc update position of target
      * @method
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint} newPos
+     * @param {MANTICORE.geometry.Point} newPos
      */
     updatePosition(newPos) {
         this.target.position.set(newPos);
-        this._previousPosition.copy(newPos);
+        this._previousPosition.copyFrom(newPos);
     }
 
     /**
@@ -125,7 +126,7 @@ class CardinalSplineTo extends CardinalSpline {
      * @method
      * @public
      * @param {number} duration
-     * @param {PIXI.Point[]} points
+     * @param {MANTICORE.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
 
@@ -167,7 +168,7 @@ class CardinalSplineTo extends CardinalSpline {
 
     /**
      * @desc Points getter
-     * @returns {PIXI.Point[]}
+     * @returns {MANTICORE.geometry.Point[]}
      */
     get points() {
         return this._points;
@@ -188,7 +189,7 @@ class CardinalSplineTo extends CardinalSpline {
 
     /**
      * @protected
-     * @returns {PIXI.Point | Point}
+     * @returns {MANTICORE.geometry.Point}
      */
 
     get previousPosition() {
@@ -196,7 +197,7 @@ class CardinalSplineTo extends CardinalSpline {
     }
 
     set previousPosition(value) {
-        this._previousPosition.copy(value);
+        this._previousPosition.copyFrom(value);
     }
 }
 

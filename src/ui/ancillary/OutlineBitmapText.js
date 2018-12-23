@@ -4,6 +4,7 @@ import Math from "util/Math";
 import FontCache from "cache/FontCache";
 import Color from "util/Color";
 import Macro from "macro";
+import Point from "geometry/Point";
 
 /**
  * @desc Bitmap text with outline.
@@ -224,11 +225,11 @@ class OutlineBitmapText extends PIXI.Container {
     }
 
     /**
-     * @type {PIXI.Point | Point}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get anchor() {
-        return new PIXI.Point(this._label.anchor.x, this._label.anchor.y);
+        return Point.create(this._label.anchor.x, this._label.anchor.y);
     }
 
     /**

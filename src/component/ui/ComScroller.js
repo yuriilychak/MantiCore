@@ -5,7 +5,7 @@ import Type from "util/Type";
 import Math from "util/Math";
 import TIME_LINE from "enumerator/animation/TimeLine";
 import MoveTo from "animation/action/MoveTo";
-import EaseQuadraticInOut from "animation/easing/EaseQuadraticInOut";
+import Point from "geometry/Point";
 import EaseQuadraticOut from "animation/easing/EaseQuadraticOut";
 
 /**
@@ -29,27 +29,27 @@ class ComScroller extends Component {
 
         /**
          * @desc Previous drag pos for update drag.
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._prvDragPos = new PIXI.Point(0, 0);
+        this._prvDragPos = Point.create(0, 0);
 
         /**
          * @desc Zero point. Need for calculate drag position, for don't create every frame.
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._zeroPoint = new PIXI.Point(0, 0);
+        this._zeroPoint = Point.create(0, 0);
 
         /**
          * @desc Inner boundary for scroll. Need to don't calculate every frame.
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._innerBoundary = new PIXI.Point(0, 0);
+        this._innerBoundary = Point.create(0, 0);
 
         /**
          * @desc Flag is bounce effects enabled.
@@ -60,11 +60,11 @@ class ComScroller extends Component {
 
         /**
          * @desc Offset for calculate dumping.
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._offset = new PIXI.Point();
+        this._offset = Point.create();
     }
 
     /**
@@ -386,26 +386,26 @@ class ComScroller extends Component {
      * @desc Update drag start event of owner.
      * @method
      * @public
-     * @param {PIXI.Point | Point} position
+     * @param {MANTICORE.geometry.Point} position
      */
 
     updateDragStart(position) {
         const innerContainer = this.owner.innerContainer;
         Geometry.sSub(this.owner, innerContainer, this._innerBoundary);
-        this._prvDragPos.copy(innerContainer.toLocal(position));
+        this._prvDragPos.copyFrom(innerContainer.toLocal(position));
     }
 
     /**
      * @desc Update drag move event of owner.
      * @method
      * @public
-     * @param {PIXI.Point | Point} position
+     * @param {MANTICORE.geometry.Point} position
      */
 
     updateDragMove(position) {
         const innerContainer = this.owner.innerContainer;
         const innerPos = innerContainer.position;
-        this._offset.copy(Geometry.pSub(innerContainer.toLocal(position), this._prvDragPos, true));
+        this._offset.copyFrom(Geometry.pSub(innerContainer.toLocal(position), this._prvDragPos, true));
         const interpolatedPos = Geometry.pRound(Geometry.pAdd(innerPos, this._offset), true);
         const boundPos = Geometry.pRange(interpolatedPos, this._innerBoundary, this._zeroPoint);
         let resultPos;
@@ -424,7 +424,7 @@ class ComScroller extends Component {
         if (this._bounceEnabled && !interpolatedPos.equals(boundPos)) {
             const dif = Geometry.pAbs(Geometry.pSub(innerPos, boundPos), true);
             const bound = Geometry.pMult(Geometry.pFromSize(this.owner), 0.3);
-            const coef = new PIXI.Point(
+            const coef = Point.create(
                 dif.x > bound.x || this.isVertical() ? 0 : Math.intPow(1 - dif.x / bound.x, 5),
                 dif.y > bound.y || this.isHorizontal() ? 0 : Math.intPow(1 - dif.y / bound.y, 5)
             );
@@ -443,7 +443,7 @@ class ComScroller extends Component {
      * @desc Update drag finish event of owner.
      * @method
      * @public
-     * @param {PIXI.Point | Point} position
+     * @param {MANTICORE.geometry.Point} position
      */
 
     updateDragFinish(position) {
@@ -596,7 +596,7 @@ class ComScroller extends Component {
 
     _runScrollAction(time, x, y, ease = EaseQuadraticOut.create()) {
         const innerContainer = this.owner.innerContainer;
-        const action = MoveTo.create(time, new PIXI.Point(x, y));
+        const action = MoveTo.create(time, Point.create(x, y));
         action.ease = ease;
         innerContainer.animationManager.runAction(action, false, 0, TIME_LINE.SCROLL_VIEW);
     }
@@ -642,7 +642,7 @@ class ComScroller extends Component {
     /**
      * @desc Inner boundary of scroller.
      * @public
-     * @type {PIXI.Point | Point}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get innerBoundary() {
@@ -654,7 +654,7 @@ class ComScroller extends Component {
             return;
         }
 
-        this._innerBoundary.copy(value);
+        this._innerBoundary.copyFrom(value);
     }
 
     /**

@@ -3,6 +3,7 @@ import Type from "util/Type";
 import Math from "util/Math";
 import Constant from "constant/index";
 import Color from "util/Color";
+import Point from "../geometry/Point";
 
 /**
  * @desc Slice 9 sprite to avoid breaking batch.
@@ -27,11 +28,11 @@ class Slice9Sprite extends PIXI.Container {
 
         /**
          * @desc anchor point of sprite.
-         * @type {PIXI.ObservablePoint | ObservablePoint}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._anchor = new PIXI.ObservablePoint(this._onAnchorPointUpdate, this);
+        this._anchor = Point.create();
 
         /**
          * @desc Tint of sprite
@@ -87,6 +88,8 @@ class Slice9Sprite extends PIXI.Container {
          */
 
         this._isInit = false;
+
+        this._anchor.initChangeCallback(this._onAnchorPointUpdate, this);
 
         this.interactiveChildren = false;
         this.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
@@ -156,7 +159,7 @@ class Slice9Sprite extends PIXI.Container {
 
     /**
      * @public
-     * @type {PIXI.ObservablePoint}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get anchor() {
@@ -164,7 +167,7 @@ class Slice9Sprite extends PIXI.Container {
     }
 
     set anchor (value) {
-        this._anchor.copy(value);
+        this._anchor.copyFrom(value);
     }
 
     /**

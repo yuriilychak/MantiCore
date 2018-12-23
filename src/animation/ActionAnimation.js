@@ -1,6 +1,7 @@
 import Type from "util/Type";
 import Geometry from "util/Geometry";
 import ReusableObject from "memory/ReusableObject";
+import Point from "geometry/Point";
 
 /**
  * @desc Class for manipulate with action animation.
@@ -24,25 +25,25 @@ class ActionAnimation extends ReusableObject{
         this._action = action;
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._position = new PIXI.Point(0, 0);
+        this._position = Point.create(0, 0);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._scale = new PIXI.Point(1, 1);
+        this._scale = Point.create(1, 1);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._skew = new PIXI.Point(0, 0);
+        this._skew = Point.create(0, 0);
 
         /**
          * @type {int}
@@ -203,7 +204,7 @@ class ActionAnimation extends ReusableObject{
     /**
      * @desc Offset in start of animation from target position.
      * @public
-     * @returns {PIXI.Point}
+     * @returns {MANTICORE.geometry.Point}
      */
 
     get positionOffset() {
@@ -214,13 +215,13 @@ class ActionAnimation extends ReusableObject{
         if (this._position.equals(value)) {
             return;
         }
-        this._position.copy(value);
+        this._position.copyFrom(value);
     }
 
     /**
      * @desc Offset in start of animation from target scale.
      * @public
-     * @returns {PIXI.Point}
+     * @returns {MANTICORE.geometry.Point}
      */
 
     get scaleOffset() {
@@ -231,13 +232,13 @@ class ActionAnimation extends ReusableObject{
         if (this._scale.equals(value)) {
             return;
         }
-        this._scale.copy(value);
+        this._scale.copyFrom(value);
     }
 
     /**
      * @desc Offset in start of animation from target skew.
      * @public
-     * @returns {PIXI.Point}
+     * @returns {MANTICORE.geometry.Point}
      */
 
     get skewOffset() {
@@ -248,7 +249,7 @@ class ActionAnimation extends ReusableObject{
         if (this._skew.equals(value)) {
             return;
         }
-        this._skew.copy(value);
+        this._skew.copyFrom(value);
     }
 
     /**

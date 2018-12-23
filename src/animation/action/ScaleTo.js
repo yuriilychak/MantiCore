@@ -52,8 +52,8 @@ class ScaleTo extends PointAction{
 
     startWithTarget(target) {
         super.startWithTarget(target);
-        this.startPoint.copy(target.scale);
-        this.delta.copy(this.endPoint);
+        this.startPoint.copyFrom(target.scale);
+        this.delta.copyFrom(this.endPoint);
         Geometry.pSub(this.delta, this.startPoint, true);
     }
 

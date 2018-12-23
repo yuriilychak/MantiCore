@@ -4,6 +4,7 @@ import Color from "util/Color";
 
 import Logger from "logger";
 
+import Point from "geometry/Point";
 import BundleCache from "cache/BundleCache";
 
 import AtlasLabel from "ui/AtlasLabel";
@@ -283,9 +284,9 @@ function _parseAnimation(element, data, bundle, globalParent) {
 function _createAnimation(animation, bundle) {
     const {frames, fps} = animation;
     const frameCount = frames.length;
-    const offsetPosition = new PIXI.Point(0, 0);
-    const offsetScale = new PIXI.Point(1, 1);
-    const offsetSkew = new PIXI.Point(0, 0);
+    const offsetPosition = Point.create(0, 0);
+    const offsetScale = Point.create(1, 1);
+    const offsetSkew = Point.create(0, 0);
     let offsetRotation = 0;
     let tint = -1;
     let alpha = -1;
@@ -347,8 +348,8 @@ function _createAnimation(animation, bundle) {
                 break;
             }
             case ACTION_TYPE.POSITION: {
-                nextValue = new PIXI.Point(0, 0);
-                prevValue = new PIXI.Point(0, 0);
+                nextValue = Point.create(0, 0);
+                prevValue = Point.create(0, 0);
                 _iterateFrames(
                     track,
                     fps,
@@ -370,8 +371,8 @@ function _createAnimation(animation, bundle) {
                 break;
             }
             case ACTION_TYPE.SCALE: {
-                nextValue = new PIXI.Point(0, 0);
-                prevValue = new PIXI.Point(1, 1);
+                nextValue = Point.create(0, 0);
+                prevValue = Point.create(1, 1);
                 _iterateFrames(
                     track,
                     fps,
@@ -393,8 +394,8 @@ function _createAnimation(animation, bundle) {
                 break;
             }
             case ACTION_TYPE.SKEW: {
-                nextValue = new PIXI.Point(0, 0);
-                prevValue = new PIXI.Point(0, 0);
+                nextValue = Point.create(0, 0);
+                prevValue = Point.create(0, 0);
                 _iterateFrames(
                     track,
                     fps,

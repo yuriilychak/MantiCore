@@ -14,7 +14,7 @@ class CatmullRomBy extends CardinalSplineBy {
     /**
      * @constructor
      * @param {number} duration
-     * @param {PIXI.Point[]} points
+     * @param {MANTICORE.geometry.Point[]} points
      */
     constructor(duration, points) {
         super(duration, points, 0.5);

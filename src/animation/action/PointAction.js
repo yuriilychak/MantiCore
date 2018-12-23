@@ -1,4 +1,5 @@
 import ActionInterval from "./ActionInterval";
+import Point from "geometry/Point";
 
 /**
  * @desc Base action for manipulate with point transformations (scale, position, skew).
@@ -18,25 +19,25 @@ class PointAction extends ActionInterval{
         super(t);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._startPoint = new PIXI.Point(0, 0);
+        this._startPoint = Point.create(0, 0);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._endPoint = new PIXI.Point(x, y);
+        this._endPoint = Point.create(x, y);
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._delta = new PIXI.Point(0, 0);
+        this._delta = Point.create(0, 0);
     }
 
     /**
@@ -80,7 +81,7 @@ class PointAction extends ActionInterval{
 
     /**
      * @protected
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get startPoint() {
@@ -89,7 +90,7 @@ class PointAction extends ActionInterval{
 
     /**
      * @protected
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get endPoint() {
@@ -98,7 +99,7 @@ class PointAction extends ActionInterval{
 
     /**
      * @protected
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get delta() {

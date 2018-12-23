@@ -7,7 +7,7 @@ import Geometry from "util/Geometry";
  * @extends MANTICORE.animation.action.BezierBy
  * @memberOf MANTICORE.animation.action
  * @example
- * const bezier = [new PIXI.Point(0, windowSize.height / 2), new PIXI.Point(300, -windowSize.height / 2), new PIXI.Point(300, 100)];
+ * const bezier = [new MANTICORE.geometry.Point(0, windowSize.height / 2), new MANTICORE.geometry.Point(300, -windowSize.height / 2), new MANTICORE.geometry.Point(300, 100)];
  * const bezierTo = new BezierTo(2, bezier);
  */
 
@@ -15,12 +15,12 @@ class BezierTo extends BezierBy{
     /**
      * @constructor
      * @param {number} t
-     * @param {PIXI.Point[]} c - Array of points
+     * @param {MANTICORE.geometry.Point[]} c - Array of points
      */
     constructor(t, c) {
         super(t, []);
         /**
-         * @type {PIXI.Point[]}
+         * @type {MANTICORE.geometry.Point[]}
          * @private
          */
         this._toConfig = c;
@@ -48,7 +48,7 @@ class BezierTo extends BezierBy{
         const configSize = this.config.length;
 
         for (let i = 0; i < configSize; ++i) {
-            this.config[i].copy(Geometry.pSub(this._toConfig[i], this.startPoint));
+            this.config[i].copyFrom(Geometry.pSub(this._toConfig[i], this.startPoint));
         }
     }
 
@@ -57,7 +57,7 @@ class BezierTo extends BezierBy{
      * @method
      * @public
      * @param {number} t
-     * @param {PIXI.Point[]} c - Array of points
+     * @param {MANTICORE.geometry.Point[]} c - Array of points
      */
 
     reuse(t, c) {

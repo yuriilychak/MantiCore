@@ -6,6 +6,7 @@ import Asset from "util/Asset";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Constant from "constant/index";
 import Geometry from "util/Geometry";
+import Point from "geometry/Point";
 
 /**
  * @desc Base component for all UI elements.
@@ -33,10 +34,10 @@ class Widget extends ComponentContainer {
 
         /**
          * @desc anchor point of widget.
-         * @type {PIXI.ObservablePoint | ObservablePoint}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._anchor = new PIXI.ObservablePoint(this._onAnchorPointUpdate, this);
+        this._anchor = Point.create();
 
         /**
          * @desc Clipping mask.
@@ -45,6 +46,8 @@ class Widget extends ComponentContainer {
          */
 
         this._clippingMask = null;
+
+        this._anchor.initChangeCallback(this._onAnchorPointUpdate, this);
 
         if (this._collider instanceof PIXI.Sprite) {
             this._collider.width = 100;
@@ -246,7 +249,7 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @type {PIXI.ObservablePoint}
+     * @type {MANTICORE.geometry.Point}
      */
 
     get anchor() {
@@ -254,7 +257,7 @@ class Widget extends ComponentContainer {
     }
 
     set anchor(value) {
-        this._anchor.copy(value);
+        this._anchor.copyFrom(value);
     }
 
     /**

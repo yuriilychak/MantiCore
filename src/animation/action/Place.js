@@ -1,5 +1,6 @@
 import ActionInstant from "./ActionInstant";
 import Type from "util/Type";
+import Point from "geometry/Point";
 
 /**
  * @desc Places display object in a certain position
@@ -12,7 +13,7 @@ class Place extends ActionInstant {
 
     /**
      * @constructor
-     * @param {PIXI.Point | PIXI.ObservablePoint | number} x
+     * @param {MANTICORE.geometry.Point | number} x
      * @param {number} [y]
      */
 
@@ -20,17 +21,17 @@ class Place extends ActionInstant {
         super();
 
         /**
-         * @type {?PIXI.Point}
+         * @type {?MANTICORE.geometry.Point}
          * @private
          */
         this._position = null;
 
         if (Type.isNumber(x)) {
             y = Type.setValue(y, x);
-            this._position = new PIXI.Point(x, y);
+            this._position = Point.create(x, y);
         }
         else {
-            this._position = new PIXI.Point(x.x, x.y);
+            this._position = Point.create(x.x, x.y);
         }
     }
 
@@ -38,7 +39,7 @@ class Place extends ActionInstant {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {PIXI.Point | PIXI.ObservablePoint | number} x
+     * @param {MANTICORE.geometry.Point | number} x
      * @param {number} [y]
      */
 

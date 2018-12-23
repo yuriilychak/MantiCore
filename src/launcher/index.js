@@ -6,6 +6,7 @@ import Math from "util/Math";
 import EventDispatcher from "eventDispatcher";
 import SYSTEM_EVENT from "enumerator/SystemEvent";
 import ORIENTATION from "enumerator/system/Orientation";
+import Point from "geometry/Point";
 
 /**
  * @desc Contains all basic functional for manipulate with application
@@ -25,27 +26,27 @@ export default {
 
     /**
      * @desc Design resolution of app.
-     * @type {PIXI.Point | Point}
+     * @type {MANTICORE.geometry.Point}
      * @private
      */
 
-    _designResolution: new PIXI.Point(0, 0),
+    _designResolution: Point.create(0, 0),
 
     /**
      * @desc Resolution of app.
-     * @type {PIXI.Point | Point}
+     * @type {MANTICORE.geometry.Point}
      * @private
      */
 
-    _appResolution: new PIXI.Point(0, 0),
+    _appResolution: Point.create(0, 0),
 
     /**
      * @desc Real resolution of app.
-     * @type {PIXI.Point | Point}
+     * @type {MANTICORE.geometry.Point}
      * @private
      */
 
-    _canvasResolution: new PIXI.Point(0, 0),
+    _canvasResolution: Point.create(0, 0),
 
     /**
      * @desc Orientation of screen.
@@ -88,8 +89,8 @@ export default {
                 }
             }
 
-            this._appResolution.copy(this._designResolution);
-            this._canvasResolution.copy(this._designResolution);
+            this._appResolution.copyFrom(this._designResolution);
+            this._canvasResolution.copyFrom(this._designResolution);
 
             config.width = Type.setValue(config.width, this._designResolution.x);
             config.height = Type.setValue(config.height, this._designResolution.y);
@@ -164,7 +165,7 @@ export default {
      * @function
      * @public
      * @readonly
-     * @returns {PIXI.Point}
+     * @returns {MANTICORE.geometry.Point}
      */
 
     get designResolution() {
@@ -175,7 +176,7 @@ export default {
      * @desc Returns real resolution of app.
      * @function
      * @public
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get appResolution() {
@@ -187,7 +188,7 @@ export default {
      * @desc Returns real resolution of app.
      * @function
      * @public
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get canvasResolution() {

@@ -1,4 +1,5 @@
 import ActionInterval from "./ActionInterval";
+import Point from "geometry/Point";
 
 /**
  * @desc An action that moves the target with a cubic Bezier curve by a certain distance. Relative to its movement.
@@ -6,7 +7,7 @@ import ActionInterval from "./ActionInterval";
  * @extends MANTICORE.animation.action.ActionInterval
  * @memberOf MANTICORE.animation.action
  * @example
- * const bezier = [new PIXI.Point(0, windowSize.height / 2), new PIXI.Point(300, -windowSize.height / 2), new PIXI.Point(300, 100)];
+ * const bezier = [new MANTICORE.geometry.Point(0, windowSize.height / 2), new MANTICORE.geometry.Point(300, -windowSize.height / 2), new MANTICORE.geometry.Point(300, 100)];
  * const bezierForward = new BezierBy(3, bezier);
  */
 
@@ -15,25 +16,25 @@ class BezierBy extends ActionInterval{
     /**
      * @constructor
      * @param {number} t - time in seconds
-     * @param {PIXI.Point[]} c - Array of points
+     * @param {MANTICORE.geometry.Point[]} c - Array of points
      */
     constructor(t, c) {
         super(t);
         /**
-         * @type {PIXI.Point[]}
+         * @type {MANTICORE.geometry.Point[]}
          * @private
          */
         this._config = c;
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._startPoint = new PIXI.Point(0, 0);
+        this._startPoint = Point.create(0, 0);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._prevPoint = new PIXI.Point(0, 0);
+        this._prevPoint = Point.create(0, 0);
     }
 
     /**
@@ -106,9 +107,9 @@ class BezierBy extends ActionInterval{
         const x1 = locConfig[1].x, y1 = locConfig[1].y;
         const x2 = locConfig[2].x, y2 = locConfig[2].y;
         const r = [
-            new PIXI.Point(x1 - x2, y1 - y2),
-            new PIXI.Point(x0 - x2, y0 - y2),
-            new PIXI.Point(-x2, -y2) ];
+            Point.create(x1 - x2, y1 - y2),
+            Point.create(x0 - x2, y0 - y2),
+            Point.create(-x2, -y2) ];
         return this.doReverse(BezierBy.create(this.duration, r));
     }
 
@@ -117,7 +118,7 @@ class BezierBy extends ActionInterval{
      * @method
      * @public
      * @param {number} t
-     * @param {PIXI.Point[]} c - Array of points
+     * @param {MANTICORE.geometry.Point[]} c - Array of points
      */
 
     reuse(t, c) {
@@ -174,7 +175,7 @@ class BezierBy extends ActionInterval{
 
     /**
      * @protected
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get startPoint() {
@@ -183,7 +184,7 @@ class BezierBy extends ActionInterval{
 
     /**
      * @protected
-     * @returns {PIXI.Point[]}
+     * @returns {MANTICORE.geometry.Point[]}
      */
 
     get config() {

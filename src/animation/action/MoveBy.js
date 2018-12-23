@@ -1,7 +1,7 @@
 import ActionInterval from "./ActionInterval";
 import Geometry from "util/Geometry";
-import Constant from "constant";
 import Type from "util/Type";
+import Point from "geometry/Point";
 
 /**
  * @desc Moves a Node object x,y pixels by modifying its position property.                                  <br/>
@@ -13,7 +13,7 @@ import Type from "util/Type";
  * @extends MANTICORE.animation.action.ActionInterval
  * @memberOf MANTICORE.animation.action
  * @example
- * const actionTo = moveBy(2, new PIXI.Point(windowSize.width - 40, windowSize.height - 40));
+ * const actionTo = moveBy(2, new MANTICORE.geometry.Point(windowSize.width - 40, windowSize.height - 40));
  */
 
 class MoveBy extends ActionInterval {
@@ -21,34 +21,34 @@ class MoveBy extends ActionInterval {
     /**
      * @constructor
      * @param {number} duration duration in seconds
-     * @param {PIXI.Point|number} deltaPos
+     * @param {MANTICORE.geometry.Point|number} deltaPos
      * @param {number} [deltaY]
      */
 
     constructor(duration, deltaPos, deltaY) {
         super(duration);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._delta = new PIXI.Point(0, 0);
+        this._delta = Point.create(0, 0);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._startPoint = new PIXI.Point(0, 0);
+        this._startPoint = Point.create(0, 0);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._prevPoint = new PIXI.Point(0, 0);
+        this._prevPoint = Point.create(0, 0);
 
 
         if(Type.isNumber(deltaPos)) {
             this._delta.set(deltaPos, deltaY);
         }
         else {
-            this._delta.copy(deltaPos);
+            this._delta.copyFrom(deltaPos);
         }
     }
 
@@ -112,7 +112,7 @@ class MoveBy extends ActionInterval {
      * @method
      * @public
      * @param {number} duration duration in seconds
-     * @param {PIXI.Point|number} deltaPos
+     * @param {MANTICORE.geometry.Point|number} deltaPos
      * @param {number} [deltaY]
      */
 
@@ -125,7 +125,7 @@ class MoveBy extends ActionInterval {
             this._delta.set(deltaPos, deltaY);
         }
         else {
-            this._delta.copy(deltaPos);
+            this._delta.copyFrom(deltaPos);
         }
     }
 
@@ -154,7 +154,7 @@ class MoveBy extends ActionInterval {
 
     /**
      * @protected
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get delta() {

@@ -1,6 +1,6 @@
 import ActionInterval from "./ActionInterval";
 import Type from "util/Type";
-import Constant from "constant";
+import Point from "geometry/Point";
 import Geometry from "util/Geometry";
 
 /**
@@ -10,7 +10,7 @@ import Geometry from "util/Geometry";
  * @extends MANTICORE.animation.action.ActionInterval
  * @memberOf MANTICORE.animation.action
  * @example
- * const actionBy = new JumpBy(2, new PIXI.Point(300, 0), 50, 4);
+ * const actionBy = new JumpBy(2, new MANTICORE.geometry.Point(300, 0), 50, 4);
  * const actionBy = new JumpBy(2, 300, 0, 50, 4);
  */
 
@@ -19,7 +19,7 @@ class JumpBy extends ActionInterval {
     /**
      * @constructor
      * @param {number} [duration = 0]
-     * @param {PIXI.Point | Point | number} [position]
+     * @param {MANTICORE.geometry.Point | number} [position]
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]
@@ -36,20 +36,20 @@ class JumpBy extends ActionInterval {
         }
 
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._startPoint = new PIXI.Point(0, 0);
+        this._startPoint = Point.create(0, 0);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._previousPosition = new PIXI.Point(0, 0);
+        this._previousPosition = Point.create(0, 0);
         /**
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
-        this._delta = new PIXI.Point(0, 0);
+        this._delta = Point.create(0, 0);
         /**
          * @type {number}
          * @private
@@ -126,7 +126,7 @@ class JumpBy extends ActionInterval {
      * @method
      * @public
      * @param {number} [duration = 0]
-     * @param {PIXI.Point | Point | number} [position]
+     * @param {MANTICORE.geometry.Point | number} [position]
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]
@@ -196,7 +196,7 @@ class JumpBy extends ActionInterval {
 
     /**
      * @protected
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get delta() {
@@ -205,7 +205,7 @@ class JumpBy extends ActionInterval {
 
     /**
      * @protected
-     * @returns {PIXI.Point|Point}
+     * @returns {MANTICORE.geometry.Point|Point}
      */
 
     get startPoint() {

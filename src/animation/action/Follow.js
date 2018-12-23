@@ -3,6 +3,7 @@ import Type from "util/Type";
 import Launcher from "launcher";
 import Geometry from "util/Geometry";
 import Math from "util/Math";
+import Point from "geometry/Point";
 
 /**
  * @desc  Follow action which makes its target follows another DisplayObject.
@@ -39,13 +40,13 @@ class Follow extends Action {
         this._boundaryFullyCovered = false;
         /**
          * @desc Fast access to the screen dimensions.
-         * @type {?PIXI.Point}
+         * @type {?MANTICORE.geometry.Point}
          * @private
          */
         this._halfScreenSize = null;
         /**
          * @desc Fast access to the screen dimensions.
-         * @type {?PIXI.Point}
+         * @type {?MANTICORE.geometry.Point}
          * @private
          */
         this._fullScreenSize = null;
@@ -78,11 +79,11 @@ class Follow extends Action {
 
         /**
          * @desc Need to don't create point every step.
-         * @type {PIXI.Point | Point}
+         * @type {MANTICORE.geometry.Point}
          * @private
          */
 
-        this._zeroPoint = new PIXI.Point();
+        this._zeroPoint = Point.create();
 
         this.initWithTarget(followedDisplayObject, rect);
     }
