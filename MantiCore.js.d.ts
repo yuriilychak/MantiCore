@@ -942,6 +942,17 @@ declare namespace MANTICORE {
             WEB_P = "webp"
         }
 
+        export enum NUMBER_TYPE {
+            INT_8 = 0,
+            INT_16 = 1,
+            INT_32 = 2,
+            UINT_8 = 3,
+            UINT_16 = 4,
+            UINT_32 = 5,
+            FLOAT_32 = 6,
+            FLOAT_64 = 7
+        }
+
         export enum RESOLUTION {
             R_NONE = 0,
             R_1280_720 = 1,
@@ -1221,6 +1232,26 @@ declare namespace MANTICORE {
             target: Object;
 
             dispatch(data?: Object): void;
+        }
+    }
+
+    export namespace geometry {
+        export class Point extends MANTICORE.memory.ReusableObject {
+            constructor(x?: number, y?: number, type?: MANTICORE.enumerator.NUMBER_TYPE);
+
+            public x: number;
+            public y: number;
+            public readonly type: MANTICORE.enumerator.NUMBER_TYPE;
+
+            public copyFrom(p: MANTICORE.geometry.Point): void;
+            public copyTo(p: MANTICORE.geometry.Point): void;
+            public equals (p: MANTICORE.geometry.Point): boolean;
+            public set(x: number, y?: number): void;
+            public initChangeCallback(callback: Function, context: Object): void;
+            public clearChangeCallback(): void;
+            public clone(): MANTICORE.geometry.Point;
+            // noinspection JSAnnotator
+            public static create<T extends MANTICORE.geometry.Point>(x?: number, y?: number, type?: MANTICORE.enumerator.NUMBER_TYPE): T;
         }
     }
 

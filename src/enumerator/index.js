@@ -2,6 +2,7 @@ import BUNDLE_TYPE from "./BundleType";
 import DIRECTION from "./Direction";
 import ENGINE_MODE from "./EngineMode";
 import FILE_TYPE from "./FileType";
+import NUMBER_TYPE from "./NumberType";
 import RESOLUTION from "./Resolution";
 import SCENE_TRANSITION from "./SceneTransition";
 import SYSTEM_EVENT from "./SystemEvent";
@@ -23,6 +24,7 @@ export default {
     DIRECTION,
     ENGINE_MODE,
     FILE_TYPE,
+    NUMBER_TYPE,
     RESOLUTION,
     SCENE_TRANSITION,
     SYSTEM_EVENT,

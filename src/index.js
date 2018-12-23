@@ -7,6 +7,7 @@ import component from "./component";
 import constant from "./constant";
 import enumerator from "./enumerator";
 import eventDispatcher from "./eventDispatcher";
+import geometry from "./geometry";
 import loader from "./loader";
 import launcher from "./launcher";
 import macro from "./macro";
@@ -35,6 +36,7 @@ export {
     constant,
     enumerator,
     eventDispatcher,
+    geometry,
     loader,
     launcher,
     macro,
