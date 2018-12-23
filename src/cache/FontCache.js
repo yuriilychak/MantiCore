@@ -39,7 +39,7 @@ export default {
 
         fontData.font = fontName;
         fontData.size = font.size;
-        fontData.lineHeight = font.lineHeight / res;
+        fontData.lineHeight = font.lineHeight;
         fontData.chars = {};
 
         // parse letters
@@ -56,9 +56,9 @@ export default {
             dimension = letter.dimensions;
 
             fontData.chars[letter.id] = {
-                xOffset: offset[0] / res,
-                yOffset: offset[1] / res,
-                xAdvance: letter.ax / res,
+                xOffset: offset[0],
+                yOffset: offset[1],
+                xAdvance: letter.ax,
                 kerning: {},
                 texture: new PIXI.Texture(baseTexture, new PIXI.Rectangle(
                     dimension[0] / res,
@@ -75,9 +75,9 @@ export default {
 
         for (i = 0; i < kerningCount; ++i) {
             kerning = kernings[i];
-            first = kerning[0] / res;
-            second = kerning[1] / res;
-            amount = kerning[2] / res;
+            first = kerning[0];
+            second = kerning[1];
+            amount = kerning[2];
 
             if (fontData.chars[second]) {
                 fontData.chars[second].kerning[first] = amount;

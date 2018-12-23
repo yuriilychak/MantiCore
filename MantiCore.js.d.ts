@@ -611,6 +611,7 @@ declare namespace MANTICORE {
         export const ACCELEROMETER_ENABLED: boolean;
         export const TYPED_ARRAY_SUPPORTED: boolean;
         export const SUPPORTED_FORMATS: MANTICORE.enumerator.TEXTURE_FORMAT[];
+        export const RESOLUTION: MANTICORE.enumerator.RESOLUTION;
 
         export function init(callback: Function);
         export function isMobile(): boolean;
@@ -1097,6 +1098,12 @@ declare namespace MANTICORE {
                 UNKNOWN = 0,
                 DESKTOP = 1,
                 MOBILE = 2
+            }
+
+            export enum RESOLUTION {
+                SD = 0,
+                HD = 1,
+                UD = 2
             }
         }
 

@@ -3,6 +3,7 @@ import CLIENT from "./Client";
 import ORIENTATION from "./Orientation";
 import OS from "./OS";
 import PLATFORM from "./Platform";
+import RESOLUTION from "./Resolution";
 
 /**
  * @desc Namespace that contains some system enumerators (Browser, platform etc.)
@@ -15,5 +16,6 @@ export default {
     CLIENT,
     OS,
     ORIENTATION,
-    PLATFORM
+    PLATFORM,
+    RESOLUTION
 }

@@ -92,7 +92,7 @@ class AssetBundle extends BaseBundle {
         }
         const fonts = this.data.fontData;
         const fontCount = fonts.length;
-        const resolution = 1;
+        const resolution = atlas.scale;
 
         let i, fontName;
 

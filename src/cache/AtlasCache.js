@@ -152,6 +152,8 @@ class TextureAtlas extends ReusableObject{
      */
 
     _init(baseTexture, atlas, bundle) {
+
+
         this._baseTexture = baseTexture;
 
         const scale = atlas.scale;
@@ -184,16 +186,14 @@ class TextureAtlas extends ReusableObject{
                     dimensions[0],
                     dimensions[1],
                     dimensions[frame.rotated ? 3 : 2],
-                    dimensions[frame.rotated ? 2 : 3],
-                    scale
+                    dimensions[frame.rotated ? 2 : 3]
                 ),
-                this._createUVRect(0, 0, sourceSize[0], sourceSize[1], scale),
+                this._createUVRect(0, 0, sourceSize[0], sourceSize[1]),
                 frame.trimmed ? this._createUVRect(
                     frame.spriteDimensions[0],
                     frame.spriteDimensions[1],
                     dimensions[2],
-                    dimensions[3],
-                    scale
+                    dimensions[3]
                 ) : null,
                 frame.rotated ? 2 : 0
             );
@@ -214,12 +214,12 @@ class TextureAtlas extends ReusableObject{
      * @private
      */
 
-    _createUVRect(x, y, width, height, scale) {
+    _createUVRect(x, y, width, height) {
         return new PIXI.Rectangle(
-            this._calculateUV(x, scale),
-            this._calculateUV(y, scale),
-            this._calculateUV(width, scale),
-            this._calculateUV(height, scale)
+            this._calculateUV(x),
+            this._calculateUV(y),
+            this._calculateUV(width),
+            this._calculateUV(height)
         );
     }
 
@@ -232,8 +232,8 @@ class TextureAtlas extends ReusableObject{
      * @private
      */
 
-    _calculateUV(value, scale) {
-        return Math.floor(value * scale) / this._resolution;
+    _calculateUV(value) {
+        return value / this._resolution;
     }
 
     /**

@@ -1,4 +1,5 @@
 import Type from "util/Type";
+import Math from "util/Math";
 import PLATFORM from "enumerator/system/Platform";
 import OS from "enumerator/system/OS";
 import CLIENT from "enumerator/system/Client";
@@ -9,6 +10,7 @@ import EventDispatcher from "eventDispatcher";
 import SYSTEM_EVENT from "enumerator/SystemEvent";
 import Timer from "timer";
 import TEXTURE_FORMAT from "enumerator/TextureFormat";
+import RESOLUTION from "enumerator/system/Resolution";
 
 /**
  * @desc Boot section of engine.
@@ -141,6 +143,15 @@ export default {
     SUPPORTED_FORMATS: [TEXTURE_FORMAT.PNG],
 
     /**
+     * @desc Resolution of device. Need to load textures by quality.
+     * @type {MANTICORE.enumerator.system.RESOLUTION}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    RESOLUTION: RESOLUTION.SD,
+
+    /**
      * PUBLIC FUNCTIONS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -190,6 +201,23 @@ export default {
         this.KEYBOARD_ENABLED = !Type.isUndefined(docEle['onkeyup']);
         this.ACCELEROMETER_ENABLED = Type.toBoolean(Type.setValue(window.DeviceMotionEvent, window.DeviceOrientationEvent));
         this.TYPED_ARRAY_SUPPORTED = "Uint8ClampedArray" in window; //Cause IE10 don't support this type of arrays.
+
+        const maxDimension = Math.max(window.screen.height, window.screen.width);
+
+        switch (true) {
+            case maxDimension >= 1920: {
+                this.RESOLUTION = RESOLUTION.UD;
+                break;
+            }
+            case maxDimension >= 1024: {
+                this.RESOLUTION = RESOLUTION.HD;
+                break;
+            }
+            default: {
+                this.RESOLUTION = RESOLUTION.UD;
+                break;
+            }
+        }
 
         /*
          * CLIENT
@@ -576,6 +604,7 @@ export default {
         const platforms = ["Unknown", "Desktop", "Mobile"];
         const template1 = "{0}: {1} Version: {2}\n";
         const template2 = "{0}: {1}\n";
+        const resolution = this.RESOLUTION === RESOLUTION.UD ? "UD" : this.RESOLUTION === RESOLUTION.HD ? "HD" : "SD";
 
         Logger.log(
             Format.replace(template1, "OS", oses[this.OS], this.OS_VERSION) +
@@ -587,7 +616,8 @@ export default {
             Format.replace(template2, "Touches enabled", this.TOUCHES_ENABLED.toString()) +
             Format.replace(template2, "Keyboard enabled", this.KEYBOARD_ENABLED.toString()) +
             Format.replace(template2, "Accelerometer enabled", this.ACCELEROMETER_ENABLED.toString()) +
-            Format.replace(template2, "Supported texture formats", JSON.stringify(this.SUPPORTED_FORMATS))
+            Format.replace(template2, "Supported texture formats", JSON.stringify(this.SUPPORTED_FORMATS)) +
+            Format.replace(template2, "Resolution", resolution)
         );
     },
 
