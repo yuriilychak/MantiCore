@@ -1,6 +1,7 @@
 import Repository from "repository/Repository";
 import Math from "util/Math";
 import Type from "util/Type";
+import Rectangle from "geometry/Rectangle";
 
 /**
  * @desc Namespace for manipulate with fonts.
@@ -60,7 +61,7 @@ export default {
                 yOffset: offset[1],
                 xAdvance: letter.ax,
                 kerning: {},
-                texture: new PIXI.Texture(baseTexture, new PIXI.Rectangle(
+                texture: new PIXI.Texture(baseTexture, Rectangle.create(
                     dimension[0] / res,
                     dimension[1] / res,
                     dimension[2] / res,

@@ -1241,7 +1241,7 @@ declare namespace MANTICORE {
 
             public x: number;
             public y: number;
-            public readonly type: MANTICORE.enumerator.NUMBER_TYPE;
+            public type: MANTICORE.enumerator.NUMBER_TYPE;
 
             public copyFrom(p: MANTICORE.geometry.Point): void;
             public copyTo(p: MANTICORE.geometry.Point): void;
@@ -1252,6 +1252,32 @@ declare namespace MANTICORE {
             public clone(): MANTICORE.geometry.Point;
             // noinspection JSAnnotator
             public static create<T extends MANTICORE.geometry.Point>(x?: number, y?: number, type?: MANTICORE.enumerator.NUMBER_TYPE): T;
+        }
+
+        export class Rectangle extends MANTICORE.memory.ReusableObject {
+            constructor(x?: number, y?: number, width?: number, height?: number, type?: MANTICORE.enumerator.NUMBER_TYPE);
+
+            public static EMPTY: MANTICORE.geometry.Rectangle;
+            public x: number;
+            public y: number;
+            public width: number;
+            public height: number;
+            public readonly left: number;
+            public readonly right: number;
+            public readonly top: number;
+            public readonly bottom: number;
+
+            public clone(): MANTICORE.geometry.Rectangle;
+            public copyFrom(rectangle: MANTICORE.geometry.Rectangle): MANTICORE.geometry.Rectangle;
+            public copyTo(rectangle: MANTICORE.geometry.Rectangle): MANTICORE.geometry.Rectangle;
+            public contains(x: number, y: number): boolean;
+            public pad(paddingX: number, paddingY: number): void;
+            public fit(rectangle: MANTICORE.geometry.Rectangle): void;
+            public ceil(resolution?: number, eps?: number): void;
+            public enlarge(rectangle: MANTICORE.geometry.Rectangle): void;
+
+            // noinspection JSAnnotator
+            public static create<T extends MANTICORE.geometry.Rectangle>(x?: number, y?: number, width?: number, height?: number, type?: MANTICORE.enumerator.NUMBER_TYPE): T;
         }
     }
 

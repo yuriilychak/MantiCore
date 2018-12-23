@@ -5,6 +5,8 @@ import VERTICAL_ALIGN from "enumerator/ui/VerticalAlign";
 import HORIZONTAL_ALIGN from "enumerator/ui/HorizontalAlign";
 import UI_ELEMENT from "enumerator/ui/UIElement";
 import Point from "geometry/Point";
+import Rectangle from "geometry/Rectangle";
+import NUMBER_TYPE from "enumerator/NumberType";
 
 /**
  * @desc Chars of dots.
@@ -356,9 +358,9 @@ class AtlasLabel extends BaseLabel {
 
             isDot = DOT_LIST.indexOf(char) !== -1;
             frameWidth = isDot ? this._dotWidth : frameOffset;
-            rect = new PIXI.Rectangle(
+            rect = Rectangle.create(
                 baseFrame.x + charIndex * frameOffset, baseFrame.y,
-                frameWidth, frameHeight
+                frameWidth, frameHeight, NUMBER_TYPE.INT_16
             );
 
             charWidth = isDot ? dotWidth : letterWidth;

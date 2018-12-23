@@ -10,7 +10,7 @@ import NUMBER_TYPE from "enumerator/NumberType";
  * @extends MANTICORE.memory.ReusableObject
  */
 
-class Point extends ReusableObject {
+export default class Point extends ReusableObject {
 
     /**
      * @constructor
@@ -286,6 +286,18 @@ class Point extends ReusableObject {
         return this._type;
     }
 
+    set type(value) {
+        if (this._type === value) {
+            return;
+        }
+
+        this._type = value;
+        const x = this._data[0];
+        const y = this._data[1];
+        this._updateDataByType();
+        this.set(x, y);
+    }
+
     /**
      * @desc X cord of point
      * @public
@@ -322,6 +334,4 @@ class Point extends ReusableObject {
         this._onChange();
     }
 }
-
-export default Point;
 

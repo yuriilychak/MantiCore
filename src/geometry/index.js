@@ -1,4 +1,5 @@
 import Point from "./Point";
+import Rectangle from "./Rectangle";
 
 /**
  * @desc Contains some geometry elements for advanced memory usage.
@@ -7,5 +8,6 @@ import Point from "./Point";
  */
 
 export default {
-    Point
+    Point,
+    Rectangle
 }

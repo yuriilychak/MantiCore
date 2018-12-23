@@ -1,5 +1,5 @@
 import Repository from "repository/Repository";
-import Math from "util/Math";
+import Rectangle from "geometry/Rectangle";
 import Type from "util/Type";
 import ReusableObject from "../memory/ReusableObject";
 
@@ -210,12 +210,12 @@ class TextureAtlas extends ReusableObject{
      * @param {int} width
      * @param {int} height
      * @param {number} scale
-     * @return {PIXI.Rectangle}
+     * @return {MANTICORE.geometry.Rectangle}
      * @private
      */
 
     _createUVRect(x, y, width, height) {
-        return new PIXI.Rectangle(
+        return Rectangle.create(
             this._calculateUV(x),
             this._calculateUV(y),
             this._calculateUV(width),

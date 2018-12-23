@@ -1,9 +1,10 @@
 import Asset from "util/Asset";
 import Type from "util/Type";
 import Math from "util/Math";
-import Constant from "constant/index";
+import Rectangle from "geometry/Rectangle";
 import Color from "util/Color";
 import Point from "../geometry/Point";
+import NUMBER_TYPE from "enumerator/NumberType";
 
 /**
  * @desc Slice 9 sprite to avoid breaking batch.
@@ -92,7 +93,7 @@ class Slice9Sprite extends PIXI.Container {
         this._anchor.initChangeCallback(this._onAnchorPointUpdate, this);
 
         this.interactiveChildren = false;
-        this.hitArea = new PIXI.Rectangle(0, 0, 0, 0);
+        this.hitArea = Rectangle.create(0, 0, 0, 0, NUMBER_TYPE.INT_16);
 
         const elementCount = Slice9Sprite.ELEMMENT_COUNT * Slice9Sprite.ELEMMENT_COUNT;
 
@@ -522,7 +523,7 @@ class Slice9Sprite extends PIXI.Container {
 
                 vOrigin = vOrigins[j];
 
-                rect = new PIXI.Rectangle(hOrigin, vOrigin, hDimension, vDimension);
+                rect = Rectangle.create(hOrigin, vOrigin, hDimension, vDimension, NUMBER_TYPE.INT_16);
 
                 if (Type.isNull(sprite)) {
                     frameTexture = new PIXI.Texture(baseTexture, rect);
