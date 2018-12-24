@@ -747,7 +747,7 @@ declare namespace MANTICORE {
 
                 index: number;
                 // noinspection JSAnnotator
-                static create(): MANTICORE.component.ui.ComItem;
+                static create<T extends MANTICORE.component.ui.ComItem>(): T;
                 updateData(data: any): void;
                 clone(): MANTICORE.component.ui.ComItem;
             }
@@ -816,7 +816,7 @@ declare namespace MANTICORE {
                 listenInteractions: boolean;
 
                 // noinspection JSAnnotator
-                static create(name?: string): MANTICORE.component.ui.ComUI;
+                static create <T extends MANTICORE.component.ui.ComUI>(name?: string): T;
                 emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
                 logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, maxLevel?: number): void;
                 logUnlocalizedFields(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
