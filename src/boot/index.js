@@ -214,7 +214,7 @@ export default {
                 break;
             }
             default: {
-                this.RESOLUTION = RESOLUTION.UD;
+                this.RESOLUTION = RESOLUTION.SD;
                 break;
             }
         }
