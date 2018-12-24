@@ -62,7 +62,7 @@ const middleware = {
             parentResource: resource,
         };
 
-        const textureFormat = Macro.USE_WEB_P_FALLBACK && Boot.SUPPORTED_FORMATS.indexOf(TEXTURE_FORMAT.WEB_P) ? FILE_TYPE.WEB_P : FILE_TYPE.PNG;
+        const textureFormat = Macro.USE_WEB_P_FALLBACK && (Boot.SUPPORTED_FORMATS.indexOf(TEXTURE_FORMAT.WEB_P) !== -1) ? FILE_TYPE.WEB_P : FILE_TYPE.PNG;
         let index = 0;
         let loadPath = Format.changeBaseName(url, Format.addFileType(textures[index].name, textureFormat));
 
