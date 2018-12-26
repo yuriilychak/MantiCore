@@ -3,6 +3,7 @@ import DIRECTION from "./Direction";
 import ENGINE_MODE from "./EngineMode";
 import FILE_TYPE from "./FileType";
 import NUMBER_TYPE from "./NumberType";
+import PARTICLE_TYPE from "./ParticleType";
 import RESOLUTION from "./Resolution";
 import SCENE_TRANSITION from "./SceneTransition";
 import SYSTEM_EVENT from "./SystemEvent";
@@ -25,6 +26,7 @@ export default {
     ENGINE_MODE,
     FILE_TYPE,
     NUMBER_TYPE,
+    PARTICLE_TYPE,
     RESOLUTION,
     SCENE_TRANSITION,
     SYSTEM_EVENT,

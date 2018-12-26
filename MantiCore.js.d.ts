@@ -953,6 +953,11 @@ declare namespace MANTICORE {
             FLOAT_64 = 7
         }
 
+        export enum PARTICLE_TYPE {
+            PARTICLE = 0,
+            SEQUENCE = 1
+        }
+
         export enum RESOLUTION {
             R_NONE = 0,
             R_1280_720 = 1,
@@ -1334,6 +1339,7 @@ declare namespace MANTICORE {
     export namespace macro {
         export let FPS: number;
         export let USE_WEB_P_FALLBACK: boolean;
+        export let PARTICLES_ENABLED: boolean;
         export let MODE: MANTICORE.enumerator.ENGINE_MODE;
         export let DEFAULT_POOL_SIZE: number;
         export let OUTLINE_SAMPLES: number;

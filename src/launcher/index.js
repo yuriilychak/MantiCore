@@ -1,6 +1,7 @@
 import RESOLUTION from "enumerator/Resolution";
 import Timer from "timer";
 import Boot from "boot";
+import Macro from "macro";
 import Type from "util/Type";
 import Math from "util/Math";
 import EventDispatcher from "eventDispatcher";
@@ -99,6 +100,14 @@ export default {
             parentContainer.appendChild(this._app.view);
             Timer.enterFrameTimer = this._app.ticker;
 
+            if (Macro.PARTICLES_ENABLED) {
+                this._particleSystem = new revolt.FX();
+                this._app.ticker.add(function () {
+                    this._particleSystem.update();
+                });
+
+            }
+
             if (!Type.isNull(onComplete)) {
                 onComplete();
             }
@@ -164,7 +173,6 @@ export default {
      * @desc Returns design resolution of app.
      * @function
      * @public
-     * @readonly
      * @returns {MANTICORE.geometry.Point}
      */
 

@@ -1,5 +1,7 @@
 import FILE_TYPE from "enumerator/FileType";
+import Macro from "macro";
 import Format from "./Format";
+import ParticleCache from "cache/ParticleCache";
 
 /**
  * @desc Namespace that contain functions for manipulate with assets

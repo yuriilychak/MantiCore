@@ -18,9 +18,16 @@ export default {
      * @desc Is use wbp images as fallback.
      * @type {boolean}
      * @memberOf MANTICORE.macro
-     * @private
      */
     USE_WEB_P_FALLBACK: false,
+
+    /**
+     * @desc Is use revolt particles.
+     * @type {boolean}
+     * @memberOf MANTICORE.macro
+     */
+
+    PARTICLES_ENABLED: false,
 
     /**
      * @desc Mode that currently use engine.
