@@ -893,7 +893,7 @@ declare namespace MANTICORE {
             readonly listenerManager: MANTICORE.manager.ListenerManager;
 
             // noinspection JSAnnotator
-            static create(name?: string): MANTICORE.component.Component;
+            static create<T extends MANTICORE.component.Component>(name?: string): T;
             hasOwner(): boolean;
             onAdd(owner: MANTICORE.view.ComponentContainer): void;
             onRemove(): void;
