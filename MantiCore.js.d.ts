@@ -682,6 +682,19 @@ declare namespace MANTICORE {
             export function getLocale(key: string): string;
         }
 
+        export namespace particleCache {
+            export function addParticleData: function(name: string, data: Object): boolean;
+            export function removeParticleData(name: string): boolean;
+            export function getParticleData(name: string): Object | null;
+            export function clear(): void;
+            export function getParticle(name: string): MANTICORE.cache.particleCache.ParticleInfo | null;
+            export interface ParticleInfo {
+                name: string;
+                type: MANTICORE.enumerator.PARTICLE_TYPE;
+                source: string;
+            }
+        }
+
         export namespace spineCache {
             export function add(name: string, data: Object): void;
             export function remove(name: string): boolean;
@@ -1474,6 +1487,11 @@ declare namespace MANTICORE {
             id: number;
             protected reuseId(): void;
         }
+    }
+
+    export namespace particleSystem {
+        export function init(): void;
+        export function generateParticle(name: string): Object | null;
     }
 
     export namespace pool {

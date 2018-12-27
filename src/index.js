@@ -14,6 +14,7 @@ import macro from "./macro";
 import manager from "./manager";
 import memory from "./memory";
 import model from "./model";
+import particleSystem from "./particleSystem";
 import pool from "./pool";
 import repository from "./repository";
 import timer from "./timer";
@@ -43,6 +44,7 @@ export {
     manager,
     memory,
     model,
+    particleSystem,
     pool,
     repository,
     timer,

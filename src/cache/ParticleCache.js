@@ -66,9 +66,10 @@ export default {
      * @desc Clear particle cache.
      * @function
      * @public
+     * @memberOf MANTICORE.cache.particleCache
      */
 
-    clear() {
+    clear: function() {
         this._particleData.clear();
         this._particles.clear();
     },

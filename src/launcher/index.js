@@ -1,13 +1,13 @@
 import RESOLUTION from "enumerator/Resolution";
 import Timer from "timer";
 import Boot from "boot";
-import Macro from "macro";
 import Type from "util/Type";
 import Math from "util/Math";
 import EventDispatcher from "eventDispatcher";
 import SYSTEM_EVENT from "enumerator/SystemEvent";
 import ORIENTATION from "enumerator/system/Orientation";
 import Point from "geometry/Point";
+import ParticleSystem from "particleSystem";
 
 /**
  * @desc Contains all basic functional for manipulate with application
@@ -100,13 +100,7 @@ export default {
             parentContainer.appendChild(this._app.view);
             Timer.enterFrameTimer = this._app.ticker;
 
-            if (Macro.PARTICLES_ENABLED) {
-                this._particleSystem = new revolt.FX();
-                this._app.ticker.add(function () {
-                    this._particleSystem.update();
-                });
-
-            }
+            ParticleSystem.init();
 
             if (!Type.isNull(onComplete)) {
                 onComplete();
