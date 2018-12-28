@@ -3,7 +3,9 @@ import BUNDLE_TYPE from "enumerator/BundleType";
 import FontCache from "cache/FontCache";
 import AtlasCache from "cache/AtlasCache";
 import SpineCache from "cache/SpineCache";
+import ParticleCache from "cache/ParticleCache";
 import Constant from "constant";
+import Type from "util/Type";
 
 /**
  * @desc Class for store asset bundles
@@ -43,6 +45,14 @@ class AssetBundle extends BaseBundle {
          */
 
         this._fonts = [];
+
+        /**
+         * @desc Array with particles  that use bundle.
+         * @type {Array}
+         * @private
+         */
+
+        this._particles = [];
 
         /**
          * @desc Array with skeletons that use bundle.
@@ -110,14 +120,25 @@ class AssetBundle extends BaseBundle {
      */
 
     atlasLoadComplete() {
-        const skeletonNames = this.data.skeletonNames;
-        const skeletons = this.data.skeletons;
+        let i;
+
+        const skeletonNames = Type.setValue(this.data.skeletonNames, []);
+        const skeletons = Type.setValue(this.data.skeletons, []);
         const skeletonCount = skeletonNames.length;
 
-        for (let i = 0; i < skeletonCount; ++i) {
+        for (i = 0; i < skeletonCount; ++i) {
             this._skeletons.push(skeletonNames[i]);
             SpineCache.add(skeletonNames[i], skeletons[i]);
         }
+
+        const particleNames = Type.setValue(this.data.particleNames, []);
+        const particleData = Type.setValue(this.data.particleData, []);
+        const particleCount = particleNames.length;
+
+        for (i = 0; i < particleCount; ++i) {
+            ParticleCache.add(this.data.name + "_" + particleNames[i], particleData[i]);
+        }
+
     }
 
     /**
@@ -135,6 +156,7 @@ class AssetBundle extends BaseBundle {
         const fontCount = this._fonts.length;
         const atlasCount = this._atlases.length;
         const skeletonCount = this._skeletons.length;
+        const particleCount = this._particles.length;
         let i;
         for (i = 0; i < fontCount; ++i) {
             FontCache.remove(this._fonts[i]);
@@ -145,11 +167,15 @@ class AssetBundle extends BaseBundle {
         for (i = 0; i < skeletonCount; ++i) {
             SpineCache.remove(this._skeletons[i]);
         }
+        for (i = 0; i < particleCount; ++i) {
+            ParticleCache.remove(this._particles[i]);
+        }
 
         this._fonts.length = 0;
         this._atlases.length = 0;
         this._linkedTextures.length = 0;
         this._skeletons.length = 0;
+        this._particles.length = 0;
         super.clearData();
     }
 

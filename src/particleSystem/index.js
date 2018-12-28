@@ -57,7 +57,7 @@ export default {
         const sourceName = particleInfo.source;
 
         if (!this._bundles.hasElement(sourceName)) {
-            const particleData = ParticleCache.getParticleData(sourceName);
+            const particleData = ParticleCache.get(sourceName);
 
             if (Type.isNull(particleData)) {
                 return null;

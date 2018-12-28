@@ -40,6 +40,8 @@
  * @property {string[]} animationNames - Name of animations that use bundle.
  * @property {string[]} skeletonNames - Name of skeletons that use bundle.
  * @property {Object[]} skeletons - Skeletons that use bundle.
+ * @property {Object[]} particleData - Data of revolt particles.
+ * @property {string[]} particleNames - Name of particles.
  */
 
 /**

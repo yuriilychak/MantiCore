@@ -683,9 +683,9 @@ declare namespace MANTICORE {
         }
 
         export namespace particleCache {
-            export function addParticleData: function(name: string, data: Object): boolean;
-            export function removeParticleData(name: string): boolean;
-            export function getParticleData(name: string): Object | null;
+            export function add(name: string, data: Object): boolean;
+            export function remove(name: string): boolean;
+            export function get(name: string): Object | null;
             export function clear(): void;
             export function getParticle(name: string): MANTICORE.cache.particleCache.ParticleInfo | null;
             export interface ParticleInfo {
@@ -1564,6 +1564,8 @@ declare namespace MANTICORE {
             fonts: string[];
             fontStyles: MANTICORE.type.FontStyle[];
             name: string;
+            particleDat: Object[],
+            particleNames: string[],
             skeletonNames: string[];
             skeletons: Object[];
             texts: string[];

@@ -32,7 +32,7 @@ export default {
      * @returns {boolean}
      */
 
-    addParticleData: function(name, data) {
+    add: function(name, data) {
         return this._particleData.addElement(data, name);
     },
 
@@ -45,7 +45,7 @@ export default {
      * @returns {boolean}
      */
 
-    removeParticleData: function(name) {
+    remove: function(name) {
         return this._particleData.removeElement(name);
     },
 
@@ -58,7 +58,7 @@ export default {
      * @returns {?Object}
      */
 
-    getParticleData: function(name) {
+    get: function(name) {
         return this._particleData.getElement(name);
     },
 
