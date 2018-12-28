@@ -686,7 +686,8 @@ export default {
             "ArrowRight": 39,
             "ArrowDown": 40,
         };
-        if (event.key !== undefined){
+
+        if (!Type.isUndefined(event.key)){
             keyCode = charCodeArr[event.key] || event.key.charCodeAt(0);
         }
         else{
@@ -710,7 +711,7 @@ export default {
     },
 
     /**
-     * @desc Calls when user focuse on tab.
+     * @desc Calls when user focus on tab.
      * @function
      * @private
      */
