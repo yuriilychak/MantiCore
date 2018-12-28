@@ -247,7 +247,7 @@ export default {
                 this.CLIENT = CLIENT.CORDOVA;
                 break;
             }
-            case (typeof process !== 'undefined' && process.versions !== null && process.versions.node !== null): {
+            case (!Type.isUndefined(process) && process.versions !== null && process.versions.node !== null): {
                 if (Type.toBoolean(process.versions.electron)) {
                     this.CLIENT = CLIENT.ELECTRON;
                     break;
@@ -369,6 +369,8 @@ export default {
          * -------------------------------------------------------------------------------------------------------------
          */
 
+        const unknown = "Unknown";
+
         switch (true) {
             case /(Windows 10.0|Windows NT 10.0)/.test(nAgt): {
                 this.OS = OS.WINDOWS;
@@ -411,12 +413,12 @@ export default {
             }
             case /OpenBSD/.test(nAgt): {
                 this.OS = OS.BSD;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /SunOS/.test(nAgt): {
                 this.OS = OS.SUN;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /(Linux|X11)/.test(nAgt): {
@@ -494,7 +496,7 @@ export default {
                             break;
                         }
                         default: {
-                            this.OS_VERSION = "Unknown";
+                            this.OS_VERSION = unknown;
                             break;
                         }
                     }
@@ -502,7 +504,7 @@ export default {
                 }
                 else {
                     this.OS = OS.TIZEN;
-                    this.OS_VERSION = "Unknown";
+                    this.OS_VERSION = unknown;
                 }
 
                 break;
@@ -520,47 +522,47 @@ export default {
             }
             case /(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/.test(nAgt): {
                 this.OS = OS.MAC_OS;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /UNIX/.test(nAgt): {
                 this.OS = OS.UNIX;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /QNX/.test(nAgt): {
                 this.OS = OS.BLACKBERRY;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /Windows Phone/i.test(ua) || (/IEMobile/i).test(ua): {
                 this.OS = OS.WINDOWS_MOBILE;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
             }
             case /Kindle/.test(nAgt) || (/\bKF[A-Z][A-Z]+/).test(ua) || (/Silk.*Mobile Safari/).test(nAgt): {
                 this.OS = OS.KINDLE;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /(CrOS)/.test(navigator.userAgent): {
                 this.OS = OS.CHROME_OS;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /BeOS/.test(nAgt):
             case /OS\/2/.test(nAgt): {
                 this.OS = OS.DEPRECATED_OS;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             case /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/.test(nAgt): {
                 this.OS = OS.SEARCH_BOT;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
             default: {
                 this.OS = OS.UNKNOWN;
-                this.OS_VERSION = "Unknown";
+                this.OS_VERSION = unknown;
                 break;
             }
         }
