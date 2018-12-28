@@ -988,7 +988,10 @@ declare namespace MANTICORE {
             BLUR = "SYSTEM.BLUR",
             VISIBLE = "SYSTEM.VISIBLE",
             HIDDEN = "SYSTEM.HIDDEN",
-            LOCALE_CHANGE = "SYSTEM.LOCALE_CHANGE"
+            LOCALE_CHANGE = "SYSTEM.LOCALE_CHANGE",
+            KEY_DOWN = "SYSTEM.KEY_DOWN",
+            KEY_PRESS = "SYSTEM.KEY_PRESS",
+            KEY_RELEASE = "SYSTEM.KEY_RELEASE"
         }
 
         export enum TEXTURE_FORMAT {
@@ -1353,6 +1356,8 @@ declare namespace MANTICORE {
         export let FPS: number;
         export let USE_WEB_P_FALLBACK: boolean;
         export let PARTICLES_ENABLED: boolean;
+        export let KEYBOARD_ENABLED: boolean;
+        export let BLOCK_BROWSER_HOT_KEYS: boolean;
         export let MODE: MANTICORE.enumerator.ENGINE_MODE;
         export let DEFAULT_POOL_SIZE: number;
         export let OUTLINE_SAMPLES: number;

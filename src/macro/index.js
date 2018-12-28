@@ -38,6 +38,22 @@ export default {
     MODE: ENGINE_MODE.DEBUG,
 
     /**
+     * @desc Is use keyboard in game.
+     * @type {boolean}
+     * @memberOf MANTICORE.macro
+     */
+
+    KEYBOARD_ENABLED: false,
+
+    /**
+     * @desc Is block browser hot keys (space, arrows and etc.).
+     * @type {boolean}
+     * @memberOf MANTICORE.macro
+     */
+
+    BLOCK_BROWSER_HOT_KEYS: false,
+
+    /**
      * @desc Default size of pool, for some object.
      * @type {int}
      * @memberOf MANTICORE.macro

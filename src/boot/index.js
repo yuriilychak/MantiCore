@@ -1,5 +1,6 @@
 import Type from "util/Type";
 import Math from "util/Math";
+import Macro from "macro";
 import PLATFORM from "enumerator/system/Platform";
 import OS from "enumerator/system/OS";
 import CLIENT from "enumerator/system/Client";
@@ -216,6 +217,17 @@ export default {
             default: {
                 this.RESOLUTION = RESOLUTION.SD;
                 break;
+            }
+        }
+
+        if (this.KEYBOARD_ENABLED && Macro.KEYBOARD_ENABLED) {
+            const keyboardManager = PIXI.keyboardManager;
+            keyboardManager.on('down', this._onKeyDownHandler, this);
+            keyboardManager.on('pressed', this._onKeyPressedHandler, this);
+            keyboardManager.on('released', this._onKeyReleaseHandler, this);
+
+            if (Macro.BLOCK_BROWSER_HOT_KEYS) {
+                window.addEventListener("keydown", this._onBrowserHotKeyHandler, false);
             }
         }
 
@@ -625,6 +637,65 @@ export default {
      * PRIVATE FUNCTIONS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @function
+     * @param {int} key
+     * @private
+     */
+
+    _onKeyDownHandler(key) {
+        EventDispatcher.dispatch(SYSTEM_EVENT.KEY_DOWN, key);
+    },
+
+    /**
+     * @function
+     * @param {int} key
+     * @private
+     */
+
+    _onKeyPressedHandler(key) {
+        EventDispatcher.dispatch(SYSTEM_EVENT.KEY_PRESS, key);
+    },
+
+    /**
+     * @function
+     * @param {int} key
+     * @private
+     */
+
+    _onKeyReleaseHandler(key) {
+        EventDispatcher.dispatch(SYSTEM_EVENT.KEY_RELEASE, key);
+    },
+
+    /**
+     * @function
+     * @param {KeyboardEvent} event
+     * @private
+     */
+
+    _onBrowserHotKeyHandler(event) {
+        let keyCode;
+        const charCodeArr = {
+            " ": 32,
+            "Spacebar": 32,
+            "ArrowLeft": 37,
+            "ArrowUp": 38,
+            "ArrowRight": 39,
+            "ArrowDown": 40,
+        };
+        if (event.key !== undefined){
+            keyCode = charCodeArr[event.key] || event.key.charCodeAt(0);
+        }
+        else{
+            keyCode = event.which || event.charCode || event.keyCode || 0;
+        }
+        // space and arrow keys
+        const blockKeys = [32, 37, 38, 39, 40];
+        if(blockKeys.indexOf(keyCode) > -1) {
+            event.preventDefault();
+        }
+    },
 
     /**
      * @desc Calls when user change tab.
