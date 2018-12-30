@@ -97,7 +97,7 @@ export default {
         let asset, i;
         const imageFormat = Macro.USE_WEB_P_FALLBACK && (Boot.SUPPORTED_FORMATS.indexOf(TEXTURE_FORMAT.WEB_P) !== -1) ? FILE_TYPE.WEB_P : FILE_TYPE.PNG;
         const bundleName = "bundle_" + (Boot.isDesktop() ? "d" : "m") + "_" + resolutionSuffix;
-        let useBundle =false;
+        let useBundle = false;
         for (i = 0; i < assetCount; ++i) {
             asset = this._assetsForLoad[i];
             switch (asset.type) {
@@ -167,7 +167,7 @@ export default {
         const name = asset.name + "_" + nameSuffix;
         const basePath = asset.useAssetDir ? Macro.ASSET_DIR : "";
         const resolution = Type.setValue(asset.resolution, fileType);
-        let filePath = (basePath !== "" ? basePath + "/" : "") + Type.setValue(asset.path, name);
+        let filePath = (basePath !== "" ? basePath + "/" : "") + Type.setValue(asset.path, asset.name);
         if (!Type.isNull(pathSuffix)) {
             filePath += "/" + pathSuffix;
         }
