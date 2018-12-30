@@ -32,6 +32,5 @@ export default {
     PARTICLE_TYPE,
     RESOLUTION,
     SCENE_TRANSITION,
-    SYSTEM_EVENT,
     TEXTURE_FORMAT
 }
