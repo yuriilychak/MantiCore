@@ -45,6 +45,14 @@ export default {
     _isLoading: false,
 
     /**
+     * @desc Name of bundle for load.
+     * @type {?string}
+     * @private
+     */
+
+    _bundleName: null,
+
+    /**
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -77,27 +85,36 @@ export default {
         if (this._isLoading) {
             return;
         }
+
         this._isLoading = true;
-        let resolutionSuffix;
-        switch(Boot.RESOLUTION) {
-            case RESOLUTION.UD: {
-                resolutionSuffix = "ud";
-                break;
-            }
-            case RESOLUTION.HD: {
-                resolutionSuffix = "hd";
-                break;
-            }
-            default: {
-                resolutionSuffix = "sd";
-                break;
+
+        if (!this._isInit) {
+            PIXI.loader.onLoad.add(this._onLoadProgress.bind(this));
+            PIXI.loader.onComplete.add(this._onLoadComplete.bind(this));
+            this._isInit = true;
+            this._bundleName = "bundle_" + (Boot.isDesktop() ? "d" : "m") + "_";
+
+            switch(Boot.RESOLUTION) {
+                case RESOLUTION.UD: {
+                    this._bundleName += "ud";
+                    break;
+                }
+                case RESOLUTION.HD: {
+                    this._bundleName += "hd";
+                    break;
+                }
+                default: {
+                    this._bundleName += "sd";
+                    break;
+                }
             }
         }
+
         const assetCount = this._assetsForLoad.length;
-        let asset, i;
         const imageFormat = Macro.USE_WEB_P_FALLBACK && (Boot.SUPPORTED_FORMATS.indexOf(TEXTURE_FORMAT.WEB_P) !== -1) ? FILE_TYPE.WEB_P : FILE_TYPE.PNG;
-        const bundleName = "bundle_" + (Boot.isDesktop() ? "d" : "m") + "_" + resolutionSuffix;
         let useBundle = false;
+        let asset, i;
+
         for (i = 0; i < assetCount; ++i) {
             asset = this._assetsForLoad[i];
             switch (asset.type) {
@@ -111,7 +128,7 @@ export default {
                 }
                 case ASSET_TYPE.BUNDLE: {
                     useBundle = true;
-                    this._addAssetToLoader(asset, "bundle", FILE_TYPE.JSON, bundleName);
+                    this._addAssetToLoader(asset, "bundle", FILE_TYPE.JSON, this._bundleName);
                     break;
                 }
                 case ASSET_TYPE.SOUND: {
@@ -127,12 +144,6 @@ export default {
 
         if (useBundle) {
             PIXI.loader.use(Middleware.bundleParser);
-        }
-
-        if (!this._isInit) {
-            PIXI.loader.onProgress.add(this._onLoadProgress.bind(this));
-            PIXI.loader.onComplete.add(this._onLoadComplete.bind(this));
-            this._isInit = true;
         }
         EventDispatcher.dispatch(LOADER_EVENT.START);
         PIXI.loader.load();
@@ -150,8 +161,7 @@ export default {
      */
 
     _onLoadProgress: function () {
-        console.log("PROGRESS", arguments);
-        EventDispatcher.dispatch(LOADER_EVENT.PROGRESS);
+        EventDispatcher.dispatch(LOADER_EVENT.PROGRESS, arguments[0].progress);
     },
 
     /**
