@@ -1395,6 +1395,7 @@ declare namespace MANTICORE {
         export let MODE: MANTICORE.enumerator.ENGINE_MODE;
         export let DEFAULT_POOL_SIZE: number;
         export let OUTLINE_SAMPLES: number;
+        export let ASSET_DIR: string;
     }
 
     export namespace manager {
