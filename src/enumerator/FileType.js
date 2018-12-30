@@ -8,5 +8,6 @@
 export default {
     JSON: "json",
     PNG: "png",
-    WEB_P: "webp"
+    WEB_P: "webp",
+    MP3: "mp3"
 };

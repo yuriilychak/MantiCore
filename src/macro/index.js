@@ -67,5 +67,13 @@ export default {
      * @memberOf MANTICORE.macro
      */
 
-    OUTLINE_SAMPLES: 8
+    OUTLINE_SAMPLES: 8,
+
+    /**
+     * @desc Dir for load assets.
+     * @type {string}
+     * @memberOf MANTICORE.macro
+     */
+
+    ASSET_DIR: "",
 }

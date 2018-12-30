@@ -1,7 +1,7 @@
 import Repository from "repository/Repository";
 import Timer from "./Timer";
 import EventDispatcher from "eventDispatcher";
-import SYSTEM_EVENT from "enumerator/SystemEvent";
+import SYSTEM_EVENT from "enumerator/event/SystemEvent";
 import Type from "util/Type";
 
 /**

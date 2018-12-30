@@ -1,7 +1,7 @@
 /**
  * @desc Enumerator for some system events.
  * @enumerator {string}
- * @memberOf MANTICORE.enumerator
+ * @memberOf MANTICORE.enumerator.event
  * @name SYSTEM_EVENT
  */
 
@@ -11,8 +11,5 @@ export default {
     VISIBLE: "SYSTEM.VISIBLE",
     HIDDEN: "SYSTEM.HIDDEN",
     LOCALE_CHANGE: "SYSTEM.LOCALE_CHANGE",
-    RESIZE: "SYSTEM.RESIZE",
-    KEY_DOWN: "SYSTEM.KEY_DOWN",
-    KEY_PRESS: "SYSTEM.KEY_PRESS",
-    KEY_RELEASE: "SYSTEM.KEY_RELEASE"
+    RESIZE: "SYSTEM.RESIZE"
 };

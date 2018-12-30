@@ -1,7 +1,7 @@
 import Repository from "../repository/Repository";
 import Type from  "util/Type";
 import EventDispatcher from "eventDispatcher";
-import SYSTEM_EVENT from "enumerator/SystemEvent";
+import SYSTEM_EVENT from "enumerator/event/SystemEvent";
 
 /**
  * @desc Namespace for manipulate with localization.

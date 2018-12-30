@@ -931,6 +931,15 @@ declare namespace MANTICORE {
     }
 
     export namespace enumerator {
+
+        export enum ASSET_TYPE {
+            UNKNOWN = 0,
+            DATA = 1,
+            IMAGE = 2,
+            SOUND = 3,
+            BUNDLE = 4
+        }
+
         export enum BUNDLE_TYPE {
             NONE = 0,
             ASSET = 1,
@@ -952,7 +961,8 @@ declare namespace MANTICORE {
         export enum FILE_TYPE {
             JSON = "json",
             PNG = "png",
-            WEB_P = "webp"
+            WEB_P = "webp",
+            MP3 = "mp3"
         }
 
         export enum NUMBER_TYPE {
@@ -981,17 +991,6 @@ declare namespace MANTICORE {
         export enum SCENE_TRANSITION {
             SHOW = "TransitionShow",
             HIDE = "TransitionHide"
-        }
-
-        export enum SYSTEM_EVENT {
-            FOCUS = "SYSTEM.FOCUS",
-            BLUR = "SYSTEM.BLUR",
-            VISIBLE = "SYSTEM.VISIBLE",
-            HIDDEN = "SYSTEM.HIDDEN",
-            LOCALE_CHANGE = "SYSTEM.LOCALE_CHANGE",
-            KEY_DOWN = "SYSTEM.KEY_DOWN",
-            KEY_PRESS = "SYSTEM.KEY_PRESS",
-            KEY_RELEASE = "SYSTEM.KEY_RELEASE"
         }
 
         export enum TEXTURE_FORMAT {
@@ -1077,6 +1076,29 @@ declare namespace MANTICORE {
                 SCROLL_VIEW = "scrollView",
                 SPINE = "spine",
                 UI = "ui"
+            }
+        }
+
+        export namespace event {
+            export enum KEYBOARD_EVENT {
+                DOWN = "KEYBOARD_EVENT.DOWN",
+                PRESS = "KEYBOARD_EVENT.PRESS",
+                RELEASE = "KEYBOARD_EVENT.RELEASE"
+            }
+
+            export enum LOADER_EVENT {
+                START = "LOADER_EVENT.START",
+                PROGRESS = "LOADER_EVENT.PROGRESS",
+                COMPLETE = "LOADER_EVENT.COMPLETE"
+            }
+
+            export enum SYSTEM_EVENT {
+                FOCUS = "SYSTEM.FOCUS",
+                BLUR = "SYSTEM.BLUR",
+                VISIBLE = "SYSTEM.VISIBLE",
+                HIDDEN = "SYSTEM.HIDDEN",
+                LOCALE_CHANGE = "SYSTEM.LOCALE_CHANGE",
+                RESIZE = "SYSTEM.RESIZE"
             }
         }
 
@@ -1196,7 +1218,7 @@ declare namespace MANTICORE {
                 DESELECTED_UP = 5,
                 DESELECTED_DOWN = 6,
                 DESELECTED_OVER = 7,
-                DESELECTED_DISABLED = 8,
+                DESELECTED_DISABLED = 8
             }
 
             export enum UI_ELEMENT {
@@ -1228,7 +1250,6 @@ declare namespace MANTICORE {
                 BOTTOM = 3
             }
         }
-
     }
 
     export namespace eventDispatcher {
@@ -1343,7 +1364,20 @@ declare namespace MANTICORE {
             data: any;
         }
 
-        type LoaderCallback = () => void;
+        export interface AssetInfo {
+            name: string;
+            path: string;
+            type: MANTICORE.enumerator.ASSET_TYPE | null;
+            resolution: MANTICORE.enumerator.FILE_TYPE | string | null;
+            useAssetDir: boolean;
+        }
+
+        export const assetForLoad: MANTICORE.loader.AssetInfo[];
+        export const assetLoaded: MANTICORE.loader.AssetInfo[];
+        export const isLoading: boolean;
+
+        export function addAsset(name: string, type: MANTICORE.enumerator.ASSET_TYPE, path?: string, resolution?: MANTICORE.enumerator.FILE_TYPE | string, useAssetDir?: boolean): void;
+        export function load(): void;
     }
 
     export namespace logger {
@@ -1953,7 +1987,7 @@ declare namespace MANTICORE {
             hasProgressBar(): boolean;
         }
 
-        export class TextField extends MANTICORE.ui.Label{
+        export class TextField extends MANTICORE.ui.Label {
             constructor(fontName: string, size: number);
 
             text: string;
@@ -2125,11 +2159,11 @@ declare namespace MANTICORE {
 
     export namespace view {
         namespace callback {
-            type ChildAction = (component: MANTICORE.component.Component, child: PIXI.DisplayObject)=>void;
-            type IterateComponent = (component: MANTICORE.component.Component, index?: number)=>void;
+            type ChildAction = (component: MANTICORE.component.Component, child: PIXI.DisplayObject) => void;
+            type IterateComponent = (component: MANTICORE.component.Component, index?: number) => void;
         }
 
-        export class ComponentContainer extends PIXI.Container{
+        export class ComponentContainer extends PIXI.Container {
             constructor();
 
 
@@ -2140,7 +2174,7 @@ declare namespace MANTICORE {
             isUpdate: boolean;
             tint: number;
             parentTint: number;
-            protected  readonly realTint: number;
+            protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
@@ -2152,14 +2186,21 @@ declare namespace MANTICORE {
             readonly hasInteractionManager: boolean;
 
             static create<T extends MANTICORE.view.ComponentContainer>(...var_args: any[]): T;
+
             public reuse(...var_args: any[]): void;
+
             public disuse(): void;
+
             public kill(): void;
+
             public destroy(): void;
+
             public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+
             public doLayout(): void;
 
             protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+
             protected onUpdate(dt: number): void;
         }
 
@@ -2172,7 +2213,7 @@ declare namespace MANTICORE {
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             parentTint: number;
-            protected  readonly realTint: number;
+            protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
@@ -2184,14 +2225,21 @@ declare namespace MANTICORE {
             readonly hasInteractionManager: boolean;
 
             static create<T extends MANTICORE.view.ComponentSpine>(skeletonName: string): T;
+
             public reuse(...var_args: any[]): void;
+
             public disuse(): void;
+
             public kill(): void;
+
             public destroy(): void;
+
             public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+
             public doLayout(): void;
 
             protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+
             protected onUpdate(dt: number): void;
 
         }
@@ -2205,7 +2253,7 @@ declare namespace MANTICORE {
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             parentTint: number;
-            protected  readonly realTint: number;
+            protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
             readonly componentManager: MANTICORE.manager.ComponentManager;
@@ -2217,32 +2265,47 @@ declare namespace MANTICORE {
             readonly hasInteractionManager: boolean;
 
             static create<T extends MANTICORE.view.ComponentSprite>(frameName: string): T;
+
             public reuse(...var_args: any[]): void;
+
             public disuse(): void;
+
             public kill(): void;
+
             public destroy(): void;
+
             public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+
             public doLayout(): void;
 
             protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+
             protected onUpdate(dt: number): void;
 
         }
-        export class Scene extends PIXI.Container{
+
+        export class Scene extends PIXI.Container {
             constructor(comTransitionShow?: MANTICORE.component.Component, comTransitionHide?: MANTICORE.component.Component);
 
             static create<T extends MANTICORE.view.Scene>(comTransitionShow?: MANTICORE.component.Component, comTransitionHide?: MANTICORE.component.Component): T;
+
             public show(): void;
+
             public hide(): void;
 
             protected onShowStart(): void;
+
             protected onShowComplete(): void;
+
             protected onHideStart(): void;
+
             protected onHideComplete(): void;
 
         }
+
         export class Slice9Sprite extends PIXI.Container {
             constructor(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number);
+
             tint: number;
             parentTint: number;
             anchor: MANTICORE.geometry.Point;
@@ -2252,7 +2315,7 @@ declare namespace MANTICORE {
             bottomSlice: number;
             frameName: string;
             slice: number[];
-            protected  readonly realTint: number;
+            protected readonly realTint: number;
 
             static create<T extends MANTICORE.view.Slice9Sprite>(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): T;
         }

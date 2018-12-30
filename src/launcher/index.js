@@ -4,7 +4,7 @@ import Boot from "boot";
 import Type from "util/Type";
 import Math from "util/Math";
 import EventDispatcher from "eventDispatcher";
-import SYSTEM_EVENT from "enumerator/SystemEvent";
+import SYSTEM_EVENT from "enumerator/event/SystemEvent";
 import ORIENTATION from "enumerator/system/Orientation";
 import Point from "geometry/Point";
 import ParticleSystem from "particleSystem";

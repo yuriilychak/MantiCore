@@ -8,7 +8,8 @@ import BROWSER from "enumerator/system/Browser";
 import Logger from "logger";
 import Format from "util/Format";
 import EventDispatcher from "eventDispatcher";
-import SYSTEM_EVENT from "enumerator/SystemEvent";
+import SYSTEM_EVENT from "enumerator/event/SystemEvent";
+import KEYBOARD_EVENT from "enumerator/event/KeyboardEvent";
 import Timer from "timer";
 import TEXTURE_FORMAT from "enumerator/TextureFormat";
 import RESOLUTION from "enumerator/system/Resolution";
@@ -647,7 +648,7 @@ export default {
      */
 
     _onKeyDownHandler(key) {
-        EventDispatcher.dispatch(SYSTEM_EVENT.KEY_DOWN, key);
+        EventDispatcher.dispatch(KEYBOARD_EVENT.DOWN, key);
     },
 
     /**
@@ -657,7 +658,7 @@ export default {
      */
 
     _onKeyPressedHandler(key) {
-        EventDispatcher.dispatch(SYSTEM_EVENT.KEY_PRESS, key);
+        EventDispatcher.dispatch(KEYBOARD_EVENT.PRESS, key);
     },
 
     /**
@@ -667,7 +668,7 @@ export default {
      */
 
     _onKeyReleaseHandler(key) {
-        EventDispatcher.dispatch(SYSTEM_EVENT.KEY_RELEASE, key);
+        EventDispatcher.dispatch(KEYBOARD_EVENT.RELEASE, key);
     },
 
     /**
