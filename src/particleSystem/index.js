@@ -49,7 +49,6 @@ export default {
 
     generateParticle(name) {
         const particleInfo = ParticleCache.getParticle(name);
-
         if (Type.isNull(particleInfo)) {
             return null;
         }

@@ -57,7 +57,8 @@ export default {
                 type: PARTICLE_TYPE.SEQUENCE
             }, particleName);
         }
-        return this._particleData.addElement(data, name);
+        const result = this._particleData.addElement(data, name);
+        return result;
     },
 
     /**

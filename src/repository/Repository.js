@@ -34,12 +34,12 @@ class Repository {
     /**
      * @desc Add value to repository, if element already exist don't add and return false.
      * @param {*} value - Value to store;
-     * @param {int | string} [key] - Key of element
+     * @param {int | ?string} [key = null] - Key of element
      * @returns {boolean}
      */
 
-    addElement(value, key) {
-        if (!Type.isEmpty(value.id)) {
+    addElement(value, key = null) {
+        if (!Type.isEmpty(value.id) && Type.isEmpty(key)) {
             key = value.id;
         }
 
