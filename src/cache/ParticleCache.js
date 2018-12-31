@@ -1,4 +1,5 @@
-import Repository from "../repository/Repository";
+import Repository from "repository/Repository";
+import PARTICLE_TYPE from "enumerator/ParticleType";
 
 /**
  * @desc Namespace for manipulate with spine skeletons.
@@ -33,6 +34,29 @@ export default {
      */
 
     add: function(name, data) {
+        const emitters = data.emitters;
+        const sequences = data.sequences;
+        const emitterCount = emitters.length;
+        const sequenceCount = sequences.length;
+        let i, particleName;
+
+        for (i = 0; i < emitterCount; ++i) {
+            particleName = emitters[i].name;
+            this._particles.addElement({
+                name: particleName,
+                source: name,
+                type: PARTICLE_TYPE.PARTICLE
+            }, particleName);
+        }
+
+        for (i = 0; i < sequenceCount; ++i) {
+            particleName = sequences[i].name;
+            this._particles.addElement({
+                name: particleName,
+                source: name,
+                type: PARTICLE_TYPE.SEQUENCE
+            }, particleName);
+        }
         return this._particleData.addElement(data, name);
     },
 
