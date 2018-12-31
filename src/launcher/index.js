@@ -140,25 +140,13 @@ export default {
 
     resize: function(width, height) {
         this._canvasResolution.set(width, height);
-        const hProportion = this._canvasResolution.x / this._designResolution.x;
-        const vProportion = this._canvasResolution.y / this._designResolution.y;
-        this._appResolution.x = this._designResolution.x;
-        this._appResolution.y = this._designResolution.y;
+        const proportion = Math.min(this._canvasResolution.x / this._designResolution.x, this._canvasResolution.y / this._designResolution.y);
+        this._appResolution.x =  Math.ceil(this._canvasResolution.x / proportion);
+        this._appResolution.y = Math.ceil(this._canvasResolution.y / proportion);
 
-        if (hProportion < vProportion) {
-            this._appResolution.y = Math.ceil(this._canvasResolution.y / hProportion);
-        }
-        else {
-            this._appResolution.x = Math.ceil(this._canvasResolution.x / vProportion);
-        }
-
-        const scale = Math.min(this._canvasResolution.x / this._designResolution.x, this._canvasResolution.y / this._designResolution.y);
-        const renderWidth = this._canvasResolution.x > this._canvasResolution.y ? this._designResolution.x : this._designResolution.y;
-        const renderHeight = this._canvasResolution.x > this._canvasResolution.y ? this._designResolution.x : this._designResolution.y;
-        this._app.renderer.resize(renderWidth, renderHeight);
-
-        this._app.view.style.width = `${Math.ceil(renderWidth * scale)}px`;
-        this._app.view.style.height = `${Math.ceil(renderHeight * scale)}px`;
+        this._app.renderer.resize(this._designResolution.x, this._designResolution.y);
+        this._app.view.style.width = `${Math.ceil(this._designResolution.x * proportion)}px`;
+        this._app.view.style.height = `${Math.ceil(this._designResolution.y * proportion)}px`;
 
         EventDispatcher.dispatch(SYSTEM_EVENT.RESIZE);
     },
