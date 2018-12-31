@@ -58,6 +58,14 @@ export default {
     _orientation: ORIENTATION.AUTO,
 
     /**
+     * @desc Current game scene.
+     * @type {MANTICORE.view.Scene}
+     * @private
+     */
+
+    _crtScene: null,
+
+    /**
      * @desc create application with parameters.
      * @function
      * @memberOf MANTICORE.launcher
@@ -126,6 +134,10 @@ export default {
      */
 
     runScene: function(scene) {
+        if (!Type.isNull(this._crtScene)) {
+            this._crtScene.kill();
+        }
+        this._crtScene = scene;
         this._app.stage.addChild(scene);
         scene.show();
     },
@@ -173,7 +185,6 @@ export default {
         return this._appResolution;
     },
 
-
     /**
      * @desc Returns real resolution of app.
      * @function
@@ -201,6 +212,15 @@ export default {
         }
         this._orientation = value;
         this.resize(this._canvasResolution.x, this._canvasResolution.y);
+    },
+
+    /**
+     * @public
+     * @return {MANTICORE.view.Scene}
+     */
+
+    get currentScene() {
+        return this._crtScene;
     }
 };
 

@@ -1329,6 +1329,7 @@ declare namespace MANTICORE {
         export const designResolution: MANTICORE.geometry.Point;
         export const appResolution: MANTICORE.geometry.Point;
         export const canvasResolution: MANTICORE.geometry.Point;
+        export const currentScene: MANTICORE.view.Scene;
 
         export function initApp(parentContainer: HTMLElement, resolution: MANTICORE.enumerator.RESOLUTION, config?: MANTICORE.launcher.AppConfig, onComplete?: Function): void;
         export function runScene(scene: MANTICORE.view.Scene): void;
