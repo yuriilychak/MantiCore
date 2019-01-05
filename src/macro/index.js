@@ -76,4 +76,12 @@ export default {
      */
 
     ASSET_DIR: "",
+
+    /**
+     * @desc Scale of spine skeletons.
+     * @type {number}
+     * @memberOf MANTICORE.macro
+     */
+
+    SPINE_SCALE: 1,
 }

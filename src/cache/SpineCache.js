@@ -1,5 +1,6 @@
 import Repository from "repository/Repository";
 import Asset from "util/Asset";
+import Macro from "macro";
 
 /**
  * @desc Namespace for manipulate with spine skeletons.
@@ -29,15 +30,17 @@ export default {
         }
         const atlas = new PIXI.spine.core.TextureAtlas();
         const skins = data.skins;
-        let skinKey, skin, slotKey, slot, frame, frameName;
+        let skinKey, skin, slotKey, slot, slotData, frame, frameName;
         const frames = {};
+        const pathKey = "path";
 
         for (skinKey in skins) {
             skin = skins[skinKey];
             for (slotKey in skin) {
                 slot = skin[slotKey];
                 for (frame in slot) {
-                    frameName = slot[frame]["path"] ? slot[frame]["path"] : frame;
+                    slotData = slot[frame];
+                    frameName = slotData.hasOwnProperty(pathKey) ? slotData[pathKey] : frame;
                     frames[frameName] = Asset.getSpriteFrame(frameName);
                 }
             }
@@ -49,7 +52,7 @@ export default {
         const spineAtlasLoader = new PIXI.spine.core.AtlasAttachmentLoader(atlas);
         const spineJsonParser = new PIXI.spine.core.SkeletonJson(spineAtlasLoader);
 
-        spineJsonParser.scale = 1.0;
+        spineJsonParser.scale = Macro.SPINE_SCALE;
 
         const spineData = spineJsonParser.readSkeletonData(data);
         this._skeletons.addElement(spineData, name);
