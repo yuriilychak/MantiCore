@@ -250,15 +250,18 @@ function _parseAnimation(element, data, bundle, globalParent) {
 
     timeLine.isResetParameters = true;
 
-    let i, animation;
+    let i, animation, animationAction ;
 
     for (i = 0; i < animationCount; ++i) {
         animation = animations[i];
         if (i === 0) {
             timeLine.fps = animation.fps;
         }
+        animationAction = _createAnimation(animation, bundle);
+        if (!Type.isNull(animationAction)) {
+            timeLine.addAnimation(_getAnimatioName(animation.name, bundle), animationAction);
+        }
 
-        timeLine.addAnimation(_getAnimatioName(animation.name, bundle), _createAnimation(animation, bundle));
     }
 
     if (Type.isNull(globalParent)) {
@@ -492,6 +495,10 @@ function _createAnimation(animation, bundle) {
         if (result.length > 0) {
             tracks.push(result.length > 1 ? Sequence.create(result) : result[0]);
         }
+    }
+
+    if (tracks.length === 0) {
+        return null;
     }
 
     /**
