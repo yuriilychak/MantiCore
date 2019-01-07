@@ -995,7 +995,7 @@ function _createPanel(data, bundle) {
 
 function _createUIElement(data, bundle) {
     const element = bundle.ui[data.fileData[0]];
-    const result = parseChild(null, element, bundle);
+    const result = parseChild(null, element, bundle, null);
 
     _parseWidgetData(result, element, bundle);
 
