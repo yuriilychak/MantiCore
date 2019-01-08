@@ -177,7 +177,7 @@ class ActionInterval extends FiniteTimeAction {
         this.MAX_VALUE = 2;
         this._elapsed = 0;
         this._firstTick = true;
-        this._ease = [];
+        this._ease = null;
         this._speed = 1;
         this._repeatForever = false;
         this._repeatMethod = false;
@@ -204,7 +204,9 @@ class ActionInterval extends FiniteTimeAction {
         this.MAX_VALUE = 2;
         this._elapsed = 0;
         this._firstTick = true;
-        this._ease.kill();
+        if (!Type.isNull(this._ease)) {
+            this._ease.kill();
+        }
         this._ease = null;
         this._speed = 1;
         this._repeatForever = false;

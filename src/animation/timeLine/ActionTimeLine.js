@@ -399,7 +399,7 @@ class ActionTimeLine extends BaseTimeLine{
             return false;
         }
 
-        if (!this._animations.hasElement(this.runningName)) {
+        if (!this._animations.hasElement(this.runningName) && !Type.isNull(this._runningAnimation)) {
             this._runningAnimation.kill();
         }
 
