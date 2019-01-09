@@ -233,6 +233,16 @@ class Repository {
     get values() {
         return this._values.slice(0);
     }
+
+    /**
+     * @desc Returns size of repository.
+     * @public
+     * @return {int}
+     */
+
+    get length() {
+        return this._keys.length;
+    }
 }
 
 export default Repository;

@@ -1430,6 +1430,9 @@ declare namespace MANTICORE {
             public removeTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public stopTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public removeAllTimeLines(): void;
+
+            public setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT | number, event: string, timeLineName?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public clearEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT | number, timeLineName?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
         }
 
         export class BaseManager extends MANTICORE.memory.ReusableObject {
@@ -1549,14 +1552,16 @@ declare namespace MANTICORE {
         export class Repository {
             constructor();
 
+            keys: number[] | string[];
+            values: any[];
+            length: number;
+
             addElement(value: any, key?: number | string): boolean;
             updateElement(value: any, key?: number | string): boolean;
             removeElement(key: number | string): boolean;
             hasElement(key: number | string): boolean;
             getElement(key: number | string): any;
             clear(isKillValues?: boolean): void;
-            keys: number[] | string[];
-            values: any[];
             isEmpty(): boolean;
         }
     }

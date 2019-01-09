@@ -419,6 +419,50 @@ class AnimationManager extends BaseManager {
     }
 
     /**
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {?string} event
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLineName = null]
+     * @returns {boolean}
+     */
+
+    setEvent(eventId, event, timeLineName = null) {
+        if (Type.isNull(timeLineName)) {
+            /**
+             * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+             */
+            const timeLines = this._timeLines.values;
+            const timeLineCount = timeLines.length;
+            let i;
+
+            for (i = 0; i < timeLineCount; ++i) {
+                timeLines[i].setEvent(eventId, event);
+            }
+            return true;
+        }
+
+        const timeLine = this.getTimeLine(timeLineName);
+        if (Type.isNull(timeLine)) {
+            return false;
+        }
+        timeLine.setEvent(eventId, event);
+        return true;
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLineName = null]
+     * @returns {boolean}
+     */
+
+    clearEvent(eventId, timeLineName = null) {
+        return this.setEvent(eventId, null, timeLineName);
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
