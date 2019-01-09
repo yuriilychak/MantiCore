@@ -463,6 +463,16 @@ class AnimationManager extends BaseManager {
     }
 
     /**
+     * @desc Reset owner to startup parameters (Tint, position, scale and etc).
+     * @method
+     * @public
+     */
+
+    resetParameters() {
+        this.getTimeLine(TIME_LINE.MAIN).resetParameters();
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

@@ -428,6 +428,21 @@ class ActionTimeLine extends BaseTimeLine{
     }
 
     /**
+     * @method
+     * @public
+     */
+
+    resetParameters() {
+        this.target.position.copy(this._startPosition);
+        this.target.scale.copy(this._startScale);
+        this.target.skew.copy(this._startSkew);
+        this.target.tint = this._startTint;
+        this.target.alpha = this._startAlpha;
+        this.target.rotation = this._startRotation;
+        this.target.visible = this._startVisible;
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -443,13 +458,7 @@ class ActionTimeLine extends BaseTimeLine{
             return;
         }
 
-        this.target.position.copy(this._startPosition);
-        this.target.scale.copy(this._startScale);
-        this.target.skew.copy(this._startSkew);
-        this.target.tint = this._startTint;
-        this.target.alpha = this._startAlpha;
-        this.target.rotation = this._startRotation;
-        this.target.visible = this._startVisible;
+        this.resetPosition();
     }
 
     /**

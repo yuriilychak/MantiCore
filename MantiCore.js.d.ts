@@ -526,20 +526,21 @@ declare namespace MANTICORE {
             export class ActionTimeLine extends MANTICORE.animation.timeLine.BaseTimeLine{
                 constructor(target: PIXI.DisplayObject, name);
 
-                inherit: boolean;
-                isResetParameters: boolean;
-                readonly isDone: boolean;
+                public inherit: boolean;
+                public isResetParameters: boolean;
+                public readonly isDone: boolean;
 
-                clone(): MANTICORE.animation.timeLine.ActionTimeLine;
-                addNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-                removeNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+                public clone(): MANTICORE.animation.timeLine.ActionTimeLine;
+                public addNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+                public removeNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
 
-                refreshStartParameters(): void;
-                addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
-                removeAnimation(name: string): boolean;
-                removeAllAnimations(): void;
+                public refreshStartParameters(): void;
+                public addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
+                public removeAnimation(name: string): boolean;
+                public removeAllAnimations(): void;
 
-                runAction(action: MANTICORE.animation.action.Action, loop?: boolean): void;
+                public runAction(action: MANTICORE.animation.action.Action, loop?: boolean): void;
+                public resetParameters(): void;
             }
 
             export class BaseTimeLine extends MANTICORE.memory.ReusableObject{
@@ -1433,6 +1434,7 @@ declare namespace MANTICORE {
 
             public setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT | number, event: string, timeLineName?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public clearEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT | number, timeLineName?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public resetParameters(): void;
         }
 
         export class BaseManager extends MANTICORE.memory.ReusableObject {
