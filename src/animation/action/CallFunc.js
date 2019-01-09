@@ -46,7 +46,7 @@ class CallFunc extends ActionInstant {
      * @public
      */
     execute() {
-        if (!Type.isNull(this._callback)) {
+        if (Type.isNull(this._callback)) {
             return;
         }
         this._callback.call(this._context, this.target, this._data);
