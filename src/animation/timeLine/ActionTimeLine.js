@@ -458,7 +458,7 @@ class ActionTimeLine extends BaseTimeLine{
             return;
         }
 
-        this.resetPosition();
+        this.resetParameters();
     }
 
     /**
