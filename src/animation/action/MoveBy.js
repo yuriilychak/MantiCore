@@ -90,10 +90,16 @@ class MoveBy extends ActionInterval {
             return;
         }
         dt = this.computeEaseTime(dt);
-        let x = this._delta.x * dt;
-        let y = this._delta.y * dt;
+        const x = this._delta.x * dt;
+        const y = this._delta.y * dt;
 
-        this.target.position.set(this._startPoint.x + x, this._startPoint.y + y);
+        if (x !== 0) {
+            this.target.x = this._startPoint.x + x;
+        }
+
+        if (y !== 0) {
+            this.target.y = this._startPoint.y + y;
+        }
     }
 
     /**
