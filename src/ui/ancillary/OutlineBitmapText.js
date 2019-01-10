@@ -161,10 +161,15 @@ class OutlineBitmapText extends PIXI.Container {
 
         const letters = this._label.children;
         const letterCount = letters.length;
+        let endIndex = beginIndex + count + 1;
+
+        if (endIndex > letterCount){
+            endIndex = letterCount;
+        }
 
         let letter, i;
 
-        for (i = beginIndex; i < letterCount; ++i) {
+        for (i = beginIndex; i < endIndex; ++i) {
             letter = letters[i];
             letter.cachedTint = color;
             letter.tint = color;
