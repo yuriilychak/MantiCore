@@ -108,6 +108,13 @@ class OutlineBitmapText extends PIXI.Container {
 
         this.interactiveChildren = false;
 
+        /**
+         * @desc Is letter painted.
+         * @type {boolean}
+         * @private
+         */
+        this._isLetterPainted = false;
+
         this.addChild(this._label);
     }
 
@@ -159,6 +166,8 @@ class OutlineBitmapText extends PIXI.Container {
 
         this._label.validate();
 
+        this._isLetterPainted = true;
+
         const letters = this._label.children;
         const letterCount = letters.length;
         let endIndex = beginIndex + count + 1;
@@ -183,7 +192,13 @@ class OutlineBitmapText extends PIXI.Container {
      */
 
     clearLetterColors() {
+        if (!this._isLetterPainted) {
+            return;
+        }
+
         this._label.validate();
+
+        this._isLetterPainted = false;
 
         const letters = this._label.children;
         const letterCount = letters.length;
