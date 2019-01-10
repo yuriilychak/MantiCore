@@ -48,6 +48,9 @@ export default {
      */
 
     generateParticle(name) {
+        if (!Macro.PARTICLES_ENABLED) {
+            return null;
+        }
         const particleInfo = ParticleCache.getParticle(name);
         if (Type.isNull(particleInfo)) {
             return null;
@@ -70,5 +73,23 @@ export default {
 
         return particleInfo.type === PARTICLE_TYPE.PARTICLE ? this._system.getParticleEmitter(name) : this._system.getEffectSequence(name);
 
+    },
+
+    /**
+     * @desc Update system by step. Need to start system from some time interval.
+     * @function
+     * @public
+     * @param {int} [iterationCount = 1]
+     * @param {int} [step = 1]
+     */
+
+    update(iterationCount = 1, step = 1) {
+        if (!Macro.PARTICLES_ENABLED) {
+            return;
+        }
+
+        for (let i = 0; i < iterationCount; ++i) {
+            this._system.update(step);
+        }
     }
 };

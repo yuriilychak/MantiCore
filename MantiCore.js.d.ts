@@ -1539,6 +1539,7 @@ declare namespace MANTICORE {
     export namespace particleSystem {
         export function init(): void;
         export function generateParticle(name: string): Object | null;
+        export function update(iterationCount?: number, step?: number): void;
     }
 
     export namespace pool {
