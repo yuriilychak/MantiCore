@@ -187,6 +187,29 @@ class Label extends BaseLabel {
     }
 
     /**
+     * @desc Set color of specific letters.
+     * @method
+     * @public
+     * @param {int} beginIndex
+     * @param {int} count
+     * @param {int} color
+     */
+
+    updateColorByLetter(beginIndex, count, color) {
+        this._label.updateColorByLetter(beginIndex, count, color);
+    }
+
+    /**
+     * @desc Clear colors of all letters.
+     * @method
+     * @public
+     */
+
+    clearLetterColors() {
+        this._label.clearLetterColors();
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

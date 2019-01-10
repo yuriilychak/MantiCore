@@ -80,16 +80,15 @@ export default {
      * @function
      * @public
      * @param {int} [iterationCount = 1]
-     * @param {int} [step = 1]
      */
 
-    update(iterationCount = 1, step = 1) {
+    update(iterationCount = 1) {
         if (!Macro.PARTICLES_ENABLED) {
             return;
         }
 
         for (let i = 0; i < iterationCount; ++i) {
-            this._system.update(step);
+            this._system.update();
         }
     }
 };

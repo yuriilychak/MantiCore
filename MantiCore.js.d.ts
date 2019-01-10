@@ -1764,6 +1764,8 @@ declare namespace MANTICORE {
                 letterSpacing: number;
 
                 updateText(): void;
+                updateColorByLetter(beginIndex: number, count: number, color: number): void;
+                clearLetterColors(): void;
                 clone(): MANTICORE.ui.ancillary.OutlineBitmapText;
 
             }
@@ -1908,6 +1910,8 @@ declare namespace MANTICORE {
             // noinspection JSAnnotator
             static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ListView;
             scrollToItem(time: number, index: number): void;
+            updateColorByLetter(beginIndex: number, count: number, color: number): void;
+            clearLetterColors(): void;
         }
 
         // @ts-ignore

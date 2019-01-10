@@ -147,6 +147,40 @@ class OutlineBitmapText extends PIXI.Container {
     }
 
     /**
+     * @desc Set color of specific letters.
+     * @method
+     * @public
+     * @param {int} beginIndex
+     * @param {int} count
+     * @param {int} color
+     */
+
+    updateColorByLetter(beginIndex, count, color) {
+        const letters = this._label.children;
+
+        if (letters.length < beginIndex + count) {
+            return;
+        }
+        for (let i = beginIndex; i < beginIndex + count; ++i) {
+            letters[i].tint = color;
+        }
+    }
+
+    /**
+     * @desc Clear colors of all letters.
+     * @method
+     * @public
+     */
+
+    clearLetterColors() {
+        const letters = this._label.children;
+        const letterCount = letters.length;
+        for (let i = 0; i < letterCount; ++i) {
+            letters[i].tint = Color.COLORS.WHITE;
+        }
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
