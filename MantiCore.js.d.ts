@@ -1882,6 +1882,8 @@ declare namespace MANTICORE {
             constructor(fontName: string, size: number);
             // noinspection JSAnnotator
             static create(fontName: string, size: number): MANTICORE.ui.Label;
+            updateColorByLetter(beginIndex: number, count: number, color: number): void;
+            clearLetterColors(): void;
         }
 
         export class ListView extends MANTICORE.ui.ScrollView{
@@ -1910,8 +1912,6 @@ declare namespace MANTICORE {
             // noinspection JSAnnotator
             static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ListView;
             scrollToItem(time: number, index: number): void;
-            updateColorByLetter(beginIndex: number, count: number, color: number): void;
-            clearLetterColors(): void;
         }
 
         // @ts-ignore
