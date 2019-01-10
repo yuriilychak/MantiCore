@@ -1504,7 +1504,6 @@ declare namespace MANTICORE {
             removeEventListener(event: string): void;
             removeAllEventListeners(): void;
             dispatchEvent(event: string, data?: any): void;
-
         }
     }
 
