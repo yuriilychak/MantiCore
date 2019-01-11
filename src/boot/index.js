@@ -204,7 +204,7 @@ export default {
         this.ACCELEROMETER_ENABLED = Type.toBoolean(Type.setValue(window.DeviceMotionEvent, window.DeviceOrientationEvent));
         this.TYPED_ARRAY_SUPPORTED = "Uint8ClampedArray" in window; //Cause IE10 don't support this type of arrays.
 
-        const maxDimension = Math.max(window.screen.height, window.screen.width);
+        const maxDimension = Math.max(window.screen.height, window.screen.width) * window.devicePixelRatio;
 
         switch (true) {
             case maxDimension >= 1920: {
