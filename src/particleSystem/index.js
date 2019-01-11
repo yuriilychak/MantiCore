@@ -24,6 +24,12 @@ export default {
     _bundles: null,
 
     /**
+     * @type {boolean}
+     */
+
+    _paused: false,
+
+    /**
      * @function
      * @public
      * @memberOf MANTICORE.particleSystem
@@ -36,7 +42,11 @@ export default {
 
         this._bundles = new Repository();
         this._system = new revolt.FX();
-        Timer.enterFrameTimer.add(() => this._system.update());
+        Timer.enterFrameTimer.add(() => {
+            if (!this._paused) {
+                this._system.update();
+            }
+        });
     },
 
     /**
@@ -91,5 +101,28 @@ export default {
         for (let i = 0; i < iterationCount; ++i) {
             this._system.update(step);
         }
+    },
+
+    /**
+     * @public
+     * @returns {boolean}
+     */
+
+    get paused() {
+        return this._paused;
+    },
+
+    set paused(value) {
+        if (this._paused !== value) {
+            return;
+        }
+        this._paused = value;
+        if (this._paused) {
+            this._system.pause();
+        }
+        else {
+            this._system.start();
+        }
     }
+
 };
