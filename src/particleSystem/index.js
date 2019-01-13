@@ -1,9 +1,11 @@
 import Macro from "macro";
 import Repository from "repository/Repository";
 import ParticleCache from "cache/ParticleCache";
+import EventDispatcher from "eventDispatcher";
 import Timer from "timer";
 import Type from "util/Type";
 import PARTICLE_TYPE from "enumerator/ParticleType";
+import SYSTEM_EVENT from "enumerator/event/SystemEvent";
 
 /**
  * @desc Contains loader for load bundles and other resources.
@@ -47,6 +49,9 @@ export default {
                 this._system.update();
             }
         });
+
+        EventDispatcher.addListener(SYSTEM_EVENT.VISIBLE, this, this._onPageVisibleHandler);
+        EventDispatcher.addListener(SYSTEM_EVENT.HIDDEN, this, this._onPageHiddenHandler);
     },
 
     /**
@@ -101,6 +106,24 @@ export default {
         for (let i = 0; i < iterationCount; ++i) {
             this._system.update(step);
         }
+    },
+
+    /**
+     * @function
+     * @private
+     */
+
+    _onPageVisibleHandler: function () {
+        this.paused = false;
+    },
+
+    /**
+     * @function
+     * @private
+     */
+
+    _onPageHiddenHandler: function () {
+        this.paused = true;
     },
 
     /**
