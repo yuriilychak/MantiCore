@@ -50,8 +50,8 @@ export default {
             }
         });
 
-        EventDispatcher.addListener(SYSTEM_EVENT.VISIBLE, this, this._onPageVisibleHandler);
-        EventDispatcher.addListener(SYSTEM_EVENT.HIDDEN, this, this._onPageHiddenHandler);
+        EventDispatcher.addListener(SYSTEM_EVENT.VISIBLE, this._onPageVisibleHandler, this);
+        EventDispatcher.addListener(SYSTEM_EVENT.HIDDEN, this._onPageHiddenHandler, this);
     },
 
     /**
