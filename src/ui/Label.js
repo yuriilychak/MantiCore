@@ -494,8 +494,10 @@ class Label extends BaseLabel {
             return;
         }
         this._label.fontSize = value;
+        this._label.updateText();
         if (this._isShadowEnabled) {
             this._shadow.fontSize = value;
+            this._shadow.updateText();
         }
     }
 
