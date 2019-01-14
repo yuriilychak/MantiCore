@@ -480,6 +480,31 @@ class Label extends BaseLabel {
     }
 
     /**
+     * @desc Real font size if auto size enabled.
+     * @public
+     * @returns {int}
+     */
+
+    get realFontSize() {
+        return this._label.fontSize;
+    }
+
+    /**
+     * @public
+     * @returns {int}
+     */
+
+    set realFontSize(value) {
+        if (this._label.fontSize === value) {
+            return;
+        }
+        this._label.fontSize = value;
+        if (this._isShadowEnabled) {
+            this._shadow.fontSize = value;
+        }
+    }
+
+    /**
      * @public
      * @type {string}
      */

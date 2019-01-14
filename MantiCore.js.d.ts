@@ -1881,6 +1881,7 @@ declare namespace MANTICORE {
         // @ts-ignore
         export class Label extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(fontName: string, size: number);
+            public realFontSize: number;
             // noinspection JSAnnotator
             static create(fontName: string, size: number): MANTICORE.ui.Label;
             updateColorByLetter(beginIndex: number, count: number, color: number): void;
