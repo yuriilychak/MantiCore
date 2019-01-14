@@ -489,11 +489,6 @@ class Label extends BaseLabel {
         return this._label.fontSize;
     }
 
-    /**
-     * @public
-     * @returns {int}
-     */
-
     set realFontSize(value) {
         if (this._label.fontSize === value) {
             return;
