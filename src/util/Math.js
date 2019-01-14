@@ -445,18 +445,13 @@ const math = {
      */
 
     intPow: function(value, power) {
-        if (power < 0) return 1 / this.intPow(value, -power);
-        const numSplit = value.toString().split(".");
-        let fixedNum = (numSplit.length === 2 ? numSplit[1].length : 0) * power;
-        let b = value, result = 1;
-        while (power > 0) {
-            if ((power & 1) !== 0) {
-                result *= b;
-            }
-            power >>= 1;
-            b *= b;
+        let result = 1;
+        const sign = this.sign(power);
+        const count = power * sign;
+        for (let i = 0; i < count; ++i) {
+            result *= value;
         }
-        return fixedNum === 0 ? result : parseFloat(result.toFixed(fixedNum));
+        return sign === 1 ? result : 1 / result;
     },
 
     /**
