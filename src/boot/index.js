@@ -648,7 +648,7 @@ export default {
      */
 
     _onKeyDownHandler(key) {
-        EventDispatcher.dispatch(KEYBOARD_EVENT.DOWN, key);
+        EventDispatcher.dispatch(KEYBOARD_EVENT.DOWN, this, key);
     },
 
     /**
@@ -658,7 +658,7 @@ export default {
      */
 
     _onKeyPressedHandler(key) {
-        EventDispatcher.dispatch(KEYBOARD_EVENT.PRESS, key);
+        EventDispatcher.dispatch(KEYBOARD_EVENT.PRESS, this, key);
     },
 
     /**
@@ -668,7 +668,7 @@ export default {
      */
 
     _onKeyReleaseHandler(key) {
-        EventDispatcher.dispatch(KEYBOARD_EVENT.RELEASE, key);
+        EventDispatcher.dispatch(KEYBOARD_EVENT.RELEASE, this, key);
     },
 
     /**
