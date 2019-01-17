@@ -37,7 +37,7 @@ class Component extends ReusableObject {
          * @private
          */
 
-        this._isActive = true;
+        this._isActive = false;
 
         /**
          * @desc Flag is need to call callbacks for add child and remove child.
