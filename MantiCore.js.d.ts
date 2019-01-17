@@ -549,6 +549,7 @@ declare namespace MANTICORE {
                 name: string;
                 fps: number;
                 loop: boolean;
+                type: MANTICORE.enumerator.animation.TIME_LINE_TYPE;
                 protected readonly fpsCoef;
                 protected runningName;
                 protected target: PIXI.DisplayObject;
@@ -1078,6 +1079,12 @@ declare namespace MANTICORE {
                 SPINE = "spine",
                 UI = "ui"
             }
+
+            export enum TIME_LINE_TYPE {
+                NONE = 0,
+                ACTION = 1,
+                SPINE = 2
+            }
         }
 
         export namespace event {
@@ -1420,6 +1427,7 @@ declare namespace MANTICORE {
             public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): void;
             public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public stop(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public stopAll(): void;
             public pause(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
             public resume(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
 

@@ -1,5 +1,6 @@
 import Type from "util/Type";
 import BaseTimeLine from "./BaseTimeLine";
+import TIME_LINE_TYPE from "enumerator/animation/TimeLineType";
 
 /**
  * @desc Class for manipulate with spine animation.
@@ -9,6 +10,15 @@ import BaseTimeLine from "./BaseTimeLine";
  */
 
 class SpineTimeLine extends BaseTimeLine {
+    /**
+     * @constructor
+     * @param {PIXI.DisplayObject} target
+     * @param {string} name
+     */
+    constructor(target, name) {
+        super(target, name);
+        this.type = TIME_LINE_TYPE.SPINE;
+    }
     /**
      * PUBLIC METHODS
      * -----------------------------------------------------------------------------------------------------------------

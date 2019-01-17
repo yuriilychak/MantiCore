@@ -6,6 +6,7 @@ import TIME_LINE from "enumerator/animation/TimeLine";
 import Type from "util/Type";
 import Pool from "pool";
 import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
+import TIME_LINE_TYPE from "enumerator/animation/TimeLineType";
 
 /**
  * @desc Class for manipulate with animations
@@ -264,6 +265,28 @@ class AnimationManager extends BaseManager {
         actionTimeLine.stop();
 
         return true;
+    }
+
+    /**
+     * @desc Stop all time lines
+     * @method
+     * @public
+     */
+
+    stopAll() {
+        /**
+         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+         */
+        const timeLines = this._timeLines.values;
+        const timeLineCount = this._timeLines.length;
+        let i, timeLine;
+        for(i = 0; i < timeLineCount; ++i) {
+            timeLine = timeLines[i];
+            if (!timeLine.isRunning) {
+                continue;
+            }
+            timeLine.stop();
+        }
     }
 
     /**
@@ -593,7 +616,7 @@ class AnimationManager extends BaseManager {
         this._activeTimeLines.push(timeLine);
         ++this._activeTimeLineCount;
 
-        this.active = true;
+        this.active = this.active || timeLine.type === TIME_LINE_TYPE.ACTION;
     }
 
     /**

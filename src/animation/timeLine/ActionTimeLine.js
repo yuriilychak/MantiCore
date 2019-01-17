@@ -8,6 +8,7 @@ import Repository from "repository/Repository";
 import ActionAnimation from "../ActionAnimation";
 
 import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
+import TIME_LINE_TYPE from "enumerator/animation/TimeLineType";
 import BaseTimeLine from "./BaseTimeLine";
 import Point from "geometry/Point";
 
@@ -121,6 +122,8 @@ class ActionTimeLine extends BaseTimeLine{
          */
 
         this._isResetParameters = false;
+
+        this.type = TIME_LINE_TYPE.ACTION;
 
         this.refreshStartParameters();
     }

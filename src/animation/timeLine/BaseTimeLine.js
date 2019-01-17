@@ -9,6 +9,7 @@ import Repository from "repository/Repository";
 import ReusableObject from "memory/ReusableObject";
 
 import TIME_LINE_EVENT from "enumerator/animation/TimeLineEvent";
+import TIME_LINE_TYPE from "enumerator/animation/TimeLineType";
 
 /**
  * @desc Base class for action and spine time line.
@@ -93,6 +94,12 @@ class BaseTimeLine extends ReusableObject{
          */
 
         this._isLoop = false;
+
+        /**
+         * @type {MANTICORE.enumerator.animation.TIME_LINE_TYPE}
+         * @private
+         */
+        this._type = TIME_LINE_TYPE.NONE;
     }
 
     /**
@@ -449,6 +456,22 @@ class BaseTimeLine extends ReusableObject{
 
     get animations() {
         return [];
+    }
+
+    /**
+     * @public
+     * @return {MANTICORE.enumerator.animation.TIME_LINE_TYPE}
+     */
+
+    get type() {
+        return this._type;
+    }
+
+    set type(value) {
+        if (this._type === value) {
+            return;
+        }
+        this._type = value;
     }
 }
 
