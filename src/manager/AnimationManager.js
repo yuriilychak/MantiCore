@@ -287,6 +287,7 @@ class AnimationManager extends BaseManager {
             }
             timeLine.stop();
         }
+        this.active = false;
     }
 
     /**
