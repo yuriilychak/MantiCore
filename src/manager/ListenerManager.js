@@ -63,8 +63,11 @@ class ListenerManager extends BaseManager {
         if (this.isListenEvent(event)) {
             return false;
         }
-        this._events.push(event);
-        return EventDispatcher.addListener(event, handler, this.owner);
+        const result = EventDispatcher.addListener(event, handler, this.owner);
+        if (result) {
+            this._events.push(event);
+        }
+        return result;
     }
 
     /**
