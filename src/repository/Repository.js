@@ -1,4 +1,3 @@
-import Math from "util/Math";
 import Type from "util/Type";
 
 /**
