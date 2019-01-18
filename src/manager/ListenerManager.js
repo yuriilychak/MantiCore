@@ -56,14 +56,15 @@ class ListenerManager extends BaseManager {
      * @public
      * @param {string} event
      * @param {Function} handler
+     * @returns {boolean}
      */
 
     addEventListener(event, handler) {
         if (this.isListenEvent(event)) {
-            return;
+            return false;
         }
         this._events.push(event);
-        EventDispatcher.addListener(event, handler, this.owner);
+        return EventDispatcher.addListener(event, handler, this.owner);
     }
 
     /**

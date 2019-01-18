@@ -1508,7 +1508,7 @@ declare namespace MANTICORE {
 
             isListenEvent(event: string): boolean;
 
-            addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): void;
+            addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): boolean;
             removeEventListener(event: string): void;
             removeAllEventListeners(): void;
             dispatchEvent(event: string, data?: any): void;
