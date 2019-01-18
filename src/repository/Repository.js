@@ -208,7 +208,7 @@ class Repository {
      */
 
     _getKeyIndex(key) {
-        return Math.binaryIndexOf(key, this._keys);
+        return this._keys.indexOf(key);
     }
 
     /**

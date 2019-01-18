@@ -1,6 +1,8 @@
 import Repository from "repository/Repository";
 import EventModel from "./EventModel";
 import ListenerModel from "./ListenerModel";
+import Type from "util/Type";
+import Logger from "logger";
 
 /**
  * @desc Simply event dispatcher.
@@ -55,11 +57,18 @@ const eventDispatcher = {
      */
 
     addListener: function (type, listener, target) {
+        if (Type.isEmpty(type)) {
+            Logger.engineWarn(3);
+            return false;
+        }
+
         if (this.hasListener(type, target)) {
+            Logger.engineWarn(2, type);
             return false;
         }
 
         let listenerRepo;
+
 
         if (!this._listenerRepo.hasElement(type)) {
             listenerRepo = new Repository();
