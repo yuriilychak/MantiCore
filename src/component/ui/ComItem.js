@@ -11,8 +11,8 @@ class ComItem extends ComUI {
     /**
      * @constructor
      */
-    constructor() {
-        super("ComItem");
+    constructor(name = "ComItem") {
+        super(name);
         /**
          * @desc Index of item
          * @type {int}

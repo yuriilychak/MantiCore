@@ -45,25 +45,6 @@ class Repository {
         if (this.hasElement(key)) {
             return false;
         }
-
-        const keyCount = this._keys.length;
-
-        if (keyCount === 0) {
-            this._keys.push(key);
-            this._values.push(value);
-            return true;
-        }
-
-        for (let i = 0; i < keyCount; ++i) {
-            if (key > this._keys[i]) {
-                continue;
-            }
-
-            this._keys.splice(i, 0, key);
-            this._values.splice(i, 0, value);
-            return true;
-        }
-
         this._keys.push(key);
         this._values.push(value);
         return true;

@@ -758,7 +758,7 @@ declare namespace MANTICORE {
             }
 
             export class ComItem extends MANTICORE.component.ui.ComUI {
-                constructor();
+                constructor(name?: string);
 
                 index: number;
                 // noinspection JSAnnotator
