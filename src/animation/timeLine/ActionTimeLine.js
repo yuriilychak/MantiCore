@@ -420,7 +420,6 @@ class ActionTimeLine extends BaseTimeLine{
 
     playAnimation() {
         this._setStartParameters();
-        console.log(this);
         this._runningAnimation.play(this.target);
         if (this._isRunAction || !this._isInherit) {
             super.playAnimation();
