@@ -420,7 +420,6 @@ class AnimationManager extends BaseManager {
             timeLine = this._activeTimeLines[i];
             timeLine.update(dt);
 
-
             if (!timeLine.isDone) {
                 ++i;
                 continue;
@@ -614,6 +613,10 @@ class AnimationManager extends BaseManager {
      */
 
     _addActiveTimeLine(timeLine) {
+        const index = this._timeLinesForStop.indexOf(timeLine);
+        if (index !== -1) {
+            this._timeLinesForStop.splice(index, 1);
+        }
         if (this._activeTimeLines.indexOf(timeLine) !== -1) {
             return;
         }
