@@ -223,6 +223,7 @@ class ActionTimeLine extends BaseTimeLine{
         this.clearRunningAnimation();
 
         this.loop = loop;
+
         this.runAnimation(
             Constant.TEMPORARY_ANIMATION_NAME + Format.getUniqueId(),
             ActionAnimation.create(action)
@@ -386,7 +387,6 @@ class ActionTimeLine extends BaseTimeLine{
         this._runningAnimation = this._isRunAction  ? animation : this._animations.getElement(name);
 
         super.runAnimation(name);
-        this.playAnimation();
         this._isRunAction = false;
     }
 
@@ -420,8 +420,10 @@ class ActionTimeLine extends BaseTimeLine{
 
     playAnimation() {
         this._setStartParameters();
+        console.log(this);
         this._runningAnimation.play(this.target);
         if (this._isRunAction || !this._isInherit) {
+            super.playAnimation();
             return;
         }
 
