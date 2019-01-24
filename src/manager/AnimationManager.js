@@ -287,7 +287,6 @@ class AnimationManager extends BaseManager {
             }
             timeLine.stop();
         }
-        this._activeTimeLines.length = 0;
         this.active = false;
     }
 
@@ -434,6 +433,10 @@ class AnimationManager extends BaseManager {
 
             this._activeTimeLines.splice(i, 1);
             --this._activeTimeLineCount;
+        }
+
+        if (!this.active) {
+            this._activeTimeLines.length = 0;
         }
 
         if (this._activeTimeLineCount === 0) {
