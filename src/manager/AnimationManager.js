@@ -436,7 +436,7 @@ class AnimationManager extends BaseManager {
         }
 
         if (!this.active) {
-            this._activeTimeLines.length = 0;
+            this._activeTimeLines.length = this._activeTimeLineCount = 0;
         }
 
         if (this._activeTimeLineCount === 0) {
