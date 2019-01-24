@@ -203,11 +203,12 @@ class ComItemBox extends Component {
      * @method
      * @public
      * @param {Function} callback
+     * @param {int} [beginIndex = 0]
+     * @param {int} [endIndex]
      */
 
-    iterateItems(callback) {
-        const itemCount = this._items.length;
-        for (let i = 0; i < itemCount; ++i) {
+    iterateItems(callback, beginIndex = 0, endIndex = this._items.length - 1) {
+        for (let i = beginIndex; i <= endIndex; ++i) {
             callback(this._items[i], i);
         }
     }
