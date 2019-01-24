@@ -54,6 +54,13 @@ class AnimationManager extends BaseManager {
 
         this._events = new Repository();
 
+        /**
+         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+         * @private
+         */
+
+        this._timeLinesForStop = [];
+
         this._timeLines.addElement(Pool.getObject(ActionTimeLine, owner, TIME_LINE.MAIN), TIME_LINE.MAIN);
     }
 
@@ -262,7 +269,7 @@ class AnimationManager extends BaseManager {
             return false;
         }
 
-        actionTimeLine.stop();
+        this._timeLinesForStop.push(actionTimeLine);
 
         return true;
     }
@@ -274,20 +281,7 @@ class AnimationManager extends BaseManager {
      */
 
     stopAll() {
-        /**
-         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
-         */
-        const timeLines = this._timeLines.values;
-        const timeLineCount = this._timeLines.length;
-        let i, timeLine;
-        for(i = 0; i < timeLineCount; ++i) {
-            timeLine = timeLines[i];
-            if (!timeLine.isRunning) {
-                continue;
-            }
-            timeLine.stop();
-        }
-        this.active = false;
+        this._timeLinesForStop = this._activeTimeLines.slice(0);
     }
 
     /**
@@ -303,7 +297,7 @@ class AnimationManager extends BaseManager {
         if (!AnimationManager._canStop(actionTimeLine)) {
             return false;
         }
-        actionTimeLine.stop();
+        this._timeLinesForStop.push(actionTimeLine);
         return true;
     }
 
@@ -417,11 +411,11 @@ class AnimationManager extends BaseManager {
 
     update(dt) {
         if (!this.active) {
-            this._activeTimeLines.length = this._activeTimeLineCount = 0;
             return;
         }
         let i = 0;
         let timeLine;
+        let index;
         while (i < this._activeTimeLineCount) {
             timeLine = this._activeTimeLines[i];
             timeLine.update(dt);
@@ -434,6 +428,15 @@ class AnimationManager extends BaseManager {
 
             this._activeTimeLines.splice(i, 1);
             --this._activeTimeLineCount;
+        }
+
+        for (i = 0; i < this._timeLinesForStop.length; ++i) {
+            index = this._activeTimeLines.indexOf(this._timeLinesForStop);
+            this._timeLinesForStop[i].stop();
+            if (index === -1) {
+                continue;
+            }
+            this._activeTimeLines.splice(index, 1);
         }
 
         if (this._activeTimeLineCount === 0) {
