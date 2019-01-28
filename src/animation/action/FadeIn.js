@@ -10,7 +10,7 @@ import FadeTo from "./FadeTo";
 
 class FadeIn extends FadeTo{
     constructor(duration) {
-        super(duration, 0);
+        super(duration, 1);
     }
 
     /**
