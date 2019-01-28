@@ -237,6 +237,17 @@ const math = {
     },
 
     /**
+     * @desc Return random number.
+     * @function
+     * @public
+     * @return {number}
+     */
+
+    random() {
+        return Math.random();
+    },
+
+    /**
      * @desc Calculate fast sin with low precision.
      * @function
      * @param {number} angle

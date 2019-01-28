@@ -2158,6 +2158,7 @@ declare namespace MANTICORE {
             export function secondsToFrames(value: number): number;
             export function toMilliseconds(seconds: number): number;
             export function toSeconds(milliseconds: number): number;
+            export function random(): number;
             export function randInt(max: number, min?: number): number;
         }
 
