@@ -14,6 +14,9 @@ declare namespace MANTICORE {
                 stop(): void;
                 step(dt: number): void;
                 update (dt: number):void;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Action>(): T;
             }
 
             export class ActionInstant extends MANTICORE.animation.action.FiniteTimeAction{
@@ -39,6 +42,9 @@ declare namespace MANTICORE {
                 protected doClone<T extends MANTICORE.animation.action.ActionInterval>(action: T): T;
                 protected doReverse<T extends MANTICORE.animation.action.ActionInterval>(action: T): T;
                 protected computeEaseTime(dt: number): number;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.ActionInterval>(duration?: number): T;
             }
 
             export class BezierBy extends MANTICORE.animation.action.ActionInterval{
@@ -49,10 +55,16 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.BezierBy;
                 reverse(): MANTICORE.animation.action.BezierBy;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.BezierBy>(duration: number, controlPoints: MANTICORE.geometry.Point[]): T;
             }
 
             export class BezierTo extends MANTICORE.animation.action.BezierBy {
                 clone(): MANTICORE.animation.action.BezierTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.BezierTo>(duration: number, controlPoints: MANTICORE.geometry.Point[]): T;
             }
 
             export class Blink extends ActionInterval {
@@ -60,6 +72,9 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.Blink;
                 reverse(): MANTICORE.animation.action.Blink;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Blink>(duration: number, blinks: number): T;
             }
 
             export class CallFunc extends MANTICORE.animation.action.ActionInstant {
@@ -69,6 +84,9 @@ declare namespace MANTICORE {
 
                 execute(): void;
                 clone(): MANTICORE.animation.action.CallFunc;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.CallFunc>(callback: MANTICORE.animation.callback.CallFuncExecute, context?: Object, data?: any): T;
             }
 
             export class CardinalSpline extends MANTICORE.animation.action.ActionInterval {
@@ -76,6 +94,9 @@ declare namespace MANTICORE {
                 protected static getControlPointAt(controlPoints: MANTICORE.geometry.Point[], pos: number): MANTICORE.geometry.Point;
                 protected static reverseControlPoints(controlPoints: MANTICORE.geometry.Point[]): MANTICORE.geometry.Point[];
                 protected static cloneControlPoints(controlPoints: MANTICORE.geometry.Point[]): MANTICORE.geometry.Point[];
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.CardinalSpline>(duration: number): T;
             }
 
             export class CardinalSplineBy extends MANTICORE.animation.action.CardinalSplineTo {
@@ -84,6 +105,9 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.CardinalSplineBy;
                 reverse(): MANTICORE.animation.action.CardinalSplineBy;
                 updatePosition(newPos: MANTICORE.geometry.Point): void;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.CardinalSplineBy>(duration: number): T;
             }
 
             export class CardinalSplineTo extends MANTICORE.animation.action.CardinalSpline {
@@ -96,29 +120,44 @@ declare namespace MANTICORE {
                 clone(): MANTICORE.animation.action.CardinalSplineTo;
                 reverse(): MANTICORE.animation.action.CardinalSplineTo;
                 updatePosition(newPos: MANTICORE.geometry.Point): void;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.CardinalSplineTo>(duration: number): T;
             }
 
             export class CatmullRomBy extends MANTICORE.animation.action.CardinalSplineBy {
                 constructor(duration: number, points: MANTICORE.geometry.Point[]);
 
                 clone(): MANTICORE.animation.action.CatmullRomBy;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.CatmullRomBy>(duration: number, points: MANTICORE.geometry.Point[]): T;
             }
 
             export class CatmullRomTo extends MANTICORE.animation.action.CardinalSplineTo {
                 constructor(duration: number, points: MANTICORE.geometry.Point[]);
 
                 clone(): MANTICORE.animation.action.CatmullRomTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.CatmullRomTo>(duration: number, points: MANTICORE.geometry.Point[]): T;
             }
 
             export class DelayTime extends MANTICORE.animation.action.ActionInterval{
                 reverse(): MANTICORE.animation.action.DelayTime;
                 clone(): MANTICORE.animation.action.DelayTime;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.DelayTime>(duration: number): T;
             }
 
             export class FadeIn extends MANTICORE.animation.action.FadeTo {
                 constructor(duration: number);
                 reverse(): MANTICORE.animation.action.FadeTo;
                 clone(): MANTICORE.animation.action.FadeIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.FadeIn>(duration: number): T;
             }
 
             export class FadeOut extends MANTICORE.animation.action.FadeTo {
@@ -126,12 +165,18 @@ declare namespace MANTICORE {
 
                 reverse(): MANTICORE.animation.action.FadeTo;
                 clone(): MANTICORE.animation.action.FadeOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.FadeOut>(duration: number): T;
             }
 
             export class FadeTo extends MANTICORE.animation.action.ActionInterval{
                 constructor(duration: number, alpha: number);
 
                 clone(): MANTICORE.animation.action.FadeTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.FadeTo>(duration: number, alpha: number): T;
             }
 
             export class FiniteTimeAction extends MANTICORE.animation.action.Action {
@@ -141,16 +186,25 @@ declare namespace MANTICORE {
 
                 reverse(): MANTICORE.animation.action.FiniteTimeAction;
                 clone(): MANTICORE.animation.action.FiniteTimeAction;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.FiniteTimeAction>(): T;
             }
 
             export class FlipX extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.FlipX;
                 reverse(): MANTICORE.animation.action.FlipX;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.FlipX>(): T;
             }
 
             export class FlipY extends MANTICORE.animation.action.ActionInstant {
                 reverse(): MANTICORE.animation.action.FlipY;
                 clone(): MANTICORE.animation.action.FlipY;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.FlipY>(): T;
             }
 
             export class Follow extends MANTICORE.animation.action.Action {
@@ -159,17 +213,26 @@ declare namespace MANTICORE {
                 boundarySet: boolean;
 
                 clone(): MANTICORE.animation.action.Follow;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Follow>(followedDisplayObject: PIXI.DisplayObject, rect: PIXI.Rectangle): T;
             }
 
             export class FrameChange extends MANTICORE.animation.action.ActionInstant {
                 constructor(frame: string);
                 clone(): MANTICORE.animation.action.FrameChange;
                 reverse(): MANTICORE.animation.action.FrameChange;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.FrameChange>(frame: string): T;
             }
 
             export class Hide extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.Hide;
                 reverse(): MANTICORE.animation.action.Show;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Hide>(): T;
             }
 
             export class JumpBy extends MANTICORE.animation.action.ActionInterval {
@@ -182,12 +245,18 @@ declare namespace MANTICORE {
                 protected readonly jumps: number;
                 protected readonly delta: MANTICORE.geometry.Point;
                 protected readonly startPoint: MANTICORE.geometry.Point;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.JumpBy>(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number): T;
             }
 
             export class JumpTo extends MANTICORE.animation.action.JumpBy {
                 constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number);
 
                 clone(): MANTICORE.animation.action.JumpTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.JumpTo>(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number): T;
             }
 
             export class MoveBy extends MANTICORE.animation.action.ActionInterval {
@@ -197,12 +266,18 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.MoveBy;
                 reverse(): MANTICORE.animation.action.MoveBy;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.MoveBy>(duration: number, deltaPos: MANTICORE.geometry.Point | number, deltaY?: number): T;
             }
 
             export class MoveTo extends MANTICORE.animation.action.MoveBy {
                 constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number);
 
                 clone(): MANTICORE.animation.action.MoveTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.MoveTo>(duration: number, position: MANTICORE.geometry.Point | number, y: number): T;
             }
 
             export class Place extends MANTICORE.animation.action.ActionInstant {
@@ -210,6 +285,9 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.Place;
                 reverse(): MANTICORE.animation.action.Place;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Place>(x: MANTICORE.geometry.Point | number, y?: number): T;
             }
 
             export class PointAction extends MANTICORE.animation.action.ActionInterval{
@@ -218,11 +296,15 @@ declare namespace MANTICORE {
                 protected readonly startPoint: MANTICORE.geometry.Point;
                 protected readonly endPoint: MANTICORE.geometry.Point;
                 protected readonly delta: MANTICORE.geometry.Point;
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.PointAction>(duration: number, x: number, y?:number): T;
             }
 
             export class RemoveSelf extends MANTICORE.animation.action.ActionInstant {
                 constructor(isKill?: boolean);
                 clone(): MANTICORE.animation.action.RemoveSelf;
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.RemoveSelf>(isKill?: boolean): T;
             }
 
             export class Repeat extends ActionInterval {
@@ -232,6 +314,8 @@ declare namespace MANTICORE {
                 reverse(): MANTICORE.animation.action.Repeat;
 
                 innerAction: MANTICORE.animation.action.FiniteTimeAction;
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Repeat>(action: MANTICORE.animation.action.FiniteTimeAction, times?: number): T;
             }
 
             export class RepeatForever extends MANTICORE.animation.action.ActionInterval{
@@ -241,6 +325,8 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.RepeatForever;
                 reverse(): MANTICORE.animation.action.RepeatForever;
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.RepeatForever>(action: MANTICORE.animation.action.ActionInterval): T;
             }
 
             export class ReverseTime extends MANTICORE.animation.action.ActionInterval {
@@ -248,6 +334,8 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.ReverseTime;
                 reverse(): MANTICORE.animation.action.ReverseTime;
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.ReverseTime>(action: MANTICORE.animation.action.FiniteTimeAction): T;
             }
 
             export class RotateBy extends MANTICORE.animation.action.ActionInterval {
@@ -255,6 +343,8 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.RotateBy;
                 reverse(): MANTICORE.animation.action.RotateBy;
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.RotateBy>(duration: number, deltaAngle: number): T;
             }
 
             export class RotateTo extends MANTICORE.animation.action.ActionInterval{
@@ -262,17 +352,26 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.RotateTo;
                 reverse(): null;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.RotateTo>(duration: number, deltaAngle: number): T;
             }
 
             export class ScaleBy extends MANTICORE.animation.action.ScaleTo {
                 reverse(): MANTICORE.animation.action.ScaleBy;
                 clone(): MANTICORE.animation.action.ScaleBy;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.ScaleBy>(duration: number, sx: number, sy?:number): T;
             }
 
             export class ScaleTo extends MANTICORE.animation.action.PointAction{
                 constructor(duration: number, sx: number, sy?:number);
 
                 clone(): MANTICORE.animation.action.ScaleTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.ScaleTo>(duration: number, sx: number, sy?:number): T;
             }
 
             export class Sequence extends MANTICORE.animation.action.ActionInterval {
@@ -282,11 +381,17 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.Sequence;
                 reverse(): MANTICORE.animation.action.Sequence;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Sequence>(...var_args: MANTICORE.animation.action.FiniteTimeAction[]): T;
             }
 
             export class Show extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.Show;
                 reverse(): MANTICORE.animation.action.Hide;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Show>(): T;
             }
 
             export class SkewBy extends MANTICORE.animation.action.SkewTo{
@@ -294,12 +399,18 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.SkewBy;
                 reverse(): MANTICORE.animation.action.SkewBy;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.SkewBy>(t: number, sx: number, sy: number): T;
             }
 
             export class SkewTo extends MANTICORE.animation.action.PointAction{
                 constructor(t: number, sx: number, sy: number);
 
                 clone(): MANTICORE.animation.action.SkewTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.SkewTo>(t: number, sx: number, sy: number): T;
             }
 
             export class Spawn extends ActionInterval {
@@ -307,6 +418,9 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.Spawn;
                 reverse(): MANTICORE.animation.action.Spawn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Spawn>(...var_args: MANTICORE.animation.action.FiniteTimeAction[]): T;
             }
 
             export class Speed extends Action{
@@ -317,6 +431,9 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.Speed;
                 reverse(): MANTICORE.animation.action.Speed;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Speed>(action: MANTICORE.animation.action.ActionInterval, speed: number): T;
             }
 
             export class TargetedAction extends MANTICORE.animation.action.ActionInterval {
@@ -325,6 +442,9 @@ declare namespace MANTICORE {
                 forcedTarget: PIXI.DisplayObject;
 
                 clone(): MANTICORE.animation.action.TargetedAction;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.TargetedAction>(target: PIXI.DisplayObject, action: MANTICORE.animation.action.FiniteTimeAction): T;
             }
 
             export class TintBy extends MANTICORE.animation.action.ActionInterval{
@@ -332,23 +452,35 @@ declare namespace MANTICORE {
 
                 clone(): MANTICORE.animation.action.TintBy;
                 reverse(): MANTICORE.animation.action.TintBy;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.TintBy>(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): T;
             }
 
             export class TintTo extends MANTICORE.animation.action.ActionInterval {
                 constructor(duration: number, red: number, green: number, blue: number);
 
                 clone(): MANTICORE.animation.action.TintTo;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.TintTo>(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): T;
             }
 
             export class ToggleVisibility extends MANTICORE.animation.action.ActionInstant {
                 clone(): MANTICORE.animation.action.ToggleVisibility;
                 reverse(): MANTICORE.animation.action.ToggleVisibility;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.ToggleVisibility>(): T;
             }
 
             export class Tween extends MANTICORE.animation.action.ActionInterval {
                 constructor(duration: number, key: string, from:  number, to: number);
                 reverse(): MANTICORE.animation.action.Tween;
                 clone(): MANTICORE.animation.action.Tween;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.Tween>(duration: number, key: string, from:  number, to: number): T;
             }
         }
         export namespace callback {
@@ -358,102 +490,174 @@ declare namespace MANTICORE {
             export class EaseBackIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackIn;
                 clone(): EaseBackIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBackIn>(): T;
             }
             export class EaseBackInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackInOut;
                 clone(): EaseBackInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBackInOut>(): T;
             }
             export class EaseBackOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseBackOut;
                 clone(): EaseBackOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBackOut>(): T;
             }
             export class EaseBase extends MANTICORE.memory.ReusableObject {
                 constructor();
                 easing(time: number): void;
                 reverse(): EaseBase;
                 clone(): EaseBase;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBase>(): T;
             }
             export class EaseBezier extends MANTICORE.animation.easing.EaseBase {
                 constructor(first: number, second: number, third: number, fourth: number);
                 reverse(): EaseBezier;
                 clone(): EaseBezier;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBezier>(): T;
             }
             export class EaseBounceIn extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceIn;
                 clone(): EaseBounceIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBounceIn>(): T;
             }
             export class EaseBounceInOut extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceInOut;
                 clone(): EaseBounceInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBounceInOut>(): T;
             }
             export class EaseBounceOut extends MANTICORE.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceOut;
                 clone(): EaseBounceOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBounceOut>(): T;
             }
             export class EaseBounceTime  extends EaseBase {
                 protected bounceTime (time: number): number;
                 reverse(): EaseBounceTime;
                 clone(): EaseBounceTime;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseBounceTime>(): T;
             }
             export class EaseCircleIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleIn;
                 clone(): EaseCircleIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseCircleIn>(): T;
             }
             export class EaseCircleInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleInOut;
                 clone(): EaseCircleInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseCircleInOut>(): T;
             }
             export class EaseCircleOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCircleOut;
                 clone(): EaseCircleOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseCircleOut>(): T;
             }
             export class EaseCubicIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicIn;
                 clone(): EaseCubicIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseCubicIn>(): T;
             }
             export class EaseCubicInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicInOut;
                 clone(): EaseCubicInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseCubicInOut>(): T;
             }
             export class EaseCubicOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseCubicOut;
                 clone(): EaseCubicOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseCubicOut>(): T;
             }
             export class EaseElasticIn  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticIn;
                 clone(): EaseElasticIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseElasticIn>(): T;
             }
             export class EaseElasticInOut  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticInOut;
                 clone(): EaseElasticInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseElasticInOut>(): T;
             }
             export class EaseElasticOut  extends MANTICORE.animation.easing.EasePeriod {
                 reverse(): EaseElasticOut;
                 clone(): EaseElasticOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseElasticOut>(): T;
             }
             export class EaseExponentialIn extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialIn;
                 clone(): EaseExponentialIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseExponentialIn>(): T;
             }
             export class EaseExponentialInOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialInOut;
                 clone(): EaseExponentialInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseExponentialInOut>(): T;
             }
             export class EaseExponentialOut extends MANTICORE.animation.easing.EaseBase {
                 reverse(): EaseExponentialOut;
                 clone(): EaseExponentialOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseExponentialOut>(): T;
             }
             export class EaseIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseIn;
                 clone(): EaseIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseIn>(rate?: number): T;
             }
             export class EaseInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseInOut;
-                clone(): EaseInOut;
+                clone(): EaseInOut
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseInOut>(rate?: number): T;
             }
             export class EaseOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseOut;
                 clone(): EaseOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseOut>(rate?: number): T;
             }
             export class EasePeriod extends MANTICORE.animation.easing.EaseBase {
                 constructor(period?: number);
@@ -466,59 +670,101 @@ declare namespace MANTICORE {
                 protected calculateTime(time: number, period: number): number;
                 protected easingPeriod(time: number);
                 protected easingDefault(time: number): number;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EasePeriod>(period?: number): T;
             }
 
             export class EaseQuadraticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticIn;
                 clone(): EaseQuadraticIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuadraticIn>(): T;
             }
             export class EaseQuadraticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticInOut;
                 clone(): EaseQuadraticInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuadraticInOut>(): T;
             }
             export class EaseQuadraticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuadraticOut;
                 clone(): EaseQuadraticOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuadraticOut>(): T;
             }
             export class EaseQuarticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticIn;
                 clone(): EaseQuarticIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuarticIn>(): T;
             }
             export class EaseQuarticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticInOut;
                 clone(): EaseQuarticInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuarticInOut>(): T;
             }
             export class EaseQuarticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuarticOut;
                 clone(): EaseQuarticOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuarticOut>(): T;
             }
             export class EaseQuinticIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticIn;
                 clone(): EaseQuinticIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuinticIn>(): T;
             }
             export class EaseQuinticInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticInOut;
                 clone(): EaseQuinticInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuinticInOut>(): T;
             }
             export class EaseQuinticOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseQuinticOut;
                 clone(): EaseQuinticOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseQuinticOut>(): T;
             }
             export class EaseRate extends MANTICORE.animation.easing.EaseBase {
                 constructor(rate?: number);
                 public rate;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseRate>(rate?: number): T;
             }
             export class EaseSineIn extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineIn;
                 clone(): EaseSineIn;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseSineIn>(): T;
             }
             export class EaseSineInOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineInOut;
                 clone(): EaseSineInOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseSineInOut>(): T;
             }
             export class EaseSineOut extends MANTICORE.animation.easing.EaseRate {
                 reverse(): EaseSineOut;
                 clone(): EaseSineOut;
+
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.easing.EaseSineOut>(): T;
             }
         }
 
