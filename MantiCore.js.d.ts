@@ -22,6 +22,8 @@ declare namespace MANTICORE {
             export class ActionInstant extends MANTICORE.animation.action.FiniteTimeAction{
                 reverse(): any;
                 clone(): MANTICORE.animation.action.ActionInstant;
+                // noinspection JSAnnotator
+                static create<T extends MANTICORE.animation.action.ActionInstant>(): T;
             }
 
             export class ActionInterval extends MANTICORE.animation.action.FiniteTimeAction {
