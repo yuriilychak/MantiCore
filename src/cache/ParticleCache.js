@@ -110,6 +110,16 @@ export default {
 
     getParticle: function(name) {
         return this._particles.getElement(name);
+    },
+
+    /**
+     * @method
+     * @public
+     * @returns {string[]}
+     */
+
+    get names() {
+        return this._particles.keys;
     }
 }
 

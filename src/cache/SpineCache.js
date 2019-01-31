@@ -78,5 +78,15 @@ export default {
 
     getSkeleton: function (name) {
         return this._skeletons.getElement(name);
+    },
+
+    /**
+     * @method
+     * @public
+     * @returns {string[]}
+     */
+
+    get names() {
+        return this._skeletons.keys;
     }
 }

@@ -933,6 +933,7 @@ declare namespace MANTICORE {
         }
 
         export namespace particleCache {
+            export const names: string[];
             export function add(name: string, data: Object): boolean;
             export function remove(name: string): boolean;
             export function get(name: string): Object | null;
@@ -946,6 +947,7 @@ declare namespace MANTICORE {
         }
 
         export namespace spineCache {
+            export const names: string[];
             export function add(name: string, data: Object): void;
             export function remove(name: string): boolean;
             export function getSkeleton(name: string): PIXI.spine.core.SkeletonData;
