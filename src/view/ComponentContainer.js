@@ -626,16 +626,15 @@ class ComponentContainer extends PIXI.Container {
      */
 
     get visible() {
-        return super.visible;
+        return !!this._visible;
     }
 
     set visible(value) {
-        if (super.visible === value) {
+        if (this._visible === value) {
             return;
         }
-        super.visible = value;
-
-        if (Type.isEmpty(this._componentManager)) {
+        this._visible = value;
+        if (!this._hasComponentManager) {
             return;
         }
         this._componentManager.visibleAction(this.visible);

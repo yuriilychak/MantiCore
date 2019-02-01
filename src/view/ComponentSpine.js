@@ -576,14 +576,14 @@ class ComponentSpine extends PIXI.spine.Spine {
      */
 
     get visible() {
-        return super.visible;
+        return !!this._visible;
     }
 
     set visible(value) {
-        if (super.visible === value) {
+        if (this._visible === value) {
             return;
         }
-        super.visible = value;
+        this._visible = value;
 
         if (!this._hasComponentManager) {
             return;
