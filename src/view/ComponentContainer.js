@@ -502,6 +502,28 @@ class ComponentContainer extends PIXI.Container {
      */
 
     /**
+     * @public
+     * @returns {number}
+     */
+
+    get width() {
+        return 0;
+    }
+
+    set width(value) {}
+
+    /**
+     * @public
+     * @returns {number}
+     */
+
+    get height() {
+        return 0;
+    }
+
+    set height(value) {}
+
+    /**
      * @desc Returns anchor point.
      * @public
      * @return {MANTICORE.geometry.Point}
