@@ -111,7 +111,7 @@ export default {
      */
 
     remove(name) {
-        const index = Math.binaryIndexOf(name, this._font);
+        const index = Math.binaryIndexOf(name, this._fonts);
 
         if (index === -1) {
             return false;
@@ -130,7 +130,7 @@ export default {
 
         for (i = 0; i < sizeCount; ++i) {
             sizeName = name + "_" + sizes[i];
-            sizeIndex = Math.binaryIndexOf(sizeName, this._font);
+            sizeIndex = Math.binaryIndexOf(sizeName, this._fonts);
             if (sizeIndex !== -1) {
                 this._fonts.splice(sizeIndex, 1);
             }

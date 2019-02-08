@@ -16,7 +16,7 @@ import Geometry from "util/Geometry";
  * const actionTo = new ScaleTo(2, 0.5, 2);
  */
 
-class ScaleTo extends PointAction{
+class ScaleTo extends PointAction {
     /**
      * @constructor
      * @param {number} duration
