@@ -368,8 +368,11 @@ class ActionTimeLine extends BaseTimeLine{
         this._animations.clear(true);
         this._isInherit = false;
         this._isResetParameters = false;
-        this._nestedChildren.length = 0;
-        this._nestedChildren = null;
+
+        if (!Type.isNull(this._nestedChildren)) {
+            this._nestedChildren.length = 0;
+            this._nestedChildren = null;
+        }
         super.clearData();
     }
 
