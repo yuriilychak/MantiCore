@@ -222,7 +222,7 @@ class InteractionManager extends BaseManager {
      */
 
     _dispatchInteractiveEvent(id, interactiveEvent) {
-        if (!this.owner.interactive || !this._events.hasElement(id) || this.owner.blockEvents) {
+        if (!this.owner || !this.owner.interactive || !this._events.hasElement(id) || this.owner.blockEvents) {
             return;
         }
 
