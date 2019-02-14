@@ -142,13 +142,12 @@ class Label extends BaseLabel {
      */
 
     clearData() {
+        this._label.maxWidth = 0;
         this._label = null;
         this._isShadowEnabled = false;
         this._shadowOffset = null;
         this._shadow = null;
         this._lineHeight = 0;
-        this._label.maxWidth = 0;
-
         super.clearData();
     }
 
