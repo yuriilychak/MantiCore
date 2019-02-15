@@ -69,6 +69,11 @@ class AnimationManager extends BaseManager {
      * -----------------------------------------------------------------------------------------------------------------
      */
 
+    reuse(owner) {
+        super.reuse(owner);
+        this._timeLines.addElement(Pool.getObject(ActionTimeLine, owner, TIME_LINE.MAIN), TIME_LINE.MAIN);
+    }
+
     /**
      * @desc Add time line to manager.
      * @method
