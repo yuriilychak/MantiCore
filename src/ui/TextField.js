@@ -132,6 +132,13 @@ class TextField extends Label {
 
         this._isSelected = false;
 
+        /**
+         * @desc Pattern for input.
+         * @type {?string}
+         * @private
+         */
+        this._pattern = null;
+
         this.uiType = UI_ELEMENT.TEXT_FIELD;
 
         this._updateTextTransform();
@@ -187,6 +194,7 @@ class TextField extends Label {
 
         TextField._updateInputStyle(Format.replace(styleTemplate, x, y, globalSize.y, globalSize.x));
         input.value = this.text;
+        input.pattern = !Type.isNull(this._pattern) ? this._pattern : "";
         input.maxLength = this._maxLength === -1 ? MAX_CHAR_COUNT : this._maxLength;
         input.onblur = this._onInputBlurHandler.bind(this);
         input.oninput = this._onInputChangeHandler.bind(this);
@@ -465,6 +473,22 @@ class TextField extends Label {
         this._placeholderColor = Color.setLightness(value, Color.getLightness(value) * 0.6);
 
         this._updateTextTransform();
+    }
+
+    /**
+     * @public
+     * @return {?string}
+     */
+
+    get pattern() {
+        return this._pattern;
+    }
+
+    set pattern(value) {
+        if (this._pattern === value) {
+            return;
+        }
+        this._pattern = value;
     }
 }
 

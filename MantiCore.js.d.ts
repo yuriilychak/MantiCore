@@ -2273,6 +2273,7 @@ declare namespace MANTICORE {
             placeholderColor: number;
             placeholderText: string;
             color: number;
+            pattern: string;
 
             // noinspection JSAnnotator
             static create(fontName: string, size: number): MANTICORE.ui.TextField;
