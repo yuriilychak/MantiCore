@@ -1536,7 +1536,7 @@ declare namespace MANTICORE {
     }
 
     export namespace geometry {
-        export class Point extends MANTICORE.memory.ReusableObject {
+        export class Point extends PIXI.Point implements MANTICORE.memory.ReusableObject {
             constructor(x?: number, y?: number, type?: MANTICORE.enumerator.NUMBER_TYPE);
 
             public x: number;
@@ -1554,7 +1554,7 @@ declare namespace MANTICORE {
             public static create<T extends MANTICORE.geometry.Point>(x?: number, y?: number, type?: MANTICORE.enumerator.NUMBER_TYPE): T;
         }
 
-        export class Rectangle extends MANTICORE.memory.ReusableObject {
+        export class Rectangle extends PIXI.Point implements MANTICORE.memory.ReusableObject {
             constructor(x?: number, y?: number, width?: number, height?: number, type?: MANTICORE.enumerator.NUMBER_TYPE);
 
             public static EMPTY: MANTICORE.geometry.Rectangle;
