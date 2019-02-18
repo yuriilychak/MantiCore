@@ -433,6 +433,14 @@ class TextField extends Label {
         return this._placeholderColor;
     }
 
+    set placeholderColor(value) {
+        if (this._placeholderColor === value) {
+            return;
+        }
+        this._placeholderColor = value;
+        this._updateTextTransform();
+    }
+
     /**
      * @public
      * @type {string}
