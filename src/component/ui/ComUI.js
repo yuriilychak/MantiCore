@@ -249,7 +249,7 @@ class ComUI extends Component {
 
     removeAllChildListeners() {
         this._iterateChildEvents(model => {
-            this.listenerManager.removeEventListener(model.getInteractiveEvent(model.event));
+            this.listenerManager.removeEventListener(model.interactiveEvent);
             model.kill();
         });
         this._childEvents.length = 0;
@@ -407,6 +407,15 @@ class ChildEventModel extends Model {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @public
+     * @returns {string}
+     */
+
+    get interactiveEvent() {
+        return this.target.interactionManager.getInteractiveEvent(this._event);
+    }
 
     /**
      * @public
