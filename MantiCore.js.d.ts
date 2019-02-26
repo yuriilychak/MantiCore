@@ -1088,7 +1088,7 @@ declare namespace MANTICORE {
                 setChildText<T extends PIXI.Container>(text: any, path: string, widget?: T): boolean;
                 localize<T extends PIXI.Container>(key: string, path: string, widget?: T): boolean;
                 getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
-                addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path: string, widget?: P): T;
+                addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path?: string, widget?: P): T;
                 addChildListener<T extends PIXI.Container>(listener: MANTICORE.eventDispatcher.InteractiveCallback, eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
                 removeChildListener<T extends PIXI.Container>(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string,  widget?: T): boolean;
                 removeAllChildListeners() : void;

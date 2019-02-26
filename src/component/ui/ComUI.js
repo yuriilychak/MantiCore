@@ -152,13 +152,13 @@ class ComUI extends Component {
      * @method
      * @public
      * @param {MANTICORE.component.Component} component - Component for add to children.
-     * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
+     * @param {?string} [path = null] - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
      * @returns {MANTICORE.component.Component}
      */
 
-    addComponentToChild(component, path, widget = null) {
-        const child = this.getChildView(path, widget);
+    addComponentToChild(component, path = null, widget = null) {
+        const child = Type.isNull(path) ? this.owner : this.getChildView(path, widget);
 
         if (!Type.isNull(child) && child.uiType) {
             child.componentManager.addComponent(component);
