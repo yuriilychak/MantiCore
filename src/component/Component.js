@@ -243,6 +243,9 @@ class Component extends ReusableObject {
             return;
         }
         this._isActive = value;
+        if (this._isActive && this.hasOwner()) {
+            this.owner.isUpdate = true;
+        }
     }
 
     /**
