@@ -925,7 +925,7 @@ function _createLabel(data, bundle) {
         return result;
     }
     catch (error) {
-        console.log("Can't create label font:" + font.name + " label name:" + _getElementName(data.name, bundle));
+        console.log("Can't create label font:" + name + " label name:" + _getElementName(data.name, bundle));
     }
 }
 
