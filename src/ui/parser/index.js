@@ -899,29 +899,34 @@ function _createSlider(data, bundle) {
 function _createLabel(data, bundle) {
     const font = _getFontStyle(data.fileData[0], bundle);
     const name = bundle.fonts[font.name];
-    /**
-     * @type {MANTICORE.ui.Label}
-     */
-    const result = Label.create(name, font.size);
-    result.horizontalAlign = font.align[0];
-    result.verticalAlign = font.align[1];
-    result.text = _getText(data, 1, bundle);
-    result.color = _getColor(font.color, bundle);
-    result.autoSize = Type.toBoolean(data.fileData[2]);
-    result.letterSpacing = data.fileData[3];
-    result.localized = false;
+    try {
+        /**
+         * @type {MANTICORE.ui.Label}
+         */
+        const result = Label.create(name, font.size);
+        result.horizontalAlign = font.align[0];
+        result.verticalAlign = font.align[1];
+        result.text = _getText(data, 1, bundle);
+        result.color = _getColor(font.color, bundle);
+        result.autoSize = Type.toBoolean(data.fileData[2]);
+        result.letterSpacing = data.fileData[3];
+        result.localized = false;
 
-    if (font.outlineSize > 0) {
-        result.outlineSize = font.outlineSize;
-        result.outlineColor = _getColor(font.outlineColor, bundle);
+        if (font.outlineSize > 0) {
+            result.outlineSize = font.outlineSize;
+            result.outlineColor = _getColor(font.outlineColor, bundle);
+        }
+
+        if (font.shadowOffset[0] !== 0 || font.shadowOffset[1] !== 0) {
+            result.setShadowOffset(font.shadowOffset[0], font.shadowOffset[1]);
+            result.shadowColor = _getColor(font.shadowColor, bundle);
+        }
+
+        return result;
     }
-
-    if (font.shadowOffset[0] !== 0 || font.shadowOffset[1] !== 0) {
-        result.setShadowOffset(font.shadowOffset[0], font.shadowOffset[1]);
-        result.shadowColor = _getColor(font.shadowColor, bundle);
+    catch (error) {
+        console.log("Can't create label font:" + font.name + " label name:" + _getElementName(data.name, bundle));
     }
-
-    return result;
 }
 
 /**
