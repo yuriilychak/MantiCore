@@ -31,6 +31,14 @@ class Button extends BaseButton {
         this.collider.addState(disabledFrame, INTERACTIVE_STATE.DISABLED);
 
         this.uiType = UI_ELEMENT.BUTTON;
+
+        /**
+         * @desc Flag is button currently over.
+         * @type {boolean}
+         * @private
+         */
+
+        this._isOver = false;
     }
 
     /**
@@ -69,7 +77,12 @@ class Button extends BaseButton {
         super.emitInteractiveEvent(eventType, event);
         switch (eventType) {
             case INTERACTIVE_EVENT.UP: {
-                this.changeStateWithFallback(INTERACTIVE_STATE.OVER, INTERACTIVE_STATE.UP);
+                if (this._isOver) {
+                    this.changeStateWithFallback(INTERACTIVE_STATE.OVER, INTERACTIVE_STATE.UP);
+                }
+                else {
+                    this.changeEnabledState(INTERACTIVE_STATE.UP);
+                }
                 break;
             }
             case INTERACTIVE_EVENT.DOWN: {
@@ -77,10 +90,12 @@ class Button extends BaseButton {
                 break;
             }
             case INTERACTIVE_EVENT.OVER: {
+                this._isOver = true;
                 this.changeEnabledState(INTERACTIVE_STATE.OVER);
                 break;
             }
             case INTERACTIVE_EVENT.OUT: {
+                this._isOver = false;
                 this.changeEnabledState(INTERACTIVE_STATE.UP);
                 break;
             }
