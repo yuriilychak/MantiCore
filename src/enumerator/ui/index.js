@@ -1,3 +1,4 @@
+import CLIPPING_TYPE from "./ClippingType";
 import HORIZONTAL_ALIGN from "./HorizontalAlign";
 import INTERACTIVE_EVENT from "./InteractiveEvent";
 import INTERACTIVE_STATE from "./InteractiveState";
@@ -15,6 +16,7 @@ import VERTICAL_ALIGN from "./VerticalAlign";
  */
 
 export default {
+    CLIPPING_TYPE,
     HORIZONTAL_ALIGN,
     INTERACTIVE_EVENT,
     INTERACTIVE_STATE,

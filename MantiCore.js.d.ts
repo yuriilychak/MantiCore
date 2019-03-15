@@ -1420,6 +1420,10 @@ declare namespace MANTICORE {
         }
 
         export namespace ui {
+            export enum CLIPPING_TYPE {
+                GRAPHIC = 0,
+                SPRITE =  1
+            }
             export enum HORIZONTAL_ALIGN {
                 NONE = 0,
                 LEFT = 1,
@@ -2296,6 +2300,7 @@ declare namespace MANTICORE {
             constructor(collider?: PIXI.Sprite | MANTICORE.view.Slice9Sprite);
 
             clipping: boolean;
+            clippingType: MANTICORE.enumerator.ui.CLIPPING_TYPE;
             tint: number;
             anchor: MANTICORE.geometry.Point;
             flipX: boolean;

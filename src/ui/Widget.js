@@ -4,9 +4,11 @@ import Math from "util/Math";
 import Slice9Sprite from "view/Slice9Sprite";
 import Asset from "util/Asset";
 import UI_ELEMENT from "enumerator/ui/UIElement";
+import CLIPPING_TYPE from "enumerator/ui/ClippingType";
 import Constant from "constant/index";
 import Geometry from "util/Geometry";
 import Point from "geometry/Point";
+import Color from "util/Color";
 
 /**
  * @desc Base component for all UI elements.
@@ -41,7 +43,7 @@ class Widget extends ComponentContainer {
 
         /**
          * @desc Clipping mask.
-         * @type {?PIXI.Sprite}
+         * @type {?PIXI.Sprite | ?PIXI.Graphics}
          * @private
          */
 
@@ -60,6 +62,13 @@ class Widget extends ComponentContainer {
         this.uiType = UI_ELEMENT.WIDGET;
 
         this._collider.name = Constant.COLLIDER_NAME;
+
+        /**
+         * @type {CLIPPING_TYPE}
+         * @private
+         */
+
+        this._clippingType = CLIPPING_TYPE.SPRITE;
     }
 
     /**
@@ -180,9 +189,17 @@ class Widget extends ComponentContainer {
         }
 
         if (value) {
-            this._clippingMask = Asset.createWhiteSprite();
-            this._clippingMask.width = this._collider.width;
-            this._clippingMask.height = this._collider.height;
+            if (this._clippingType === CLIPPING_TYPE.SPRITE) {
+                this._clippingMask = Asset.createWhiteSprite();
+                this._clippingMask.width = this._collider.width;
+                this._clippingMask.height = this._collider.height;
+            }
+            else {
+                this._clippingMask = new PIXI.Graphics();
+                this._clippingMask.beginFill(Color.COLORS.WHITE);
+                this._clippingMask.drawRect(0, 0, this._collider.width, this._collider.height);
+                this._clippingMask.endFill();
+            }
         }
         else {
             super.removeChild(this._clippingMask);
@@ -321,6 +338,29 @@ class Widget extends ComponentContainer {
         this._collider.name = Constant.COLLIDER_NAME;
 
         super.addChild(this._collider);
+    }
+
+    /**
+     * @public
+     * @return {CLIPPING_TYPE}
+     */
+
+    get clippingType() {
+        return this._clippingType;
+    }
+
+    set clippingType(value) {
+        if (this._clippingType === value) {
+            return;
+        }
+        this._clippingType = value;
+
+        if (!this._isClipped()) {
+            return;
+        }
+
+        this.clipping = false;
+        this.clipping = true;
     }
 }
 
