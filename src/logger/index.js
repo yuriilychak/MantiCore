@@ -67,10 +67,10 @@ export default {
                 break;
             }
             default: {
-                const arrayArgs = Array.from(arguments);
-                const [warnIndex, ...args] = arrayArgs;
+                const arrayArgs = Array.prototype.slice.call(arguments);
+                const warnIndex = arrayArgs.shift();
                 const warnTemplate = WARNING["W_" + Format.formatNumber(warnIndex, 2)];
-                message = Format.replace(warnTemplate, ...args);
+                message = Format.replace(warnTemplate, ...arrayArgs);
                 break;
             }
         }

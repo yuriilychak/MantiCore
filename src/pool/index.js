@@ -205,11 +205,11 @@ const pool = {
      * @param {...*} var_args
      */
     getObject: function (var_args) {
-        const arrayArgs = Array.from(arguments);
-        const [objectClass, ...reuseArguments] = arrayArgs;
+        const arrayArgs = Array.prototype.slice.call(arguments);
+        const objectClass = arrayArgs.shift();
 
         if (!this.hasObject(objectClass)) {
-            return new objectClass(...reuseArguments);
+            return new objectClass(...arrayArgs);
         }
 
         const pid = this._getPID(objectClass);
@@ -217,7 +217,7 @@ const pool = {
         const object = elements.pop();
 
         if (object.reuse) {
-            object.reuse(...reuseArguments);
+            object.reuse(...arrayArgs);
         }
 
         if (object.inPool) {

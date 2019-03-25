@@ -94,7 +94,7 @@ const format = {
      * @example "{0} is {1}", "1", "number" -> "1 is number"
      * @function
      * @memberOf MANTICORE.util.format
-     * @param {...string} var_args
+     * @param {string | string[]} var_args
      * @returns {string}
      */
 
