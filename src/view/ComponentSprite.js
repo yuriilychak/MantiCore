@@ -164,6 +164,13 @@ class ComponentSprite extends PIXI.Sprite {
 
         this._blockEvents = false;
 
+        /**
+         * @type {?string}
+         * @private
+         */
+
+        this._userData = null;
+
         this._updateTint();
     }
 
@@ -799,6 +806,23 @@ class ComponentSprite extends PIXI.Sprite {
 
     get hasInteractionManager() {
         return this._interactionManager;
+    }
+
+    /**
+     * @desc User data of element
+     * @public
+     * @return {?string}
+     */
+
+    get userData() {
+        return this._userData;
+    }
+
+    set userData(value) {
+        if (this._userData === value) {
+            return;
+        }
+        this._userData = value;
     }
 }
 

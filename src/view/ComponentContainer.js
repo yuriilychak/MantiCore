@@ -161,6 +161,13 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._blockEvents = false;
+
+        /**
+         * @type {?string}
+         * @private
+         */
+
+        this._userData = null;
     }
 
     /**
@@ -831,6 +838,23 @@ class ComponentContainer extends PIXI.Container {
 
     get hasInteractionManager() {
         return this._interactionManager;
+    }
+
+    /**
+     * @desc User data of element
+     * @public
+     * @return {?string}
+     */
+
+    get userData() {
+        return this._userData;
+    }
+
+    set userData(value) {
+        if (this._userData === value) {
+            return;
+        }
+        this._userData = value;
     }
 }
 

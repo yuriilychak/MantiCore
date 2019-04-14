@@ -164,6 +164,13 @@ class ComponentSpine extends PIXI.spine.Spine {
 
         this._blockEvents = false;
 
+        /**
+         * @type {?string}
+         * @private
+         */
+
+        this._userData = null;
+
         this.animationManager.addTimeLine(TIME_LINE.SPINE, SpineTimeLine.create(this, TIME_LINE.SPINE));
 
         this._updateTint();
@@ -796,6 +803,23 @@ class ComponentSpine extends PIXI.spine.Spine {
 
     get hasInteractionManager() {
         return this._interactionManager;
+    }
+
+    /**
+     * @desc User data of element
+     * @public
+     * @return {?string}
+     */
+
+    get userData() {
+        return this._userData;
+    }
+
+    set userData(value) {
+        if (this._userData === value) {
+            return;
+        }
+        this._userData = value;
     }
 }
 

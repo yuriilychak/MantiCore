@@ -2455,6 +2455,7 @@ declare namespace MANTICORE {
             isUpdate: boolean;
             tint: number;
             parentTint: number;
+            userData: string | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
@@ -2494,6 +2495,7 @@ declare namespace MANTICORE {
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             parentTint: number;
+            userData: string | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
@@ -2533,7 +2535,8 @@ declare namespace MANTICORE {
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
-            parentTint: number;
+            parentTint: number
+            userData: string | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;

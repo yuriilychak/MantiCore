@@ -42,6 +42,8 @@
  * @property {Object[]} skeletons - Skeletons that use bundle.
  * @property {Object[]} particleData - Data of revolt particles.
  * @property {string[]} particleNames - Name of particles.
+ * @property {string[]} userData - Array with user data of elements.
+ * @property {string[]} locales - Locales that use labels.
  */
 
 /**
@@ -168,6 +170,7 @@
  * @property {boolean[] | null} percent - Is percent enabled.
  * @property {int[] | null} preDimensions - Percent dimension of element.
  * @property {int[] | null} margin - Margin of element;
+ * @property {int} userData - Index of user data in bundle.
  */
 
 /**

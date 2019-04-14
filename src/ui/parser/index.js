@@ -133,7 +133,7 @@ function parseChild (parent, data, bundle, globalParent) {
     }
 
     if (Type.isNull(result)) {
-        return;
+        return result;
     }
 
     _parseWidgetData(result, data, bundle);
@@ -222,6 +222,8 @@ function _parseWidgetData(element, data, bundle) {
     }
 
     element.visible = visible;
+
+    element.userData = _getUserData(data.userData, bundle);
 }
 
 /**
@@ -1181,6 +1183,19 @@ function _getAtlasLabelData(data, index, bundle) {
 
 function _getFontStyle(styleIndex, bundle) {
     return _extractValue(styleIndex, bundle, "fontStyles", null);
+}
+
+/**
+ * @function
+ * @private
+ * @memberOf MANTICORE.ui.parser
+ * @param {int} userDataIndex
+ * @param {MANTICORE.type.AssetBundle} bundle
+ * @returns {string | null}
+ */
+
+function _getUserData(userDataIndex, bundle) {
+    return _extractValue(userDataIndex, bundle, "userData", null);
 }
 
 /**
