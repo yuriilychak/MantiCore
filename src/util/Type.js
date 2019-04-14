@@ -14,7 +14,7 @@ const type = {
      * @returns {boolean}
      */
 
-    isUndefined: function (obj) {
+    isUndefined(obj) {
         return typeof obj === "undefined";
     },
 
@@ -26,7 +26,7 @@ const type = {
      * @returns {boolean}
      */
 
-    isNull: function (obj) {
+    isNull(obj) {
         return obj === null;
     },
 
@@ -38,7 +38,7 @@ const type = {
      * @returns {boolean}
      */
 
-    isEmpty: function (obj) {
+    isEmpty(obj) {
         return this.isNull(obj) || this.isUndefined(obj);
     },
 
@@ -52,7 +52,7 @@ const type = {
      * @private
      */
 
-    _isProtoEqual: function (obj, link) {
+    _isProtoEqual(obj, link) {
         return Object.prototype.toString.call(obj) === "[object " + link + "]";
     },
 
@@ -63,7 +63,7 @@ const type = {
      * @param {*} obj
      * @returns {boolean}
      */
-    isFunction: function (obj) {
+    isFunction(obj) {
         return typeof obj === 'function';
     },
 
@@ -74,7 +74,7 @@ const type = {
      * @param {*} obj
      * @returns {boolean}
      */
-    isNumber: function (obj) {
+    isNumber(obj) {
         return typeof obj === 'number' || this._isProtoEqual(obj, "Number");
     },
 
@@ -86,7 +86,7 @@ const type = {
      * @returns {boolean}
      */
 
-    isString: function (obj) {
+    isString(obj) {
         return typeof obj === "string" || this._isProtoEqual(obj, "String");
     },
 
@@ -98,7 +98,7 @@ const type = {
      * @returns {boolean}
      */
 
-    isArray: function (obj) {
+    isArray(obj) {
         return Array.isArray(obj) || (typeof obj === "object" && this._isProtoEqual(obj, "Array"));
     },
 
@@ -110,8 +110,25 @@ const type = {
      * @returns {boolean}
      */
 
-    isObject: function (obj) {
+    isObject(obj) {
         return typeof obj === "object" && this._isProtoEqual(obj, "Object");
+    },
+
+    /**
+     * @desc Check is string valid json
+     * @function
+     * @memberOf MANTICORE.util.type
+     * @param {string} jsonString
+     * @return {boolean}
+     */
+
+    isValidJson(jsonString){
+        try {
+            JSON.parse(jsonString);
+        } catch (e) {
+            return false;
+        }
+        return true;
     },
 
     /**
@@ -123,7 +140,7 @@ const type = {
      * @returns {*}
      */
 
-    setValue: function (value, defaultValue = null) {
+    setValue(value, defaultValue = null) {
         return !this.isEmpty(value) ? value : defaultValue;
     },
 
@@ -135,7 +152,7 @@ const type = {
      * @return {boolean}
      */
 
-    toBoolean: function(value) {
+    toBoolean(value) {
         return !!value;
     }
 };

@@ -223,7 +223,38 @@ function _parseWidgetData(element, data, bundle) {
 
     element.visible = visible;
 
-    element.userData = _getUserData(data.userData, bundle);
+    const userData = _getUserData(data.userData, bundle);
+
+    switch (true) {
+        case (Type.isNull(userData) || userData === ""): {
+            element.userData = null;
+            break;
+        }
+        case userData.match(/^-?\d+$/): {
+            element.userData = parseInt(userData, 10);
+            break;
+        }
+        case userData.match(/^\d+\.\d+$/): {
+            element.userData = parseFloat(userData);
+            break;
+        }
+        case userData === "false": {
+            element.userData = false;
+            break;
+        }
+        case userData === "true": {
+            element.userData = true;
+            break;
+        }
+        case Type.isValidJson(userData): {
+            element.userData = JSON.parse(userData);
+            break;
+        }
+        default: {
+            element.userData = userData;
+            break;
+        }
+    }
 }
 
 /**

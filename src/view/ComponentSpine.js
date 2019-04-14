@@ -165,7 +165,7 @@ class ComponentSpine extends PIXI.spine.Spine {
         this._blockEvents = false;
 
         /**
-         * @type {?string}
+         * @type {number | string | Object | Array | boolean | null}
          * @private
          */
 
@@ -808,7 +808,7 @@ class ComponentSpine extends PIXI.spine.Spine {
     /**
      * @desc User data of element
      * @public
-     * @return {?string}
+     * @return {number | string | Object | Array | boolean | null}
      */
 
     get userData() {

@@ -163,7 +163,7 @@ class ComponentContainer extends PIXI.Container {
         this._blockEvents = false;
 
         /**
-         * @type {?string}
+         * @type {number | string | Object | Array | boolean | null}
          * @private
          */
 
@@ -843,7 +843,7 @@ class ComponentContainer extends PIXI.Container {
     /**
      * @desc User data of element
      * @public
-     * @return {?string}
+     * @return {number | string | Object | Array | boolean | null}
      */
 
     get userData() {

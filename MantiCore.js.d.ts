@@ -2427,6 +2427,7 @@ declare namespace MANTICORE {
             export function isString(obj: any): boolean;
             export function isArray(obj: any): boolean;
             export function isObject(obj: any): boolean;
+            export function isValidJson(jsonString: string): boolean;
             export function setValue(value: any, defaultValue?: any): any;
             export function toBoolean(value: any):  boolean;
         }
@@ -2455,7 +2456,7 @@ declare namespace MANTICORE {
             isUpdate: boolean;
             tint: number;
             parentTint: number;
-            userData: string | null;
+            userData: number | string | Object | Array<any> | boolean | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
@@ -2495,7 +2496,7 @@ declare namespace MANTICORE {
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             parentTint: number;
-            userData: string | null;
+            userData: number | string | Object | Array<any> | boolean | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
@@ -2535,8 +2536,8 @@ declare namespace MANTICORE {
             inPool: boolean;
             uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
-            parentTint: number
-            userData: string | null;
+            parentTint: number;
+            userData: number | string | Object | Array<any> | boolean | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
             readonly animationManager: MANTICORE.manager.AnimationManager;
