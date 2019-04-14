@@ -1,6 +1,8 @@
 import Repository from "repository/Repository";
 import Asset from "util/Asset";
 import Macro from "macro";
+import Type from "util/Type";
+import Logger from "logger";
 
 /**
  * @desc Namespace for manipulate with spine skeletons.
@@ -30,7 +32,7 @@ export default {
         }
         const atlas = new PIXI.spine.core.TextureAtlas();
         const skins = data.skins;
-        let skinKey, skin, slotKey, slot, slotData, frame, frameName;
+        let skinKey, skin, slotKey, slot, slotData, frame, frameName, spriteFrame;
         const frames = {};
         const pathKey = "path";
 
@@ -41,7 +43,13 @@ export default {
                 for (frame in slot) {
                     slotData = slot[frame];
                     frameName = slotData.hasOwnProperty(pathKey) ? slotData[pathKey] : frame;
-                    frames[frameName] = Asset.getSpriteFrame(frameName);
+                    spriteFrame = Asset.getSpriteFrame(frameName);
+
+                    if (Type.isEmpty(spriteFrame)) {
+                        Logger.engineWarn(4, spriteFrame, name);
+                    }
+
+                    frames[frameName] = spriteFrame;
                 }
             }
         }
