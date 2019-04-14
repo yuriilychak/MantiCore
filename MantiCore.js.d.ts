@@ -2144,6 +2144,7 @@ declare namespace MANTICORE {
         export class Label extends MANTICORE.ui.ancillary.BaseLabel {
             constructor(fontName: string, size: number);
             public realFontSize: number;
+            public locale: string | null;
             // noinspection JSAnnotator
             static create(fontName: string, size: number): MANTICORE.ui.Label;
             updateColorByLetter(beginIndex: number, count: number, color: number): void;
@@ -2436,6 +2437,7 @@ declare namespace MANTICORE {
             export function logHierarchy(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, maxLevel?: number): void;
             export function logUnlocalizedFields(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
             export function getChildView<T extends PIXI.Container>(path: string, firstElement: T): T| null;
+            export function localize<T extends PIXI.DisplayObject>(root: T): void;
         }
     }
 

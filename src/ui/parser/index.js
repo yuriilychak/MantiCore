@@ -1,6 +1,7 @@
 import Type from "util/Type";
 import Math from "util/Math";
 import Color from "util/Color";
+import Ui from "util/UI";
 
 import Logger from "logger";
 
@@ -75,7 +76,7 @@ function parseChild (parent, data, bundle, globalParent) {
             break;
         }
         case UI_ELEMENT.LABEL: {
-            result = _createLabel(data, bundle);
+            result = _createLabel(data, bundle, parent ? parent.name : "root");
             break;
         }
         case UI_ELEMENT.PANEL: {
@@ -127,7 +128,7 @@ function parseChild (parent, data, bundle, globalParent) {
             break;
         }
         default: {
-            Logger.log("Cant parse element");
+            Logger.engineWarn(6, data.type);
             break;
         }
     }
@@ -926,10 +927,11 @@ function _createSlider(data, bundle) {
  * @memberOf MANTICORE.ui.parser
  * @param {MANTICORE.type.ElementData} data
  * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {string} parentName
  * @returns {MANTICORE.ui.Label}
  */
 
-function _createLabel(data, bundle) {
+function _createLabel(data, bundle, parentName) {
     const font = _getFontStyle(data.fileData[0], bundle);
     const name = bundle.fonts[font.name];
     try {
@@ -943,7 +945,10 @@ function _createLabel(data, bundle) {
         result.color = _getColor(font.color, bundle);
         result.autoSize = Type.toBoolean(data.fileData[2]);
         result.letterSpacing = data.fileData[3];
+        result.locale = _getLocale(data.fileData[4], bundle);
         result.localized = false;
+
+        Ui.localize(result);
 
         if (font.outlineSize > 0) {
             result.outlineSize = font.outlineSize;
@@ -958,7 +963,8 @@ function _createLabel(data, bundle) {
         return result;
     }
     catch (error) {
-        console.log("Can't create label font:" + name + " label name:" + _getElementName(data.name, bundle));
+        Logger.engineWarn(5, name, _getElementName(data.name, bundle), parentName);
+        return null;
     }
 }
 
@@ -1214,6 +1220,19 @@ function _getAtlasLabelData(data, index, bundle) {
 
 function _getFontStyle(styleIndex, bundle) {
     return _extractValue(styleIndex, bundle, "fontStyles", null);
+}
+
+/**
+ * @function
+ * @private
+ * @memberOf MANTICORE.ui.parser
+ * @param {int} localeIndex
+ * @param {MANTICORE.type.AssetBundle} bundle
+ * @returns {string | null}
+ */
+
+function _getLocale(localeIndex, bundle) {
+    return _extractValue(localeIndex, bundle, "locales", null);
 }
 
 /**

@@ -2,6 +2,7 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
 import Logger from "logger";
 import Type from "./Type";
 import Format from "./Format";
+import LocalizationCache from "../cache/LocalizationCache";
 
 /**
  * @desc Contains some methods to manipulate with ui.
@@ -43,7 +44,7 @@ const ui = {
      * @param {number} [maxLevel = -1]
      */
 
-    logHierarchy: function(widget, maxLevel = -1) {
+    logHierarchy(widget, maxLevel = -1) {
         this._logHierarchy(widget, null, 0, maxLevel);
     },
 
@@ -55,7 +56,7 @@ const ui = {
      * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} widget
      */
 
-    logUnlocalizedFields: function (widget) {
+    logUnlocalizedFields(widget) {
         this._logUnlocalizedFields(widget);
     },
 
@@ -69,7 +70,7 @@ const ui = {
      * @returns {PIXI.DisplayObject | null}
      */
 
-    getChildView: function(path, parent) {
+    getChildView(path, parent) {
         const pathSplit = path.split(this.DIVIDER);
 
         const elementCount = pathSplit.length;
@@ -87,6 +88,41 @@ const ui = {
     },
 
     /**
+     * @desc Localize node and her children.
+     * @function
+     * @public
+     * @memberOf MANTICORE.util.ui
+     * @param {MANTICORE.view.ComponentContainer | MANTICORE.ui.Label | PIXI.DisplayObject} root
+     */
+
+    localize(root) {
+        const uiType = Type.setValue(root.uiType, UI_ELEMENT.NONE);
+
+        switch (uiType) {
+            case UI_ELEMENT.LABEL: {
+                const locale = root.locale;
+                if (Type.isNull(locale) || locale === "") {
+                    return;
+                }
+                root.text = LocalizationCache.getLocale(locale);
+                break;
+            }
+            case UI_ELEMENT.NONE: {
+                return;
+            }
+            default: {
+                const children = root.children;
+                const childCount = children.length;
+
+                for (let i = 0; i < childCount; ++i) {
+                    this.localize(children[i]);
+                }
+                break;
+            }
+        }
+    },
+
+    /**
      * PRIVATE FUNCTIONS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -101,7 +137,7 @@ const ui = {
      * @param {int} [maxLevel = -1]
      */
 
-    _logHierarchy: function(widget, parentPath = null, tabCount = 0, maxLevel = -1) {
+    _logHierarchy(widget, parentPath = null, tabCount = 0, maxLevel = -1) {
         if (Type.isUndefined(widget.uiType) || maxLevel === tabCount) {
             return;
         }
@@ -184,7 +220,7 @@ const ui = {
      * @return {string}
      */
 
-    _refreshPath: function(path) {
+    _refreshPath(path) {
         const pathSplit = path.split(this.DIVIDER);
         if (pathSplit.length !== 1) {
             pathSplit.splice(0, 1);
@@ -201,7 +237,7 @@ const ui = {
      * @param {string} path
      */
 
-    _logElement: function(tab, type, path) {
+    _logElement(tab, type, path) {
         Logger.log(Format.replace(this.LOG_TEMPLATE, tab, type, path));
     },
 
@@ -282,7 +318,7 @@ const ui = {
      * @returns {string}
      */
 
-    _getComponentName: function(type) {
+    _getComponentName(type) {
         switch (type) {
             case UI_ELEMENT.ATLAS_LABEL: return "AtlasLabel";
             case UI_ELEMENT.BUTTON: return "Button";

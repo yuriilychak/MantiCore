@@ -72,6 +72,14 @@ class Label extends BaseLabel {
 
         this._label.maxWidth = this.width;
 
+        /**
+         * @desc Locale of label
+         * @type {?string}
+         * @private
+         */
+
+        this._locale = null;
+
         this.uiType = UI_ELEMENT.LABEL;
 
         this.addChild(this._label);
@@ -555,6 +563,23 @@ class Label extends BaseLabel {
         }
         super.letterSpacing = value;
         this._updateAutoSize();
+    }
+
+    /**
+     * @desc Locale of label.
+     * @public
+     * @return {?string}
+     */
+
+    get locale() {
+        return this._locale;
+    }
+
+    set locale(value) {
+        if (this._locale === value) {
+            return;
+        }
+        this._locale = value;
     }
 }
 
