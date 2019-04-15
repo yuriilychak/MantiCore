@@ -1179,6 +1179,7 @@ declare namespace MANTICORE {
         export const TEMPORARY_ANIMATION_NAME: string;
         export const DEFAULT_NAME: string;
         export const EMPTY_ID: number;
+        export const EMPTY_FONT_ID: string;
         export const OFFSET_EPSILON: number;
     }
 

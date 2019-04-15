@@ -7,6 +7,7 @@ import Logger from "logger";
 
 import Point from "geometry/Point";
 import BundleCache from "cache/BundleCache";
+import Constant from "constant";
 
 import AtlasLabel from "ui/AtlasLabel";
 import Button from "ui/Button";
@@ -84,7 +85,7 @@ function parseChild (parent, data, bundle, globalParent) {
             break;
         }
         case UI_ELEMENT.LABEL: {
-            result = _createLabel(data, bundle, parent && parent.name ? parent.name : "root");
+            result = _createLabel(data, bundle, parent);
             break;
         }
         case UI_ELEMENT.PANEL: {
@@ -936,45 +937,51 @@ function _createSlider(data, bundle) {
  * @memberOf MANTICORE.ui.parser
  * @param {MANTICORE.type.ElementData} data
  * @param {MANTICORE.type.AssetBundle} bundle
- * @param {string} parentName
+ * @param {PIXI.DisplayObject} parent
  * @returns {MANTICORE.ui.Label}
  */
 
-function _createLabel(data, bundle, parentName) {
+function _createLabel(data, bundle, parent) {
     const font = _getFontStyle(data.fileData[0], bundle);
     const name = bundle.fonts[font.name];
+    let result;
     try {
         /**
          * @type {MANTICORE.ui.Label}
          */
-        const result = Label.create(name, font.size);
-        result.horizontalAlign = font.align[0];
-        result.verticalAlign = font.align[1];
-        result.text = _getText(data, 1, bundle);
-        result.color = _getColor(font.color, bundle);
-        result.autoSize = Type.toBoolean(data.fileData[2]);
-        result.letterSpacing = data.fileData[3];
-        result.locale = _getLocale(data.fileData[4], bundle);
-        result.localized = false;
+        result = Label.create(name, font.size);
 
-        Ui.localize(result);
-
-        if (font.outlineSize > 0) {
-            result.outlineSize = font.outlineSize;
-            result.outlineColor = _getColor(font.outlineColor, bundle);
-        }
-
-        if (font.shadowOffset[0] !== 0 || font.shadowOffset[1] !== 0) {
-            result.setShadowOffset(font.shadowOffset[0], font.shadowOffset[1]);
-            result.shadowColor = _getColor(font.shadowColor, bundle);
-        }
-
-        return result;
     }
     catch (error) {
-        Logger.engineWarn(5, name, _getElementName(data.name, bundle), parentName);
-        return null;
+        /**
+         * @type {MANTICORE.ui.Label}
+         */
+        result = Label.create(Constant.EMPTY_FONT_ID, font.size);
+        Logger.engineWarn(5, name, _getElementName(data.name, bundle), Ui.fullPath(parent));
     }
+
+    result.horizontalAlign = font.align[0];
+    result.verticalAlign = font.align[1];
+    result.text = _getText(data, 1, bundle);
+    result.color = _getColor(font.color, bundle);
+    result.autoSize = Type.toBoolean(data.fileData[2]);
+    result.letterSpacing = data.fileData[3];
+    result.locale = _getLocale(data.fileData[4], bundle);
+    result.localized = false;
+
+    Ui.localize(result);
+
+    if (font.outlineSize > 0) {
+        result.outlineSize = font.outlineSize;
+        result.outlineColor = _getColor(font.outlineColor, bundle);
+    }
+
+    if (font.shadowOffset[0] !== 0 || font.shadowOffset[1] !== 0) {
+        result.setShadowOffset(font.shadowOffset[0], font.shadowOffset[1]);
+        result.shadowColor = _getColor(font.shadowColor, bundle);
+    }
+
+    return result;
 }
 
 /**
@@ -1295,7 +1302,8 @@ function _getColor(index, bundle) {
  */
 
 function _extractValue(index, bundle, link, defaultValue) {
-    return index !== -1 ? bundle[link][index] : defaultValue;
+    const bundleData = bundle[link];
+    return !Type.isEmpty(bundleData) && index !== -1 ? bundleData[index] : defaultValue;
 }
 
 /**

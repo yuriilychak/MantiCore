@@ -80,6 +80,15 @@ const constant = {
     DEFAULT_NAME: "Untitled",
 
     /**
+     * @desc Id of empty font.
+     * @public
+     * @type {string}
+     * @memberOf MANTICORE.constant
+     */
+
+    EMPTY_FONT_ID: "EmptyFont",
+
+    /**
      * @desc Number for empty int id.
      * @type {int}
      * @public

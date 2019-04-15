@@ -1,12 +1,14 @@
-import Type from "util/Type";
+import Format from "util/Format";
 import Math from "util/Math";
+import Type from "util/Type";
 import Macro from "macro";
 import PLATFORM from "enumerator/system/Platform";
 import OS from "enumerator/system/OS";
 import CLIENT from "enumerator/system/Client";
 import BROWSER from "enumerator/system/Browser";
 import Logger from "logger";
-import Format from "util/Format";
+
+import FontCache from "cache/FontCache";
 import EventDispatcher from "eventDispatcher";
 import SYSTEM_EVENT from "enumerator/event/SystemEvent";
 import KEYBOARD_EVENT from "enumerator/event/KeyboardEvent";
@@ -575,7 +577,7 @@ export default {
             if (webP.height === 2) {
                 this.SUPPORTED_FORMATS.push(TEXTURE_FORMAT.WEB_P);
             }
-            callback();
+            FontCache.createEmptyFont(callback);
         };
     },
 
