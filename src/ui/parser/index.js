@@ -76,7 +76,7 @@ function parseChild (parent, data, bundle, globalParent) {
             break;
         }
         case UI_ELEMENT.LABEL: {
-            result = _createLabel(data, bundle, parent ? parent.name : "root");
+            result = _createLabel(data, bundle, parent && parent.name ? parent.name : "root");
             break;
         }
         case UI_ELEMENT.PANEL: {
@@ -227,7 +227,7 @@ function _parseWidgetData(element, data, bundle) {
     const userData = _getUserData(data.userData, bundle);
 
     switch (true) {
-        case (Type.isNull(userData) || userData === ""): {
+        case (Type.isEmpty(userData) || userData === ""): {
             element.userData = null;
             break;
         }
