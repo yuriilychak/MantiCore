@@ -62,7 +62,15 @@ import ComUILayout from "component/ui/ComUILayout";
 
 function parseChild (parent, data, bundle, globalParent) {
     let result = null;
-    switch (data.type) {
+
+    if (Type.isEmpty(data)) {
+        Logger.engineWarn(8, Ui.fullPath(parent));
+        return;
+    }
+
+    const type = Type.setValue(data.type, UI_ELEMENT.NONE);
+
+    switch (type) {
         case UI_ELEMENT.BUTTON: {
             result = _createButton(data, bundle);
             break;
@@ -128,12 +136,13 @@ function parseChild (parent, data, bundle, globalParent) {
             break;
         }
         default: {
-            Logger.engineWarn(6, data.type);
+            Logger.engineWarn(6, type);
             break;
         }
     }
 
     if (Type.isNull(result)) {
+        Logger.engineWarn(7, type, Ui.fullPath(parent));
         return result;
     }
 
@@ -1304,11 +1313,22 @@ export default {
      * @returns {MANTICORE.ui.Widget}
      */
     parseElement: function (name, link) {
-        const bundle = BundleCache.getAssetBundle(link).data;
+        const bundle = BundleCache.getAssetBundle(link);
 
-        const index = bundle.componentNames.indexOf(name);
-        const data = bundle.ui[index];
+        if (Type.isNull(bundle)) {
+            Logger.engineWarn(10, link);
+            return ComponentContainer.create();
+        }
 
-        return parseChild(null, data, bundle, null);
+        const bundleData = bundle.data;
+        const index = bundleData.componentNames.indexOf(name);
+        const data = bundleData.ui[index];
+
+        if (Type.isEmpty(data)) {
+            Logger.engineWarn(9, link, name);
+            return ComponentContainer.create();
+        }
+
+        return parseChild(null, data, bundleData, null);
     }
 }

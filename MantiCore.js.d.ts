@@ -2434,6 +2434,7 @@ declare namespace MANTICORE {
         }
 
         export namespace ui {
+            export function fullPath<T extends PIXI.DisplayObject>(node: T): string;
             export function logHierarchy(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, maxLevel?: number): void;
             export function logUnlocalizedFields(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
             export function getChildView<T extends PIXI.Container>(path: string, firstElement: T): T| null;

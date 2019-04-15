@@ -123,6 +123,32 @@ const ui = {
     },
 
     /**
+     * @desc Return full path of to node.
+     * @function
+     * @public
+     * @memberOf MANTICORE.util.ui
+     * @param {PIXI.DisplayObject} node
+     * @returns {string};
+     */
+
+    fullPath(node) {
+        if (Type.isEmpty(node)) {
+            return "empty";
+        }
+
+        const emptyName = "anonymous";
+        let result = !Type.isEmpty(node.name) ? node.name : emptyName;
+        let parent = node.parent;
+
+        while (!Type.isEmpty(parent)) {
+            result = (!Type.isEmpty(parent.name) ? parent.name : emptyName) + "=>" + result;
+            parent = parent.parent;
+        }
+
+        return result;
+    },
+
+    /**
      * PRIVATE FUNCTIONS
      * -----------------------------------------------------------------------------------------------------------------
      */
