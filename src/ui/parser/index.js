@@ -234,7 +234,7 @@ function _parseWidgetData(element, data, bundle) {
 
     element.visible = visible;
 
-    const userData = _getUserData(data.userData, bundle);
+    const userData = !Type.isEmpty(data.userData) ? _getUserData(data.userData, bundle) : null;
 
     switch (true) {
         case (Type.isEmpty(userData) || userData === ""): {
