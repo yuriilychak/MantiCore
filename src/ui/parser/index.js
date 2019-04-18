@@ -14,11 +14,12 @@ import Button from "ui/Button";
 import CheckBox from "ui/CheckBox";
 import ComponentContainer from "view/ComponentContainer";
 import ComponentSprite from "view/ComponentSprite";
-import ComponentSkeleton from "view/ComponentSkeleton";
+import ComponentSpine from "view/ComponentSpine";
 import ImageView from "ui/ImageView";
 import Label from "ui/Label";
 import ListView from "ui/ListView";
 import Panel from "ui/Panel";
+import ParticleEmitter from "ui/ParticleEmitter";
 import ProgressBar from "ui/ProgressBar";
 import ScrollView from "ui/ScrollView";
 import Slider from "ui/Slider";
@@ -51,7 +52,6 @@ import Easing from "animation/easing";
 import FrameChange from "animation/action/FrameChange";
 
 import ComUILayout from "component/ui/ComUILayout";
-import ComponentSpine from "../../view/ComponentSpine";
 
 /**
  * @function
@@ -140,6 +140,10 @@ function parseChild (parent, data, bundle, globalParent) {
         }
         case UI_ELEMENT.SPINE: {
             result = _createSpineSkeleton(data, bundle);
+            break;
+        }
+        case UI_ELEMENT.PARTICLE: {
+            result = _createParticleEmitter(data, bundle);
             break;
         }
         default: {
@@ -363,6 +367,9 @@ function _createAnimation(animation, bundle) {
     let result, prevValue, nextValue, action;
 
     for (iterator in sortedFrames) {
+        if (!sortedFrames.hasOwnProperty(iterator)) {
+            continue;
+        }
         result = [];
         track = sortedFrames[iterator];
         switch (track[0].type) {
@@ -764,6 +771,25 @@ function _createAtlasLabel(data, bundle) {
  * @memberOf MANTICORE.ui.parser
  * @param {MANTICORE.type.ElementData} data
  * @param {MANTICORE.type.AssetBundle} bundle
+ * @returns {MANTICORE.ui.ParticleEmitter}
+ */
+
+function _createParticleEmitter(data, bundle) {
+    const particleName = _getParticleName(data.fileData[0], bundle);
+
+    if (Type.isNull(particleName)) {
+        return null;
+    }
+
+    return ParticleEmitter.create(particleName, data.fileData[1]);
+}
+
+/**
+ * @function
+ * @private
+ * @memberOf MANTICORE.ui.parser
+ * @param {MANTICORE.type.ElementData} data
+ * @param {MANTICORE.type.AssetBundle} bundle
  * @returns {MANTICORE.view.ComponentSpine}
  */
 
@@ -775,8 +801,7 @@ function _createSpineSkeleton(data, bundle) {
     }
 
     try {
-        const result = ComponentSpine.create(skeletonName);
-        return result;
+        return ComponentSpine.create(skeletonName);
     }
     catch (e) {
         return null;
@@ -1293,6 +1318,19 @@ function _getLocale(localeIndex, bundle) {
 
 function _getUserData(userDataIndex, bundle) {
     return _extractValue(userDataIndex, bundle, "userData");
+}
+
+/**
+ * @function
+ * @private
+ * @memberOf MANTICORE.ui.parser
+ * @param {int} particleNameIndex
+ * @param {MANTICORE.type.AssetBundle} bundle
+ * @returns {string | null}
+ */
+
+function _getParticleName(particleNameIndex, bundle) {
+    return _extractValue(particleNameIndex, bundle, "particleNames");
 }
 
 /**
