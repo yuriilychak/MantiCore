@@ -46,7 +46,8 @@ export default {
                     spriteFrame = Asset.getSpriteFrame(frameName);
 
                     if (Type.isEmpty(spriteFrame)) {
-                        Logger.engineWarn(4, spriteFrame, name);
+                        Logger.engineWarn(4, frameName, name);
+                        continue;
                     }
 
                     frames[frameName] = spriteFrame;
