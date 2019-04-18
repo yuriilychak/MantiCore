@@ -24,7 +24,8 @@ const UI_ELEMENT = {
     SCROLL_VIEW: 15,
     LIST_VIEW: 16,
     PAGE_VIEW: 17,
-    SPINE: 18
+    SPINE: 18,
+    PARTICLE: 19
 };
 
 export default UI_ELEMENT;

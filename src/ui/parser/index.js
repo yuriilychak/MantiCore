@@ -14,6 +14,7 @@ import Button from "ui/Button";
 import CheckBox from "ui/CheckBox";
 import ComponentContainer from "view/ComponentContainer";
 import ComponentSprite from "view/ComponentSprite";
+import ComponentSkeleton from "view/ComponentSkeleton";
 import ImageView from "ui/ImageView";
 import Label from "ui/Label";
 import ListView from "ui/ListView";
@@ -50,6 +51,7 @@ import Easing from "animation/easing";
 import FrameChange from "animation/action/FrameChange";
 
 import ComUILayout from "component/ui/ComUILayout";
+import ComponentSpine from "../../view/ComponentSpine";
 
 /**
  * @function
@@ -134,6 +136,10 @@ function parseChild (parent, data, bundle, globalParent) {
         }
         case UI_ELEMENT.LIST_VIEW: {
             result = _createListView(data, bundle);
+            break;
+        }
+        case UI_ELEMENT.SPINE: {
+            result = _createSpineSkeleton(data, bundle);
             break;
         }
         default: {
@@ -758,6 +764,31 @@ function _createAtlasLabel(data, bundle) {
  * @memberOf MANTICORE.ui.parser
  * @param {MANTICORE.type.ElementData} data
  * @param {MANTICORE.type.AssetBundle} bundle
+ * @returns {MANTICORE.view.ComponentSpine}
+ */
+
+function _createSpineSkeleton(data, bundle) {
+    const skeletonName = _getSkeletonName(data.fileData[0], bundle);
+
+    if (Type.isNull(skeletonName)) {
+        return null;
+    }
+
+    try {
+        const result = ComponentSpine.create(skeletonName);
+        return result;
+    }
+    catch (e) {
+        return null;
+    }
+}
+
+/**
+ * @function
+ * @private
+ * @memberOf MANTICORE.ui.parser
+ * @param {MANTICORE.type.ElementData} data
+ * @param {MANTICORE.type.AssetBundle} bundle
  * @returns {MANTICORE.ui.ScrollView}
  */
 
@@ -1222,7 +1253,7 @@ function _getAnchor(index, bundle) {
 
 function _getAtlasLabelData(data, index, bundle) {
     const dataIndex = data.fileData[index];
-    return _extractValue(dataIndex, bundle, "atlasFonts", null);
+    return _extractValue(dataIndex, bundle, "atlasFonts");
 }
 
 /**
@@ -1235,7 +1266,7 @@ function _getAtlasLabelData(data, index, bundle) {
  */
 
 function _getFontStyle(styleIndex, bundle) {
-    return _extractValue(styleIndex, bundle, "fontStyles", null);
+    return _extractValue(styleIndex, bundle, "fontStyles");
 }
 
 /**
@@ -1248,7 +1279,7 @@ function _getFontStyle(styleIndex, bundle) {
  */
 
 function _getLocale(localeIndex, bundle) {
-    return _extractValue(localeIndex, bundle, "locales", null);
+    return _extractValue(localeIndex, bundle, "locales");
 }
 
 /**
@@ -1261,7 +1292,20 @@ function _getLocale(localeIndex, bundle) {
  */
 
 function _getUserData(userDataIndex, bundle) {
-    return _extractValue(userDataIndex, bundle, "userData", null);
+    return _extractValue(userDataIndex, bundle, "userData");
+}
+
+/**
+ * @function
+ * @private
+ * @memberOf MANTICORE.ui.parser
+ * @param {int} skeletonNameIndex
+ * @param {MANTICORE.type.AssetBundle} bundle
+ * @returns {string | null}
+ */
+
+function _getSkeletonName(skeletonNameIndex, bundle) {
+    return _extractValue(skeletonNameIndex, bundle, "skeletonNames");
 }
 
 /**
@@ -1274,7 +1318,7 @@ function _getUserData(userDataIndex, bundle) {
  */
 
 function _getTextFieldStyle(styleIndex, bundle) {
-    return _extractValue(styleIndex, bundle, "textFieldStyles", null);
+    return _extractValue(styleIndex, bundle, "textFieldStyles");
 }
 
 /**
@@ -1297,11 +1341,11 @@ function _getColor(index, bundle) {
  * @param {int} index
  * @param {MANTICORE.type.AssetBundle} bundle
  * @param {string} link
- * @param {*} defaultValue
+ * @param {*} [defaultValue]
  * @returns {*}
  */
 
-function _extractValue(index, bundle, link, defaultValue) {
+function _extractValue(index, bundle, link, defaultValue = null) {
     const bundleData = bundle[link];
     return !Type.isEmpty(bundleData) && index !== -1 ? bundleData[index] : defaultValue;
 }
