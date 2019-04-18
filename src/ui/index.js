@@ -7,6 +7,7 @@ import ImageView from "./ImageView";
 import Label from "./Label";
 import ListView from "./ListView";
 import Panel from "./Panel";
+import ParticleEmitter from "./ParticleEmitter";
 import ProgressBar from "./ProgressBar";
 import ScrollView from "./ScrollView";
 import Slider from "./Slider";
@@ -30,6 +31,7 @@ const ui = {
     Label,
     ListView,
     Panel,
+    ParticleEmitter,
     ProgressBar,
     ScrollView,
     Slider,

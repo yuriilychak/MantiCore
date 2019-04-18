@@ -1425,6 +1425,12 @@ declare namespace MANTICORE {
                 GRAPHIC = 0,
                 SPRITE =  1
             }
+
+            export enum CONTAINER_TYPE {
+                DEFAULT = 0,
+                PARTICLE = 1
+            }
+
             export enum HORIZONTAL_ALIGN {
                 NONE = 0,
                 LEFT = 1,
@@ -1465,6 +1471,12 @@ declare namespace MANTICORE {
                 CLIPPING = 2
             }
 
+            export enum PARTICLE_EVENT {
+                START = 0,
+                EXHAUSTED = 1,
+                COMPLETE = 2
+            }
+
             export enum SCROLL_DIRECTION {
                 NONE = 0,
                 VERTICAL = 1,
@@ -1503,7 +1515,8 @@ declare namespace MANTICORE {
                 SCROLL_VIEW = 15,
                 LIST_VIEW = 16,
                 PAGE_VIEW = 17,
-                SPINE = 18
+                SPINE = 18,
+                PARTICLE = 19
             }
 
             export enum VERTICAL_ALIGN {
@@ -2104,6 +2117,24 @@ declare namespace MANTICORE {
             selected: boolean;
 
             protected onActionClickHandler(event: Object): void;
+        }
+
+        export class  ParticleEmitter extends MANTICORE.view.ComponentContainer {
+            constructor(particleName:string, containerType?: MANTICORE.enumerator.ui.CONTAINER_TYPE);
+
+            public readonly canEmit: boolean;
+            public readonly particleType: MANTICORE.enumerator.PARTICLE_TYPE;
+            public readonly particleName: string;
+            public readonly containerType: MANTICORE.enumerator.ui.CONTAINER_TYPE;
+
+            public eventStart: string;
+            public eventComplete: string;
+            public eventExhausted: string;
+
+            public emitParticle(scale?: number, paused?: boolean, delay?: number);
+            public resume();
+            public pause();
+            public stop(killImmediately?: boolean);
         }
 
         export class ImageView extends MANTICORE.view.Slice9Sprite{

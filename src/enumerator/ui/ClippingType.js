@@ -5,7 +5,9 @@
  * @memberOf MANTICORE.enumerator.ui
  */
 
-export default {
+const CLIPPING_TYPE = {
     GRAPHIC: 0,
     SPRITE: 1
-}
+};
+
+export default CLIPPING_TYPE;
