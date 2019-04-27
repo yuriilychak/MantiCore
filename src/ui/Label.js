@@ -575,6 +575,10 @@ class Label extends BaseLabel {
             return;
         }
         super.letterSpacing = value;
+        this._label.letterSpacing = value;
+        if (this._isShadowEnabled) {
+            this._shadow.letterSpacing = value;
+        }
         this._updateAutoSize();
     }
 
