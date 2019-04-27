@@ -526,6 +526,8 @@ class Label extends BaseLabel {
         if (this._isShadowEnabled) {
             this._shadow.fontName = value;
         }
+
+        this._updateAutoSize();
     }
 
     /**
