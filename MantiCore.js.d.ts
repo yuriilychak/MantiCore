@@ -2373,6 +2373,8 @@ declare namespace MANTICORE {
             export function setSaturation(color: number, saturation: number): number;
             export function intToRgb(value: number): number[];
             export function intToHsl(value: number): number[];
+            export function intToHex(value: number): string;
+            export function hexToInt(value: string): number;
             export function hslToInt(hue: number, saturation: number, lightness: number): number;
             export function rgbToInt(red: number, green: number, blue: number): number;
             export function rgbToHsl(red: number, green: number, blue: number): number[];

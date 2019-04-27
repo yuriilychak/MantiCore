@@ -162,6 +162,28 @@ const color = {
         return [red, green, blue];
     },
 
+    /**
+     * @desc Convert hex color to int color
+     * @memberOf MANTICORE.util.color
+     * @param {string} value
+     * @return {number}
+     */
+
+    hexToInt(value) {
+        return parseInt(value.replace("#", ""), 16);
+    },
+
+    /**
+     * @desc Convert int color to hex.
+     * @memberOf MANTICORE.util.color
+     * @param {number} value
+     * @return {string}
+     */
+
+    intToHex(value) {
+        return "#" + value.toString(16);
+    },
+
     /**s
      * @desc Convert int to Hls values.
      * @param {int} value
