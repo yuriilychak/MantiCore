@@ -517,6 +517,17 @@ class Label extends BaseLabel {
         return this._label.fontName;
     }
 
+    set fontName(value) {
+        if (this._label.fontName === value) {
+            return;
+        }
+        this._label.fontName = value;
+
+        if (this._isShadowEnabled) {
+            this._shadow.fontName = value;
+        }
+    }
+
     /**
      * @public
      * @type {int}

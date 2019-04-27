@@ -2119,7 +2119,7 @@ declare namespace MANTICORE {
             protected onActionClickHandler(event: Object): void;
         }
 
-        export class  ParticleEmitter extends MANTICORE.view.ComponentContainer {
+        export class ParticleEmitter extends MANTICORE.view.ComponentContainer {
             constructor(particleName:string, containerType?: MANTICORE.enumerator.ui.CONTAINER_TYPE);
 
             public readonly canEmit: boolean;
@@ -2135,6 +2135,9 @@ declare namespace MANTICORE {
             public resume();
             public pause();
             public stop(killImmediately?: boolean);
+
+            // noinspection JSAnnotator
+            static create(particleName:string, containerType?: MANTICORE.enumerator.ui.CONTAINER_TYPE): MANTICORE.ui.ParticleEmitter;
         }
 
         export class ImageView extends MANTICORE.view.Slice9Sprite{
