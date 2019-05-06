@@ -333,7 +333,7 @@ class AtlasLabel extends BaseLabel {
         if (this._text === value) {
             return;
         }
-        this._text = value;
+        this._text = value.toString();
 
         const textLength = this._text.length;
         const baseFrame = this._fontFrame.frame;
