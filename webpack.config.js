@@ -25,7 +25,7 @@ module.exports = {
         modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
     output: {
-        filename: 'manticore.js',
+        filename: 'mCore.js',
         path: path.resolve(__dirname, 'dist'),
         library: 'mCore'
     },
