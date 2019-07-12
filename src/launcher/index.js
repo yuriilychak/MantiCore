@@ -1,4 +1,3 @@
-import RESOLUTION from "enumerator/Resolution";
 import Timer from "timer";
 import Boot from "boot";
 import Type from "util/Type";
@@ -66,37 +65,24 @@ export default {
     _crtScene: null,
 
     /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
      * @desc create application with parameters.
      * @function
      * @memberOf MANTICORE.launcher
-     * @param {MANTICORE.enumerator.RESOLUTION | int[]} resolution
+     * @param {int} [designWidth = 800]
+     * @param {int} [designHeight = 600]
      * @param {MANTICORE.launcher.AppConfig} [config = {}]
-     * @param {Function} [onComplete]
+     * @param {Function} [onComplete = null]
+     * @param {HTMLElement} [parentContainer = null]
      */
-    initApp: function (parentContainer, resolution, config = {}, onComplete = null) {
+
+    initApp(config = {}, designWidth = 800, designHeight = 600, onComplete = null, parentContainer = null) {
         Boot.init(() => {
-            if (Type.isArray(resolution)) {
-                this._designResolution.set(resolution[0], resolution[1]);
-            }
-            else {
-                switch (resolution) {
-                    case RESOLUTION.R_800_600: {
-                        this._designResolution.set(800, 600);
-                        break;
-                    }
-                    case RESOLUTION.R_1280_720: {
-                        this._designResolution.set(1280, 720);
-                        break;
-                    }
-                    case RESOLUTION.R_1920_1080: {
-                        this._designResolution.set(1920, 1080);
-                        break;
-                    }
-                    default: {
-                        this._designResolution.set(640, 480);
-                    }
-                }
-            }
+            this._designResolution.set(designWidth, designHeight);
 
             this._appResolution.copyFrom(this._designResolution);
             this._canvasResolution.copyFrom(this._designResolution);
@@ -105,7 +91,11 @@ export default {
             config.height = Type.setValue(config.height, this._designResolution.y);
 
             this._app = new PIXI.Application(this._designResolution.x, this._designResolution.y, config);
-            parentContainer.appendChild(this._app.view);
+
+            if (!Type.isNull(parentContainer)) {
+                parentContainer.appendChild(this._app.view);
+            }
+
             Timer.enterFrameTimer = this._app.ticker;
 
             ParticleSystem.init();
@@ -133,7 +123,7 @@ export default {
      * @param {MANTICORE.view.Scene} scene
      */
 
-    runScene: function(scene) {
+    runScene(scene) {
         if (!Type.isNull(this._crtScene)) {
             this._crtScene.kill();
         }
@@ -148,20 +138,50 @@ export default {
      * @public
      * @param {number} width
      * @param {number} height
+     * @param {boolean} [resizeRenderer = false]
      */
 
-    resize: function(width, height) {
-        this._canvasResolution.set(width, height);
-        const proportion = Math.min(this._canvasResolution.x / this._designResolution.x, this._canvasResolution.y / this._designResolution.y);
+    resize(width, height, resizeRenderer = false) {
+        this._canvasResolution.set(Math.ceil(width), Math.ceil(height));
+
+        if (!resizeRenderer) {
+            const proportion = Math.min(
+                this._canvasResolution.x / this._designResolution.x,
+                this._canvasResolution.y / this._designResolution.y
+            );
+            this._doResize(proportion);
+        }
+        else {
+            this._designResolution.copyFrom(this._canvasResolution);
+            this._doResize();
+        }
+    },
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Resize rendere and canvas
+     * @function
+     * @param {number} [proportion = 1]
+     * @private
+     */
+
+    _doResize(proportion = 1) {
         this._appResolution.x =  Math.ceil(this._canvasResolution.x / proportion);
         this._appResolution.y = Math.ceil(this._canvasResolution.y / proportion);
-
         this._app.renderer.resize(this._designResolution.x, this._designResolution.y);
-        this._app.view.style.width = `${Math.ceil(this._designResolution.x * proportion)}px`;
-        this._app.view.style.height = `${Math.ceil(this._designResolution.y * proportion)}px`;
-
+        this._app.view.width = Math.ceil(this._designResolution.x * proportion);
+        this._app.view.height = Math.ceil(this._designResolution.y * proportion);
         EventDispatcher.dispatch(SYSTEM_EVENT.RESIZE);
     },
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @desc Returns design resolution of app.
