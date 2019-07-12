@@ -1,4 +1,4 @@
-declare namespace MANTICORE {
+declare namespace mCore {
     export namespace animation {
         export namespace action {
             export class Action extends MANTICORE.memory.ReusableObject{

@@ -25,9 +25,9 @@ module.exports = {
         modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
     output: {
-        filename: 'MantiCore.js',
+        filename: 'manticore.js',
         path: path.resolve(__dirname, 'dist'),
-        library: 'MANTICORE'
+        library: 'mCore'
     },
     plugins: [
         new JsDocPlugin({
