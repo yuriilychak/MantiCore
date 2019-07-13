@@ -2961,7 +2961,7 @@ export default {
 
     add(font, fontName, baseTexture, resolution) {
         const fontData = {};
-        const res = PIXI.utils.getResolutionOfUrl(baseTexture.imageUrl, resolution);
+        const res = PIXI.utils.getResolutionOfUrl(baseTexture.url, resolution);
 
         fontData.font = fontName;
         fontData.size = font.size;

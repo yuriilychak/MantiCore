@@ -158,7 +158,7 @@ class TextureAtlas extends ReusableObject{
 
         const scale = atlas.scale;
 
-        this._resolution = PIXI.utils.getResolutionOfUrl(this._baseTexture.imageUrl, null);
+        this._resolution = PIXI.utils.getResolutionOfUrl(this._baseTexture.url, null);
 
         if (Type.isNull(this._resolution)) {
             this._resolution = scale;
