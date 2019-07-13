@@ -27,7 +27,8 @@ module.exports = {
     output: {
         filename: 'mCore.js',
         path: path.resolve(__dirname, 'dist'),
-        library: 'mCore'
+        library: 'mCore',
+        libraryTarget: 'window'
     },
     plugins: [
         new JsDocPlugin({

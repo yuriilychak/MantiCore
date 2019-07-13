@@ -212,7 +212,7 @@ export default {
 
         this.TOUCHES_ENABLED = Type.toBoolean(!Type.isUndefined(docEle["ontouchstart"]) || !Type.isUndefined(document["ontouchstart"]) || navigator.msPointerEnabled);
         this.MOUSE_ENABLED = !Type.isUndefined(docEle["onmouseup"]);
-        this.MOUSE_WHEEL_ENABLED = !Type.isUndefined(docEle["wheel"]) || !Type.isUndefined(docEle["mousewheel"]) || !Type.isUndefined(docEle["DOMMouseScroll"]);
+        this.MOUSE_WHEEL_ENABLED = !Type.isUndefined(docEle["onwheel"]) || !Type.isUndefined(docEle["onmousewheel"]) || !Type.isUndefined(docEle["onDOMMouseScroll"]);
         this.KEYBOARD_ENABLED = !Type.isUndefined(docEle["onkeyup"]);
         this.ACCELEROMETER_ENABLED = Type.toBoolean(Type.setValue(window.DeviceMotionEvent, window.DeviceOrientationEvent));
         this.TYPED_ARRAY_SUPPORTED = "Uint8ClampedArray" in window; //Cause IE10 don"t support this type of arrays.
@@ -249,15 +249,15 @@ export default {
             let eventName;
 
             switch (true) {
-                case !Type.isUndefined(docEle["wheel"]): {
+                case !Type.isUndefined(docEle["onwheel"]): {
                     eventName = "wheel";
                     break;
                 }
-                case !Type.isUndefined(docEle["mousewheel"]): {
+                case !Type.isUndefined(docEle["onmousewheel"]): {
                     eventName = "mousewheel";
                     break;
                 }
-                case !Type.isUndefined(docEle["DOMMouseScroll"]): {
+                case !Type.isUndefined(docEle["onDOMMouseScroll"]): {
                     eventName = "DOMMouseScroll";
                     break;
                 }
