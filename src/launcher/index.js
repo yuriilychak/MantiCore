@@ -90,7 +90,7 @@ export default {
             config.width = Type.setValue(config.width, this._designResolution.x);
             config.height = Type.setValue(config.height, this._designResolution.y);
 
-            this._app = new PIXI.Application(this._designResolution.x, this._designResolution.y, config);
+            this._app = new PIXI.Application(config);
 
             if (!Type.isNull(parentContainer)) {
                 parentContainer.appendChild(this._app.view);
@@ -103,7 +103,7 @@ export default {
             if (!Type.isNull(onComplete)) {
                 onComplete();
             }
-        });
+        }, Type.setValue(parentContainer, config.view.parentNode));
     },
 
     /**

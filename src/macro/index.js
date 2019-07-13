@@ -46,6 +46,14 @@ export default {
     KEYBOARD_ENABLED: false,
 
     /**
+     * @desc Is use mouse wheel in game.
+     * @type {boolean}
+     * @memberOf MANTICORE.macro
+     */
+
+    MOUSE_WHEEL_ENABLED: false,
+
+    /**
      * @desc Is block browser hot keys (space, arrows and etc.).
      * @type {boolean}
      * @memberOf MANTICORE.macro

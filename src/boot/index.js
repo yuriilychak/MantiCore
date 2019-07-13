@@ -129,6 +129,15 @@ export default {
     ACCELEROMETER_ENABLED: false,
 
     /**
+     * @desc Flag is mouse wheel input enabled.
+     * @type {boolean}
+     * @readonly
+     * @memberOf MANTICORE.boot
+     */
+
+    MOUSE_WHEEL_ENABLED: false,
+
+    /**
      * @desc Flag is typed array such Int8Array are support.
      * @type {boolean}
      * @readonly
@@ -164,10 +173,11 @@ export default {
      * @desc Init engine
      * @function
      * @param {Function} callback
+     * @param {HTMLDivElement} parentContainer
      * @memberOf MANTICORE.boot
      */
 
-    init: function(callback) {
+    init(callback, parentContainer) {
 
         const docEle = document.documentElement;
 
@@ -201,10 +211,11 @@ export default {
          */
 
         this.TOUCHES_ENABLED = Type.toBoolean(!Type.isUndefined(docEle["ontouchstart"]) || !Type.isUndefined(document["ontouchstart"]) || navigator.msPointerEnabled);
-        this.MOUSE_ENABLED = !Type.isUndefined(docEle['onmouseup']);
-        this.KEYBOARD_ENABLED = !Type.isUndefined(docEle['onkeyup']);
+        this.MOUSE_ENABLED = !Type.isUndefined(docEle["onmouseup"]);
+        this.MOUSE_WHEEL_ENABLED = !Type.isUndefined(docEle["wheel"]) || !Type.isUndefined(docEle["mousewheel"]) || !Type.isUndefined(docEle["DOMMouseScroll"]);
+        this.KEYBOARD_ENABLED = !Type.isUndefined(docEle["onkeyup"]);
         this.ACCELEROMETER_ENABLED = Type.toBoolean(Type.setValue(window.DeviceMotionEvent, window.DeviceOrientationEvent));
-        this.TYPED_ARRAY_SUPPORTED = "Uint8ClampedArray" in window; //Cause IE10 don't support this type of arrays.
+        this.TYPED_ARRAY_SUPPORTED = "Uint8ClampedArray" in window; //Cause IE10 don"t support this type of arrays.
 
         const maxDimension = Math.max(window.screen.height, window.screen.width) * (Type.setValue(window.devicePixelRatio, 1));
 
@@ -225,12 +236,38 @@ export default {
 
         if (this.KEYBOARD_ENABLED && Macro.KEYBOARD_ENABLED) {
             const keyboardManager = PIXI.keyboardManager;
-            keyboardManager.on('down', this._onKeyDownHandler, this);
-            keyboardManager.on('pressed', this._onKeyPressedHandler, this);
-            keyboardManager.on('released', this._onKeyReleaseHandler, this);
+            keyboardManager.on("down", this._onKeyDownHandler, this);
+            keyboardManager.on("pressed", this._onKeyPressedHandler, this);
+            keyboardManager.on("released", this._onKeyReleaseHandler, this);
 
             if (Macro.BLOCK_BROWSER_HOT_KEYS) {
                 window.addEventListener("keydown", this._onBrowserHotKeyHandler, false);
+            }
+        }
+
+        if (this.MOUSE_ENABLED && this.MOUSE_WHEEL_ENABLED && Macro.MOUSE_WHEEL_ENABLED) {
+            let eventName;
+
+            switch (true) {
+                case !Type.isUndefined(docEle["wheel"]): {
+                    eventName = "wheel";
+                    break;
+                }
+                case !Type.isUndefined(docEle["mousewheel"]): {
+                    eventName = "mousewheel";
+                    break;
+                }
+                case !Type.isUndefined(docEle["DOMMouseScroll"]): {
+                    eventName = "DOMMouseScroll";
+                    break;
+                }
+                default: {
+                    eventName = null;
+                }
+            }
+
+            if (!Type.isNull(eventName)) {
+                parentContainer.addEventListener(eventName, this._onMouseWheel, false);
             }
         }
 
@@ -276,58 +313,58 @@ export default {
         const nVer = navigator.appVersion;
         const nAgt = navigator.userAgent;
         let browser = navigator.appName;
-        let version = '' + parseFloat(navigator.appVersion);
+        let version = "" + parseFloat(navigator.appVersion);
         let nameOffset, verOffset, ix;
 
         if (this.CLIENT === CLIENT.BROWSER) {
             switch (true) {
-                case (verOffset = nAgt.indexOf('Opera')) !== -1: {
+                case (verOffset = nAgt.indexOf("Opera")) !== -1: {
                     this.BROWSER = BROWSER.OPERA;
                     version = nAgt.substring(verOffset + 6);
-                    if ((verOffset = nAgt.indexOf('Version')) !== -1) {
+                    if ((verOffset = nAgt.indexOf("Version")) !== -1) {
                         version = nAgt.substring(verOffset + 8);
                     }
                     break;
                 }
-                case (verOffset = nAgt.indexOf('OPR')) !== -1: {
+                case (verOffset = nAgt.indexOf("OPR")) !== -1: {
                     this.BROWSER = BROWSER.OPERA;
                     version = nAgt.substring(verOffset + 4);
                     break;
                 }
-                case (verOffset = nAgt.indexOf('Edge')) !== -1: {
+                case (verOffset = nAgt.indexOf("Edge")) !== -1: {
                     this.BROWSER = BROWSER.EDGE;
                     version = nAgt.substring(verOffset + 5);
                     break;
                 }
-                case (verOffset = nAgt.indexOf('MSIE')) !== -1: {
+                case (verOffset = nAgt.indexOf("MSIE")) !== -1: {
                     this.BROWSER = BROWSER.IE;
                     version = nAgt.substring(verOffset + 5);
                     break
                 }
-                case (verOffset = nAgt.indexOf('Chrome')) !== -1: {
+                case (verOffset = nAgt.indexOf("Chrome")) !== -1: {
                     this.BROWSER = BROWSER.CHROME;
                     version = nAgt.substring(verOffset + 7);
                     break;
                 }
-                case (verOffset = nAgt.indexOf('Safari')) !== -1: {
+                case (verOffset = nAgt.indexOf("Safari")) !== -1: {
                     this.BROWSER = BROWSER.SAFARI;
                     version = nAgt.substring(verOffset + 7);
-                    if ((verOffset = nAgt.indexOf('Version')) !== -1) {
+                    if ((verOffset = nAgt.indexOf("Version")) !== -1) {
                         version = nAgt.substring(verOffset + 8);
                     }
                     break;
                 }
-                case (verOffset = nAgt.indexOf('Firefox')) !== -1: {
+                case (verOffset = nAgt.indexOf("Firefox")) !== -1: {
                     this.BROWSER = BROWSER.FIREFOX;
                     version = nAgt.substring(verOffset + 8);
                     break;
                 }
-                case nAgt.indexOf('Trident/') !== -1: {
+                case nAgt.indexOf("Trident/") !== -1: {
                     this.BROWSER = BROWSER.IE;
-                    version = nAgt.substring(nAgt.indexOf('rv:') + 3);
+                    version = nAgt.substring(nAgt.indexOf("rv:") + 3);
                     break;
                 }
-                case (nameOffset = nAgt.lastIndexOf(' ') + 1) < (verOffset = nAgt.lastIndexOf('/')): {
+                case (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")): {
                     browser = nAgt.substring(nameOffset, verOffset);
                     version = nAgt.substring(verOffset + 1);
                     break;
@@ -337,11 +374,11 @@ export default {
                 }
             }
             // trim the version string
-            if ((ix = version.indexOf(';')) !== -1) version = version.substring(0, ix);
-            if ((ix = version.indexOf(' ')) !== -1) version = version.substring(0, ix);
-            if ((ix = version.indexOf(')')) !== -1) version = version.substring(0, ix);
+            if ((ix = version.indexOf(";")) !== -1) version = version.substring(0, ix);
+            if ((ix = version.indexOf(" ")) !== -1) version = version.substring(0, ix);
+            if ((ix = version.indexOf(")")) !== -1) version = version.substring(0, ix);
 
-            version = parseInt('' + version, 10);
+            version = parseInt("" + version, 10);
             if (isNaN(version)) {
                 version = parseInt(navigator.appVersion, 10);
             }
@@ -360,8 +397,8 @@ export default {
          * -------------------------------------------------------------------------------------------------------------
          */
         if (Type.isUndefined(navigator.cookieEnabled)) {
-            document.cookie = 'testcookie';
-            this.COOKIES_ENABLED = document.cookie.indexOf('testcookie') !== -1;
+            document.cookie = "testcookie";
+            this.COOKIES_ENABLED = document.cookie.indexOf("testcookie") !== -1;
         }
         else {
             this.COOKIES_ENABLED = navigator.cookieEnabled;
@@ -432,67 +469,67 @@ export default {
 
 
                     switch (true) {
-                        case Type.toBoolean(nAgt.match('CentOS')): {
-                            this.OS_VERSION = 'CentOS';
+                        case Type.toBoolean(nAgt.match("CentOS")): {
+                            this.OS_VERSION = "CentOS";
                             if (match = /CentOS\/[0-9\.\-]+el([0-9_]+)/.exec(nAgt)) {
-                                this.OS_VERSION += " " + match[1].replace(/_/g,'.');
+                                this.OS_VERSION += " " + match[1].replace(/_/g,".");
                             }
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Debian')): {
-                            this.OS_VERSION = 'Debian';
+                        case Type.toBoolean(nAgt.match("Debian")): {
+                            this.OS_VERSION = "Debian";
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Fedora')): {
-                            this.OS_VERSION = 'Fedora';
+                        case Type.toBoolean(nAgt.match("Fedora")): {
+                            this.OS_VERSION = "Fedora";
                             if (match = /Fedora\/[0-9\.\-]+fc([0-9]+)/.exec(nAgt)) {
                                 this.OS_VERSION += " " + match[1];
                             }
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Gentoo')): {
-                            this.OS_VERSION = 'Gentoo';
+                        case Type.toBoolean(nAgt.match("Gentoo")): {
+                            this.OS_VERSION = "Gentoo";
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Kubuntu')): {
-                            this.OS_VERSION = 'Kubuntu';
+                        case Type.toBoolean(nAgt.match("Kubuntu")): {
+                            this.OS_VERSION = "Kubuntu";
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Mandriva Linux')): {
-                            this.OS_VERSION = 'Mandriva';
+                        case Type.toBoolean(nAgt.match("Mandriva Linux")): {
+                            this.OS_VERSION = "Mandriva";
                             if (match = /Mandriva Linux\/[0-9\.\-]+mdv([0-9]+)/.exec(nAgt)) {
                                 this.os.version += " " + match[1];
                             }
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Mageia')): {
-                            this.OS_VERSION = 'Mageia';
+                        case Type.toBoolean(nAgt.match("Mageia")): {
+                            this.OS_VERSION = "Mageia";
                             if (match = /Mageia\/[0-9\.\-]+mga([0-9]+)/.exec(nAgt)) {
                                 this.os.version += " " + match[1];
                             }
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Red Hat')): {
-                            this.OS_VERSION = 'Red Hat';
+                        case Type.toBoolean(nAgt.match("Red Hat")): {
+                            this.OS_VERSION = "Red Hat";
                             if (match = /Red Hat[^\/]*\/[0-9\.\-]+el([0-9_]+)/.exec(nAgt)) {
-                                this.OS_VERSION += " " + match[1].replace(/_/g,'.');
+                                this.OS_VERSION += " " + match[1].replace(/_/g,".");
                             }
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Slackware')): {
-                            this.OS_VERSION = 'Slackware';
+                        case Type.toBoolean(nAgt.match("Slackware")): {
+                            this.OS_VERSION = "Slackware";
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('SUSE')): {
-                            this.OS_VERSION = 'SUSE';
+                        case Type.toBoolean(nAgt.match("SUSE")): {
+                            this.OS_VERSION = "SUSE";
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Turbolinux')): {
-                            this.OS_VERSION = 'Turbolinux';
+                        case Type.toBoolean(nAgt.match("Turbolinux")): {
+                            this.OS_VERSION = "Turbolinux";
                             break;
                         }
-                        case Type.toBoolean(nAgt.match('Ubuntu')): {
-                            this.OS_VERSION = 'Ubuntu';
+                        case Type.toBoolean(nAgt.match("Ubuntu")): {
+                            this.OS_VERSION = "Ubuntu";
                             if (match = /Ubuntu\/([0-9.]*)/.exec(nAgt)) {
                                 this.OS_VERSION += " " + match[1];
                             }
@@ -515,7 +552,7 @@ export default {
             case /(iPhone|iPad|iPod)/.test(nAgt): {
                 this.OS = OS.IOS;
                 const osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
-                this.OS_VERSION = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+                this.OS_VERSION = osVersion[1] + "." + osVersion[2] + "." + (osVersion[3] | 0);
                 break;
             }
             case /Mac OS X/.test(nAgt): {
@@ -572,7 +609,7 @@ export default {
 
         const webP = new Image();
 
-        webP.src = 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wA' + 'iMwAgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA';
+        webP.src = "data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wA" + "iMwAgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA";
         webP.onload = webP.onerror = () => {
             if (webP.height === 2) {
                 this.SUPPORTED_FORMATS.push(TEXTURE_FORMAT.WEB_P);
@@ -645,12 +682,23 @@ export default {
 
     /**
      * @function
+     * @param {string} event
+     * @param  {int} key
+     * @private
+     */
+
+    _dispatchKeyboardEvent(event, key) {
+        EventDispatcher.dispatch(event, this, key);
+    },
+
+    /**
+     * @function
      * @param {int} key
      * @private
      */
 
     _onKeyDownHandler(key) {
-        EventDispatcher.dispatch(KEYBOARD_EVENT.DOWN, this, key);
+       this._dispatchKeyboardEvent(KEYBOARD_EVENT.DOWN, key);
     },
 
     /**
@@ -660,7 +708,7 @@ export default {
      */
 
     _onKeyPressedHandler(key) {
-        EventDispatcher.dispatch(KEYBOARD_EVENT.PRESS, this, key);
+        this._dispatchKeyboardEvent(KEYBOARD_EVENT.PRESS, key);
     },
 
     /**
@@ -670,8 +718,9 @@ export default {
      */
 
     _onKeyReleaseHandler(key) {
-        EventDispatcher.dispatch(KEYBOARD_EVENT.RELEASE, this, key);
+        this._dispatchKeyboardEvent(KEYBOARD_EVENT.RELEASE, key);
     },
+
 
     /**
      * @function
@@ -703,13 +752,17 @@ export default {
         }
     },
 
+    _onMouseWheel(event) {
+        EventDispatcher.dispatch(SYSTEM_EVENT.WHEEL, event);
+    },
+
     /**
      * @desc Calls when user change tab.
      * @function
      * @private
      */
 
-    _onVisibleChangeHandler: function() {
+    _onVisibleChangeHandler() {
         EventDispatcher.dispatch(document.hidden ? SYSTEM_EVENT.HIDDEN : SYSTEM_EVENT.VISIBLE);
     },
 
@@ -719,7 +772,7 @@ export default {
      * @private
      */
 
-    _onFocusHandler: function () {
+    _onFocusHandler() {
         EventDispatcher.dispatch(SYSTEM_EVENT.FOCUS);
     },
 
@@ -729,7 +782,7 @@ export default {
      * @private
      */
 
-    _onBlurHandler: function () {
+    _onBlurHandler() {
         EventDispatcher.dispatch(SYSTEM_EVENT.BLUR);
     }
 };

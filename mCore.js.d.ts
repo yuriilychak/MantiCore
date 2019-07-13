@@ -856,6 +856,7 @@ declare namespace mCore {
         export const COOKIES_ENABLED: boolean;
         export const PLATFORM: MANTICORE.enumerator.system.PLATFORM;
         export const MOUSE_ENABLED: boolean;
+        export const MOUSE_WHEEL_ENABLED: boolean;
         export const KEYBOARD_ENABLED: boolean;
         export const TOUCHES_ENABLED: boolean;
         export const ACCELEROMETER_ENABLED: boolean;
@@ -863,7 +864,7 @@ declare namespace mCore {
         export const SUPPORTED_FORMATS: MANTICORE.enumerator.TEXTURE_FORMAT[];
         export const RESOLUTION: MANTICORE.enumerator.RESOLUTION;
 
-        export function init(callback: Function);
+        export function init(callback: Function, parentContainer: HTMLDivElement);
         export function isMobile(): boolean;
         export function isDesktop(): boolean;
         export function dump(): void;
@@ -1357,7 +1358,8 @@ declare namespace mCore {
                 VISIBLE = "SYSTEM.VISIBLE",
                 HIDDEN = "SYSTEM.HIDDEN",
                 LOCALE_CHANGE = "SYSTEM.LOCALE_CHANGE",
-                RESIZE = "SYSTEM.RESIZE"
+                RESIZE = "SYSTEM.RESIZE",
+                WHEEL = "SYSTEM.WHEEL"
             }
         }
 
@@ -1668,6 +1670,7 @@ declare namespace mCore {
         export let USE_WEB_P_FALLBACK: boolean;
         export let PARTICLES_ENABLED: boolean;
         export let KEYBOARD_ENABLED: boolean;
+        export let MOUSE_WHEEL_ENABLED: boolean;
         export let BLOCK_BROWSER_HOT_KEYS: boolean;
         export let MODE: MANTICORE.enumerator.ENGINE_MODE;
         export let DEFAULT_POOL_SIZE: number;
