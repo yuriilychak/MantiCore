@@ -175,6 +175,9 @@ export default {
         this._app.renderer.resize(this._designResolution.x, this._designResolution.y);
         this._app.view.width = Math.ceil(this._designResolution.x * proportion);
         this._app.view.height = Math.ceil(this._designResolution.y * proportion);
+        if (proportion === 1) {
+            this._app.renderer.resolution = 1;
+        }
         EventDispatcher.dispatch(SYSTEM_EVENT.RESIZE);
     },
 
