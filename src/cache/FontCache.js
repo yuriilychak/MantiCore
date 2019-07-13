@@ -3009,7 +3009,7 @@ export default {
                 fontData.chars[second].kerning[first] = amount;
             }
         }
-        PIXI.extras.BitmapText.fonts[fontData.font] = fontData;
+        PIXI.BitmapText.fonts[fontData.font] = fontData;
         nameSplit = fontData.font.split("_");
 
         if (nameSplit.length === 2) {
