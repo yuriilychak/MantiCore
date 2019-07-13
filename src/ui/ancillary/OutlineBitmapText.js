@@ -33,11 +33,11 @@ class OutlineBitmapText extends PIXI.Container {
 
         /**
          * @desc Label that contain text.
-         * @type {PIXI.extras.BitmapText}
+         * @type {PIXI.BitmapText}
          * @private
          */
 
-        this._label = new PIXI.extras.BitmapText("", {
+        this._label = new PIXI.BitmapText("", {
             font: {
                 name: fontName,
                 size: size
@@ -69,7 +69,7 @@ class OutlineBitmapText extends PIXI.Container {
         this._isOutlineEnabled = false;
 
         /**
-         * @type {?PIXI.extras.BitmapText[]}
+         * @type {?PIXI.BitmapText[]}
          * @private
          */
 
@@ -220,11 +220,11 @@ class OutlineBitmapText extends PIXI.Container {
      * @desc Create clone of label. Need to create outlines and shadows.
      * @method
      * @private
-     * @return {PIXI.extras.BitmapText}
+     * @return {PIXI.BitmapText}
      */
 
     _cloneLabel() {
-        const result = new PIXI.extras.BitmapText("", {
+        const result = new PIXI.BitmapText("", {
             font: {
                 name: this._label.font.name,
                 size: this._label.font.size

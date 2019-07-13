@@ -23,12 +23,12 @@ const asset = {
         const textureCache = PIXI.utils.TextureCache;
 
         if (textureCache[link]) {
-            return PIXI.Texture.fromFrame(link);
+            return PIXI.Texture.from(link);
         }
         const typedLink = Format.addFileType(link, FILE_TYPE.PNG);
 
         if (textureCache[typedLink]) {
-            return PIXI.Texture.fromFrame(typedLink);
+            return PIXI.Texture.from(typedLink);
         }
 
         return null;
