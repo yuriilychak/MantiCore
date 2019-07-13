@@ -753,7 +753,7 @@ export default {
     },
 
     _onMouseWheel(event) {
-        EventDispatcher.dispatch(SYSTEM_EVENT.WHEEL, event);
+        EventDispatcher.dispatch(SYSTEM_EVENT.WHEEL, this, event);
     },
 
     /**
