@@ -227,7 +227,6 @@ class TextureAtlas extends ReusableObject{
      * @desc Calculate UV cord for dimension
      * @method
      * @param {int} value
-     * @param  {number} scale
      * @return {number}
      * @private
      */
