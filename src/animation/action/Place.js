@@ -5,15 +5,15 @@ import Point from "geometry/Point";
 /**
  * @desc Places display object in a certain position
  * @class
- * @extends MANTICORE.animation.action.ActionInstant
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
  */
 
 class Place extends ActionInstant {
 
     /**
      * @constructor
-     * @param {MANTICORE.geometry.Point | number} x
+     * @param {mCore.geometry.Point | number} x
      * @param {number} [y]
      */
 
@@ -21,7 +21,7 @@ class Place extends ActionInstant {
         super();
 
         /**
-         * @type {?MANTICORE.geometry.Point}
+         * @type {?mCore.geometry.Point}
          * @private
          */
         this._position = null;
@@ -39,7 +39,7 @@ class Place extends ActionInstant {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point | number} x
+     * @param {mCore.geometry.Point | number} x
      * @param {number} [y]
      */
 
@@ -61,14 +61,14 @@ class Place extends ActionInstant {
      */
 
     update(dt) {
-        this.target.position.copy(this._position);
+        this.target.position.copyFrom(this._position);
     }
 
     /**
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Place}
+     * @return {mCore.animation.action.Place}
      */
 
     clone(){
@@ -79,7 +79,7 @@ class Place extends ActionInstant {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Place}
+     * @return {mCore.animation.action.Place}
      */
 
     reverse () {

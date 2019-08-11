@@ -4,8 +4,8 @@ import Point from "geometry/Point";
 /**
  * @desc Base action for manipulate with point transformations (scale, position, skew).
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  */
 
 class PointAction extends ActionInterval{
@@ -19,21 +19,21 @@ class PointAction extends ActionInterval{
         super(t);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
         this._startPoint = Point.create(0, 0);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
         this._endPoint = Point.create(x, y);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -81,7 +81,7 @@ class PointAction extends ActionInterval{
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get startPoint() {
@@ -90,7 +90,7 @@ class PointAction extends ActionInterval{
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get endPoint() {
@@ -99,7 +99,7 @@ class PointAction extends ActionInterval{
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get delta() {

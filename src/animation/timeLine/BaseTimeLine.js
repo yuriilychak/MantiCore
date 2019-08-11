@@ -14,8 +14,8 @@ import TIME_LINE_TYPE from "enumerator/animation/TimeLineType";
 /**
  * @desc Base class for action and spine time line.
  * @class
- * @memberOf MANTICORE.animation.timeLine
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.animation.timeLine
+ * @extends mCore.memory.ReusableObject
  */
 
 class BaseTimeLine extends ReusableObject{
@@ -81,7 +81,7 @@ class BaseTimeLine extends ReusableObject{
 
         /**
          * @desc Events that dispatch time line.
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
 
@@ -96,7 +96,7 @@ class BaseTimeLine extends ReusableObject{
         this._isLoop = false;
 
         /**
-         * @type {MANTICORE.enumerator.animation.TIME_LINE_TYPE}
+         * @type {mCore.enumerator.animation.TIME_LINE_TYPE}
          * @private
          */
         this._type = TIME_LINE_TYPE.NONE;
@@ -216,7 +216,7 @@ class BaseTimeLine extends ReusableObject{
      * @desc Set event in repository.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {mCore.enumerator.animation.TIME_LINE_EVENT | int} eventId
      * @param {?string} event
      */
 
@@ -305,7 +305,7 @@ class BaseTimeLine extends ReusableObject{
      * @desc Dispatch animation event if it exist.
      * @method
      * @protected
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {mCore.enumerator.animation.TIME_LINE_EVENT | int} eventId
      */
 
     dispatchEvent(eventId) {
@@ -460,7 +460,7 @@ class BaseTimeLine extends ReusableObject{
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.animation.TIME_LINE_TYPE}
+     * @return {mCore.enumerator.animation.TIME_LINE_TYPE}
      */
 
     get type() {

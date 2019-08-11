@@ -7,7 +7,7 @@ import Type from "util/Type";
 /**
  * @desc Namespace that manipulate with timers.
  * @namespace timer
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 
 export default {
@@ -30,7 +30,7 @@ export default {
     enterFrameTimer: null,
 
     /**
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
 
@@ -75,7 +75,7 @@ export default {
 
     add(tickCallback, tickTarget, interval, userData = null, repeatCount = 0, delay = 0, paused = false) {
         /**
-         * @type {MANTICORE.timer.Timer}
+         * @type {mCore.timer.Timer}
          */
         const timer = Timer.create(
             tickCallback,
@@ -112,7 +112,7 @@ export default {
             return false;
         }
         /**
-         * @type {MANTICORE.timer.Timer}
+         * @type {mCore.timer.Timer}
          */
         const timer = this._timers.getElement(id);
         return timer.pause(this.getTime());
@@ -131,7 +131,7 @@ export default {
             return false;
         }
         /**
-         * @type {MANTICORE.timer.Timer}
+         * @type {mCore.timer.Timer}
          */
         const timer = this._timers.getElement(id);
         return timer.start(this.getTime());
@@ -150,7 +150,7 @@ export default {
             return false;
         }
         /**
-         * @type {MANTICORE.timer.Timer}
+         * @type {mCore.timer.Timer}
          */
         const timer = this._timers.getElement(id);
         return timer.resume(this.getTime());
@@ -169,7 +169,7 @@ export default {
             return false;
         }
         /**
-         * @type {MANTICORE.timer.Timer}
+         * @type {mCore.timer.Timer}
          */
         const timer = this._timers.getElement(id);
         timer.stop();
@@ -214,7 +214,7 @@ export default {
             this.enterFrameTimer.start();
         }
         /**
-         * @type {MANTICORE.timer.Timer[]}
+         * @type {mCore.timer.Timer[]}
          */
         const timers = this._timers.values;
         const timerCount = timers.length;
@@ -236,7 +236,7 @@ export default {
         }
 
         /**
-         * @type {MANTICORE.timer.Timer[]}
+         * @type {mCore.timer.Timer[]}
          */
         const timers = this._timers.values;
         const timerCount = timers.length;

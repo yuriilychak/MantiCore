@@ -2,8 +2,8 @@ import Math from "./Math";
 
 /**
  * @desc Namespace that contain function to manipulate with colors.
- * @namespace MANTICORE.util.color
- * @memberOf MANTICORE.util
+ * @namespace mCore.util.color
+ * @memberOf mCore.util
  */
 
 const color = {
@@ -11,7 +11,7 @@ const color = {
     /**
      * @desc Enum with colors.
      * @public
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @enum {int}
      * @readonly
      */
@@ -26,7 +26,7 @@ const color = {
 
     /**
      * @desc Returns lightness of color.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} color
      * @returns {int}
      */
@@ -37,7 +37,7 @@ const color = {
 
     /**
      * @desc Set lightness of color and return new color.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} color - Color for change
      * @param {int} lightness - New lightness
      * @returns {int}
@@ -51,7 +51,7 @@ const color = {
 
     /**
      * @desc Returns hue of color.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} color
      * @returns {int}
      */
@@ -62,7 +62,7 @@ const color = {
 
     /**
      * @desc Set hue of color and return new color.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} color - Color for change
      * @param {int} hue - New lightness
      * @returns {int}
@@ -76,7 +76,7 @@ const color = {
 
     /**
      * @desc Returns saturation of color.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} color
      * @returns {int}
      */
@@ -87,7 +87,7 @@ const color = {
 
     /**
      * @desc Set saturation of color and return new color.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} color - Color for change
      * @param {int} saturation - New lightness
      * @returns {int}
@@ -105,7 +105,7 @@ const color = {
      * @public
      * @param {int} color1
      * @param {int} color2
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      */
 
     multiply(color1, color2) {
@@ -127,7 +127,7 @@ const color = {
 
     /**
      * @desc Method for manipulate with hue
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {number} p
      * @param {number} q
      * @param {number} t
@@ -146,7 +146,7 @@ const color = {
     /**
      * @desc Convert int to RGB values.
      * @param {int} value
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @returns {int[]}
      */
 
@@ -164,7 +164,7 @@ const color = {
 
     /**
      * @desc Convert hex color to int color
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {string} value
      * @return {number}
      */
@@ -175,7 +175,7 @@ const color = {
 
     /**
      * @desc Convert int color to hex.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {number} value
      * @return {string}
      */
@@ -187,7 +187,7 @@ const color = {
     /**s
      * @desc Convert int to Hls values.
      * @param {int} value
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @returns {number[]}
      */
 
@@ -200,7 +200,7 @@ const color = {
      * @desc Convert HSL to int color.
      * @function
      * @public
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {number} hue
      * @param {number} saturation
      * @param {number} lightness
@@ -214,7 +214,7 @@ const color = {
 
     /**
      * @desc Convert rgb to int
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} red
      * @param {int} green
      * @param {int} blue
@@ -227,7 +227,7 @@ const color = {
 
     /**
      * @desc Convert RGB to HSL. Need for change brightness, saturation and lightness of color.
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {int} red
      * @param {int} green
      * @param {int} blue
@@ -279,7 +279,7 @@ const color = {
      * @desc Convert HSL to RGB.
      * @function
      * @public
-     * @memberOf MANTICORE.util.color
+     * @memberOf mCore.util.color
      * @param {number} hue
      * @param {number} saturation
      * @param {number} lightness

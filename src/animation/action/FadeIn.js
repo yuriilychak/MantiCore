@@ -4,8 +4,8 @@ import FadeTo from "./FadeTo";
  * @desc Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.<br/>
  * The "reverse" of this action is FadeOut
  * @class
- * @extends MANTICORE.animation.action.FadeTo
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.FadeTo
+ * @memberOf mCore.animation.action
  */
 
 class FadeIn extends FadeTo{
@@ -22,7 +22,7 @@ class FadeIn extends FadeTo{
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FadeTo}
+     * @return {mCore.animation.action.FadeTo}
      */
 
     reverse() {
@@ -33,7 +33,7 @@ class FadeIn extends FadeTo{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FadeIn}
+     * @return {mCore.animation.action.FadeIn}
      */
 
     clone() {

@@ -9,8 +9,8 @@ import LocalizationCache from "cache/LocalizationCache";
 /**
  * @desc Base Class for ui components.
  * @class
- * @extends MANTICORE.component.Component
- * @memberOf MANTICORE.component.ui
+ * @extends mCore.component.Component
+ * @memberOf mCore.component.ui
  */
 
 class ComUI extends Component {
@@ -31,7 +31,7 @@ class ComUI extends Component {
 
         /**
          * @desc Repository that store child events.
-         * @type {MANTICORE.component.ui.ComUI.ChildEventModel[]}
+         * @type {mCore.component.ui.ComUI.ChildEventModel[]}
          * @private
          */
 
@@ -47,7 +47,7 @@ class ComUI extends Component {
      * @desc Log hierarchy for owner or custom widget.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} [widget = null]
      * @param {number} [maxLevel = -1] - Max level of log hierarchy
      */
 
@@ -59,8 +59,8 @@ class ComUI extends Component {
      * @desc Log labels and buttons that don't localized for owner or custom widget.
      * @function
      * @public
-     * @memberOf MANTICORE.util.ui
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} widget
+     * @memberOf mCore.util.ui
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} widget
      */
 
     logUnlocalizedFields(widget = null) {
@@ -72,7 +72,7 @@ class ComUI extends Component {
      * @public
      * @method
      * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} [widget = null]
      * @returns {?PIXI.Container | * }
      */
 
@@ -85,7 +85,7 @@ class ComUI extends Component {
      * @public
      * @param {*} text - Text to set.
      * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} [widget = null]
      * @returns {boolean}
      */
 
@@ -130,7 +130,7 @@ class ComUI extends Component {
      * @public
      * @param {string} key - Key in localization.
      * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} [widget = null]
      * @returns {boolean}
      */
 
@@ -151,10 +151,10 @@ class ComUI extends Component {
      * @desc Add Component to child.
      * @method
      * @public
-     * @param {MANTICORE.component.Component} component - Component for add to children.
+     * @param {mCore.component.Component} component - Component for add to children.
      * @param {?string} [path = null] - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
-     * @returns {MANTICORE.component.Component}
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} [widget = null]
+     * @returns {mCore.component.Component}
      */
 
     addComponentToChild(component, path = null, widget = null) {
@@ -172,9 +172,9 @@ class ComUI extends Component {
      * @method
      * @public
      * @param {Function} listener - Function to listen child.
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType - Event type that need to listen children.
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType - Event type that need to listen children.
      * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} [widget = null]
      * @returns {boolean}
      */
 
@@ -213,9 +213,9 @@ class ComUI extends Component {
      * @desc Remove child listener.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType - Event type that listen children.
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType - Event type that listen children.
      * @param {string} path - Path to widget. For example "wgtLayer=>pnlMain=>pnlMenu=>uie03=>btnNext"
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} [widget = null]
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} [widget = null]
      * @return {boolean}
      */
 
@@ -259,7 +259,7 @@ class ComUI extends Component {
      * @desc Calls when interactive manager of owner emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
@@ -280,7 +280,7 @@ class ComUI extends Component {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.ui.ComChildListener}
+     * @return {mCore.component.ui.ComChildListener}
      */
 
     clone() {
@@ -295,7 +295,7 @@ class ComUI extends Component {
     /**
      * @desc Iterate child events.
      * @method
-     * @param {MANTICORE.component.ui.ComUI.IterateChildEvents} callback
+     * @param {mCore.component.ui.ComUI.IterateChildEvents} callback
      * @private
      */
 
@@ -334,36 +334,36 @@ class ComUI extends Component {
  * @desc Callback for iterate child event models.
  * @callback IterateChildEvents
  * @typedef {Function}
- * @param {MANTICORE.component.ui.ComUI.ChildEventModel} model
+ * @param {mCore.component.ui.ComUI.ChildEventModel} model
  * @param {int} index
  * @private
- * @memberOf MANTICORE.component.ui.ComUI
+ * @memberOf mCore.component.ui.ComUI
  */
 
 /**
  * @desc Model for save child events.
  * @class
- * @extends MANTICORE.model.Model
+ * @extends mCore.model.Model
  * @private
- * @memberOf MANTICORE.component.ui.ComUI
+ * @memberOf mCore.component.ui.ComUI
  */
 
 class ChildEventModel extends Model {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentSprite | MANTICORE.ui.Widget} target
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} event
+     * @param {mCore.view.ComponentSprite | mCore.ui.Widget} target
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} event
      */
 
     constructor(target, event) {
         super();
         /**
-         * @type {MANTICORE.view.ComponentSprite|MANTICORE.ui.Widget}
+         * @type {mCore.view.ComponentSprite|mCore.ui.Widget}
          * @private
          */
         this._target = target;
         /**
-         * @type {MANTICORE.enumerator.ui.INTERACTIVE_EVENT}
+         * @type {mCore.enumerator.ui.INTERACTIVE_EVENT}
          * @private
          */
         this._event = event;
@@ -375,8 +375,8 @@ class ChildEventModel extends Model {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentSprite | MANTICORE.ui.Widget} target
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} event
+     * @param {mCore.view.ComponentSprite | mCore.ui.Widget} target
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} event
      */
 
     reuse(target, event) {
@@ -419,7 +419,7 @@ class ChildEventModel extends Model {
 
     /**
      * @public
-     * @return {MANTICORE.view.ComponentSprite|MANTICORE.ui.Widget}
+     * @return {mCore.view.ComponentSprite|mCore.ui.Widget}
      */
 
     get target() {
@@ -428,7 +428,7 @@ class ChildEventModel extends Model {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.ui.INTERACTIVE_EVENT}
+     * @return {mCore.enumerator.ui.INTERACTIVE_EVENT}
      */
 
     get event() {

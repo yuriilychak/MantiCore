@@ -4,8 +4,8 @@ import Math from "util/Math";
 
 /**
  * @class
- * @extends MANTICORE.animation.easing.EaseBase
- * @memberOf MANTICORE.animation.easing
+ * @extends mCore.animation.easing.EaseBase
+ * @memberOf mCore.animation.easing
  */
 
 class EaseQuinticInOut extends EaseBase {
@@ -30,7 +30,7 @@ class EaseQuinticInOut extends EaseBase {
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseQuinticInOut}
+     * @returns {mCore.animation.easing.EaseQuinticInOut}
      */
     clone() {
         return EaseQuinticInOut.create();
@@ -40,7 +40,7 @@ class EaseQuinticInOut extends EaseBase {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseQuinticInOut}
+     * @returns {mCore.animation.easing.EaseQuinticInOut}
      */
     reverse() {
         return EaseQuinticInOut.create();

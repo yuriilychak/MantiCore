@@ -2,7 +2,7 @@
  * @desc Enumerator that contain time line types.
  * @name TIME_LINE_TYPE
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.animation
+ * @memberOf mCore.enumerator.animation
  */
 
 export default {

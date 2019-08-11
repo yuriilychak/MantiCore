@@ -9,8 +9,8 @@ import NUMBER_TYPE from "enumerator/NumberType";
 /**
  * @desc Slice 9 sprite to avoid breaking batch.
  * @class
- * @memberOf MANTICORE.view
- * @toc MANTICORE.view.Slice9Sprite
+ * @memberOf mCore.view
+ * @toc mCore.view.Slice9Sprite
  */
 
 class Slice9Sprite extends PIXI.Container {
@@ -29,7 +29,7 @@ class Slice9Sprite extends PIXI.Container {
 
         /**
          * @desc anchor point of sprite.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -160,7 +160,7 @@ class Slice9Sprite extends PIXI.Container {
 
     /**
      * @public
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get anchor() {
@@ -322,7 +322,7 @@ class Slice9Sprite extends PIXI.Container {
     /**
      * @method
      * @private
-     * @param {PIXI.DisplayObject | MANTICORE.view.ComponentContainer} child
+     * @param {PIXI.DisplayObject | mCore.view.ComponentContainer} child
      *
      */
 
@@ -362,7 +362,7 @@ class Slice9Sprite extends PIXI.Container {
      * @param {number} anchor -anchor x or y of sprite.
      * @param {int} minBoundary - left or top slice.
      * @param {int} maxBoundary - right or bottom slice.
-     * @return {MANTICORE.view.Slice9Sprite.DimensionParam}
+     * @return {mCore.view.Slice9Sprite.DimensionParam}
      */
 
     _generateDimensionParam(origin, dimension, anchor, minBoundary, maxBoundary) {
@@ -563,7 +563,7 @@ class Slice9Sprite extends PIXI.Container {
      * @desc method for iterate sprite frames.
      * @method
      * @private
-     * @param {MANTICORE.view.Slice9Sprite.IterateFrames | Function} callback
+     * @param {mCore.view.Slice9Sprite.IterateFrames | Function} callback
      */
 
     _iterateFrames(callback)  {
@@ -606,7 +606,7 @@ class Slice9Sprite extends PIXI.Container {
  * @static
  * @private
  * @type {int}
- * @memberOf MANTICORE.view.Slice9Sprite
+ * @memberOf mCore.view.Slice9Sprite
  */
 
 Slice9Sprite.PADDING = 1;
@@ -616,7 +616,7 @@ Slice9Sprite.PADDING = 1;
  * @static
  * @private
  * @type {int}
- * @memberOf MANTICORE.view.Slice9Sprite
+ * @memberOf mCore.view.Slice9Sprite
  */
 
 Slice9Sprite.ELEMMENT_COUNT = 3;
@@ -625,7 +625,7 @@ Slice9Sprite.ELEMMENT_COUNT = 3;
  * @desc Data that contain dimension parameters.
  * @typedef {Object}
  * @name DimensionParam
- * @memberOf MANTICORE.view.Slice9Sprite
+ * @memberOf mCore.view.Slice9Sprite
  * @property {int[]} origins - Origins of frames.
  * @property {int[]} dimensions - Dimensions of frames.
  * @property {int[]} positions - Positions of frames.
@@ -638,7 +638,7 @@ Slice9Sprite.ELEMMENT_COUNT = 3;
  * @param {int} index - Index of frame.
  * @param {int} row - Row of frame.
  * @param {int} col - Column of frame.
- * @memberOf MANTICORE.view.Slice9Sprite
+ * @memberOf mCore.view.Slice9Sprite
  */
 
 export default Slice9Sprite;

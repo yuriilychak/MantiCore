@@ -2,7 +2,7 @@
  * @desc Enum for particle events.
  * @enumerator {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const PARTICLE_EVENT = {

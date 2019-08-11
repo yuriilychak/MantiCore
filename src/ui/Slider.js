@@ -10,29 +10,29 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
 /**
  * @desc Realization of slider class.
  * @class
- * @extends MANTICORE.ui.Widget
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.Widget
+ * @memberOf mCore.ui
  */
 
 class Slider extends Widget {
     /**
      * @constructor
-     * @param {MANTICORE.ui.Widget} ball - Slider ball texture
-     * @param {MANTICORE.enumerator.DIRECTION} [direction = MANTICORE.enumerator.DIRECTION.LEFT] - Type of progress direction.
+     * @param {mCore.ui.Widget} ball - Slider ball texture
+     * @param {mCore.enumerator.DIRECTION} [direction = mCore.enumerator.DIRECTION.LEFT] - Type of progress direction.
      * @param {?string} [progressFrame = null] - Progress texture
      */
     constructor(ball, direction = DIRECTION.LEFT, progressFrame = null) {
         super();
 
         /**
-         * @type {MANTICORE.ui.Widget}
+         * @type {mCore.ui.Widget}
          * @private
          */
 
         this._ball = ball;
 
         /**
-         * @type {MANTICORE.enumerator.DIRECTION}
+         * @type {mCore.enumerator.DIRECTION}
          * @private
          */
 
@@ -54,7 +54,7 @@ class Slider extends Widget {
         this._eventDrag = Format.generateEventName(this, "BALL_DRAG");
 
         /**
-         * @type {?MANTICORE.ui.ProgressBar}
+         * @type {?mCore.ui.ProgressBar}
          * @private
          */
 
@@ -101,8 +101,8 @@ class Slider extends Widget {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.ui.Widget} ball - Slider ball texture
-     * @param {MANTICORE.enumerator.DIRECTION} [direction = MANTICORE.enumerator.DIRECTION.LEFT] - Type of progress direction.
+     * @param {mCore.ui.Widget} ball - Slider ball texture
+     * @param {mCore.enumerator.DIRECTION} [direction = mCore.enumerator.DIRECTION.LEFT] - Type of progress direction.
      * @param {?string} [progressFrame = null] - Progress texture
      */
     reuse(ball, direction = DIRECTION.LEFT, progressFrame = null) {
@@ -231,7 +231,7 @@ class Slider extends Widget {
     /**
      * @method
      * @private
-     * @param {MANTICORE.eventDispatcher.EventModel} event
+     * @param {mCore.eventDispatcher.EventModel} event
      */
 
     _onBallDragHandler(event) {
@@ -252,7 +252,7 @@ class Slider extends Widget {
      * @private
      * @param {number} position - x or y
      * @param {number} dimension - width or height
-     * @param {MANTICORE.enumerator.DIRECTION} mainDirection - Direction for check revers progress;
+     * @param {mCore.enumerator.DIRECTION} mainDirection - Direction for check revers progress;
      */
 
     _updateProgress(position, dimension, mainDirection) {
@@ -352,7 +352,7 @@ class Slider extends Widget {
     /**
      * @desc Direction of slider.
      * @public
-     * @type {MANTICORE.enumerator.DIRECTION}
+     * @type {mCore.enumerator.DIRECTION}
      */
 
     get direction() {
@@ -414,7 +414,7 @@ class Slider extends Widget {
 
     /**
      * @public
-     * @type {MANTICORE.ui.ProgressBar | null}
+     * @type {mCore.ui.ProgressBar | null}
      */
 
     get progressBar() {

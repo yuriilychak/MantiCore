@@ -19,7 +19,7 @@ import RESOLUTION from "enumerator/system/Resolution";
 /**
  * @desc Boot section of engine.
  * @namespace boot
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 
 export default {
@@ -33,25 +33,25 @@ export default {
      * @desc Version of os that run application.
      * @type {string}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     OS_VERSION: "unknown",
 
     /**
      * @desc Os that run application
-     * @type {MANTICORE.enumerator.system.OS}
+     * @type {mCore.enumerator.system.OS}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     OS: OS.UNKNOWN,
 
     /**
      * @desc Browser that run application.
-     * @type {MANTICORE.enumerator.system.BROWSER}
+     * @type {mCore.enumerator.system.BROWSER}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     BROWSER: BROWSER.UNKNOWN,
@@ -60,16 +60,16 @@ export default {
      * @desc Version of browser that run application.
      * @type {int}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     BROWSER_VERSION: -1,
 
     /**
      * @desc Client of application (Browser, electron, cordova etc)
-     * @type {MANTICORE.enumerator.system.CLIENT}
+     * @type {mCore.enumerator.system.CLIENT}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     CLIENT: CLIENT.UNKNOWN,
@@ -78,16 +78,16 @@ export default {
      * @desc Is cookies enabled.
      * @type {boolean}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     COOKIES_ENABLED: false,
 
     /**
      * @desc Platform where run device (Desktop, mobile).
-     * @type {MANTICORE.enumerator.system.PLATFORM}
+     * @type {mCore.enumerator.system.PLATFORM}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     PLATFORM: PLATFORM.UNKNOWN,
@@ -96,7 +96,7 @@ export default {
      * @desc Flag is mouse input enabled.
      * @type {boolean}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     MOUSE_ENABLED: false,
@@ -105,7 +105,7 @@ export default {
      * @desc Flag is keyboard input enabled.
      * @type {boolean}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     KEYBOARD_ENABLED: false,
@@ -114,7 +114,7 @@ export default {
      * @desc Flag is touches input enabled.
      * @type {boolean}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     TOUCHES_ENABLED: false,
@@ -123,7 +123,7 @@ export default {
      * @desc Flag is accelerometer input enabled.
      * @type {boolean}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     ACCELEROMETER_ENABLED: false,
@@ -132,7 +132,7 @@ export default {
      * @desc Flag is mouse wheel input enabled.
      * @type {boolean}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     MOUSE_WHEEL_ENABLED: false,
@@ -141,25 +141,25 @@ export default {
      * @desc Flag is typed array such Int8Array are support.
      * @type {boolean}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     TYPED_ARRAY_SUPPORTED: false,
 
     /**
      * @desc Format of textures that support device.
-     * @type {MANTICORE.enumerator.TEXTURE_FORMAT[]}
+     * @type {mCore.enumerator.TEXTURE_FORMAT[]}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     SUPPORTED_FORMATS: [TEXTURE_FORMAT.PNG],
 
     /**
      * @desc Resolution of device. Need to load textures by quality.
-     * @type {MANTICORE.enumerator.system.RESOLUTION}
+     * @type {mCore.enumerator.system.RESOLUTION}
      * @readonly
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     RESOLUTION: RESOLUTION.SD,
@@ -174,7 +174,7 @@ export default {
      * @function
      * @param {Function} callback
      * @param {HTMLDivElement} parentContainer
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     init(callback, parentContainer) {
@@ -634,7 +634,7 @@ export default {
      * @function
      * @public
      * @return {boolean}
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     isDesktop: function () {
@@ -645,7 +645,7 @@ export default {
      * @desc Dump information about platform.
      * @function
      * @public
-     * @memberOf MANTICORE.boot
+     * @memberOf mCore.boot
      */
 
     dump: function() {

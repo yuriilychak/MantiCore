@@ -5,8 +5,8 @@ import TIME_LINE_TYPE from "enumerator/animation/TimeLineType";
 /**
  * @desc Class for manipulate with spine animation.
  * @class
- * @memberOf MANTICORE.animation.timeLine
- * @extends MANTICORE.animation.timeLine.BaseTimeLine
+ * @memberOf mCore.animation.timeLine
+ * @extends mCore.animation.timeLine.BaseTimeLine
  */
 
 class SpineTimeLine extends BaseTimeLine {
@@ -75,12 +75,12 @@ class SpineTimeLine extends BaseTimeLine {
     /**
      * @method
      * @public
-     * @return {MANTICORE.animation.SpineTimeLine}
+     * @return {mCore.animation.SpineTimeLine}
      */
 
     clone() {
         /**
-         * @type {MANTICORE.animation.SpineTimeLine}
+         * @type {mCore.animation.SpineTimeLine}
          */
         const result = SpineTimeLine.create(this.target);
         result.fps = this.fps;

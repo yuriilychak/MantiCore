@@ -2,8 +2,8 @@ import EaseRate from "./EaseRate";
 
 /**
  * @class
- * @extends MANTICORE.animation.easing.EaseRate
- * @memberOf MANTICORE.animation.easing
+ * @extends mCore.animation.easing.EaseRate
+ * @memberOf mCore.animation.easing
  */
 
 class EaseOut extends EaseRate {
@@ -31,7 +31,7 @@ class EaseOut extends EaseRate {
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseOut}
+     * @returns {mCore.animation.easing.EaseOut}
      */
     clone() {
         return EaseOut.create(this.rate);
@@ -41,7 +41,7 @@ class EaseOut extends EaseRate {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseOut}
+     * @returns {mCore.animation.easing.EaseOut}
      */
     reverse() {
         return EaseOut.create(1 / this.rate);

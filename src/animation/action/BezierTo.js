@@ -4,10 +4,10 @@ import Geometry from "util/Geometry";
 /**
  * An action that moves the target with a cubic Bezier curve to a destination point.
  * @class
- * @extends MANTICORE.animation.action.BezierBy
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.BezierBy
+ * @memberOf mCore.animation.action
  * @example
- * const bezier = [new MANTICORE.geometry.Point(0, windowSize.height / 2), new MANTICORE.geometry.Point(300, -windowSize.height / 2), new MANTICORE.geometry.Point(300, 100)];
+ * const bezier = [new mCore.geometry.Point(0, windowSize.height / 2), new mCore.geometry.Point(300, -windowSize.height / 2), new mCore.geometry.Point(300, 100)];
  * const bezierTo = new BezierTo(2, bezier);
  */
 
@@ -15,12 +15,12 @@ class BezierTo extends BezierBy{
     /**
      * @constructor
      * @param {number} t
-     * @param {MANTICORE.geometry.Point[]} c - Array of points
+     * @param {mCore.geometry.Point[]} c - Array of points
      */
     constructor(t, c) {
         super(t, []);
         /**
-         * @type {MANTICORE.geometry.Point[]}
+         * @type {mCore.geometry.Point[]}
          * @private
          */
         this._toConfig = c;
@@ -35,7 +35,7 @@ class BezierTo extends BezierBy{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.BezierTo}
+     * @return {mCore.animation.action.BezierTo}
      */
 
     clone() {
@@ -57,7 +57,7 @@ class BezierTo extends BezierBy{
      * @method
      * @public
      * @param {number} t
-     * @param {MANTICORE.geometry.Point[]} c - Array of points
+     * @param {mCore.geometry.Point[]} c - Array of points
      */
 
     reuse(t, c) {

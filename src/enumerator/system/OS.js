@@ -2,7 +2,7 @@
  * @desc Enumerator that contain os.
  * @name OS
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.system
+ * @memberOf mCore.enumerator.system
  */
 
 export default  {

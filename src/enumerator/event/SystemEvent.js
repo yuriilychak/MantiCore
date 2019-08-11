@@ -1,7 +1,7 @@
 /**
  * @desc Enumerator for some system events.
  * @enumerator {string}
- * @memberOf MANTICORE.enumerator.event
+ * @memberOf mCore.enumerator.event
  * @name SYSTEM_EVENT
  */
 

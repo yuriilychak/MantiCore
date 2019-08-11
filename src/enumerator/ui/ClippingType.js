@@ -2,7 +2,7 @@
  * @desc enum with clipping type for ui mask.
  * @enumerator {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const CLIPPING_TYPE = {

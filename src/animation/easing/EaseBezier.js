@@ -3,8 +3,8 @@ import Math from "util/Math";
 
 /**
  * @class
- * @extends MANTICORE.animation.easing.EaseBase
- * @memberOf MANTICORE.animation.easing
+ * @extends mCore.animation.easing.EaseBase
+ * @memberOf mCore.animation.easing
  */
 
 class EaseBezier extends EaseBase {
@@ -47,7 +47,7 @@ class EaseBezier extends EaseBase {
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBezier}
+     * @returns {mCore.animation.easing.EaseBezier}
      */
 
     clone() {
@@ -58,7 +58,7 @@ class EaseBezier extends EaseBase {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBezier}
+     * @returns {mCore.animation.easing.EaseBezier}
      */
     reverse() {
         return EaseBezier.create(this._coefs[3], this._coefs[2], this._coefs[1], this._coefs[0]);

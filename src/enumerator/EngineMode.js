@@ -2,7 +2,7 @@
  * @desc Enumerator that contains modes of engine.
  * @name ENGINE_MODE
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

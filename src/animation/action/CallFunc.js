@@ -4,15 +4,15 @@ import Type from "util/Type";
 /**
  * @desc Call callback.
  * @class
- * @extends MANTICORE.animation.action.ActionInstant
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
  */
 
 class CallFunc extends ActionInstant {
 
     /**
      * @constructor
-	 * @param {MANTICORE.animation.callback.CallFuncExecute} callback
+	 * @param {mCore.animation.callback.CallFuncExecute} callback
 	 * @param {object} [context = null]
 	 * @param {*} [data=null] - Data for function, it accepts all data types.
 	 */
@@ -24,7 +24,7 @@ class CallFunc extends ActionInstant {
          */
         this._context = context;
         /**
-         * @type {MANTICORE.animation.callback.CallFuncExecute}
+         * @type {mCore.animation.callback.CallFuncExecute}
          * @private
          */
         this._callback = callback;
@@ -60,7 +60,7 @@ class CallFunc extends ActionInstant {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.CallFunc}
+     * @return {mCore.animation.action.CallFunc}
      */
 
     clone() {
@@ -71,7 +71,7 @@ class CallFunc extends ActionInstant {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.animation.callback.CallFuncExecute} callback
+     * @param {mCore.animation.callback.CallFuncExecute} callback
      * @param {object} [context = null]
      * @param {*} [data=null] - Data for function, it accepts all data types.
      */

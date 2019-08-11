@@ -3,8 +3,8 @@ import Math from "util/Math";
 
 /**
  * @class
- * @extends MANTICORE.animation.easing.EaseBase
- * @memberOf MANTICORE.animation.easing
+ * @extends mCore.animation.easing.EaseBase
+ * @memberOf mCore.animation.easing
  */
 
 class EaseSineOut extends EaseBase {
@@ -23,7 +23,7 @@ class EaseSineOut extends EaseBase {
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseSineOut}
+     * @returns {mCore.animation.easing.EaseSineOut}
      */
     clone() {
         return EaseSineOut.create();
@@ -33,7 +33,7 @@ class EaseSineOut extends EaseBase {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseSineOut}
+     * @returns {mCore.animation.easing.EaseSineOut}
      */
     reverse() {
         return EaseSineOut.create();

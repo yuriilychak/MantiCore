@@ -8,7 +8,7 @@ import RESOLUTION from "./Resolution";
 /**
  * @desc Namespace that contains some system enumerators (Browser, platform etc.)
  * @namespace system
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

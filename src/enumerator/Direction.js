@@ -2,7 +2,7 @@
  * @desc Enumerator for directions.
  * @enumerator {int}
  * @name DIRECTION
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

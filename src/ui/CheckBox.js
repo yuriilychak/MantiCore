@@ -8,8 +8,8 @@ import Boot from "boot";
 
 /**
  * @class
- * @extends MANTICORE.ui.Button
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.Button
+ * @memberOf mCore.ui
  */
 
 class CheckBox extends Button {
@@ -37,7 +37,7 @@ class CheckBox extends Button {
         super(upBackFrame, downBackFrame, overBackFrame, disabledBackFrame);
 
         /**
-         * @type {MANTICORE.ui.ancillary.StateSlice9Sprite}
+         * @type {mCore.ui.ancillary.StateSlice9Sprite}
          * @private
          */
         this._icon = new StateSlice9Sprite(upIconFrame, INTERACTIVE_STATE.UP);
@@ -109,7 +109,7 @@ class CheckBox extends Button {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
@@ -131,7 +131,7 @@ class CheckBox extends Button {
      * @method
      * @protected
      * @override
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_STATE} state
+     * @param {mCore.enumerator.ui.INTERACTIVE_STATE} state
      */
 
     changeState(state) {
@@ -177,7 +177,7 @@ class CheckBox extends Button {
 
     /**
      * @public
-     * @type {MANTICORE.ui.ancillary.StateSlice9Sprite}
+     * @type {mCore.ui.ancillary.StateSlice9Sprite}
      */
 
     get icon() {

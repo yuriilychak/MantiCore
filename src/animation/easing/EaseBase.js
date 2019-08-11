@@ -3,8 +3,8 @@ import ReusableObject from "memory/ReusableObject";
 /**
  * @desc Base class for easing.
  * @class
- * @memberOf MANTICORE.animation.easing
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.animation.easing
+ * @extends mCore.memory.ReusableObject
  */
 
 class EaseBase extends ReusableObject{
@@ -23,7 +23,7 @@ class EaseBase extends ReusableObject{
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBase}
+     * @returns {mCore.animation.easing.EaseBase}
      */
     clone() {
         return EaseBase.create();
@@ -33,7 +33,7 @@ class EaseBase extends ReusableObject{
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBase}
+     * @returns {mCore.animation.easing.EaseBase}
      */
     reverse() {
         return EaseBase.create();

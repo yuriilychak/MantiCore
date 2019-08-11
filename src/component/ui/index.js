@@ -9,8 +9,8 @@ import ComUILayout from "./ComUILayout";
 
 /**
  * @desc Namespace that contains all ui components.
- * @namespace MANTICORE.component.ui
- * @memberOf MANTICORE.component
+ * @namespace mCore.component.ui
+ * @memberOf mCore.component
  */
 
 export default {

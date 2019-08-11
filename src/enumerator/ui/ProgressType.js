@@ -1,7 +1,7 @@
 /**
  * @desc Enumerator for progress bar type.
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const PROGRESS_TYPE = {

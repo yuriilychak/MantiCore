@@ -2,7 +2,7 @@
  * @desc enum with ui element interactive states.
  * @enumerator {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const INTERACTIVE_STATE = {

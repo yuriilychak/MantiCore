@@ -6,8 +6,8 @@ import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
 /**
  * @desc basee class for buttons and toggle buttons.
  * @class
- * @extends MANTICORE.ui.Widget
- * @memberOf MANTICORE.ui.ancillary
+ * @extends mCore.ui.Widget
+ * @memberOf mCore.ui.ancillary
  */
 
 class BaseButton extends Widget {
@@ -30,7 +30,7 @@ class BaseButton extends Widget {
         this._isEnabled = true;
 
         /**
-         * @type {?MANTICORE.ui.Label}
+         * @type {?mCore.ui.Label}
          * @private
          */
 
@@ -183,7 +183,7 @@ class BaseButton extends Widget {
 
     /**
      * @public
-     * @type {?MANTICORE.ui.ancillary.BaseLabel}
+     * @type {?mCore.ui.ancillary.BaseLabel}
      */
 
     get title() {

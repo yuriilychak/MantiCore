@@ -7,14 +7,14 @@ import Action from "./Action";
  *
  * @warning This action can't be Sequenceable because it is not an IntervalAction
  * @class
- * @extends MANTICORE.animation.action.Action
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.Action
+ * @memberOf mCore.animation.action
  */
 
 class Speed extends Action {
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      * @param {number} speed
      */
     constructor (action, speed) {
@@ -25,7 +25,7 @@ class Speed extends Action {
          */
         this._speed = speed;
         /**
-         * @type {MANTICORE.animation.action.ActionInterval}
+         * @type {mCore.animation.action.ActionInterval}
          * @private
          */
         this._innerAction = action;
@@ -40,7 +40,7 @@ class Speed extends Action {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Speed}
+     * @return {mCore.animation.action.Speed}
      */
 
     clone() {
@@ -66,7 +66,7 @@ class Speed extends Action {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Speed}
+     * @return {mCore.animation.action.Speed}
      */
 
     reverse () {
@@ -77,7 +77,7 @@ class Speed extends Action {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      * @param {number} speed
      */
 
@@ -130,7 +130,7 @@ class Speed extends Action {
     /**
      * @desc Get inner Action.
      * @public
-     * @return {MANTICORE.animation.action.ActionInterval}
+     * @return {mCore.animation.action.ActionInterval}
      */
 
     get innerAction() {

@@ -4,8 +4,8 @@ import Math from "util/Math";
 /**
  * @desc Rotates a display object clockwise a number of degrees by modifying its rotation property. Relative to its properties to modify.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const actionBy = new RotateBy(2, 360);
  */
@@ -32,7 +32,7 @@ class RotateBy extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.RotateBy}
+     * @return {mCore.animation.action.RotateBy}
      */
 
     clone() {
@@ -63,7 +63,7 @@ class RotateBy extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.RotateBy}
+     * @return {mCore.animation.action.RotateBy}
      */
 
     reverse() {

@@ -2,7 +2,7 @@
  * @desc Enumerator for define browser.
  * @name BROWSER
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.system
+ * @memberOf mCore.enumerator.system
  */
 
 export default {

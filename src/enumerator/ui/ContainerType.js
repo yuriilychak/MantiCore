@@ -2,7 +2,7 @@
  * @desc enum with container type for particles.
  * @enumerator {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const CONTAINER_TYPE = {

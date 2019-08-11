@@ -4,8 +4,8 @@ import Type from "util/Type";
 /**
  * @desc Runs actions sequentially, one after another.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @param {Array|FiniteTimeAction} tempArray
  * @example
  * // create sequence with actions
@@ -18,13 +18,13 @@ import Type from "util/Type";
 class Sequence extends ActionInterval {
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.FiniteTimeAction[] | ...MANTICORE.animation.action.FiniteTimeAction[]} [var_args]
+     * @param {mCore.animation.action.FiniteTimeAction[] | ...mCore.animation.action.FiniteTimeAction[]} [var_args]
      */
     constructor(var_args) {
         super();
 
         /**
-         * @type {MANTICORE.animation.action.FiniteTimeAction[]}
+         * @type {mCore.animation.action.FiniteTimeAction[]}
          * @private
          */
         this._actions = [];
@@ -62,7 +62,7 @@ class Sequence extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Sequence}
+     * @return {mCore.animation.action.Sequence}
      */
 
     clone() {
@@ -130,7 +130,7 @@ class Sequence extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Sequence}
+     * @return {mCore.animation.action.Sequence}
      */
 
     reverse() {

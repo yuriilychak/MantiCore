@@ -4,8 +4,8 @@ import ReusableObject from "memory/ReusableObject";
 /**
  * @desc Base class of all components;
  * @class
- * @memberOf MANTICORE.component
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.component
+ * @extends mCore.memory.ReusableObject
  */
 
 class Component extends ReusableObject {
@@ -25,7 +25,7 @@ class Component extends ReusableObject {
         this._name = name;
 
         /**
-         * @type {?MANTICORE.view.ComponentContainer}
+         * @type {?mCore.view.ComponentContainer}
          * @private
          */
 
@@ -57,7 +57,7 @@ class Component extends ReusableObject {
 
         /**
          * @desc Storage of listeners.
-         * @type {?MANTICORE.manager.ListenerManager}
+         * @type {?mCore.manager.ListenerManager}
          * @private
          */
 
@@ -100,7 +100,7 @@ class Component extends ReusableObject {
      * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer} owner
+     * @param {mCore.view.ComponentContainer} owner
      */
 
     onAdd (owner) {
@@ -158,7 +158,7 @@ class Component extends ReusableObject {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.Component}
+     * @return {mCore.component.Component}
      */
 
     clone() {
@@ -222,7 +222,7 @@ class Component extends ReusableObject {
 
     /**
      * @desc Return owner of component if it exist;
-     * @type {MANTICORE.view.ComponentContainer | null}
+     * @type {mCore.view.ComponentContainer | null}
      */
 
     get owner () {
@@ -285,7 +285,7 @@ class Component extends ReusableObject {
     /**
      * @desc Link to listener manager.
      * @public
-     * @return {MANTICORE.manager.ListenerManager}
+     * @return {mCore.manager.ListenerManager}
      */
 
     get listenerManager() {

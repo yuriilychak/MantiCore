@@ -4,8 +4,8 @@ import Math from "util/Math";
 /**
  * @desc Skews a Node object to given angles by modifying its skewX and skewY properties
  * @class
- * @extends MANTICORE.animation.action.PointAction
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.PointAction
+ * @memberOf mCore.animation.action
  * @example
  * const actionTo = new SkewTo(2, 37.2, -37.2);
  */
@@ -21,7 +21,7 @@ class SkewTo extends PointAction {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.SkewTo}
+     * @return {mCore.animation.action.SkewTo}
      */
 
     clone() {

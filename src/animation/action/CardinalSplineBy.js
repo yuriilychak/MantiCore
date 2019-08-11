@@ -5,21 +5,21 @@ import Point from "geometry/Point";
 /**
  * @desc BCreate cardinal spline action for move display object.
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.animation.action.CardinalSplineTo
+ * @memberOf mCore.animation.action
+ * @extends mCore.animation.action.CardinalSplineTo
  */
 
 class CardinalSplineBy extends CardinalSplineTo {
     /**
      * @constructor
      * @param {number} duration
-     * @param {MANTICORE.geometry.Point[]} points
+     * @param {mCore.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
     constructor(duration, points, tension = 0) {
         super(duration, points, tension);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._startPosition = Point.create(0, 0);
@@ -35,7 +35,7 @@ class CardinalSplineBy extends CardinalSplineTo {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.CardinalSplineBy}
+     * @return {mCore.animation.action.CardinalSplineBy}
      */
 
     clone() {
@@ -52,7 +52,7 @@ class CardinalSplineBy extends CardinalSplineTo {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.CardinalSplineBy}
+     * @return {mCore.animation.action.CardinalSplineBy}
      */
 
     reverse() {
@@ -91,12 +91,12 @@ class CardinalSplineBy extends CardinalSplineTo {
      * @desc update position of target
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point} newPos
+     * @param {mCore.geometry.Point} newPos
      */
     updatePosition(newPos) {
         const nextPos = Geometry.pAdd(newPos, this._startPosition);
         this.previousPosition.copyFrom(nextPos);
-        this.target.position.copy(nextPos);
+        this.target.position.copyFrom(nextPos);
     }
 
     /**
@@ -104,7 +104,7 @@ class CardinalSplineBy extends CardinalSplineTo {
      * @method
      * @public
      * @param {number} duration
-     * @param {MANTICORE.geometry.Point[]} points
+     * @param {mCore.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
 

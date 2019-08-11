@@ -2,8 +2,8 @@ import EaseBounceTime from "./EaseBounceTime";
 
 /**
  * @class
- * @extends MANTICORE.animation.easing.EaseBounceTime
- * @memberOf MANTICORE.animation.easing
+ * @extends mCore.animation.easing.EaseBounceTime
+ * @memberOf mCore.animation.easing
  */
 
 class EaseBounceInOut extends EaseBounceTime {
@@ -24,7 +24,7 @@ class EaseBounceInOut extends EaseBounceTime {
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBounceInOut}
+     * @returns {mCore.animation.easing.EaseBounceInOut}
      */
     clone() {
         return EaseBounceInOut.create();
@@ -34,7 +34,7 @@ class EaseBounceInOut extends EaseBounceTime {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBounceInOut}
+     * @returns {mCore.animation.easing.EaseBounceInOut}
      */
     reverse() {
         return EaseBounceInOut.create();

@@ -2,7 +2,7 @@
  * @desc Enumerator that contain time-lines for play animations for UI elements, spine and etc.
  * @name TIME_LINE
  * @enumerator {string}
- * @memberOf MANTICORE.enumerator.animation
+ * @memberOf mCore.enumerator.animation
  */
 
 export default {

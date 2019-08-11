@@ -4,22 +4,22 @@ import Point from "geometry/Point";
 /**
  * @desc BCreate cardinal spline action for move display object.
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.animation.action.CardinalSpline
+ * @memberOf mCore.animation.action
+ * @extends mCore.animation.action.CardinalSpline
  */
 
 class CardinalSplineTo extends CardinalSpline {
     /**
      * @constructor
      * @param {number} duration
-     * @param {MANTICORE.geometry.Point[]} points
+     * @param {mCore.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
     constructor(duration, points, tension = 0) {
         super(duration);
         /**
          * @desc Array of control points.
-         * @type {MANTICORE.geometry.Point[]}
+         * @type {mCore.geometry.Point[]}
          * @private
          */
         this._points = points.slice(0);
@@ -34,19 +34,19 @@ class CardinalSplineTo extends CardinalSpline {
          */
         this._tension = tension;
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._previousPosition = Point.create();
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._accumulatedDiff = Point.create();
 
         /**
          * @desc Point for calculate accumulation. Need to don't create every frame.
-         * @type {MANTICORE.geometry.Point[] | Point}
+         * @type {mCore.geometry.Point[] | Point}
          * @private
          */
 
@@ -62,7 +62,7 @@ class CardinalSplineTo extends CardinalSpline {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.CardinalSplineTo}
+     * @return {mCore.animation.action.CardinalSplineTo}
      */
 
     clone() {
@@ -102,7 +102,7 @@ class CardinalSplineTo extends CardinalSpline {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.CardinalSplineTo}
+     * @return {mCore.animation.action.CardinalSplineTo}
      */
 
     reverse() {
@@ -114,7 +114,7 @@ class CardinalSplineTo extends CardinalSpline {
      * @desc update position of target
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point} newPos
+     * @param {mCore.geometry.Point} newPos
      */
     updatePosition(newPos) {
         this.target.position.set(newPos);
@@ -126,7 +126,7 @@ class CardinalSplineTo extends CardinalSpline {
      * @method
      * @public
      * @param {number} duration
-     * @param {MANTICORE.geometry.Point[]} points
+     * @param {mCore.geometry.Point[]} points
      * @param {number} [tension = 0]
      */
 
@@ -168,7 +168,7 @@ class CardinalSplineTo extends CardinalSpline {
 
     /**
      * @desc Points getter
-     * @returns {MANTICORE.geometry.Point[]}
+     * @returns {mCore.geometry.Point[]}
      */
     get points() {
         return this._points;
@@ -189,7 +189,7 @@ class CardinalSplineTo extends CardinalSpline {
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point}
+     * @returns {mCore.geometry.Point}
      */
 
     get previousPosition() {

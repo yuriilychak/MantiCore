@@ -4,8 +4,8 @@ import ReusableObject from "memory/ReusableObject";
 /**
  * @desc Base class for all animation actions.
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.animation.action
+ * @extends mCore.memory.ReusableObject
  */
 
 class Action extends ReusableObject {
@@ -37,7 +37,7 @@ class Action extends ReusableObject {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Action}
+     * @return {mCore.animation.action.Action}
      */
     clone() {
         return Action.create();

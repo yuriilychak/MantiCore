@@ -4,7 +4,7 @@ import middleware from  "./middleware";
 /**
  * @desc Namespace that manipulate with file bundles.
  * @namespace bundle
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 
 export default {

@@ -2,8 +2,8 @@ import EasePeriod from "./EasePeriod";
 
 /**
  * @class
- * @memberOf MANTICORE.animation.easing
- * @extends MANTICORE.animation.easing.EasePeriod
+ * @memberOf mCore.animation.easing
+ * @extends mCore.animation.easing.EasePeriod
  */
 
 class EaseElasticInOut extends EasePeriod {
@@ -17,7 +17,7 @@ class EaseElasticInOut extends EasePeriod {
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseElasticInOut}
+     * @returns {mCore.animation.easing.EaseElasticInOut}
      */
     clone() {
         return EaseElasticInOut.create(this.period);
@@ -27,7 +27,7 @@ class EaseElasticInOut extends EasePeriod {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseElasticInOut}
+     * @returns {mCore.animation.easing.EaseElasticInOut}
      */
     reverse() {
         return EaseElasticInOut.create(this.period);

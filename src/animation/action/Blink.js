@@ -3,8 +3,8 @@ import ActionInterval from "./ActionInterval";
 /**
  * @desc Blinks a Node object by modifying it's visible property
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const action = new Blink(2, 10);
  */
@@ -32,7 +32,7 @@ class Blink extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Blink}
+     * @return {mCore.animation.action.Blink}
      */
 
     clone() {
@@ -69,7 +69,7 @@ class Blink extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Blink}
+     * @return {mCore.animation.action.Blink}
      */
 
     reverse() {

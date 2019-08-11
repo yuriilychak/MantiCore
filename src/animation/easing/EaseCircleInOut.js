@@ -2,8 +2,8 @@ import EaseBase from "./EaseBase";
 
 /**
  * @class
- * @extends MANTICORE.animation.easing.EaseBase
- * @memberOf MANTICORE.animation.easing
+ * @extends mCore.animation.easing.EaseBase
+ * @memberOf mCore.animation.easing
  */
 
 class EaseCircleInOut extends EaseBase {
@@ -28,7 +28,7 @@ class EaseCircleInOut extends EaseBase {
      * @desc Returns clone of easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseCircleInOut}
+     * @returns {mCore.animation.easing.EaseCircleInOut}
      */
     clone() {
         return EaseCircleInOut.create();
@@ -38,7 +38,7 @@ class EaseCircleInOut extends EaseBase {
      * @desc Returns reversed easing.
      * @method
      * @public
-     * @returns {MANTICORE.animation.easing.EaseCircleInOut}
+     * @returns {mCore.animation.easing.EaseCircleInOut}
      */
     reverse() {
         return EaseCircleInOut.create();

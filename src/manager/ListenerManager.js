@@ -5,14 +5,14 @@ import BaseManager from "./BaseManager";
 /**
  * @desc Class for manipulate with event listeners of complex objects.
  * @class
- * @memberOf MANTICORE.manager
- * @extends MANTICORE.manager.BaseManager
+ * @memberOf mCore.manager
+ * @extends mCore.manager.BaseManager
  */
 
 class ListenerManager extends BaseManager {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject} owner
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.memory.ReusableObject} owner
      */
     constructor(owner) {
         super(owner);

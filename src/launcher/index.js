@@ -10,15 +10,15 @@ import ParticleSystem from "particleSystem";
 
 /**
  * @desc Contains all basic functional for manipulate with application
- * @namespace MANTICORE.launcher
- * @memberOf MANTICORE
+ * @namespace mCore.launcher
+ * @memberOf mCore
  */
 
 export default {
 
     /**
      * @desc Application that use game.
-     * @memberOf MANTICORE.launcher
+     * @memberOf mCore.launcher
      * @type {?PIXI.Application | Application}
      * @private
      */
@@ -26,7 +26,7 @@ export default {
 
     /**
      * @desc Design resolution of app.
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      * @private
      */
 
@@ -34,7 +34,7 @@ export default {
 
     /**
      * @desc Resolution of app.
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      * @private
      */
 
@@ -42,7 +42,7 @@ export default {
 
     /**
      * @desc Real resolution of app.
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      * @private
      */
 
@@ -50,7 +50,7 @@ export default {
 
     /**
      * @desc Orientation of screen.
-     * @type {MANTICORE.enumerator.system.ORIENTATION}
+     * @type {mCore.enumerator.system.ORIENTATION}
      * @private
      */
 
@@ -58,7 +58,7 @@ export default {
 
     /**
      * @desc Current game scene.
-     * @type {MANTICORE.view.Scene}
+     * @type {mCore.view.Scene}
      * @private
      */
 
@@ -72,10 +72,10 @@ export default {
     /**
      * @desc create application with parameters.
      * @function
-     * @memberOf MANTICORE.launcher
+     * @memberOf mCore.launcher
      * @param {int} [designWidth = 800]
      * @param {int} [designHeight = 600]
-     * @param {MANTICORE.launcher.AppConfig} [config = {}]
+     * @param {mCore.launcher.AppConfig} [config = {}]
      * @param {Function} [onComplete = null]
      * @param {HTMLElement} [parentContainer = null]
      */
@@ -109,7 +109,7 @@ export default {
     /**
      * @desc return linkage to application object.
      * @public
-     * @memberOf MANTICORE.launcher
+     * @memberOf mCore.launcher
      * @returns {PIXI.Application}
      */
     get app() {
@@ -119,8 +119,8 @@ export default {
     /**
      * @desc Run new scene with replacing old.
      * @function
-     * @memberOf MANTICORE.launcher
-     * @param {MANTICORE.view.Scene} scene
+     * @memberOf mCore.launcher
+     * @param {mCore.view.Scene} scene
      */
 
     runScene(scene) {
@@ -190,7 +190,7 @@ export default {
      * @desc Returns design resolution of app.
      * @function
      * @public
-     * @returns {MANTICORE.geometry.Point}
+     * @returns {mCore.geometry.Point}
      */
 
     get designResolution() {
@@ -201,7 +201,7 @@ export default {
      * @desc Returns real resolution of app.
      * @function
      * @public
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get appResolution() {
@@ -212,7 +212,7 @@ export default {
      * @desc Returns real resolution of app.
      * @function
      * @public
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get canvasResolution() {
@@ -222,7 +222,7 @@ export default {
     /**
      * @desc Orientation of app.
      * @public
-     * @returns {MANTICORE.enumerator.system.ORIENTATION}
+     * @returns {mCore.enumerator.system.ORIENTATION}
      */
 
     get orientation() {
@@ -239,7 +239,7 @@ export default {
 
     /**
      * @public
-     * @return {MANTICORE.view.Scene}
+     * @return {mCore.view.Scene}
      */
 
     get currentScene() {
@@ -250,7 +250,7 @@ export default {
 /**
  * @typedef {Object}
  * @name AppConfig
- * @memberOf MANTICORE.launcher
+ * @memberOf mCore.launcher
  * @property {boolean} [autoStart = true] - Automatically starts the rendering after the construction. Note: Setting this parameter to false does NOT stop the shared ticker even if you set options.sharedTicker to true in case that it is already started. Stop it by your own.
  * @property {int} [width = 800] - The width of the renderer view.
  * @property {int} [height = 600] - The height of the renderer view.

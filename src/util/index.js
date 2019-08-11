@@ -7,8 +7,8 @@ import type from "./Type";
 import ui from "./UI";
 
 /**
- * @namespace MANTICORE.util
- * @memberOf MANTICORE
+ * @namespace mCore.util
+ * @memberOf mCore
  */
 
 export default {

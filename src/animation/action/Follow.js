@@ -9,15 +9,15 @@ import Rectangle from "geometry/Rectangle";
 /**
  * @desc  Follow action which makes its target follows another DisplayObject.
  * @class
- * @extends MANTICORE.animation.action.Action
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.Action
+ * @memberOf mCore.animation.action
  */
 
 class Follow extends Action {
     /**
      * @constructor
      * @param {PIXI.DisplayObject} followedDisplayObject
-     * @param {MANTICORE.geometry.Rectangle} rect
+     * @param {mCore.geometry.Rectangle} rect
      */
     constructor(followedDisplayObject, rect) {
         super();
@@ -41,13 +41,13 @@ class Follow extends Action {
         this._boundaryFullyCovered = false;
         /**
          * @desc Fast access to the screen dimensions.
-         * @type {?MANTICORE.geometry.Point}
+         * @type {?mCore.geometry.Point}
          * @private
          */
         this._halfScreenSize = null;
         /**
          * @desc Fast access to the screen dimensions.
-         * @type {?MANTICORE.geometry.Point}
+         * @type {?mCore.geometry.Point}
          * @private
          */
         this._fullScreenSize = null;
@@ -73,14 +73,14 @@ class Follow extends Action {
          */
         this._bottomBoundary = 0;
         /**
-         * @type {MANTICORE.geometry.Rectangle}
+         * @type {mCore.geometry.Rectangle}
          * @private
          */
         this._worldRect = Rectangle.create(0, 0, 0, 0);
 
         /**
          * @desc Need to don't create point every step.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -98,7 +98,7 @@ class Follow extends Action {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Follow}
+     * @return {mCore.animation.action.Follow}
      */
 
     clone() {
@@ -109,7 +109,7 @@ class Follow extends Action {
     /**
      * @desc Initializes the action with a set boundary.
      * @param {PIXI.DisplayObject} followedDisplayObject
-     * @param {MANTICORE.geometry.Rectangle} [rect = null]
+     * @param {mCore.geometry.Rectangle} [rect = null]
      * @return {boolean}
      */
 
@@ -177,7 +177,7 @@ class Follow extends Action {
      * @method
      * @public
      * @param {PIXI.DisplayObject} followedDisplayObject
-     * @param {MANTICORE.geometry.Rectangle} rect
+     * @param {mCore.geometry.Rectangle} rect
      */
 
     reuse(followedDisplayObject, rect) {

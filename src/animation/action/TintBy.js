@@ -5,8 +5,8 @@ import Color from "util/Color";
  * @desc Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  * Relative to their own color change.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const action = new TintBy(2, -127, -255, -127);
  */
@@ -42,7 +42,7 @@ class TintBy extends ActionInterval{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.TintBy}
+     * @return {mCore.animation.action.TintBy}
      */
 
     clone() {
@@ -79,7 +79,7 @@ class TintBy extends ActionInterval{
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.TintBy}
+     * @return {mCore.animation.action.TintBy}
      */
 
     reverse() {

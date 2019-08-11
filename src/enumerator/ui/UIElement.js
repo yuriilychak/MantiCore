@@ -2,7 +2,7 @@
  * @desc enum with UI elements that support. Need for parsing.
  * @enumerator {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const UI_ELEMENT = {

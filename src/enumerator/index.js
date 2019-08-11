@@ -14,8 +14,8 @@ import system from "./system";
 import ui from "./ui/index";
 
 /**
- * @namespace MANTICORE.enumerator
- * @memberOf MANTICORE
+ * @namespace mCore.enumerator
+ * @memberOf mCore
  */
 
 export default {

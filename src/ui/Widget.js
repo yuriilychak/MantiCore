@@ -13,15 +13,15 @@ import Color from "util/Color";
 /**
  * @desc Base component for all UI elements.
  * @class
- * @memberOf MANTICORE.ui
- * @extends MANTICORE.view.ComponentContainer
+ * @memberOf mCore.ui
+ * @extends mCore.view.ComponentContainer
  */
 
 class Widget extends ComponentContainer {
 
     /**
      * @constructor
-     * @param {PIXI.Sprite | MANTICORE.view.Slice9Sprite} [collider]
+     * @param {PIXI.Sprite | mCore.view.Slice9Sprite} [collider]
      */
 
     constructor(collider = Asset.createWhiteSprite()) {
@@ -29,14 +29,14 @@ class Widget extends ComponentContainer {
 
         /**
          * @desc Collider of widget.
-         * @type {PIXI.Sprite | MANTICORE.view.Slice9Sprite}
+         * @type {PIXI.Sprite | mCore.view.Slice9Sprite}
          * @private
          */
         this._collider = collider;
 
         /**
          * @desc anchor point of widget.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._anchor = Point.create();
@@ -97,7 +97,7 @@ class Widget extends ComponentContainer {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {PIXI.Sprite | MANTICORE.view.Slice9Sprite} [collider]
+     * @param {PIXI.Sprite | mCore.view.Slice9Sprite} [collider]
      */
     reuse(collider = Asset.createWhiteSprite()) {
         super.reuse();
@@ -160,7 +160,7 @@ class Widget extends ComponentContainer {
         if (Type.isNull(this._collider)) {
             return;
         }
-        this.pivot.copy(Geometry.pCompMult(
+        this.pivot.copyFrom(Geometry.pCompMult(
             Geometry.pFromSize(this._collider),
             this._anchor,
             true
@@ -266,7 +266,7 @@ class Widget extends ComponentContainer {
 
     /**
      * @public
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get anchor() {
@@ -316,7 +316,7 @@ class Widget extends ComponentContainer {
     /**
      * @desc Returns collider.
      * @protected
-     * @type {PIXI.Sprite|MANTICORE.view.Slice9Sprite|MANTICORE.ui.ancillary.StateSlice9Sprite}
+     * @type {PIXI.Sprite|mCore.view.Slice9Sprite|mCore.ui.ancillary.StateSlice9Sprite}
      */
 
     get collider() {

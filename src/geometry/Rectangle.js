@@ -6,8 +6,8 @@ import ReusableObject from "memory/ReusableObject";
 /**
  * @class
  * @name Rectangle
- * @memberOf MANTICORE.geometry
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.geometry
+ * @extends mCore.memory.ReusableObject
  */
 
 export default class Rectangle extends ReusableObject {
@@ -17,19 +17,19 @@ export default class Rectangle extends ReusableObject {
      * @param {number} [y=0] - The Y coordinate of the upper-left corner of the rectangle
      * @param {number} [width=0] - The overall width of this rectangle
      * @param {number} [height=0] - The overall height of this rectangle
-     * @param {MANTICORE.enumerator.NUMBER_TYPE} [type = MANTICORE.enumerator.NUMBER_TYPE.DEFAULT]
+     * @param {mCore.enumerator.NUMBER_TYPE} [type = mCore.enumerator.NUMBER_TYPE.DEFAULT]
      */
     constructor(x = 0, y = 0, width = 0, height = 0, type = NUMBER_TYPE.FLOAT_32) {
         super();
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._origin = Point.create(x, y, type);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -37,7 +37,7 @@ export default class Rectangle extends ReusableObject {
 
         /**
          * @desc Type of rectangle numbers.
-         * @type {MANTICORE.enumerator.NUMBER_TYPE}
+         * @type {mCore.enumerator.NUMBER_TYPE}
          * @private
          */
 
@@ -74,7 +74,7 @@ export default class Rectangle extends ReusableObject {
      * @desc Creates a clone of this Rectangle
      * @method
      * @public
-     * @return {MANTICORE.geometry.Rectangle} a copy of the rectangle
+     * @return {mCore.geometry.Rectangle} a copy of the rectangle
      */
     clone() {
         return Rectangle.create(this._origin.x, this._origin.y, this._dimension.x, this._dimension.y);
@@ -84,8 +84,8 @@ export default class Rectangle extends ReusableObject {
      * @desc Copies another rectangle to this one.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Rectangle} rectangle - The rectangle to copy from.
-     * @return {MANTICORE.geometry.Rectangle} Returns itself.
+     * @param {mCore.geometry.Rectangle} rectangle - The rectangle to copy from.
+     * @return {mCore.geometry.Rectangle} Returns itself.
      */
     copyFrom(rectangle) {
         this._origin.x = rectangle.x;
@@ -99,8 +99,8 @@ export default class Rectangle extends ReusableObject {
      * @desc Copies this rectangle to another one.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Rectangle} rectangle - The rectangle to copy to.
-     * @return {MANTICORE.geometry.Rectangle} Returns given parameter.
+     * @param {mCore.geometry.Rectangle} rectangle - The rectangle to copy to.
+     * @return {mCore.geometry.Rectangle} Returns given parameter.
      */
     copyTo(rectangle) {
         rectangle.x = this._origin.x;
@@ -150,7 +150,7 @@ export default class Rectangle extends ReusableObject {
      * @desc Fits this rectangle around the passed one.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Rectangle} rectangle - The rectangle to fit.
+     * @param {mCore.geometry.Rectangle} rectangle - The rectangle to fit.
      */
     fit(rectangle) {
         if (this._origin.x < rectangle.x) {
@@ -201,7 +201,7 @@ export default class Rectangle extends ReusableObject {
      * @desc Enlarges this rectangle to include the passed rectangle.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Rectangle} rectangle - The rectangle to include.
+     * @param {mCore.geometry.Rectangle} rectangle - The rectangle to include.
      */
     enlarge(rectangle) {
         const x1 = Math.min(this._origin.x, rectangle.x);
@@ -222,7 +222,7 @@ export default class Rectangle extends ReusableObject {
      * @param {number} [y=0] - The Y coordinate of the upper-left corner of the rectangle
      * @param {number} [width=0] - The overall width of this rectangle
      * @param {number} [height=0] - The overall height of this rectangle
-     * @param {MANTICORE.enumerator.NUMBER_TYPE} [type = MANTICORE.enumerator.NUMBER_TYPE.DEFAULT]
+     * @param {mCore.enumerator.NUMBER_TYPE} [type = mCore.enumerator.NUMBER_TYPE.DEFAULT]
      */
 
     reuse(x = 0, y = 0, width = 0, height = 0, type = NUMBER_TYPE.FLOAT_32) {

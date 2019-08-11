@@ -4,8 +4,8 @@ import ComChildIterator from "./ComChildIterator";
 import Component from "./Component";
 
 /**
- * @namespace MANTICORE.component
- * @memberOf MANTICORE
+ * @namespace mCore.component
+ * @memberOf mCore
  */
 
 const component = {

@@ -8,7 +8,7 @@ import spineCache from "./SpineCache";
 /**
  * @desc Contains caches for some file types.
  * @namespace cache
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 
 export default {

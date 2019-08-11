@@ -1,7 +1,7 @@
 /**
  * @desc enumerator with toggle states.
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const TOGGLE_INTERACTIVE_STATE = {

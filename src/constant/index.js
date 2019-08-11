@@ -1,7 +1,7 @@
 /**
  * @desc Namespace that contain core constants.
- * @namespace MANTICORE.constant
- * @memberOf MANTICORE
+ * @namespace mCore.constant
+ * @memberOf mCore
  */
 
 const constant = {
@@ -10,7 +10,7 @@ const constant = {
      * @type {string}
      * @public
      * @readonly
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
     COLLIDER_NAME: "imgCollider",
 
@@ -19,7 +19,7 @@ const constant = {
      * @type {string}
      * @public
      * @readonly
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
     COM_UI_LAYOUT_NAME: "ComUILayout",
 
@@ -28,7 +28,7 @@ const constant = {
      * @type {string}
      * @public
      * @readonly
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
 
     COM_LAYOUT: "ComLayout",
@@ -38,7 +38,7 @@ const constant = {
      * @public
      * @readonly
      * @type {number}
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
     FLT_EPSILON: 0.0000001192092896,
 
@@ -48,7 +48,7 @@ const constant = {
      * @public
      * @readonly
      * @type {number}
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
     OFFSET_EPSILON: 5,
 
@@ -56,7 +56,7 @@ const constant = {
      * @desc Name of temporary animation that run when call runAction.
      * @public
      * @type {string}
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
 
     TEMPORARY_ANIMATION_NAME: "TemporaryAnimation",
@@ -65,7 +65,7 @@ const constant = {
      * @desc Main atlas name, need for font parsing.
      * @public
      * @type {string}
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
 
     MAIN_ATLAS_NAME: "main",
@@ -74,7 +74,7 @@ const constant = {
      * @desc Default name for objects, if name not init.
      * @public
      * @type {string}
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
 
     DEFAULT_NAME: "Untitled",
@@ -83,7 +83,7 @@ const constant = {
      * @desc Id of empty font.
      * @public
      * @type {string}
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
 
     EMPTY_FONT_ID: "EmptyFont",
@@ -94,7 +94,7 @@ const constant = {
      * @public
      * @readonly
      * @const
-     * @memberOf MANTICORE.constant
+     * @memberOf mCore.constant
      */
 
     EMPTY_ID: -1

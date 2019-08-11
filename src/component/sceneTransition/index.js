@@ -2,8 +2,8 @@ import ComSceneTransition from "./ComSceneTransition";
 
 /**
  * @desc Namespace that contains all ui components.
- * @namespace MANTICORE.component.sceneTransition
- * @memberOf MANTICORE.component
+ * @namespace mCore.component.sceneTransition
+ * @memberOf mCore.component
  */
 
 export default {

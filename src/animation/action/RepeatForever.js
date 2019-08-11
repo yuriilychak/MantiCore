@@ -4,8 +4,8 @@ import ActionInterval from "./ActionInterval";
  * @desc Repeats an action for ever.To repeat the an action for a limited number of times use the Repeat action. <br/>
  * @warning This action can't be Sequenceable because it is not an IntervalAction
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const rep = new RepeatForever(new Sequence(jump2, jump1), 5);
  */
@@ -13,12 +13,12 @@ import ActionInterval from "./ActionInterval";
 class RepeatForever extends ActionInterval{
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      */
     constructor(action) {
         super();
         /**
-         * @type {?MANTICORE.animation.action.ActionInterval}
+         * @type {?mCore.animation.action.ActionInterval}
          * @private
          */
         this._innerAction = action;
@@ -33,7 +33,7 @@ class RepeatForever extends ActionInterval{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.RepeatForever}
+     * @return {mCore.animation.action.RepeatForever}
      */
 
     clone() {
@@ -57,7 +57,7 @@ class RepeatForever extends ActionInterval{
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.RepeatForever}
+     * @return {mCore.animation.action.RepeatForever}
      */
 
     reverse() {
@@ -68,7 +68,7 @@ class RepeatForever extends ActionInterval{
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      */
 
     reuse(action) {
@@ -106,7 +106,7 @@ class RepeatForever extends ActionInterval{
      * @desc Action to repeat.
      * @method
      * @public
-     * @returns {?MANTICORE.animation.action.ActionInterval}
+     * @returns {?mCore.animation.action.ActionInterval}
      */
     get innerAction() {
         return this._innerAction;

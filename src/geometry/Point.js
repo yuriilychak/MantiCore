@@ -6,8 +6,8 @@ import NUMBER_TYPE from "enumerator/NumberType";
 /**
  * @class
  * @name Point
- * @memberOf MANTICORE.geometry
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.geometry
+ * @extends mCore.memory.ReusableObject
  */
 
 export default class Point extends ReusableObject {
@@ -16,7 +16,7 @@ export default class Point extends ReusableObject {
      * @constructor
      * @param {number} [x = 0]
      * @param {number} [y = 0]
-     * @param {MANTICORE.enumerator.NUMBER_TYPE} [type = MANTICORE.enumerator.NUMBER_TYPE.DEFAULT]
+     * @param {mCore.enumerator.NUMBER_TYPE} [type = mCore.enumerator.NUMBER_TYPE.DEFAULT]
      */
 
     constructor(x = 0, y = 0, type = NUMBER_TYPE.FLOAT_32) {
@@ -30,7 +30,7 @@ export default class Point extends ReusableObject {
 
         /**
          * @desc Type of point.
-         * @type {MANTICORE.enumerator.NUMBER_TYPE}
+         * @type {mCore.enumerator.NUMBER_TYPE}
          * @private
          */
 
@@ -65,7 +65,7 @@ export default class Point extends ReusableObject {
      * @desc Copies x and y from the given point
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point} p
+     * @param {mCore.geometry.Point} p
      */
 
     copyFrom(p) {
@@ -81,7 +81,7 @@ export default class Point extends ReusableObject {
      * @desc Copies x and y into the given point
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point} p
+     * @param {mCore.geometry.Point} p
      */
 
     copyTo(p) {
@@ -90,7 +90,7 @@ export default class Point extends ReusableObject {
 
     /**
      * @desc Check is point equel to point
-     * @param {MANTICORE.geometry.Point} p
+     * @param {mCore.geometry.Point} p
      * @returns {boolean}
      */
 
@@ -154,7 +154,7 @@ export default class Point extends ReusableObject {
      * @public
      * @param {number} [x = 0]
      * @param {number} [y = 0]
-     * @param {MANTICORE.enumerator.NUMBER_TYPE} [type = MANTICORE.enumerator.NUMBER_TYPE.DEFAULT]
+     * @param {mCore.enumerator.NUMBER_TYPE} [type = mCore.enumerator.NUMBER_TYPE.DEFAULT]
      */
 
     reuse(x = 0, y = 0, type = NUMBER_TYPE.FLOAT_32) {
@@ -168,7 +168,7 @@ export default class Point extends ReusableObject {
     /**
      * @desc Clone object
      * @public
-     * @returns {MANTICORE.geometry.Point}
+     * @returns {mCore.geometry.Point}
      */
 
     clone() {
@@ -279,7 +279,7 @@ export default class Point extends ReusableObject {
     /**
      * @desc Returns type of point.
      * @public
-     * @returns {MANTICORE.enumerator.NUMBER_TYPE}
+     * @returns {mCore.enumerator.NUMBER_TYPE}
      */
 
     get type() {

@@ -40,7 +40,7 @@ import EaseSineOut from "./EaseSineOut";
 /**
  * @desc Namespace that contain easing for actions.
  * @namespace easing
- * @memberOf MANTICORE.animation
+ * @memberOf mCore.animation
  */
 
 export default {

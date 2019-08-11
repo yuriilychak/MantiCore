@@ -7,10 +7,10 @@ import Geometry from "util/Geometry";
  * @desc Moves a Node object simulating a parabolic jump movement by modifying its position property.
  * Relative to its movement.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
- * const actionBy = new JumpBy(2, new MANTICORE.geometry.Point(300, 0), 50, 4);
+ * const actionBy = new JumpBy(2, new mCore.geometry.Point(300, 0), 50, 4);
  * const actionBy = new JumpBy(2, 300, 0, 50, 4);
  */
 
@@ -19,7 +19,7 @@ class JumpBy extends ActionInterval {
     /**
      * @constructor
      * @param {number} [duration = 0]
-     * @param {MANTICORE.geometry.Point | number} [position]
+     * @param {mCore.geometry.Point | number} [position]
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]
@@ -36,17 +36,17 @@ class JumpBy extends ActionInterval {
         }
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._startPoint = Point.create(0, 0);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._previousPosition = Point.create(0, 0);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._delta = Point.create(0, 0);
@@ -74,7 +74,7 @@ class JumpBy extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.JumpBy}
+     * @return {mCore.animation.action.JumpBy}
      */
 
     clone() {
@@ -114,7 +114,7 @@ class JumpBy extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.JumpBy}
+     * @return {mCore.animation.action.JumpBy}
      */
 
     reverse() {
@@ -126,7 +126,7 @@ class JumpBy extends ActionInterval {
      * @method
      * @public
      * @param {number} [duration = 0]
-     * @param {MANTICORE.geometry.Point | number} [position]
+     * @param {mCore.geometry.Point | number} [position]
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]
@@ -196,7 +196,7 @@ class JumpBy extends ActionInterval {
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get delta() {
@@ -205,7 +205,7 @@ class JumpBy extends ActionInterval {
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get startPoint() {

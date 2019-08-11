@@ -5,8 +5,8 @@ import Scene from "./Scene";
 import Slice9Sprite from "./Slice9Sprite";
 
 /**
- * @namespace MANTICORE.view
- * @memberOf MANTICORE
+ * @namespace mCore.view
+ * @memberOf mCore
  */
 
 const view = {

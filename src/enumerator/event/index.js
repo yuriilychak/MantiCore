@@ -5,7 +5,7 @@ import SYSTEM_EVENT from "./SystemEvent";
 /**
  * @desc Namespace that contains some game events.
  * @namespace event
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default{

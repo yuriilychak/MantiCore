@@ -4,20 +4,20 @@ import PARTICLE_TYPE from "enumerator/ParticleType";
 /**
  * @desc Namespace for manipulate with spine skeletons.
  * @namespace particleCache
- * @memberOf MANTICORE.cache
+ * @memberOf mCore.cache
  */
 
 export default {
 
     /**
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
 
     _particleData: new Repository(),
 
     /**
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
 
@@ -27,7 +27,7 @@ export default {
      * @desc Add particle to cache.
      * @function
      * @public
-     * @memberOf MANTICORE.cache.particleCache
+     * @memberOf mCore.cache.particleCache
      * @param {string} name
      * @param {Object} data
      * @returns {boolean}
@@ -65,7 +65,7 @@ export default {
      * @desc Remove particle from cache.
      * @function
      * @public
-     * @memberOf MANTICORE.cache.particleCache
+     * @memberOf mCore.cache.particleCache
      * @param {string} name
      * @returns {boolean}
      */
@@ -78,7 +78,7 @@ export default {
      * @desc Returns particle data.
      * @function
      * @public
-     * @memberOf MANTICORE.cache.particleCache
+     * @memberOf mCore.cache.particleCache
      * @param {string} name
      * @returns {?Object}
      */
@@ -91,7 +91,7 @@ export default {
      * @desc Clear particle cache.
      * @function
      * @public
-     * @memberOf MANTICORE.cache.particleCache
+     * @memberOf mCore.cache.particleCache
      */
 
     clear: function() {
@@ -103,7 +103,7 @@ export default {
      * @desc Returns particle information.
      * @function
      * @public
-     * @memberOf MANTICORE.cache.particleCache
+     * @memberOf mCore.cache.particleCache
      * @param {string} name
      * @returns {?ParticleInfo}
      */
@@ -129,5 +129,5 @@ export default {
  * @name ParticleInfo
  * @param {string} name
  * @param {string} source
- * @param {MANTICORE.enumerator.PARTICLE_TYPE} type
+ * @param {mCore.enumerator.PARTICLE_TYPE} type
  */

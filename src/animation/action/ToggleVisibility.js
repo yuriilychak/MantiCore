@@ -3,8 +3,8 @@ import ActionInstant from "./ActionInstant";
 /**
  * @desc Toggle visibility of display object.
  * @class
- * @extends MANTICORE.animation.action.ActionInstant
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
  */
 
 class ToggleVisibility extends ActionInstant {
@@ -22,7 +22,7 @@ class ToggleVisibility extends ActionInstant {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ToggleVisibility}
+     * @return {mCore.animation.action.ToggleVisibility}
      */
 
     clone(){
@@ -33,7 +33,7 @@ class ToggleVisibility extends ActionInstant {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ToggleVisibility}
+     * @return {mCore.animation.action.ToggleVisibility}
      */
 
     reverse () {

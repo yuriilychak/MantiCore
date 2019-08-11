@@ -11,8 +11,8 @@ import EaseQuadraticOut from "animation/easing/EaseQuadraticOut";
 /**
  * @desc Class for manipulate with scrolling in list and scroll views.
  * @class
- * @extends MANTICORE.component.Component
- * @memberOf MANTICORE.component.ui
+ * @extends mCore.component.Component
+ * @memberOf mCore.component.ui
  */
 
 class ComScroller extends Component {
@@ -21,7 +21,7 @@ class ComScroller extends Component {
 
         /**
          * @desc Direction of scroll.
-         * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+         * @type {mCore.enumerator.ui.SCROLL_DIRECTION}
          * @private
          */
 
@@ -29,7 +29,7 @@ class ComScroller extends Component {
 
         /**
          * @desc Previous drag pos for update drag.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -37,7 +37,7 @@ class ComScroller extends Component {
 
         /**
          * @desc Zero point. Need for calculate drag position, for don't create every frame.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -45,7 +45,7 @@ class ComScroller extends Component {
 
         /**
          * @desc Inner boundary for scroll. Need to don't calculate every frame.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -60,7 +60,7 @@ class ComScroller extends Component {
 
         /**
          * @desc Offset for calculate dumping.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -75,7 +75,7 @@ class ComScroller extends Component {
     /**
      * @method
      * @public
-     * @param {MANTICORE.ui.ScrollView} owner
+     * @param {mCore.ui.ScrollView} owner
      */
 
     onAdd(owner) {
@@ -386,7 +386,7 @@ class ComScroller extends Component {
      * @desc Update drag start event of owner.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point} position
+     * @param {mCore.geometry.Point} position
      */
 
     updateDragStart(position) {
@@ -399,7 +399,7 @@ class ComScroller extends Component {
      * @desc Update drag move event of owner.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point} position
+     * @param {mCore.geometry.Point} position
      */
 
     updateDragMove(position) {
@@ -434,7 +434,7 @@ class ComScroller extends Component {
             resultPos = boundPos;
         }
 
-        innerContainer.position.copy(Geometry.pRound(resultPos));
+        innerContainer.position.copyFrom(Geometry.pRound(resultPos));
         this._updateSliderProgress(this.owner.horizontalSlider, boundPos.x / this._innerBoundary.x);
         this._updateSliderProgress(this.owner.verticalSlider, boundPos.y / this._innerBoundary.y);
     }
@@ -443,7 +443,7 @@ class ComScroller extends Component {
      * @desc Update drag finish event of owner.
      * @method
      * @public
-     * @param {MANTICORE.geometry.Point} position
+     * @param {mCore.geometry.Point} position
      */
 
     updateDragFinish(position) {
@@ -488,7 +488,7 @@ class ComScroller extends Component {
      * @method
      * @public
      * @param {number} progress
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} direction
+     * @param {mCore.enumerator.ui.SCROLL_DIRECTION} direction
      *
      */
 
@@ -555,8 +555,8 @@ class ComScroller extends Component {
      * @method
      * @private
      * @param {number} percent
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} mainDirection
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} checkDirection
+     * @param {mCore.enumerator.ui.SCROLL_DIRECTION} mainDirection
+     * @param {mCore.enumerator.ui.SCROLL_DIRECTION} checkDirection
      */
 
     _jump(percent, mainDirection, checkDirection) {
@@ -573,7 +573,7 @@ class ComScroller extends Component {
      * @desc Update progress of slider if it exist.
      * @method
      * @private
-     * @param {MANTICORE.ui.Slider} slider
+     * @param {mCore.ui.Slider} slider
      * @param {number} percent
      */
 
@@ -591,7 +591,7 @@ class ComScroller extends Component {
      * @param {number} time
      * @param {int} x
      * @param {int} y
-     * @param {MANTICORE.animation.easing.EaseBase} [ease]
+     * @param {mCore.animation.easing.EaseBase} [ease]
      */
 
     _runScrollAction(time, x, y, ease = EaseQuadraticOut.create()) {
@@ -608,7 +608,7 @@ class ComScroller extends Component {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+     * @type {mCore.enumerator.ui.SCROLL_DIRECTION}
      */
 
     get scrollDirection() {
@@ -642,7 +642,7 @@ class ComScroller extends Component {
     /**
      * @desc Inner boundary of scroller.
      * @public
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get innerBoundary() {

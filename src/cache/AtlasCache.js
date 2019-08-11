@@ -6,13 +6,13 @@ import ReusableObject from "../memory/ReusableObject";
 /**
  * @desc Namespace for manipulate with atlases.
  * @namespace fontCache
- * @memberOf MANTICORE.cache
+ * @memberOf mCore.cache
  */
 
 export default {
     /**
      * @desc Repository that contain atlases.
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
 
@@ -24,8 +24,8 @@ export default {
      * @public
      * @param {string} name
      * @param {PIXI.BaseTexture} baseTexture
-     * @param {MANTICORE.type.AtlasInfo} atlas
-     * @param {MANTICORE.type.AssetBundle} bundle
+     * @param {mCore.type.AtlasInfo} atlas
+     * @param {mCore.type.AssetBundle} bundle
      */
 
     add(name, baseTexture, atlas, bundle) {
@@ -49,16 +49,16 @@ export default {
 /**
  * @desc Class for manipulate with atlases. Don't create it manually.
  * @class
- * @memberOf MANTICORE.cache.fontCache
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.cache.fontCache
+ * @extends mCore.memory.ReusableObject
  */
 
 class TextureAtlas extends ReusableObject{
     /**
      * @constructor
      * @param {PIXI.BaseTexture} baseTexture
-     * @param {MANTICORE.type.AtlasInfo} atlas
-     * @param {MANTICORE.type.AssetBundle} bundle
+     * @param {mCore.type.AtlasInfo} atlas
+     * @param {mCore.type.AssetBundle} bundle
      */
 
     constructor(baseTexture, atlas, bundle) {
@@ -100,8 +100,8 @@ class TextureAtlas extends ReusableObject{
      * @method
      * @public
      * @param {PIXI.BaseTexture} baseTexture
-     * @param {MANTICORE.type.AtlasInfo} atlas
-     * @param {MANTICORE.type.AssetBundle} bundle
+     * @param {mCore.type.AtlasInfo} atlas
+     * @param {mCore.type.AssetBundle} bundle
      */
     reuse(baseTexture, atlas, bundle) {
         this._init(baseTexture, atlas, bundle);
@@ -147,8 +147,8 @@ class TextureAtlas extends ReusableObject{
      * @method
      * @private
      * @param {PIXI.BaseTexture} baseTexture
-     * @param {MANTICORE.type.AtlasInfo} atlas
-     * @param {MANTICORE.type.AssetBundle} bundle
+     * @param {mCore.type.AtlasInfo} atlas
+     * @param {mCore.type.AssetBundle} bundle
      */
 
     _init(baseTexture, atlas, bundle) {
@@ -210,7 +210,7 @@ class TextureAtlas extends ReusableObject{
      * @param {int} width
      * @param {int} height
      * @param {number} scale
-     * @return {MANTICORE.geometry.Rectangle}
+     * @return {mCore.geometry.Rectangle}
      * @private
      */
 
@@ -239,7 +239,7 @@ class TextureAtlas extends ReusableObject{
      * @method
      * @private
      * @param {int} index
-     * @param {MANTICORE.type.AssetBundle} bundle
+     * @param {mCore.type.AssetBundle} bundle
      * @param {string} link
      * @param {*} defaultValue
      * @returns {*}
@@ -252,9 +252,9 @@ class TextureAtlas extends ReusableObject{
     /**
      * @method
      * @private
-     * @memberOf MANTICORE.ui.parser
+     * @memberOf mCore.ui.parser
      * @param {int} index
-     * @param {MANTICORE.type.AssetBundle} bundle
+     * @param {mCore.type.AssetBundle} bundle
      * @returns {string | null}
      */
 

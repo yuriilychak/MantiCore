@@ -5,8 +5,8 @@ import Type from "util/Type";
 /**
  * @desc Class for manipulate with items.
  * @class
- * @extends MANTICORE.component.Component
- * @memberOf MANTICORE.component.ui
+ * @extends mCore.component.Component
+ * @memberOf mCore.component.ui
  */
 
 class ComItemBox extends Component {
@@ -14,7 +14,7 @@ class ComItemBox extends Component {
      * @constructor
      * @param {string} templateName - Name template for child names. For example for "item_0001" it's "item_";
      * @param {int} [numCount = 2] - Num count in template name. For example for "item_0001" it's 4;
-     * @param {MANTICORE.component.ui.ComItem} templateComponent - Component that add to new elements of ItemBox;
+     * @param {mCore.component.ui.ComItem} templateComponent - Component that add to new elements of ItemBox;
      * @param {int} [startIndex = 1] - Number for start numeration;
      */
     constructor(templateComponent, templateName, numCount = 2, startIndex = 1) {
@@ -34,13 +34,13 @@ class ComItemBox extends Component {
         this._templateNumCount = numCount;
 
         /**
-         * @type {MANTICORE.component.ui.ComItem}
+         * @type {mCore.component.ui.ComItem}
          * @private
          */
         this._componentTemplate = templateComponent;
 
         /**
-         * @type {MANTICORE.component.ui.ComItem[]}
+         * @type {mCore.component.ui.ComItem[]}
          * @private
          */
         this._items = [];
@@ -79,7 +79,7 @@ class ComItemBox extends Component {
      * @method
      * @public
      * @param {int} index
-     * @returns {MANTICORE.component.ui.ComItem | null}
+     * @returns {mCore.component.ui.ComItem | null}
      */
 
     getElement(index) {
@@ -110,7 +110,7 @@ class ComItemBox extends Component {
      * @desc Add component to item and add it to queue.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer} child
+     * @param {mCore.view.ComponentContainer} child
      */
 
     addItem(child) {
@@ -129,7 +129,7 @@ class ComItemBox extends Component {
 
         let index = this._startIndex;
         /**
-         * @type {MANTICORE.view.ComponentContainer}
+         * @type {mCore.view.ComponentContainer}
          */
         let child = owner;
         let name, component;
@@ -217,7 +217,7 @@ class ComItemBox extends Component {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.ui.ComItemBox}
+     * @return {mCore.component.ui.ComItemBox}
      */
 
     clone() {
@@ -278,7 +278,7 @@ class ComItemBox extends Component {
     /**
      * @desc Component that add to new elements of ItemBox;
      * @public
-     * @returns {MANTICORE.component.ui.ComItem}
+     * @returns {mCore.component.ui.ComItem}
      */
 
     get componentTemplate() {

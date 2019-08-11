@@ -4,10 +4,10 @@ import Point from "geometry/Point";
 /**
  * @desc An action that moves the target with a cubic Bezier curve by a certain distance. Relative to its movement.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
- * const bezier = [new MANTICORE.geometry.Point(0, windowSize.height / 2), new MANTICORE.geometry.Point(300, -windowSize.height / 2), new MANTICORE.geometry.Point(300, 100)];
+ * const bezier = [new mCore.geometry.Point(0, windowSize.height / 2), new mCore.geometry.Point(300, -windowSize.height / 2), new mCore.geometry.Point(300, 100)];
  * const bezierForward = new BezierBy(3, bezier);
  */
 
@@ -16,22 +16,22 @@ class BezierBy extends ActionInterval{
     /**
      * @constructor
      * @param {number} t - time in seconds
-     * @param {MANTICORE.geometry.Point[]} c - Array of points
+     * @param {mCore.geometry.Point[]} c - Array of points
      */
     constructor(t, c) {
         super(t);
         /**
-         * @type {MANTICORE.geometry.Point[]}
+         * @type {mCore.geometry.Point[]}
          * @private
          */
         this._config = c;
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._startPoint = Point.create(0, 0);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._prevPoint = Point.create(0, 0);
@@ -46,7 +46,7 @@ class BezierBy extends ActionInterval{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.BezierBy}
+     * @return {mCore.animation.action.BezierBy}
      */
 
     clone() {
@@ -98,7 +98,7 @@ class BezierBy extends ActionInterval{
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.BezierBy}
+     * @return {mCore.animation.action.BezierBy}
      */
 
     reverse() {
@@ -118,7 +118,7 @@ class BezierBy extends ActionInterval{
      * @method
      * @public
      * @param {number} t
-     * @param {MANTICORE.geometry.Point[]} c - Array of points
+     * @param {mCore.geometry.Point[]} c - Array of points
      */
 
     reuse(t, c) {
@@ -175,7 +175,7 @@ class BezierBy extends ActionInterval{
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get startPoint() {
@@ -184,7 +184,7 @@ class BezierBy extends ActionInterval{
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point[]}
+     * @returns {mCore.geometry.Point[]}
      */
 
     get config() {

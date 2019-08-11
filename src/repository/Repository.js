@@ -3,7 +3,7 @@ import Type from "util/Type";
 /**
  * @desc Repository for store data with fast search;
  * @class
- * @memberOf MANTICORE.repository
+ * @memberOf mCore.repository
  */
 
 class Repository {

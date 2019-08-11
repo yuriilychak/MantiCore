@@ -7,15 +7,15 @@ import DelayTime from "./DelayTime";
 /**
  * @desc Spawn a new action immediately
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  */
 
 class Spawn extends ActionInterval {
 
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.FiniteTimeAction[] | ...MANTICORE.animation.action.FiniteTimeAction} [var_args]
+     * @param {mCore.animation.action.FiniteTimeAction[] | ...mCore.animation.action.FiniteTimeAction} [var_args]
      */
     constructor(var_args) {
         const actions = Spawn._initActionArray(...arguments);
@@ -27,12 +27,12 @@ class Spawn extends ActionInterval {
         super(Math.max(actions[0].duration, actions[1].duration));
 
         /**
-         * @type {?MANTICORE.animation.action.FiniteTimeAction}
+         * @type {?mCore.animation.action.FiniteTimeAction}
          * @private
          */
         this._firstAction = null;
         /**
-         * @type {?MANTICORE.animation.action.FiniteTimeAction}
+         * @type {?mCore.animation.action.FiniteTimeAction}
          * @private
          */
         this._secondAction = null;
@@ -49,7 +49,7 @@ class Spawn extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Spawn}
+     * @return {mCore.animation.action.Spawn}
      */
 
     clone() {
@@ -83,7 +83,7 @@ class Spawn extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Spawn}
+     * @return {mCore.animation.action.Spawn}
      */
 
     reverse() {
@@ -137,8 +137,8 @@ class Spawn extends ActionInterval {
      * @desc Update actions.
      * @method
      * @private
-     * @param {MANTICORE.animation.action.ActionInterval} action1
-     * @param {MANTICORE.animation.action.ActionInterval} action2
+     * @param {mCore.animation.action.ActionInterval} action1
+     * @param {mCore.animation.action.ActionInterval} action2
      */
 
     _updateActions(action1, action2) {
@@ -162,7 +162,7 @@ class Spawn extends ActionInterval {
      * @method
      * @private
      * @param {...*} var_args
-     * @return {MANTICORE.animation.action.ActionInterval[]}
+     * @return {mCore.animation.action.ActionInterval[]}
      */
 
     static _initActionArray(var_args) {

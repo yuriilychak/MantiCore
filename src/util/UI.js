@@ -6,8 +6,8 @@ import LocalizationCache from "../cache/LocalizationCache";
 
 /**
  * @desc Contains some methods to manipulate with ui.
- * @namespace MANTICORE.util.ui
- * @memberOf MANTICORE.util
+ * @namespace mCore.util.ui
+ * @memberOf mCore.util
  */
 
 const ui = {
@@ -15,7 +15,7 @@ const ui = {
      * @desc Template for hierarchy log.
      * @readonly
      * @type {string}
-     * @memberOf MANTICORE.util.ui
+     * @memberOf mCore.util.ui
      * @private
      */
 
@@ -24,7 +24,7 @@ const ui = {
     /**
      * @desc Divider for parent/child hierarchy
      * @type {string}
-     * @memberOf MANTICORE.util.ui
+     * @memberOf mCore.util.ui
      * @private
      */
 
@@ -39,8 +39,8 @@ const ui = {
      * @desc Log to console hierarchy of widget
      * @function
      * @public
-     * @memberOf MANTICORE.util.ui
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} widget
+     * @memberOf mCore.util.ui
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} widget
      * @param {number} [maxLevel = -1]
      */
 
@@ -52,8 +52,8 @@ const ui = {
      * @desc Log labels and buttons that don't localized.
      * @function
      * @public
-     * @memberOf MANTICORE.util.ui
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} widget
+     * @memberOf mCore.util.ui
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} widget
      */
 
     logUnlocalizedFields(widget) {
@@ -64,7 +64,7 @@ const ui = {
      * @desc Returns element that get from path.
      * @function
      * @public
-     * @memberOf MANTICORE.util.ui
+     * @memberOf mCore.util.ui
      * @param {string} path
      * @param {PIXI.Container} parent
      * @returns {PIXI.DisplayObject | null}
@@ -91,8 +91,8 @@ const ui = {
      * @desc Localize node and her children.
      * @function
      * @public
-     * @memberOf MANTICORE.util.ui
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.ui.Label | PIXI.DisplayObject} root
+     * @memberOf mCore.util.ui
+     * @param {mCore.view.ComponentContainer | mCore.ui.Label | PIXI.DisplayObject} root
      */
 
     localize(root) {
@@ -126,7 +126,7 @@ const ui = {
      * @desc Return full path of to node.
      * @function
      * @public
-     * @memberOf MANTICORE.util.ui
+     * @memberOf mCore.util.ui
      * @param {PIXI.DisplayObject} node
      * @returns {string};
      */
@@ -156,8 +156,8 @@ const ui = {
     /**
      * @function
      * @private
-     * @memberOf MANTICORE.util.ui
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | PIXI.DisplayObject} widget
+     * @memberOf mCore.util.ui
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | PIXI.DisplayObject} widget
      * @param {?string} [parentPath = null]
      * @param {int} [tabCount = 0]
      * @param {int} [maxLevel = -1]
@@ -188,8 +188,8 @@ const ui = {
     /**
      * @function
      * @private
-     * @memberOf MANTICORE.util.ui
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | PIXI.DisplayObject} widget
+     * @memberOf mCore.util.ui
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | PIXI.DisplayObject} widget
      * @param {?string} [parentPath = null]
      * @param {int} [tabCount = 0]
      */
@@ -287,7 +287,7 @@ const ui = {
      * @desc Returns is type inherit button.
      * @function
      * @private
-     * @param {MANTICORE.enumerator.ui.UI_ELEMENT} type
+     * @param {mCore.enumerator.ui.UI_ELEMENT} type
      * @returns {boolean}
      */
 
@@ -299,7 +299,7 @@ const ui = {
      * @desc Returns is type inherit from scroll view.
      * @function
      * @private
-     * @param {MANTICORE.enumerator.ui.UI_ELEMENT} type
+     * @param {mCore.enumerator.ui.UI_ELEMENT} type
      * @returns {boolean}
      */
 
@@ -311,7 +311,7 @@ const ui = {
      * @desc Returns is type inherit from label.
      * @function
      * @private
-     * @param {MANTICORE.enumerator.ui.UI_ELEMENT} type
+     * @param {mCore.enumerator.ui.UI_ELEMENT} type
      * @returns {boolean}
      */
 
@@ -321,8 +321,8 @@ const ui = {
 
     /**
      *
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.ui.ScrollView} widget
-     * @param {MANTICORE.util.ui.IterateChildren} callback
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.ui.ScrollView} widget
+     * @param {mCore.util.ui.IterateChildren} callback
      * @private
      */
 
@@ -340,7 +340,7 @@ const ui = {
      * @desc Returns ui element name by type.
      * @function
      * @private
-     * @param {MANTICORE.enumerator.ui.UI_ELEMENT} type
+     * @param {mCore.enumerator.ui.UI_ELEMENT} type
      * @returns {string}
      */
 
@@ -369,8 +369,8 @@ const ui = {
 /**
  * @typedef {Function}
  * @name IterateChildren
- * @memberOf MANTICORE.util.ui
- * @param {MANTICORE.view.ComponentContainer | PIXI.DisplayObject} child
+ * @memberOf mCore.util.ui
+ * @param {mCore.view.ComponentContainer | PIXI.DisplayObject} child
  */
 
 export default ui;

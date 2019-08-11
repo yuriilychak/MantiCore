@@ -9,8 +9,8 @@ import Point from "geometry/Point";
 /**
  * @desc Class for manipulate with layouts.
  * @class
- * @memberOf MANTICORE.component.ui
- * @extends MANTICORE.component.Component
+ * @memberOf mCore.component.ui
+ * @extends mCore.component.Component
  */
 
 class ComUILayout extends Component {
@@ -20,12 +20,12 @@ class ComUILayout extends Component {
     constructor() {
         super(Constant.COM_UI_LAYOUT_NAME);
         /**
-         * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+         * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
          * @private
          */
         this._horizontalEdge = HORIZONTAL_ALIGN.NONE;
         /**
-         * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+         * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
          * @private
          */
         this._verticalEdge = VERTICAL_ALIGN.NONE;
@@ -56,12 +56,12 @@ class ComUILayout extends Component {
          */
         this._isStretchHeight = false;
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._percentPos = Point.create(0, 0);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._percentSize = Point.create(0, 0);
@@ -415,7 +415,7 @@ class ComUILayout extends Component {
     /**
      * @desc Percent size of element.
      * @public
-     * @return {MANTICORE.geometry.Point}
+     * @return {mCore.geometry.Point}
      */
 
     get percentSize() {
@@ -535,7 +535,7 @@ class ComUILayout extends Component {
     /**
      * @desc Horizontal edge of element.
      * @public
-     * @return {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @return {mCore.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalEdge() {
@@ -565,7 +565,7 @@ class ComUILayout extends Component {
     /**
      * @desc Vertical edge of element.
      * @public
-     * @return {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @return {mCore.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalEdge() {

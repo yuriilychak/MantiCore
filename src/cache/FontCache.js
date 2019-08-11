@@ -7,13 +7,13 @@ import Constant from "constant";
 /**
  * @desc Namespace for manipulate with fonts.
  * @namespace fontCache
- * @memberOf MANTICORE.cache
+ * @memberOf mCore.cache
  */
 
 export default {
     /**
      * @desc Repository that contain font sizes, for set correct size.
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
     _fontSizes: new Repository(),
@@ -2953,7 +2953,7 @@ export default {
      * @desc Add font to cache
      * @function
      * @public
-     * @param {MANTICORE.type.FontData} font
+     * @param {mCore.type.FontData} font
      * @param {string} fontName
      * @param {PIXI.BaseTexture} baseTexture
      * @param {number} resolution

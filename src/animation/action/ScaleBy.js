@@ -3,8 +3,8 @@ import ScaleTo from "./ScaleTo";
 /**
  * @desc Scales a Node object a zoom factor by modifying it's scale property. Relative to its changes.
  * @class
- * @extends MANTICORE.animation.action.ScaleTo
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ScaleTo
+ * @memberOf mCore.animation.action
  */
 
 class ScaleBy extends ScaleTo {
@@ -33,7 +33,7 @@ class ScaleBy extends ScaleTo {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ScaleBy}
+     * @return {mCore.animation.action.ScaleBy}
      */
 
     reverse() {
@@ -44,7 +44,7 @@ class ScaleBy extends ScaleTo {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ScaleBy}
+     * @return {mCore.animation.action.ScaleBy}
      */
 
     clone() {

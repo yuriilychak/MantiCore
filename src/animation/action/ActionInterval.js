@@ -16,8 +16,8 @@ import Constant from "constant";
  * <p>For example, you can simulate a Ping Pong effect running the action normally and<br/>
  * then running it again in Reverse mode. </p>
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.animation.action.FiniteTimeAction
+ * @memberOf mCore.animation.action
+ * @extends mCore.animation.action.FiniteTimeAction
  */
 
 class ActionInterval extends FiniteTimeAction {
@@ -47,7 +47,7 @@ class ActionInterval extends FiniteTimeAction {
         this._firstTick = true;
 
         /**
-         * @type {MANTICORE.animation.easing.EaseBase}
+         * @type {mCore.animation.easing.EaseBase}
          * @private
          */
         this._ease = null;
@@ -91,7 +91,7 @@ class ActionInterval extends FiniteTimeAction {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ActionInterval}
+     * @return {mCore.animation.action.ActionInterval}
      */
 
     clone() {
@@ -220,7 +220,7 @@ class ActionInterval extends FiniteTimeAction {
      * @desc Clone parameters to action, and return it.
      * @method
      * @protected
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      * @returns {*}
      */
 
@@ -238,7 +238,7 @@ class ActionInterval extends FiniteTimeAction {
      * @desc Clone parameters to action and revers eases.
      * @method
      * @protected
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      * @returns {*}
      */
 
@@ -300,7 +300,7 @@ class ActionInterval extends FiniteTimeAction {
     /**
      * @desc Returns array with easing.
      * @public
-     * @returns {MANTICORE.animation.easing.EaseBase}
+     * @returns {mCore.animation.easing.EaseBase}
      */
 
     get ease() {

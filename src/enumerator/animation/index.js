@@ -7,7 +7,7 @@ import TIME_LINE_TYPE from "./TimeLineType";
 /**
  * @desc Namespace that contains animation enumerators
  * @namespace animation
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

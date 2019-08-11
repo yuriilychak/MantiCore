@@ -4,19 +4,19 @@ import AssetBundle from "bundle/bundle/AssetBundle";
 /**
  * @desc Cache to store bundles.
  * @namespace bundleCache
- * @memberOf MANTICORE.cache
+ * @memberOf mCore.cache
  */
 
 export default {
     /**
      * @desc Repository with asset bundles
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
     _assetBundles: new Repository(),
     /**
      * @desc Repository with locale bundles
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
     _localeBundles: new Repository(),
@@ -25,8 +25,8 @@ export default {
      * @desc Add asset bundle to cache
      * @function
      * @public
-     * @param {MANTICORE.type.AssetBundle} data
-     * @return {MANTICORE.bundle.bundle.AssetBundle | null}
+     * @param {mCore.type.AssetBundle} data
+     * @return {mCore.bundle.bundle.AssetBundle | null}
      */
 
     addAssetBundle: function(data) {
@@ -43,7 +43,7 @@ export default {
      * @function
      * @public
      * @param {string} name
-     * @return {MANTICORE.bundle.bundle.AssetBundle | null}
+     * @return {mCore.bundle.bundle.AssetBundle | null}
      */
 
     getAssetBundle: function(name) {

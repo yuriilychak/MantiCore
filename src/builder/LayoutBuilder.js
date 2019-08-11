@@ -7,16 +7,16 @@ import Point from "geometry/Point";
 
 /**
  * @desc Namespace that contain builders for layout.
- * @namespace MANTICORE.builder.layoutBuilder
- * @memberOf MANTICORE.builder
+ * @namespace mCore.builder.layoutBuilder
+ * @memberOf mCore.builder
  */
 
 export default {
     /**
      * @desc Align elements in layout if it not grid and some dimensions can be set by items size.
      * @function
-     * @memberOf MANTICORE.builder.layoutBuilder
-     * @param {MANTICORE.component.ui.ComLayout} component
+     * @memberOf mCore.builder.layoutBuilder
+     * @param {mCore.component.ui.ComLayout} component
      */
 
     infiniteLayout: function(component) {
@@ -136,10 +136,10 @@ export default {
      * @desc Align children in infinite layout,
      * @function
      * @private
-     * @memberOf MANTICORE.builder.layoutBuilder
-     * @param {MANTICORE.component.ui.ComLayout} component
-     * @param {MANTICORE.geometry.Point} offset
-     * @param {MANTICORE.geometry.Point} padding
+     * @memberOf mCore.builder.layoutBuilder
+     * @param {mCore.component.ui.ComLayout} component
+     * @param {mCore.geometry.Point} offset
+     * @param {mCore.geometry.Point} padding
      * @param {int} dimCoef
      * @param {int} hMult
      * @param {int} vMult
@@ -165,7 +165,7 @@ export default {
             position.copyFrom(offset);
             sizeDif.copyFrom(childSize);
 
-            child.position.copy(
+            child.position.copyFrom(
                 Geometry.pSub(
                     Geometry.pAdd(position, childOffset, true),
                     Geometry.pMult(
@@ -193,16 +193,16 @@ export default {
      * @desc Update static dimension in infinite layout,
      * @function
      * @private
-     * @memberOf MANTICORE.builder.layoutBuilder
-     * @param {MANTICORE.ui.Widget} owner
+     * @memberOf mCore.builder.layoutBuilder
+     * @param {mCore.ui.Widget} owner
      * @param {string} link
      * @param {int} minDim
      * @param {int} offset
      * @param {int} padding
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} align
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} minAlign
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} middleAlign
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} maxAlign
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} align
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} minAlign
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} middleAlign
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} maxAlign
      * @return {int}
      */
 
@@ -227,11 +227,11 @@ export default {
      * @desc Calculate align coef for dimension.
      * @function
      * @private
-     * @memberOf MANTICORE.builder.layoutBuilder
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} align
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} minAlign
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} middleAlign
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN | MANTICORE.enumerator.ui.VERTICAL_ALIGN} maxAlign
+     * @memberOf mCore.builder.layoutBuilder
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} align
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} minAlign
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} middleAlign
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN | mCore.enumerator.ui.VERTICAL_ALIGN} maxAlign
      * @returns {number}
      */
 
@@ -248,10 +248,10 @@ export default {
      * @desc Returns anchor point of child
      * @function
      * @private
-     * @memberOf MANTICORE.builder.layoutBuilder
-     * @param {MANTICORE.view.ComponentSprite | MANTICORE.view.ComponentContainer} child
-     * @param {MANTICORE.geometry.Point} zeroPoint
-     * @param {MANTICORE.geometry.Point} outPoint
+     * @memberOf mCore.builder.layoutBuilder
+     * @param {mCore.view.ComponentSprite | mCore.view.ComponentContainer} child
+     * @param {mCore.geometry.Point} zeroPoint
+     * @param {mCore.geometry.Point} outPoint
      */
 
     _getChildAnchor(child, zeroPoint, outPoint) {
@@ -262,9 +262,9 @@ export default {
      * @desc Returns max children dimensions.
      * @function
      * @private
-     * @memberOf MANTICORE.builder.layoutBuilder
-     * @param {MANTICORE.component.ui.ComLayout} component
-     * @param {MANTICORE.geometry.Point} outPoint
+     * @memberOf mCore.builder.layoutBuilder
+     * @param {mCore.component.ui.ComLayout} component
+     * @param {mCore.geometry.Point} outPoint
      */
 
     _getMaxChildrenDimensions: function (component, outPoint) {

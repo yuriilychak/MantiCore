@@ -6,15 +6,15 @@ import CardinalSplineBy from "./CardinalSplineBy";
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  * Absolute coordinates.
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.animation.action.CardinalSplineTo
+ * @memberOf mCore.animation.action
+ * @extends mCore.animation.action.CardinalSplineTo
  */
 
 class CatmullRomBy extends CardinalSplineBy {
     /**
      * @constructor
      * @param {number} duration
-     * @param {MANTICORE.geometry.Point[]} points
+     * @param {mCore.geometry.Point[]} points
      */
     constructor(duration, points) {
         super(duration, points, 0.5);
@@ -29,7 +29,7 @@ class CatmullRomBy extends CardinalSplineBy {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.CatmullRomBy}
+     * @return {mCore.animation.action.CatmullRomBy}
      */
 
     clone() {

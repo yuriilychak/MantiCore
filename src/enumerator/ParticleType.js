@@ -2,7 +2,7 @@
  * @desc Type of particles.
  * @enum {int}
  * @name PARTICLE_TYPE
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

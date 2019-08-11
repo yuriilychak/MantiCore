@@ -2,7 +2,7 @@
  * @desc Enum with time line events.
  * @enumerator {int}
  * @name TIME_LINE_EVENT
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

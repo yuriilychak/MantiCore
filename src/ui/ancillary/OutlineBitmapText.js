@@ -10,7 +10,7 @@ import Point from "geometry/Point";
  * @desc Bitmap text with outline.
  * @class
  * @extends PIXI.Container
- * @memberOf MANTICORE.ui.ancillary
+ * @memberOf mCore.ui.ancillary
  */
 
 class OutlineBitmapText extends PIXI.Container {
@@ -46,7 +46,7 @@ class OutlineBitmapText extends PIXI.Container {
         });
 
         /**
-         * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+         * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
          * @private
          */
 
@@ -54,7 +54,7 @@ class OutlineBitmapText extends PIXI.Container {
 
         /**
          * @desc Vertical align of text field.
-         * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+         * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
          * @private
          */
 
@@ -126,7 +126,7 @@ class OutlineBitmapText extends PIXI.Container {
     /**
      * @method
      * @public
-     * @return {MANTICORE.ui.ancillary.OutlineBitmapText}
+     * @return {mCore.ui.ancillary.OutlineBitmapText}
      */
 
     clone() {
@@ -290,7 +290,7 @@ class OutlineBitmapText extends PIXI.Container {
     }
 
     /**
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get anchor() {
@@ -469,7 +469,7 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {
@@ -510,7 +510,7 @@ class OutlineBitmapText extends PIXI.Container {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {

@@ -2,7 +2,7 @@
  * @desc Enum that contains panel graphic types.
  * @enumerator {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const PANEL_GRAPHIC_TYPE = {

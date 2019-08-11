@@ -10,16 +10,16 @@ import BundleCache from "cache/BundleCache";
 /**
  * @desc Middlewares for load end generate bundles.
  * @namespace middleware
- * @memberOf MANTICORE.bundle
+ * @memberOf mCore.bundle
  */
 
 const middleware = {
     /**
      * @function
      * @public
-     * @param {MANTICORE.loader.LoaderResource} resource
+     * @param {mCore.loader.LoaderResource} resource
      * @param {Function} next
-     * @memberOf MANTICORE.bundle.middleware
+     * @memberOf mCore.bundle.middleware
      */
     bundleParser: function (resource, next) {
         if (resource.extension !== FILE_TYPE.JSON || Type.isEmpty(resource.data) || Type.isEmpty(resource.data["bundleType"])) {
@@ -28,7 +28,7 @@ const middleware = {
         }
 
         /**
-         * @type {MANTICORE.type.AssetBundle}
+         * @type {mCore.type.AssetBundle}
          */
 
         const data = resource.data;

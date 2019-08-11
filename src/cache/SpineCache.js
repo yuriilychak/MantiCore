@@ -7,13 +7,13 @@ import Logger from "logger";
 /**
  * @desc Namespace for manipulate with spine skeletons.
  * @namespace spineCache
- * @memberOf MANTICORE.cache
+ * @memberOf mCore.cache
  */
 
 export default {
     /**
      * @desc Repository with skeleton data.
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
     _skeletons: new Repository(),

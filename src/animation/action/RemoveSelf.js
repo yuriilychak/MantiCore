@@ -3,8 +3,8 @@ import ActionInstant from "./ActionInstant";
 /**
  * @desc Remove display object.
  * @class
- * @extends MANTICORE.animation.action.ActionInstant
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
  */
 
 class RemoveSelf extends ActionInstant {
@@ -42,7 +42,7 @@ class RemoveSelf extends ActionInstant {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.RemoveSelf}
+     * @return {mCore.animation.action.RemoveSelf}
      */
 
     clone(){

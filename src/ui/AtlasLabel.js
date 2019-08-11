@@ -14,7 +14,7 @@ import NUMBER_TYPE from "enumerator/NumberType";
  * @readonly
  * @private
  * @type {string}
- * @memberOf MANTICORE.ui.AtlasLabel
+ * @memberOf mCore.ui.AtlasLabel
  */
 
 const DOT_LIST = ".,";
@@ -25,7 +25,7 @@ const DOT_LIST = ".,";
  * @readonly
  * @private
  * @type {string}
- * @memberOf MANTICORE.ui.AtlasLabel
+ * @memberOf mCore.ui.AtlasLabel
  */
 
 const SYMBOL_LIST = "./0123456789,%+-×=";
@@ -33,8 +33,8 @@ const SYMBOL_LIST = "./0123456789,%+-×=";
 /**
  * @desc Realization of atlas label class.
  * @class
- * @extends MANTICORE.ui.ancillary.BaseLabel
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.ancillary.BaseLabel
+ * @memberOf mCore.ui
  */
 
 class AtlasLabel extends BaseLabel {
@@ -54,7 +54,7 @@ class AtlasLabel extends BaseLabel {
         this._fontFrame = AssetUtil.getSpriteFrame(frame);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._letterDimensions = Point.create(letterWidth, letterHeight);
@@ -174,7 +174,7 @@ class AtlasLabel extends BaseLabel {
      * @desc Calls when horizontal align change.
      * @method
      * @protected
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN} value
      */
 
     horizontalAlignChange(value) {
@@ -185,7 +185,7 @@ class AtlasLabel extends BaseLabel {
      * @desc Calls when vertical align change.
      * @method
      * @protected
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
+     * @param {mCore.enumerator.ui.VERTICAL_ALIGN} value
      */
 
     verticalAlignChange(value) {

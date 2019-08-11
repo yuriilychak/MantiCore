@@ -6,14 +6,14 @@ import ComUI from "component/ui/ComUI";
 /**
  * @desc Class for manage components.
  * @class
- * @extends MANTICORE.manager.BaseManager
- * @memberOf MANTICORE.manager
+ * @extends mCore.manager.BaseManager
+ * @memberOf mCore.manager
  */
 
 class ComponentManager extends BaseManager {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} owner
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} owner
      */
     constructor(owner) {
 
@@ -21,14 +21,14 @@ class ComponentManager extends BaseManager {
 
         /**
          * @desc Repository with components;
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
         this._componentRepo = new Repository();
 
         /**
          * @desc Array with ui components. Need to dispatch interactions for components without events.
-         * @type {MANTICORE.component.ui.ComUI[]}
+         * @type {mCore.component.ui.ComUI[]}
          * @private
          */
 
@@ -36,7 +36,7 @@ class ComponentManager extends BaseManager {
 
         /**
          * @desc Link to components. Need to dont create array every frame.
-         * @type {MANTICORE.component.Component[]}
+         * @type {mCore.component.Component[]}
          * @private
          */
         this._components = this._componentRepo.values;
@@ -59,7 +59,7 @@ class ComponentManager extends BaseManager {
      * @desc Add component to container, returns falls if component already add.
      * @method
      * @public
-     * @param {MANTICORE.component.Component} component
+     * @param {mCore.component.Component} component
      * @returns {boolean}
      */
     addComponent(component) {
@@ -77,7 +77,7 @@ class ComponentManager extends BaseManager {
      * @desc Add components to container.
      * @method
      * @public
-     * @param {MANTICORE.component.Component[]} components
+     * @param {mCore.component.Component[]} components
      */
 
     addComponents(components) {
@@ -97,7 +97,7 @@ class ComponentManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @returns {MANTICORE.component.Component | null}
+     * @returns {mCore.component.Component | null}
      */
 
     getComponent(name) {
@@ -129,7 +129,7 @@ class ComponentManager extends BaseManager {
             return false;
         }
         /**
-         * @type {MANTICORE.component.Component}
+         * @type {mCore.component.Component}
          */
         const component = this._componentRepo.getElement(name);
         component.onRemove();
@@ -216,7 +216,7 @@ class ComponentManager extends BaseManager {
     /**
      * @desc Function for iterate ui components.
      * @method
-     * @param {MANTICORE.view.callback.IterateComponent} callback
+     * @param {mCore.view.callback.IterateComponent} callback
      * @public
      */
 
@@ -264,7 +264,7 @@ class ComponentManager extends BaseManager {
      * @method
      * @private
      * @param {PIXI.DisplayObject[]} children
-     * @param {MANTICORE.view.callback.ChildAction} callback
+     * @param {mCore.view.callback.ChildAction} callback
      */
 
     _childAction(children, callback) {
@@ -287,7 +287,7 @@ class ComponentManager extends BaseManager {
      * @desc Iterate components
      * @method
      * @private
-     * @param {MANTICORE.view.callback.IterateComponent} callback
+     * @param {mCore.view.callback.IterateComponent} callback
      */
 
     _iterateComponents(callback) {
@@ -300,7 +300,7 @@ class ComponentManager extends BaseManager {
      * @desc add and int component, if component already add return false.
      * @method
      * @private
-     * @param {MANTICORE.component.Component} component
+     * @param {mCore.component.Component} component
      */
 
     _addComponent(component) {

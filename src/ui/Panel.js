@@ -8,21 +8,21 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
 /**
  * @desc Panel component.
  * @class
- * @extends MANTICORE.ui.Widget
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.Widget
+ * @memberOf mCore.ui
  */
 
 class Panel extends Widget {
     /**
      * @constructor
-     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = mCore.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
      * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
      */
     constructor(graphicType = PANEL_GRAPHIC_TYPE.NONE, data = null) {
         super();
 
         /**
-         * @type {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE}
+         * @type {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE}
          * @private
          */
 
@@ -42,7 +42,7 @@ class Panel extends Widget {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = mCore.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
      * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
      */
     reuse(graphicType, data) {
@@ -53,7 +53,7 @@ class Panel extends Widget {
     /**
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = mCore.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
      * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
      */
 
@@ -100,7 +100,7 @@ class Panel extends Widget {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE}
+     * @return {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE}
      */
 
     get panelType() {

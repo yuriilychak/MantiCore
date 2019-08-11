@@ -4,8 +4,8 @@ import ActionInterval from "./ActionInterval";
  * @desc Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  * @warning This action doesn't support "reverse"
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const action = new FadeTo(1.0, 0);
  */
@@ -40,7 +40,7 @@ class FadeTo extends ActionInterval{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FadeTo}
+     * @return {mCore.animation.action.FadeTo}
      */
 
     clone() {

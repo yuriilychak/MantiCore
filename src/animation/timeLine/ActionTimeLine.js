@@ -15,8 +15,8 @@ import Point from "geometry/Point";
 /**
  * @desc Class for manipulate with animated actions and listen their event.
  * @class
- * @memberOf MANTICORE.animation.timeLine
- * @extends MANTICORE.animation.timeLine.BaseTimeLine
+ * @memberOf mCore.animation.timeLine
+ * @extends mCore.animation.timeLine.BaseTimeLine
  */
 
 class ActionTimeLine extends BaseTimeLine{
@@ -30,13 +30,13 @@ class ActionTimeLine extends BaseTimeLine{
 
         /**
          * @desc action that currently run
-         * @type {?MANTICORE.animation.ActionAnimation}
+         * @type {?mCore.animation.ActionAnimation}
          * @private
          */
         this._runningAnimation = null;
 
         /**
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
 
@@ -59,21 +59,21 @@ class ActionTimeLine extends BaseTimeLine{
         this._isRunAction = false;
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
         this._startPosition = Point.create(0, 0);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
         this._startScale = Point.create(0, 0);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -109,7 +109,7 @@ class ActionTimeLine extends BaseTimeLine{
 
         /**
          * @desc Children that need to run inherited animation.
-         * @type {?MANTICORE.view.ComponentContainer[]}
+         * @type {?mCore.view.ComponentContainer[]}
          * @private
          */
 
@@ -157,7 +157,7 @@ class ActionTimeLine extends BaseTimeLine{
      * @method
      * @public
      * @param {string} name
-     * @param {MANTICORE.animation.ActionAnimation} animation
+     * @param {mCore.animation.ActionAnimation} animation
      * @returns {boolean}
      */
 
@@ -215,7 +215,7 @@ class ActionTimeLine extends BaseTimeLine{
     /**
      * @method
      * @public
-     * @param {MANTICORE.animation.action.Action} action
+     * @param {mCore.animation.action.Action} action
      * @param {boolean} [loop = false]
      */
 
@@ -298,7 +298,7 @@ class ActionTimeLine extends BaseTimeLine{
      * @desc Enable child for use in inherited animation.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} child
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} child
      */
 
     addNestedChild(child) {
@@ -318,7 +318,7 @@ class ActionTimeLine extends BaseTimeLine{
      * @desc Disable child for use in inherited animation.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} child
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite} child
      */
 
     removeNestedChild(child) {
@@ -338,12 +338,12 @@ class ActionTimeLine extends BaseTimeLine{
     /**
      * @method
      * @public
-     * @return {MANTICORE.animation.timeLine.ActionTimeLine}
+     * @return {mCore.animation.timeLine.ActionTimeLine}
      */
 
     clone() {
         /**
-         * @type {MANTICORE.animation.timeLine.ActionTimeLine}
+         * @type {mCore.animation.timeLine.ActionTimeLine}
          */
         const result = ActionTimeLine.create(this.target);
         result.fps = this.fps;
@@ -381,7 +381,7 @@ class ActionTimeLine extends BaseTimeLine{
      * @method
      * @protected
      * @param {string} name
-     * @param {MANTICORE.animation.ActionAnimation} [animation]
+     * @param {mCore.animation.ActionAnimation} [animation]
      */
 
     runAnimation(name, animation = null) {
@@ -440,9 +440,9 @@ class ActionTimeLine extends BaseTimeLine{
      */
 
     resetParameters() {
-        this.target.position.copy(this._startPosition);
-        this.target.scale.copy(this._startScale);
-        this.target.skew.copy(this._startSkew);
+        this.target.position.copyFrom(this._startPosition);
+        this.target.scale.copyFrom(this._startScale);
+        this.target.skew.copyFrom(this._startSkew);
         this.target.tint = this._startTint;
         this.target.alpha = this._startAlpha;
         this.target.rotation = this._startRotation;
@@ -471,7 +471,7 @@ class ActionTimeLine extends BaseTimeLine{
     /**
      * @method
      * @private
-     * @param {MANTICORE.animation.ActionTimeLine.IterateNestedChildren} callback
+     * @param {mCore.animation.ActionTimeLine.IterateNestedChildren} callback
      */
 
     _iterateNestedChildren(callback) {
@@ -583,8 +583,8 @@ class ActionTimeLine extends BaseTimeLine{
  * @callback
  * @name IterateNestedChildren
  * @typedef {Function}
- * @param {MANTICORE.view.ComponentContainer} child
- * @memberOf MANTICORE.animation.ActionTimeLine
+ * @param {mCore.view.ComponentContainer} child
+ * @memberOf mCore.animation.ActionTimeLine
  */
 
 export default ActionTimeLine;

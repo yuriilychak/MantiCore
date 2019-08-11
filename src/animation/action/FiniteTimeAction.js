@@ -8,8 +8,8 @@ import Action from "./Action";
  *
  * Infinite time actions are valid
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.animation.action.Action
+ * @memberOf mCore.animation.action
+ * @extends mCore.animation.action.Action
  */
 
 class FiniteTimeAction extends Action {
@@ -55,7 +55,7 @@ class FiniteTimeAction extends Action {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FiniteTimeAction}
+     * @return {mCore.animation.action.FiniteTimeAction}
      */
 
     clone() {

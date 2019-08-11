@@ -2,7 +2,7 @@
  * @desc Enum with file types that use application.
  * @enumerator {string}
  * @name FILE_TYPE
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

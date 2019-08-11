@@ -5,8 +5,8 @@ import Point from "geometry/Point";
 /**
  * @desc Skews a Node object by skewX and skewY degrees.Relative to its property modification.
  * @class
- * @extends MANTICORE.animation.action.SkewTo
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.SkewTo
+ * @memberOf mCore.animation.action
  */
 
 class SkewBy extends SkewTo{
@@ -25,7 +25,7 @@ class SkewBy extends SkewTo{
     constructor(t, sx, sy) {
         super(t, sx, sy);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -36,7 +36,7 @@ class SkewBy extends SkewTo{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.SkewBy}
+     * @return {mCore.animation.action.SkewBy}
      */
 
     clone() {
@@ -60,7 +60,7 @@ class SkewBy extends SkewTo{
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.SkewBy}
+     * @return {mCore.animation.action.SkewBy}
      */
 
     reverse() {

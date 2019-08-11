@@ -4,8 +4,8 @@ import Constant from "constant/index";
 /**
  * @desc Component that can iterate children.
  * @class
- * @memberOf MANTICORE.component
- * @extends MANTICORE.component.Component
+ * @memberOf mCore.component
+ * @extends mCore.component.Component
  */
 
 class ComChildIterator extends Component {
@@ -38,7 +38,7 @@ class ComChildIterator extends Component {
     /**
      * @method
      * @public
-     * @param {MANTICORE.component.callback.IterateChildren} callback
+     * @param {mCore.component.callback.IterateChildren} callback
      */
 
     iterateChildren(callback) {
@@ -74,7 +74,7 @@ class ComChildIterator extends Component {
      * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer} owner
+     * @param {mCore.view.ComponentContainer} owner
      */
 
     onAdd (owner) {
@@ -139,7 +139,7 @@ class ComChildIterator extends Component {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.ComChildIterator}
+     * @return {mCore.component.ComChildIterator}
      */
 
     clone() {

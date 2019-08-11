@@ -7,8 +7,8 @@ import ListenerManager from "./ListenerManager";
 
 /**
  * @desc Contains containers for some types. Need to decompose some big classes.
- * @namespace MANTICORE.manager
- * @memberOf MANTICORE
+ * @namespace mCore.manager
+ * @memberOf mCore
  */
 
 export default {

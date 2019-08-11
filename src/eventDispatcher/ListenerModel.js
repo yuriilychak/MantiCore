@@ -5,8 +5,8 @@ import Logger from "logger";
 /**
  * @desc Model for store event listener data.
  * @class
- * @memberOf MANTICORE.eventDispatcher
- * @extends MANTICORE.model.Model
+ * @memberOf mCore.eventDispatcher
+ * @extends mCore.model.Model
  */
 
 class ListenerModel extends Model {

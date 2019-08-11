@@ -11,21 +11,21 @@ import Geometry from "util/Geometry";
 
 /**
  * @class
- * @memberOf MANTICORE.ui
- * @extends MANTICORE.ui.ScrollView
+ * @memberOf mCore.ui
+ * @extends mCore.ui.ScrollView
  */
 
 class ListView extends ScrollView {
     /**
      * @constructor
-     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = mCore.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
      * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
      */
     constructor(graphicType = PANEL_GRAPHIC_TYPE.NONE, data = null) {
         super(graphicType, data);
 
         /**
-         * @type {MANTICORE.component.ui.ComLayout}
+         * @type {mCore.component.ui.ComLayout}
          * @private
          */
 
@@ -33,7 +33,7 @@ class ListView extends ScrollView {
 
         /**
          * @desc Component for add event for child interactions.
-         * @type {MANTICORE.component.ui.ComChildListener}
+         * @type {mCore.component.ui.ComChildListener}
          * @private
          */
 
@@ -61,7 +61,7 @@ class ListView extends ScrollView {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = mCore.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
      * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
      */
     reuse(graphicType = PANEL_GRAPHIC_TYPE.NONE, data = null) {
@@ -132,7 +132,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {MANTICORE.component.ui.ComLayout}
+     * @type {mCore.component.ui.ComLayout}
      */
 
     get layout() {
@@ -141,7 +141,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {
@@ -154,7 +154,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {
@@ -321,7 +321,7 @@ class ListView extends ScrollView {
     /**
      * @desc Return slider depend of direction.
      * @public
-     * @type {?MANTICORE.ui.Slider}
+     * @type {?mCore.ui.Slider}
      */
 
     get slider() {
@@ -338,7 +338,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+     * @type {mCore.enumerator.ui.SCROLL_DIRECTION}
      */
 
     get scrollDirection() {
@@ -395,7 +395,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get innerPadding() {
@@ -408,7 +408,7 @@ class ListView extends ScrollView {
 
     /**
      * @public
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get outerPadding() {

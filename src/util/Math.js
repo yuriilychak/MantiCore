@@ -3,8 +3,8 @@ import Constant from "constant";
 
 /**
  * @desc Namespace that contain some math function for fast calculations.
- * @namespace MANTICORE.util.math
- * @memberOf MANTICORE.util
+ * @namespace mCore.util.math
+ * @memberOf mCore.util
  */
 
 const math = {
@@ -31,7 +31,7 @@ const math = {
      * @public
      * @readonly
      * @const
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     PI: 3.14159265,
@@ -42,7 +42,7 @@ const math = {
      * @public
      * @readonly
      * @const
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     HALF_CIRCLE: 180,
@@ -53,7 +53,7 @@ const math = {
      * @public
      * @readonly
      * @const
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     MAX_BYTE: 255,
@@ -64,7 +64,7 @@ const math = {
      * @public
      * @readonly
      * @const
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     MILLI: 0.001,
@@ -73,7 +73,7 @@ const math = {
      * @desc Return sign of value
      * @param {number} value
      * @return {int}
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     sign: function(value) {
@@ -85,7 +85,7 @@ const math = {
      * @function
      * @private
      * @param {number} angle
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {number}
      */
 
@@ -98,7 +98,7 @@ const math = {
      * @function
      * @param {*} element - The item to search for within the array.
      * @param {Array} array - Array for search.
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {int} The index of the element which defaults to -1 when not found.
      */
     binaryIndexOf: function (element, array) {
@@ -138,7 +138,7 @@ const math = {
      * @desc Floor number.
      * @function
      * @param {number} value
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {int}
      */
 
@@ -150,7 +150,7 @@ const math = {
      * @desc Round number.
      * @function
      * @param {number} value
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {int}
      */
 
@@ -162,7 +162,7 @@ const math = {
      * @desc Ceil number.
      * @function
      * @param {number} value
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {int}
      */
 
@@ -176,7 +176,7 @@ const math = {
      * @function
      * @param {number} value
      * @param {int} [rank = 1]
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {int}
      */
 
@@ -189,7 +189,7 @@ const math = {
      * @function
      * @param {number} value
      * @param {int} [rank = 1]
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {int}
      */
 
@@ -202,7 +202,7 @@ const math = {
      * @function
      * @param {number} value - Value to round.
      * @param {int} [numCount = 2] - Num count after dot to round.
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {number}
      */
 
@@ -228,7 +228,7 @@ const math = {
      * @public
      * @param {int} max
      * @param {int} [min = 0]
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {int}
      */
 
@@ -251,7 +251,7 @@ const math = {
      * @desc Calculate fast sin with low precision.
      * @function
      * @param {number} angle
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {number}
      */
 
@@ -267,7 +267,7 @@ const math = {
      * @desc Calculate fast sin with low precision.
      * @function
      * @param {number} angle
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {number}
      */
 
@@ -285,7 +285,7 @@ const math = {
      * @desc Returns max value of arguments.
      * @param {...number} var_args
      * @returns {number}
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     max: function(var_args) {
@@ -305,7 +305,7 @@ const math = {
     /**
      * @desc Returns min value of arguments.
      * @param {...number} var_args
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {number}
      */
 
@@ -339,7 +339,7 @@ const math = {
      * @desc Convert degrees to radians
      * @function
      * @param {number} degrees
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {number}
      */
 
@@ -353,7 +353,7 @@ const math = {
      * @param {number} value
      * @param {number} leftBound
      * @param {number} rightBound
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {number}
      */
 
@@ -365,7 +365,7 @@ const math = {
      * @desc Convert radians to degrees
      * @function
      * @param {number} radians
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {number}
      */
 
@@ -378,7 +378,7 @@ const math = {
      * @function
      * @param {number} value - Value to convert.
      * @param {boolean} [isRound = false] - Is need to round value.
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {number}
      */
 
@@ -391,7 +391,7 @@ const math = {
      * @desc Convert percent to float
      * @function
      * @param {number} value
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @returns {number}
      */
 
@@ -403,7 +403,7 @@ const math = {
      * @desc Convert frames to seconds.
      * @function
      * @param {number} value
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {number}
      */
 
@@ -415,7 +415,7 @@ const math = {
      * @desc Convert seconds to frames.
      * @function
      * @param {number} value
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      * @return {int}
      */
 
@@ -427,7 +427,7 @@ const math = {
      * @desc Generate unique id.
      * @function
      * @return {int}
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     getUniqueId: function () {
@@ -452,7 +452,7 @@ const math = {
      * @function
      * @param {number} value
      * @param {int} power
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     intPow: function(value, power) {
@@ -470,7 +470,7 @@ const math = {
      * @function
      * @param {number} seconds
      * @return {int}
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     toMilliseconds(seconds) {
@@ -482,7 +482,7 @@ const math = {
      * @function
      * @param {int} milliseconds
      * @return {number}
-     * @memberOf MANTICORE.util.math
+     * @memberOf mCore.util.math
      */
 
     toSeconds(milliseconds) {

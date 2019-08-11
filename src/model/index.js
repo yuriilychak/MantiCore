@@ -1,8 +1,8 @@
 import Model from "./Model";
 
 /**
- * @namespace MANTICORE.model
- * @memberOf MANTICORE
+ * @namespace mCore.model
+ * @memberOf mCore
  */
 
 export default {

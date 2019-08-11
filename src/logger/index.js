@@ -6,7 +6,7 @@ import Format from "util/Format";
 /**
  * @desc Namespace for log information to console.
  * @namespace logger
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 
 export default {

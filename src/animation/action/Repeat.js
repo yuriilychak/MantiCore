@@ -4,8 +4,8 @@ import ActionInstant from "./ActionInstant";
 /**
  * @desc Repeats an action a number of times. To repeat an action forever use the CCRepeatForever action.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const rep = new Repeat(new Sequence(jump2, jump1), 5);
  */
@@ -15,7 +15,7 @@ class Repeat extends ActionInterval {
 
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.FiniteTimeAction} [action]
+     * @param {mCore.animation.action.FiniteTimeAction} [action]
      * @param {int} [times]
      */
     constructor(action = null, times = 1) {
@@ -43,7 +43,7 @@ class Repeat extends ActionInterval {
         this._actionInstant = false;
         /**
          *
-         * @type {?MANTICORE.animation.action.FiniteTimeAction}
+         * @type {?mCore.animation.action.FiniteTimeAction}
          * @private
          */
         this._innerAction = action;
@@ -63,7 +63,7 @@ class Repeat extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Repeat}
+     * @return {mCore.animation.action.Repeat}
      */
 
     clone() {
@@ -120,7 +120,7 @@ class Repeat extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Repeat}
+     * @return {mCore.animation.action.Repeat}
      */
 
     reverse() {
@@ -131,7 +131,7 @@ class Repeat extends ActionInterval {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.animation.action.FiniteTimeAction} [action]
+     * @param {mCore.animation.action.FiniteTimeAction} [action]
      * @param {int} [times]
      */
 
@@ -183,7 +183,7 @@ class Repeat extends ActionInterval {
     /**
      * @desc Action to repeat.
      * @public
-     * @returns {?MANTICORE.animation.action.FiniteTimeAction}
+     * @returns {?mCore.animation.action.FiniteTimeAction}
      */
     get innerAction() {
         return this._innerAction;

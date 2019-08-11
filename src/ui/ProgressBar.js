@@ -9,8 +9,8 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
 /**
  * @desc Progress bar class
  * @class
- * @extends MANTICORE.ui.Widget
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.Widget
+ * @memberOf mCore.ui
  */
 
 class ProgressBar extends Widget {
@@ -18,15 +18,15 @@ class ProgressBar extends Widget {
     /**
      * @constructor
      * @param {string} frameLink - link to progress frame in texture;
-     * @param {MANTICORE.enumerator.DIRECTION} [direction = MANTICORE.enumerator.DIRECTION.LEFT] - Type of progress direction.
-     * @param {MANTICORE.enumerator.ui.PROGRESS_TYPE} [type = MANTICORE.enumerator.ui.PROGRESS_TYPE.SIZE] - Type of progress change.
+     * @param {mCore.enumerator.DIRECTION} [direction = mCore.enumerator.DIRECTION.LEFT] - Type of progress direction.
+     * @param {mCore.enumerator.ui.PROGRESS_TYPE} [type = mCore.enumerator.ui.PROGRESS_TYPE.SIZE] - Type of progress change.
      */
 
     constructor(frameLink, direction = DIRECTION.LEFT, type = PROGRESS_TYPE.SIZE) {
         super();
 
         /**
-         * @type {MANTICORE.view.Slice9Sprite}
+         * @type {mCore.view.Slice9Sprite}
          * @private
          */
 
@@ -40,14 +40,14 @@ class ProgressBar extends Widget {
         this._mask = null;
 
         /**
-         * @type {MANTICORE.enumerator.DIRECTION}
+         * @type {mCore.enumerator.DIRECTION}
          * @private
          */
 
         this._direction = DIRECTION.NONE;
 
         /**
-         * @type {MANTICORE.enumerator.ui.PROGRESS_TYPE}
+         * @type {mCore.enumerator.ui.PROGRESS_TYPE}
          * @private
          */
 
@@ -81,8 +81,8 @@ class ProgressBar extends Widget {
      * @method
      * @public
      * @param {string} frameLink - link to progress frame in texture;
-     * @param {MANTICORE.enumerator.DIRECTION} [direction = MANTICORE.enumerator.DIRECTION.LEFT] - Type of progress direction.
-     * @param {MANTICORE.enumerator.ui.PROGRESS_TYPE} [type = MANTICORE.enumerator.ui.PROGRESS_TYPE.SIZE] - Type of progress change.
+     * @param {mCore.enumerator.DIRECTION} [direction = mCore.enumerator.DIRECTION.LEFT] - Type of progress direction.
+     * @param {mCore.enumerator.ui.PROGRESS_TYPE} [type = mCore.enumerator.ui.PROGRESS_TYPE.SIZE] - Type of progress change.
      */
     reuse(frameLink, direction = DIRECTION.LEFT, type = PROGRESS_TYPE.SIZE) {
         super.reuse();
@@ -250,7 +250,7 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.DIRECTION}
+     * @type {mCore.enumerator.DIRECTION}
      */
 
     get direction() {
@@ -289,7 +289,7 @@ class ProgressBar extends Widget {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.PROGRESS_TYPE}
+     * @type {mCore.enumerator.ui.PROGRESS_TYPE}
      */
 
     get type() {

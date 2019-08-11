@@ -4,8 +4,8 @@ import Type from "util/Type";
 /**
  * @desc Flip display object vertical.
  * @class
- * @extends MANTICORE.animation.action.ActionInstant
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
  */
 
 class FlipY extends ActionInstant {
@@ -27,7 +27,7 @@ class FlipY extends ActionInstant {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FlipY}
+     * @return {mCore.animation.action.FlipY}
      */
 
     clone(){
@@ -38,7 +38,7 @@ class FlipY extends ActionInstant {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FlipY}
+     * @return {mCore.animation.action.FlipY}
      */
 
     reverse () {

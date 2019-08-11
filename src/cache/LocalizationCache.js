@@ -6,7 +6,7 @@ import SYSTEM_EVENT from "enumerator/event/SystemEvent";
 /**
  * @desc Namespace for manipulate with localization.
  * @namespace localizationCache
- * @memberOf MANTICORE.cache
+ * @memberOf mCore.cache
  */
 
 export default  {
@@ -19,7 +19,7 @@ export default  {
 
     /**
      * @desc Repository with locales.
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
      */
 

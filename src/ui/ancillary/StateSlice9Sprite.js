@@ -5,8 +5,8 @@ import Type from "util/Type";
 /**
  * @desc Slice9 Sprite that have states.
  * @class
- * @extends MANTICORE.view.Slice9Sprite
- * @memberOf MANTICORE.ui.ancillary
+ * @extends mCore.view.Slice9Sprite
+ * @memberOf mCore.ui.ancillary
  */
 
 class StateSlice9Sprite extends Slice9Sprite {
@@ -37,7 +37,7 @@ class StateSlice9Sprite extends Slice9Sprite {
         this._currentState = state;
 
         /**
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
 

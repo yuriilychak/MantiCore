@@ -32,8 +32,8 @@ const MAX_CHAR_COUNT = 1024000;
 /**
  * @desc Class for text input.
  * @class
- * @extends MANTICORE.ui.Label
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.Label
+ * @memberOf mCore.ui
  */
 
 class TextField extends Label {
@@ -50,7 +50,7 @@ class TextField extends Label {
         if (Type.isNull(input)) {
             input = document.createElement("input");
             input.setAttribute("type", "text");
-            input.setAttribute("id", "MANTICORE.Input");
+            input.setAttribute("id", "mCore.Input");
             TextField._updateInputStyle();
             document.body.appendChild(input);
         }
@@ -177,7 +177,7 @@ class TextField extends Label {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 

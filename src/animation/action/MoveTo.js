@@ -7,10 +7,10 @@ import Point from "geometry/Point";
  * Several MoveTo actions can be concurrently called, and the resulting                                            <br/>
  * movement will be the sum of individual movements.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
- * const actionBy = new MoveTo(2, new MANTICORE.geometry.Point(80, 80));
+ * const actionBy = new MoveTo(2, new mCore.geometry.Point(80, 80));
  */
 
 class MoveTo extends MoveBy {
@@ -18,14 +18,14 @@ class MoveTo extends MoveBy {
     /**
      * @constructor
      * @param {number} duration duration in seconds
-     * @param {MANTICORE.geometry.Point | number} position
+     * @param {mCore.geometry.Point | number} position
      * @param {number} [y]
      */
 
     constructor(duration, position, y) {
         super(duration, position, y);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._endPosition = Point.create(0, 0);
@@ -47,7 +47,7 @@ class MoveTo extends MoveBy {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.MoveTo}
+     * @return {mCore.animation.action.MoveTo}
      */
 
     clone() {
@@ -72,7 +72,7 @@ class MoveTo extends MoveBy {
      * @method
      * @public
      * @param {number} duration duration in seconds
-     * @param {MANTICORE.geometry.Point | number} position
+     * @param {mCore.geometry.Point | number} position
      * @param {number} [y]
      */
 

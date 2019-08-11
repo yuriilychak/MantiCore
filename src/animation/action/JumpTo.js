@@ -6,10 +6,10 @@ import Point from "geometry/Point";
  * @desc Moves a Node object to a parabolic position simulating a jump movement by modifying it's position property. <br />
  * Jump to the specified location.
  * @class
- * @extends MANTICORE.animation.action.JumpBy
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.JumpBy
+ * @memberOf mCore.animation.action
  * @example
- * const actionTo = new JumpTo(2, new MANTICORE.geometry.Point(300, 0), 50, 4);
+ * const actionTo = new JumpTo(2, new mCore.geometry.Point(300, 0), 50, 4);
  * const actionTo = new JumpTo(2, 300, 0, 50, 4);
  */
 
@@ -18,7 +18,7 @@ class JumpTo extends JumpBy {
     /**
      * @constructor
      * @param {number} duration
-     * @param {MANTICORE.geometry.Point|number} position
+     * @param {mCore.geometry.Point|number} position
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]
@@ -28,7 +28,7 @@ class JumpTo extends JumpBy {
         super(duration, position, y, height, jumps);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._endPosition = Point.create(0, 0);
@@ -65,7 +65,7 @@ class JumpTo extends JumpBy {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.JumpTo}
+     * @return {mCore.animation.action.JumpTo}
      */
 
     clone() {
@@ -77,7 +77,7 @@ class JumpTo extends JumpBy {
      * @method
      * @public
      * @param {number} duration
-     * @param {MANTICORE.geometry.Point|number} position
+     * @param {mCore.geometry.Point|number} position
      * @param {number} [y]
      * @param {number} [height]
      * @param {number} [jumps]

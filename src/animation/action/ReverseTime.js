@@ -6,8 +6,8 @@ import ActionInterval from "./ActionInterval";
  * Use it as the default "reversed" method of your own actions, but using it outside the "reversed"      <br/>
  * scope is not recommended.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  *  const reverse = new ReverseTime(this);
  */
@@ -16,13 +16,13 @@ class ReverseTime extends ActionInterval {
 
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action
+     * @param {mCore.animation.action.FiniteTimeAction} action
      */
 
     constructor(action) {
         super(action.duration);
         /**
-         * @type {MANTICORE.animation.action.FiniteTimeAction}
+         * @type {mCore.animation.action.FiniteTimeAction}
          * @private
          */
         this._other = action;
@@ -37,7 +37,7 @@ class ReverseTime extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ReverseTime}
+     * @return {mCore.animation.action.ReverseTime}
      */
 
     clone() {
@@ -66,7 +66,7 @@ class ReverseTime extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ReverseTime}
+     * @return {mCore.animation.action.ReverseTime}
      */
 
     reverse() {
@@ -82,7 +82,7 @@ class ReverseTime extends ActionInterval {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action
+     * @param {mCore.animation.action.FiniteTimeAction} action
      */
 
     reuse(action) {

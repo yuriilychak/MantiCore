@@ -4,21 +4,21 @@ import ReusableObject from "memory/ReusableObject";
 /**
  * @desc Base class for manager classes.
  * @class
- * @memberOf MANTICORE.manager
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.manager
+ * @extends mCore.memory.ReusableObject
  */
 
 class BaseManager extends ReusableObject {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject} owner
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.memory.ReusableObject} owner
      */
     constructor(owner) {
         super();
 
         /**
          * @desc Owner of manager.
-         * @type {MANTICORE.view.ComponentContainer|MANTICORE.view.ComponentSprite|MANTICORE.memory.ReusableObject}
+         * @type {mCore.view.ComponentContainer|mCore.view.ComponentSprite|mCore.memory.ReusableObject}
          * @private
          */
         this._owner = owner;
@@ -49,7 +49,7 @@ class BaseManager extends ReusableObject {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject} owner
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.memory.ReusableObject} owner
      */
     reuse(owner) {
         this._owner = owner;
@@ -75,7 +75,7 @@ class BaseManager extends ReusableObject {
 
     /**
      * @protected
-     * @type {MANTICORE.view.ComponentContainer|MANTICORE.view.ComponentSprite|MANTICORE.component.Component}
+     * @type {mCore.view.ComponentContainer|mCore.view.ComponentSprite|mCore.component.Component}
      */
 
     get owner() {

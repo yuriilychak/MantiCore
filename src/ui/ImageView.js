@@ -17,8 +17,8 @@ import Constant from "constant";
 /**
  * @desc Realization of image view class.
  * @class
- * @extends MANTICORE.view.Slice9Sprite
- * @memberOf MANTICORE.ui
+ * @extends mCore.view.Slice9Sprite
+ * @memberOf mCore.ui
  */
 
 class ImageView extends Slice9Sprite {
@@ -31,7 +31,7 @@ class ImageView extends Slice9Sprite {
 
         /**
          * @desc Storage of components.
-         * @type {?MANTICORE.manager.ComponentManager}
+         * @type {?mCore.manager.ComponentManager}
          * @private
          */
 
@@ -39,7 +39,7 @@ class ImageView extends Slice9Sprite {
 
         /**
          * @desc Storage of listeners.
-         * @type {?MANTICORE.manager.ListenerManager}
+         * @type {?mCore.manager.ListenerManager}
          * @private
          */
 
@@ -47,7 +47,7 @@ class ImageView extends Slice9Sprite {
 
         /**
          * @desc Class for manipulate with animations.
-         * @type {?MANTICORE.manager.AnimationManager}
+         * @type {?mCore.manager.AnimationManager}
          * @private
          */
 
@@ -55,7 +55,7 @@ class ImageView extends Slice9Sprite {
 
         /**
          * @desc Class for manipulate with interactions.
-         * @type {MANTICORE.manager.InteractionManager}
+         * @type {mCore.manager.InteractionManager}
          * @private
          */
         this._interactionManager = null;
@@ -148,7 +148,7 @@ class ImageView extends Slice9Sprite {
         this._realTint = Color.COLORS.WHITE;
 
         /**
-         * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
+         * @type {mCore.enumerator.ui.UI_ELEMENT}
          * @private
          */
 
@@ -330,7 +330,7 @@ class ImageView extends Slice9Sprite {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
@@ -350,7 +350,7 @@ class ImageView extends Slice9Sprite {
     doLayout() {
         if (this._hasComponentManager && this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
             /**
-             * @type {MANTICORE.component.ui.ComUILayout}
+             * @type {mCore.component.ui.ComUILayout}
              */
             const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
             layout.refresh();
@@ -455,7 +455,7 @@ class ImageView extends Slice9Sprite {
     /**
      * @method
      * @protected
-     * @param {PIXI.DisplayObject | MANTICORE.view.ComponentContainer} child
+     * @param {PIXI.DisplayObject | mCore.view.ComponentContainer} child
      *
      */
 
@@ -482,7 +482,7 @@ class ImageView extends Slice9Sprite {
      * @desc Safe kill of manager.
      * @method
      * @private
-     * @param {MANTICORE.manager.BaseManager} manager
+     * @param {mCore.manager.BaseManager} manager
      * @returns {null}
      */
 
@@ -700,7 +700,7 @@ class ImageView extends Slice9Sprite {
      * @desc Type of ui element (Widget, ComponentContainer, Button etc.).
      * @public
      * @readonly
-     * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
+     * @type {mCore.enumerator.ui.UI_ELEMENT}
      */
 
     get uiType() {
@@ -718,7 +718,7 @@ class ImageView extends Slice9Sprite {
      * @desc Link to animation manager.
      * @public
      * @readonly
-     * @return {MANTICORE.manager.AnimationManager}
+     * @return {mCore.manager.AnimationManager}
      */
 
     get animationManager() {
@@ -733,7 +733,7 @@ class ImageView extends Slice9Sprite {
      * @desc Link to component manager
      * @readonly
      * @public
-     * @return {MANTICORE.manager.ComponentManager}
+     * @return {mCore.manager.ComponentManager}
      */
 
     get componentManager() {
@@ -747,7 +747,7 @@ class ImageView extends Slice9Sprite {
     /**
      * @desc Link to listener manager.
      * @public
-     * @return {MANTICORE.manager.ListenerManager}
+     * @return {mCore.manager.ListenerManager}
      */
 
     get listenerManager() {
@@ -762,7 +762,7 @@ class ImageView extends Slice9Sprite {
     /**
      * @desc Link to listener manager.
      * @public
-     * @return {MANTICORE.manager.InteractionManager}
+     * @return {mCore.manager.InteractionManager}
      */
 
     get interactionManager() {
@@ -806,7 +806,7 @@ class ImageView extends Slice9Sprite {
     /**
      * @desc Flag is view has interaction manager.
      * @public
-     * @return {MANTICORE.manager.InteractionManager}
+     * @return {mCore.manager.InteractionManager}
      */
 
     get hasInteractionManager() {

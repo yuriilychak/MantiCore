@@ -1,7 +1,7 @@
 /**
  * @desc Enumerator for scroll directions.
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const SCROLL_DIRECTION = {

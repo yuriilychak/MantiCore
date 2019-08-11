@@ -2,7 +2,7 @@
  * @desc Enumerator that contains quality of device resolution (Need for texture change).
  * @name RESOLUTION
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.system
+ * @memberOf mCore.enumerator.system
  */
 
 export default {

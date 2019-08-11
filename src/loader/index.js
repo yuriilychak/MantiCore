@@ -13,17 +13,17 @@ import Middleware from "bundle/middleware";
 /**
  * @desc Contains loader for load bundles and other resources.
  * @namespace loader
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 
 export default {
     /**
-     * @type {MANTICORE.loader.AssetInfo[]}
+     * @type {mCore.loader.AssetInfo[]}
      * @private
      */
     _assetsForLoad: [],
     /**
-     * @type {MANTICORE.loader.AssetInfo[]}
+     * @type {mCore.loader.AssetInfo[]}
      * @private
      */
     _assetsLoaded: [],
@@ -60,11 +60,11 @@ export default {
     /**
      * @function
      * @public
-     * @memberOf MANTICORE.loader
+     * @memberOf mCore.loader
      * @param {string} name
-     * @param {MANTICORE.enumerator.ASSET_TYPE} type
+     * @param {mCore.enumerator.ASSET_TYPE} type
      * @param {string} [path = null]
-     * @param {MANTICORE.enumerator.FILE_TYPE | string} [resolution = null]
+     * @param {mCore.enumerator.FILE_TYPE | string} [resolution = null]
      * @param {boolean} [useAssetDir = true]
      */
 
@@ -157,7 +157,7 @@ export default {
     /**
      * @function
      * @private
-     * @memberOf MANTICORE.loader
+     * @memberOf mCore.loader
      */
 
     _onLoadProgress: function () {
@@ -165,12 +165,12 @@ export default {
     },
 
     /**
-     * @param {MANTICORE.loader.AssetInfo} asset
+     * @param {mCore.loader.AssetInfo} asset
      * @param {string} nameSuffix
-     * @param {MANTICORE.enumerator.FILE_TYPE | string | null} [fileType = null]
+     * @param {mCore.enumerator.FILE_TYPE | string | null} [fileType = null]
      * @param {?string} [pathSuffix = null]
      * @private
-     * @memberOf MANTICORE.loader
+     * @memberOf mCore.loader
      */
 
     _addAssetToLoader(asset, nameSuffix, fileType = null, pathSuffix = null) {
@@ -189,7 +189,7 @@ export default {
 
     /**
      * @function
-     * @memberOf MANTICORE.loader
+     * @memberOf mCore.loader
      * @private
      */
 
@@ -210,8 +210,8 @@ export default {
 
     /**
      * @public
-     * @memberOf MANTICORE.loader
-     * @return {MANTICORE.loader.AssetInfo[]}
+     * @memberOf mCore.loader
+     * @return {mCore.loader.AssetInfo[]}
      */
 
     get assetForLoad() {
@@ -220,8 +220,8 @@ export default {
 
     /**
      * @public
-     * @memberOf MANTICORE.loader
-     * @return {MANTICORE.loader.AssetInfo[]}
+     * @memberOf mCore.loader
+     * @return {mCore.loader.AssetInfo[]}
      */
 
     get assetLoaded()  {
@@ -230,7 +230,7 @@ export default {
 
     /**
      * @public
-     * @memberOf MANTICORE.loader
+     * @memberOf mCore.loader
      * @return {boolean}
      */
 
@@ -242,10 +242,10 @@ export default {
 /**
  * @typedef {Object}
  * @name AssetInfo
- * @memberOf MANTICORE.loader
+ * @memberOf mCore.loader
  * @property {string} name
  * @property {string} path
- * @property {MANTICORE.enumerator.ASSET_TYPE} type
- * @property {MANTICORE.enumerator.FILE_TYPE | string} resolution
+ * @property {mCore.enumerator.ASSET_TYPE} type
+ * @property {mCore.enumerator.FILE_TYPE | string} resolution
  * @property {boolean} useAssetDir
  */

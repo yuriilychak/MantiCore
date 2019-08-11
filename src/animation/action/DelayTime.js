@@ -3,8 +3,8 @@ import ActionInterval from "./ActionInterval";
 /**
  * @desc Delays the action a certain amount of seconds
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  */
 
 class DelayTime extends ActionInterval{
@@ -20,7 +20,7 @@ class DelayTime extends ActionInterval{
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.DelayTime}
+     * @return {mCore.animation.action.DelayTime}
      */
 
     reverse() {
@@ -31,7 +31,7 @@ class DelayTime extends ActionInterval{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.DelayTime}
+     * @return {mCore.animation.action.DelayTime}
      */
 
     clone() {

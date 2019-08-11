@@ -5,7 +5,7 @@ import SpineTimeLine from "./SpineTimeLine";
 /**
  * @desc Namespace that contains classes for manipulate with time lines.
  * @namespace timeLine
- * @memberOf MANTICORE.animation
+ * @memberOf mCore.animation
  */
 
 export default {

@@ -3,7 +3,7 @@
  * @enum {int}
  * @name BUNDLE_TYPE
  * @readonly
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default  {

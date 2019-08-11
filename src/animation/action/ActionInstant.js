@@ -3,8 +3,8 @@ import FiniteTimeAction from "./FiniteTimeAction";
 /**
  * @desc Instant actions are immediate actions. They don't have a duration like the ActionInterval actions.
  * @class
- * @extends MANTICORE.animation.action.FiniteTimeAction
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.FiniteTimeAction
+ * @memberOf mCore.animation.action
  */
 
 class ActionInstant extends FiniteTimeAction {
@@ -46,7 +46,7 @@ class ActionInstant extends FiniteTimeAction {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ActionInstant}
+     * @return {mCore.animation.action.ActionInstant}
      */
 
     clone(){

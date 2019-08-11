@@ -2,7 +2,7 @@
  * @desc Enumerator with easing.
  * @name ACTION_EASING
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.animation
+ * @memberOf mCore.enumerator.animation
  */
 
 export default {

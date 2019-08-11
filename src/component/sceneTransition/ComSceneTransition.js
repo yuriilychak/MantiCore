@@ -3,8 +3,8 @@ import Component from "component/Component";
 /**
  * @desc Base component for scene transitions.
  * @class
- * @memberOf MANTICORE.component.sceneTransition
- * @extends MANTICORE.component.Component
+ * @memberOf mCore.component.sceneTransition
+ * @extends mCore.component.Component
  */
 
 class ComSceneTransition extends Component {

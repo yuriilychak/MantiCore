@@ -3,8 +3,8 @@ import ActionInstant from "./ActionInstant";
 /**
  * @desc Show display object.
  * @class
- * @extends MANTICORE.animation.action.ActionInstant
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
  */
 
 class Show extends ActionInstant {
@@ -22,7 +22,7 @@ class Show extends ActionInstant {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Show}
+     * @return {mCore.animation.action.Show}
      */
 
     clone(){

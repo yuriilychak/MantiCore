@@ -4,7 +4,7 @@ import ReusableObject from "memory/ReusableObject";
 /**
  * @desc Base class for all bundles.
  * @class
- * @memberOf MANTICORE.bundle.bundle
+ * @memberOf mCore.bundle.bundle
  */
 
 class BaseBundle extends ReusableObject {
@@ -22,7 +22,7 @@ class BaseBundle extends ReusableObject {
 
         /**
          *
-         * @type {MANTICORE.enumerator.BUNDLE_TYPE}
+         * @type {mCore.enumerator.BUNDLE_TYPE}
          * @private
          */
 
@@ -80,7 +80,7 @@ class BaseBundle extends ReusableObject {
 
     /**
      * @public
-     * @return {MANTICORE.enumerator.BUNDLE_TYPE}
+     * @return {mCore.enumerator.BUNDLE_TYPE}
      */
 
     get type() {

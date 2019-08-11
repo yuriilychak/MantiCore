@@ -6,40 +6,40 @@ import Point from "geometry/Point";
 /**
  * @desc Class for manipulate with action animation.
  * @class
- * @memberOf MANTICORE.animation
- * @extends MANTICORE.memory.ReusableObject
+ * @memberOf mCore.animation
+ * @extends mCore.memory.ReusableObject
  */
 
 class ActionAnimation extends ReusableObject{
     /**
      * @constructor
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      */
     constructor(action) {
         super();
         /**
          * @desc Action of animation.
-         * @type {MANTICORE.animation.action.ActionInterval}
+         * @type {mCore.animation.action.ActionInterval}
          * @private
          */
         this._action = action;
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
         this._position = Point.create(0, 0);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
         this._scale = Point.create(1, 1);
 
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -137,7 +137,7 @@ class ActionAnimation extends ReusableObject{
      * @desc Calls by pool when model get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.animation.action.ActionInterval} action
+     * @param {mCore.animation.action.ActionInterval} action
      */
     reuse(action) {
         super.reuse(action);
@@ -148,7 +148,7 @@ class ActionAnimation extends ReusableObject{
      * @desc Clone object
      * @method
      * @public
-     * @return {MANTICORE.animation.ActionAnimation}
+     * @return {mCore.animation.ActionAnimation}
      */
 
     clone() {
@@ -204,7 +204,7 @@ class ActionAnimation extends ReusableObject{
     /**
      * @desc Offset in start of animation from target position.
      * @public
-     * @returns {MANTICORE.geometry.Point}
+     * @returns {mCore.geometry.Point}
      */
 
     get positionOffset() {
@@ -221,7 +221,7 @@ class ActionAnimation extends ReusableObject{
     /**
      * @desc Offset in start of animation from target scale.
      * @public
-     * @returns {MANTICORE.geometry.Point}
+     * @returns {mCore.geometry.Point}
      */
 
     get scaleOffset() {
@@ -238,7 +238,7 @@ class ActionAnimation extends ReusableObject{
     /**
      * @desc Offset in start of animation from target skew.
      * @public
-     * @returns {MANTICORE.geometry.Point}
+     * @returns {mCore.geometry.Point}
      */
 
     get skewOffset() {

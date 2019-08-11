@@ -3,10 +3,10 @@ import Model from "model/Model";
 import Constant from "constant";
 
 /**
- * @desc Timer class. Don't us it manually!!! Managed by MANTICORE.timer
+ * @desc Timer class. Don't us it manually!!! Managed by mCore.timer
  * @class
- * @memberOf MANTICORE.timer
- * @extends MANTICORE.model.Model
+ * @memberOf mCore.timer
+ * @extends mCore.model.Model
  */
 
 class Timer extends Model {

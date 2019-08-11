@@ -5,8 +5,8 @@ import Constant from "constant";
 /**
  * @desc Model that can be used in pool.
  * @class
- * @extends MANTICORE.memory.ReusableObject
- * @memberOf MANTICORE.model
+ * @extends mCore.memory.ReusableObject
+ * @memberOf mCore.model
  */
 
 class Model extends ReusableObject {

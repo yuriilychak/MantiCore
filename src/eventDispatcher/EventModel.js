@@ -3,8 +3,8 @@ import Model from "model/Model";
 /**
  * @desc Model for store event data.
  * @class
- * @memberOf MANTICORE.eventDispatcher
- * @extends MANTICORE.model.Model
+ * @memberOf mCore.eventDispatcher
+ * @extends mCore.model.Model
  */
 
 class EventModel extends Model {

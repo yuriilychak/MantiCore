@@ -21,8 +21,8 @@ const eventCount = events.length;
 /**
  * @desc Component for add events to all children. Work with widget and it's children.
  * @class
- * @memberOf MANTICORE.component.ui
- * @extends MANTICORE.component.ComChildIterator
+ * @memberOf mCore.component.ui
+ * @extends mCore.component.ComChildIterator
  */
 
 class ComChildListener extends ComChildIterator {
@@ -34,7 +34,7 @@ class ComChildListener extends ComChildIterator {
 
         /**
          * @desc Repository with event that listen children.
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
 
@@ -50,7 +50,7 @@ class ComChildListener extends ComChildIterator {
      * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer} owner
+     * @param {mCore.view.ComponentContainer} owner
      */
 
     onAdd (owner) {
@@ -85,7 +85,7 @@ class ComChildListener extends ComChildIterator {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.ui.ComChildListener}
+     * @return {mCore.component.ui.ComChildListener}
      */
 
     clone() {
@@ -118,7 +118,7 @@ class ComChildListener extends ComChildIterator {
      * @desc Add events to new child.
      * @method
      * @private
-     * @param {PIXI.DisplayObject | MANTICORE.ui.Widget | MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} child
+     * @param {PIXI.DisplayObject | mCore.ui.Widget | mCore.view.ComponentContainer | mCore.view.ComponentSprite} child
      *
      */
 
@@ -140,7 +140,7 @@ class ComChildListener extends ComChildIterator {
      * @desc Remove events for child when component destroy.
      * @method
      * @private
-     * @param {PIXI.DisplayObject | MANTICORE.ui.Widget | MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite} child
+     * @param {PIXI.DisplayObject | mCore.ui.Widget | mCore.view.ComponentContainer | mCore.view.ComponentSprite} child
      *
      */
 
@@ -160,7 +160,7 @@ class ComChildListener extends ComChildIterator {
      * @desc Add or remove event from repository for children.
      * @method
      * @private
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} id
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} id
      * @param {?string} [name = null] - name of event for dispatch.
      */
 

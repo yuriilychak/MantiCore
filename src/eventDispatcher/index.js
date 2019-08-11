@@ -6,8 +6,8 @@ import Logger from "logger";
 
 /**
  * @desc Simply event dispatcher.
- * @namespace MANTICORE.eventDispatcher
- * @memberOf MANTICORE
+ * @namespace mCore.eventDispatcher
+ * @memberOf mCore
  */
 
 const eventDispatcher = {
@@ -16,34 +16,34 @@ const eventDispatcher = {
      * @desc Flag is currently event processing.
      * @type {boolean}
      * @private
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      */
 
     _isEventProcessing: false,
 
     /**
      * @desc Array with events for process.
-     * @type {MANTICORE.eventDispatcher.EventData[]}
+     * @type {mCore.eventDispatcher.EventData[]}
      * @private
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      */
 
     _eventQueue: [],
 
     /**
      * @desc Array with listeners that need to delete.
-     * @type {MANTICORE.eventDispatcher.ListenerModel[]}
+     * @type {mCore.eventDispatcher.ListenerModel[]}
      * @private
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      */
 
     _markForDelete: [],
 
     /**
      * @desc Repository with listeners.
-     * @type {MANTICORE.repository.Repository}
+     * @type {mCore.repository.Repository}
      * @private
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      */
 
     _listenerRepo: new Repository(),
@@ -53,7 +53,7 @@ const eventDispatcher = {
      * @param {string} type
      * @param {Function} listener
      * @param {Object} target
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      */
 
     addListener: function (type, listener, target) {
@@ -90,7 +90,7 @@ const eventDispatcher = {
      * @param {string} type
      * @param {Object} target
      * @returns {boolean}
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      */
 
     hasListener: function (type, target) {
@@ -111,7 +111,7 @@ const eventDispatcher = {
     },
 
     /**
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      * @param {string} type
      * @param {Object} target
      * @returns {boolean}
@@ -142,12 +142,12 @@ const eventDispatcher = {
      * @param {string} type
      * @param {Object} [targetOrEvent = null]
      * @param {Object} [data = null]
-     * @memberOf MANTICORE.eventDispatcher
+     * @memberOf mCore.eventDispatcher
      */
 
     dispatch: function(type, targetOrEvent = null, data = null) {
         /**
-         * @type {MANTICORE.eventDispatcher.EventModel}
+         * @type {mCore.eventDispatcher.EventModel}
          */
         let eventModel;
 

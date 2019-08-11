@@ -10,8 +10,8 @@ import Point from "geometry/Point";
 /**
  * @desc Component for align children in container.
  * @class
- * @extends MANTICORE.component.ComChildIterator
- * @memberOf MANTICORE.component.ui
+ * @extends mCore.component.ComChildIterator
+ * @memberOf mCore.component.ui
  */
 
 class ComLayout extends ComChildIterator {
@@ -23,7 +23,7 @@ class ComLayout extends ComChildIterator {
 
         /**
          * @desc Manager for manipulate with owner size.
-         * @type {MANTICORE.manager.LayoutSizeManager}
+         * @type {mCore.manager.LayoutSizeManager}
          * @private
          */
 
@@ -31,7 +31,7 @@ class ComLayout extends ComChildIterator {
 
         /**
          * @desc Vertical align of elements.
-         * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+         * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
          * @private
          */
 
@@ -39,7 +39,7 @@ class ComLayout extends ComChildIterator {
 
         /**
          * @desc Horizontal align of elements.
-         * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+         * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
          * @private
          */
 
@@ -55,7 +55,7 @@ class ComLayout extends ComChildIterator {
 
         /**
          * @desc Inner padding between items.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -63,7 +63,7 @@ class ComLayout extends ComChildIterator {
 
         /**
          * @desc Outer padding in owner.
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -84,7 +84,7 @@ class ComLayout extends ComChildIterator {
      * @desc Callback that calls when component attach to owner. Don't use it manually. Only override.
      * @method
      * @public
-     * @param {MANTICORE.view.ComponentContainer} owner
+     * @param {mCore.view.ComponentContainer} owner
      */
 
     onAdd (owner) {
@@ -129,12 +129,12 @@ class ComLayout extends ComChildIterator {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.ui.ComLayout}
+     * @return {mCore.component.ui.ComLayout}
      */
 
     clone() {
         /**
-         * @type {MANTICORE.component.ui.ComLayout}
+         * @type {mCore.component.ui.ComLayout}
          */
         const result = ComLayout.create();
         result.verticalAlign = this._verticalAlign;
@@ -326,7 +326,7 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get innerPadding() {
@@ -342,7 +342,7 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @type {MANTICORE.geometry.Point}
+     * @type {mCore.geometry.Point}
      */
 
     get outerPadding() {
@@ -358,7 +358,7 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {
@@ -375,7 +375,7 @@ class ComLayout extends ComChildIterator {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {

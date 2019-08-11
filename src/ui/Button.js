@@ -7,8 +7,8 @@ import Boot from "boot";
 /**
  * @desc realization of button class.
  * @class
- * @extends MANTICORE.ui.ancillary.BaseButton
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.ancillary.BaseButton
+ * @memberOf mCore.ui
  */
 
 class Button extends BaseButton {
@@ -69,7 +69,7 @@ class Button extends BaseButton {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 

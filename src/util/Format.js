@@ -1,7 +1,7 @@
 /**
  * @desc Namespace that contains function to manipulate with strings.
- * @namespace MANTICORE.util.format
- * @memberOf MANTICORE.util
+ * @namespace mCore.util.format
+ * @memberOf mCore.util
  */
 
 const format = {
@@ -9,9 +9,9 @@ const format = {
      * @desc Add file type to string.
      * @public
      * @function
-     * @memberOf MANTICORE.util.format
+     * @memberOf mCore.util.format
      * @param {string} value
-     * @param {MANTICORE.enumerator.FILE_TYPE} type
+     * @param {mCore.enumerator.FILE_TYPE} type
      * @returns {string}
      */
     addFileType: function (value, type) {
@@ -23,7 +23,7 @@ const format = {
     /**
      * @desc Format number value with numCount of zeros
      * @function
-     * @memberOf MANTICORE.util.format
+     * @memberOf mCore.util.format
      * @param {number | string}  value
      * @param {int}  numCount
      * @returns {string}
@@ -37,7 +37,7 @@ const format = {
     /**
      * @desc Replace char at string and return it
      * @function
-     * @memberOf MANTICORE.util.format
+     * @memberOf mCore.util.format
      * @param {string} targetString - string to replace
      * @param {int}    index        - index of char
      * @param {string} char         - char to replace
@@ -54,7 +54,7 @@ const format = {
     /**
      * @desc Generate unique event name.
      * @function
-     * @memberOf MANTICORE.util.format
+     * @memberOf mCore.util.format
      * @param {Object} target
      * @param {string} event
      * @return {string}
@@ -67,7 +67,7 @@ const format = {
     /**
      * @desc Generate unique string id.
      * @function
-     * @memberOf MANTICORE.util.format
+     * @memberOf mCore.util.format
      * @return {string}
      */
 
@@ -79,7 +79,7 @@ const format = {
      * @desc Extract file name from path
      * @example "dir1/dir2/dir3/image.png" => "image";
      * @function
-     * @memberOf MANTICORE.util.format
+     * @memberOf mCore.util.format
      * @param {string} path
      * @returns {string}
      */
@@ -93,7 +93,7 @@ const format = {
      * @desc Replace values at string
      * @example "{0} is {1}", "1", "number" -> "1 is number"
      * @function
-     * @memberOf MANTICORE.util.format
+     * @memberOf mCore.util.format
      * @param {string | string[]} var_args
      * @returns {string}
      */
@@ -116,15 +116,15 @@ const format = {
      * @public
      * @example
      * // returns "a/b.png"
-     * MANTICORE.util.format.join("a", "b.png");
+     * mCore.util.format.join("a", "b.png");
      * // returns "a/b/c.png"
-     * MANTICORE.util.format.join("a", "b", "c.png");
+     * mCore.util.format.join("a", "b", "c.png");
      * // returns "a/b"
-     * MANTICORE.util.format.join("a", "b");
+     * mCore.util.format.join("a", "b");
      * // returns "a/b/"
-     * MANTICORE.util.format.join("a", "b", "/");
+     * mCore.util.format.join("a", "b", "/");
      * // returns "a/b/"
-     * MANTICORE.util.format.join("a", "b/", "/");
+     * mCore.util.format.join("a", "b/", "/");
      * @param {...string} var_args
      * @returns {string}
      */
@@ -150,13 +150,13 @@ const format = {
      * @public
      * @example
      * // returns ".png"
-     * MANTICORE.util.format.extName("a/b.png");
+     * mCore.util.format.extName("a/b.png");
      * // returns ".png"
-     * MANTICORE.util.format.extName("a/b.png?a=1&b=2");
+     * mCore.util.format.extName("a/b.png?a=1&b=2");
      * // returns ""
-     * MANTICORE.util.format.extName("a/b");
+     * mCore.util.format.extName("a/b");
      * // returns ""
-     * MANTICORE.util.format.extName("a/b?a=1&b=2");
+     * mCore.util.format.extName("a/b?a=1&b=2");
      * @param {string} pathStr
      * @returns {string}
      */
@@ -190,15 +190,15 @@ const format = {
      * @public
      * @example
      * // returns "b.png"
-     * MANTICORE.util.format.baseName("a/b.png");
+     * mCore.util.format.baseName("a/b.png");
      * // returns "b.png"
-     * MANTICORE.util.format.baseName("a/b.png?a=1&b=2");
+     * mCore.util.format.baseName("a/b.png?a=1&b=2");
      * // returns "b"
-     * MANTICORE.util.format.baseName("a/b.png", ".png");
+     * mCore.util.format.baseName("a/b.png", ".png");
      * // returns "b"
-     * MANTICORE.util.format.baseName("a/b.png?a=1&b=2", ".png");
+     * mCore.util.format.baseName("a/b.png?a=1&b=2", ".png");
      * // returns "b.png"
-     * MANTICORE.util.format.baseName("a/b.png", ".txt");
+     * mCore.util.format.baseName("a/b.png", ".txt");
      * @param {string} pathStr
      * @param {string} [extName]
      * @returns {string}
@@ -234,18 +234,18 @@ const format = {
      * @example
      * unix
      * // returns "a/b"
-     * MANTICORE.util.format.dirName("a/b/c.png");
+     * mCore.util.format.dirName("a/b/c.png");
      * // returns "a/b"
-     * MANTICORE.util.format.dirName("a/b/c.png?a=1&b=2");
+     * mCore.util.format.dirName("a/b/c.png?a=1&b=2");
      * // returns "a/b"
-     * MANTICORE.util.format.dirName("a/b/");
+     * mCore.util.format.dirName("a/b/");
      * // returns ""
-     * MANTICORE.util.format.dirName("c.png");
+     * mCore.util.format.dirName("c.png");
      * windows
      * // returns "a\b"
-     * MANTICORE.util.format.dirName("a\\b\\c.png");
+     * mCore.util.format.dirName("a\\b\\c.png");
      * // returns "a\b"
-     * MANTICORE.util.format.dirName("a\\b\\c.png?a=1&b=2");
+     * mCore.util.format.dirName("a\\b\\c.png?a=1&b=2");
      * @param {string} pathStr
      * @returns {string}
      */
@@ -260,9 +260,9 @@ const format = {
      * @public
      * @example
      * // returns "a\b"
-     * MANTICORE.util.format.changeExtName("a/b.png", ".plist");//-->"a/b.plist"
+     * mCore.util.format.changeExtName("a/b.png", ".plist");//-->"a/b.plist"
      * // returns "a\b"
-     * MANTICORE.util.format.changeExtName("a/b.png?a=1&b=2", ".plist");//-->"a/b.plist?a=1&b=2"
+     * mCore.util.format.changeExtName("a/b.png?a=1&b=2", ".plist");//-->"a/b.plist?a=1&b=2"
      * @param {string} pathStr
      * @param {string} [extName = ""]
      * @returns {string}
@@ -292,15 +292,15 @@ const format = {
      * @public
      * @example
      * // returns "a/b/b.plist"
-     * MANTICORE.util.format.changeBaseName("a/b/c.plist", "b.plist");
+     * mCore.util.format.changeBaseName("a/b/c.plist", "b.plist");
      * // returns "a/b/b.plist?a=1&b=2"
-     * MANTICORE.util.format.changeBaseName("a/b/c.plist?a=1&b=2", "b.plist");
+     * mCore.util.format.changeBaseName("a/b/c.plist?a=1&b=2", "b.plist");
      * // returns "a/b/c.png"
-     * MANTICORE.util.format.changeBaseName("a/b/c.plist", ".png");
+     * mCore.util.format.changeBaseName("a/b/c.plist", ".png");
      * // returns "a/b/b"
-     * MANTICORE.util.format.changeBaseName("a/b/c.plist", "b");
+     * mCore.util.format.changeBaseName("a/b/c.plist", "b");
      * // returns "a/b/b.plist"
-     * MANTICORE.util.format.changeBaseName("a/b/c.plist", "b", true);
+     * mCore.util.format.changeBaseName("a/b/c.plist", "b", true);
      * @param {string} pathStr
      * @param {string} baseName
      * @param {boolean} [isSameExt = false]

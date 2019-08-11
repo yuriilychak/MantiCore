@@ -4,14 +4,14 @@ import Math from "util/Math";
 /**
  * @desc Class for manipulate with size in layout. Need to decompose layout component, for simplify it.
  * @class
- * @extends MANTICORE.manager.BaseManager
- * @memberOf MANTICORE.manager
+ * @extends mCore.manager.BaseManager
+ * @memberOf mCore.manager
  */
 
 class LayoutSizeManager extends BaseManager {
     /**
      * @constructor
-     * @param {MANTICORE.component.Component} owner
+     * @param {mCore.component.Component} owner
      */
     constructor(owner) {
         super(owner);

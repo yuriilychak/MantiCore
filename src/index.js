@@ -24,7 +24,7 @@ import view from "./view";
 
 /**
  * @desc Namespace that contain all core functional for all games.
- * @namespace MANTICORE
+ * @namespace mCore
  */
 
 export {

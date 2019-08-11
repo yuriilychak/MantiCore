@@ -1,7 +1,7 @@
 /**
  * @desc Enumerator for some loader events.
  * @enumerator {string}
- * @memberOf MANTICORE.enumerator.event
+ * @memberOf mCore.enumerator.event
  * @name LOADER_EVENT
  */
 

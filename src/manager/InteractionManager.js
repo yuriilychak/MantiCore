@@ -11,14 +11,14 @@ import Point from "geometry/Point";
 /**
  * @desc Class for manipulate with view interactions.
  * @class
- * @memberOf MANTICORE.manager
- * @extends MANTICORE.manager.BaseManager
+ * @memberOf mCore.manager
+ * @extends mCore.manager.BaseManager
  */
 
 class InteractionManager extends BaseManager {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject} owner
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.memory.ReusableObject} owner
      */
     constructor(owner) {
         super(owner);
@@ -48,7 +48,7 @@ class InteractionManager extends BaseManager {
         this._isInteractiveOver = false;
 
         /**
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
 
@@ -56,7 +56,7 @@ class InteractionManager extends BaseManager {
 
         /**
          * @desc Previous position of action (need to update click).
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -64,7 +64,7 @@ class InteractionManager extends BaseManager {
 
         /**
          * @desc Current position of action (need to update click).
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -72,7 +72,7 @@ class InteractionManager extends BaseManager {
 
         /**
          * @desc Accumulated offset when touch move. (need to update click).
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
@@ -104,7 +104,7 @@ class InteractionManager extends BaseManager {
      * @desc Returns interactive event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} id
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} id
      * @returns {string}
      */
 
@@ -116,7 +116,7 @@ class InteractionManager extends BaseManager {
      * @desc Add or remove event from repository. DON'T USE IT MANUALLY!!!
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} id
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} id
      * @param {?string} [name = null] - name of event for dispatch.
      */
 
@@ -142,7 +142,7 @@ class InteractionManager extends BaseManager {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {*} [event]
      */
 
@@ -182,7 +182,7 @@ class InteractionManager extends BaseManager {
 
     /**
      * @param {Object} target
-     * @param {MANTICORE.geometry.Point} point
+     * @param {mCore.geometry.Point} point
      * @private
      */
 
@@ -217,7 +217,7 @@ class InteractionManager extends BaseManager {
     /**
      * @method
      * @private
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} id
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} id
      * @param {Object} interactiveEvent
      */
 

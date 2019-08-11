@@ -2,7 +2,7 @@
  * @desc Enumerator for interactive event states.
  * @enumerator {int}
  * @readonly
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const INTERACTIVE_EVENT = {

@@ -6,8 +6,8 @@ import Geometry from "util/Geometry";
  * @desc Scales a Node object to a zoom factor by modifying it's scale property.
  * @warning This action doesn't support "reverse"
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * // It scales to 0.5 in both X and Y.
  * const actionTo = new ScaleTo(2, 0.5);
@@ -36,7 +36,7 @@ class ScaleTo extends PointAction {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.ScaleTo}
+     * @return {mCore.animation.action.ScaleTo}
      */
 
     clone() {

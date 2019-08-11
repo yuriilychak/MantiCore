@@ -19,7 +19,7 @@ import Point from "geometry/Point";
  * @desc Class that implements composite pattern;
  * @class
  * @extends PIXI.Container
- * @memberOf MANTICORE.view
+ * @memberOf mCore.view
  */
 
 class ComponentContainer extends PIXI.Container {
@@ -31,7 +31,7 @@ class ComponentContainer extends PIXI.Container {
 
         /**
          * @desc Storage of components.
-         * @type {?MANTICORE.manager.ComponentManager}
+         * @type {?mCore.manager.ComponentManager}
          * @private
          */
 
@@ -39,7 +39,7 @@ class ComponentContainer extends PIXI.Container {
 
         /**
          * @desc Storage of listeners.
-         * @type {?MANTICORE.manager.ListenerManager}
+         * @type {?mCore.manager.ListenerManager}
          * @private
          */
 
@@ -47,7 +47,7 @@ class ComponentContainer extends PIXI.Container {
 
         /**
          * @desc Class for manipulate with animations.
-         * @type {?MANTICORE.manager.AnimationManager}
+         * @type {?mCore.manager.AnimationManager}
          * @private
          */
 
@@ -55,7 +55,7 @@ class ComponentContainer extends PIXI.Container {
 
         /**
          * @desc Class for manipulate with interactions.
-         * @type {MANTICORE.manager.InteractionManager}
+         * @type {mCore.manager.InteractionManager}
          * @private
          */
         this._interactionManager = null;
@@ -148,7 +148,7 @@ class ComponentContainer extends PIXI.Container {
         this._realTint = Color.COLORS.WHITE;
 
         /**
-         * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
+         * @type {mCore.enumerator.ui.UI_ELEMENT}
          * @private
          */
 
@@ -337,7 +337,7 @@ class ComponentContainer extends PIXI.Container {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
@@ -357,7 +357,7 @@ class ComponentContainer extends PIXI.Container {
     doLayout() {
         if (this._hasComponentManager && this._componentManager.hasComponent(Constant.COM_UI_LAYOUT_NAME)) {
             /**
-             * @type {MANTICORE.component.ui.ComUILayout}
+             * @type {mCore.component.ui.ComUILayout}
              */
             const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
             layout.refresh();
@@ -448,7 +448,7 @@ class ComponentContainer extends PIXI.Container {
     /**
      * @method
      * @protected
-     * @param {PIXI.DisplayObject | MANTICORE.view.ComponentContainer} child
+     * @param {PIXI.DisplayObject | mCore.view.ComponentContainer} child
      *
      */
 
@@ -475,7 +475,7 @@ class ComponentContainer extends PIXI.Container {
      * @desc Safe kill of manager.
      * @method
      * @private
-     * @param {MANTICORE.manager.BaseManager} manager
+     * @param {mCore.manager.BaseManager} manager
      * @returns {null}
      */
 
@@ -533,7 +533,7 @@ class ComponentContainer extends PIXI.Container {
     /**
      * @desc Returns anchor point.
      * @public
-     * @return {MANTICORE.geometry.Point}
+     * @return {mCore.geometry.Point}
      */
 
     get anchor() {
@@ -727,7 +727,7 @@ class ComponentContainer extends PIXI.Container {
      * @desc Type of ui element (Widget, ComponentContainer, Button etc.).
      * @public
      * @readonly
-     * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
+     * @type {mCore.enumerator.ui.UI_ELEMENT}
      */
 
     get uiType() {
@@ -745,7 +745,7 @@ class ComponentContainer extends PIXI.Container {
      * @desc Link to animation manager.
      * @public
      * @readonly
-     * @return {MANTICORE.manager.AnimationManager}
+     * @return {mCore.manager.AnimationManager}
      */
 
     get animationManager() {
@@ -760,7 +760,7 @@ class ComponentContainer extends PIXI.Container {
      * @desc Link to component manager
      * @readonly
      * @public
-     * @return {MANTICORE.manager.ComponentManager}
+     * @return {mCore.manager.ComponentManager}
      */
 
     get componentManager() {
@@ -774,7 +774,7 @@ class ComponentContainer extends PIXI.Container {
     /**
      * @desc Link to listener manager.
      * @public
-     * @return {MANTICORE.manager.ListenerManager}
+     * @return {mCore.manager.ListenerManager}
      */
 
     get listenerManager() {
@@ -789,7 +789,7 @@ class ComponentContainer extends PIXI.Container {
     /**
      * @desc Link to listener manager.
      * @public
-     * @return {MANTICORE.manager.InteractionManager}
+     * @return {mCore.manager.InteractionManager}
      */
 
     get interactionManager() {
@@ -833,7 +833,7 @@ class ComponentContainer extends PIXI.Container {
     /**
      * @desc Flag is view has interaction manager.
      * @public
-     * @return {MANTICORE.manager.InteractionManager}
+     * @return {mCore.manager.InteractionManager}
      */
 
     get hasInteractionManager() {

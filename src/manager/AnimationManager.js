@@ -11,28 +11,28 @@ import TIME_LINE_TYPE from "enumerator/animation/TimeLineType";
 /**
  * @desc Class for manipulate with animations
  * @class
- * @extends MANTICORE.manager.BaseManager
- * @memberOf MANTICORE.manager
+ * @extends mCore.manager.BaseManager
+ * @memberOf mCore.manager
  */
 
 class AnimationManager extends BaseManager {
     /**
      * @constructor
-     * @param {MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.component.Component} owner
+     * @param {mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.component.Component} owner
      */
     constructor(owner) {
         super(owner);
 
         /**
          * @desc Repository with time-lines
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
         this._timeLines = new Repository();
 
         /**
          * @desc Array with active time-lines to update.
-         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+         * @type {mCore.animation.timeLine.BaseTimeLine[]}
          * @private
          */
 
@@ -48,14 +48,14 @@ class AnimationManager extends BaseManager {
 
         /**
          * @desc Events that dispatch time line.
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
 
         this._events = new Repository();
 
         /**
-         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+         * @type {mCore.animation.timeLine.BaseTimeLine[]}
          * @private
          */
 
@@ -79,14 +79,14 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {MANTICORE.animation.ActionAnimation | MANTICORE.animation.action.ActionInterval} animation
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine]
+     * @param {mCore.animation.ActionAnimation | mCore.animation.action.ActionInterval} animation
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine]
      * @returns {boolean}
      */
 
     addAnimation(name, animation, timeLine = TIME_LINE.MAIN) {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {mCore.animation.ActionTimeLine}
          */
         const actionTimeLine = this._timeLines.getElement(timeLine);
         if (actionTimeLine.hasAnimation(name)) {
@@ -105,13 +105,13 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
     removeAnimation(name, timeLine = null) {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {mCore.animation.ActionTimeLine}
          */
         const actionTimeLine = this._findTimeLine(name, timeLine);
         if (Type.isNull(actionTimeLine) || !actionTimeLine.hasAnimation(name)) {
@@ -128,12 +128,12 @@ class AnimationManager extends BaseManager {
      * @desc Remove all animations from time line.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine]
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine]
      */
 
     removeAllAnimations(timeLine = TIME_LINE.MAIN) {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {mCore.animation.ActionTimeLine}
          */
         const actionTimeLine = this._timeLines.getElement(timeLine);
 
@@ -147,7 +147,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {MANTICORE.animation.timeLine.BaseTimeLine} [timeLine = null]
+     * @param {mCore.animation.timeLine.BaseTimeLine} [timeLine = null]
      * @return {boolean}
      */
 
@@ -156,7 +156,7 @@ class AnimationManager extends BaseManager {
             return false;
         }
         /**
-         * @type {MANTICORE.animation.timeLine.BaseTimeLine}
+         * @type {mCore.animation.timeLine.BaseTimeLine}
          */
         const actionTimeLine = !Type.isNull(timeLine) ? timeLine : ActionTimeLine.create(this.owner, name);
         const eventIds = this._events.keys;
@@ -175,7 +175,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} name
+     * @param {string | mCore.enumerator.animation.TIME_LINE} name
      * @return {boolean}
      */
 
@@ -193,8 +193,8 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} name
-     * @return {MANTICORE.animation.timeLine.BaseTimeLine | null}
+     * @param {string | mCore.enumerator.animation.TIME_LINE} name
+     * @return {mCore.animation.timeLine.BaseTimeLine | null}
      */
 
     getTimeLine(name) {
@@ -223,7 +223,7 @@ class AnimationManager extends BaseManager {
 
     refreshTimeLines() {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine[]}
+         * @type {mCore.animation.ActionTimeLine[]}
          */
         const timeLines = this._timeLines.values;
         const timeLineCount = timeLines.length;
@@ -240,7 +240,7 @@ class AnimationManager extends BaseManager {
      * @param {string} name - Name of animation to play.
      * @param {boolean} [loop = false] - Is need to loop animation.
      * @param {int} frame [frame = 0] - Start frame of animation.
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null] - Time line to play.
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine = null] - Time line to play.
      * @returns {boolean}
      */
 
@@ -263,7 +263,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
@@ -293,7 +293,7 @@ class AnimationManager extends BaseManager {
      * @desc Stop time line if it run some animation.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} timeLine
+     * @param {string | mCore.enumerator.animation.TIME_LINE} timeLine
      * @returns {boolean}
      */
 
@@ -311,7 +311,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
@@ -330,13 +330,13 @@ class AnimationManager extends BaseManager {
      * @desc Pause time line if it playing.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE | null} timeLine
+     * @param {string | mCore.enumerator.animation.TIME_LINE | null} timeLine
      * @returns {boolean}
      */
 
     pauseTimeLine(timeLine) {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {mCore.animation.ActionTimeLine}
          */
         const actionTimeLine = this._timeLines.getElement(timeLine);
         if (!AnimationManager._canPause(actionTimeLine)) {
@@ -351,7 +351,7 @@ class AnimationManager extends BaseManager {
      * @method
      * @public
      * @param {string} name
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null]
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine = null]
      * @returns {boolean}
      */
 
@@ -370,13 +370,13 @@ class AnimationManager extends BaseManager {
      * @desc Pause time line if it playing.
      * @method
      * @public
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE | null} timeLine
+     * @param {string | mCore.enumerator.animation.TIME_LINE | null} timeLine
      * @returns {boolean}
      */
 
     resumeTimeLine(timeLine) {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {mCore.animation.ActionTimeLine}
          */
         const actionTimeLine = this._timeLines.getElement(timeLine);
         if (!AnimationManager._canResume(actionTimeLine)) {
@@ -389,17 +389,17 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @public
-     * @param {MANTICORE.animation.action.Action} action
+     * @param {mCore.animation.action.Action} action
      * @param {boolean} [loop = false] - Is need to loop animation.
      * @param {int} frame [frame = 0] - Start frame of animation.
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLine = null] - Time line to play.
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLine = null] - Time line to play.
      */
 
     runAction(action, loop = false, frame = 0, timeLine = null) {
         timeLine = !Type.isNull(timeLine) && this._timeLines.hasElement(timeLine) ? timeLine : TIME_LINE.MAIN;
 
         /**
-         * @type {MANTICORE.animation.ActionTimeLine}
+         * @type {mCore.animation.ActionTimeLine}
          */
         const actionTimeLine = this._timeLines.getElement(timeLine);
 
@@ -453,16 +453,16 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @public
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {mCore.enumerator.animation.TIME_LINE_EVENT | int} eventId
      * @param {?string} event
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLineName = null]
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLineName = null]
      * @returns {boolean}
      */
 
     setEvent(eventId, event, timeLineName = null) {
         if (Type.isNull(timeLineName)) {
             /**
-             * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+             * @type {mCore.animation.timeLine.BaseTimeLine[]}
              */
             const timeLines = this._timeLines.values;
             const timeLineCount = timeLines.length;
@@ -485,8 +485,8 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @public
-     * @param {MANTICORE.enumerator.animation.TIME_LINE_EVENT | int} eventId
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} [timeLineName = null]
+     * @param {mCore.enumerator.animation.TIME_LINE_EVENT | int} eventId
+     * @param {string | mCore.enumerator.animation.TIME_LINE} [timeLineName = null]
      * @returns {boolean}
      */
 
@@ -529,7 +529,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @private
-     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
+     * @param {mCore.animation.timeLine.BaseTimeLine} timeLine
      */
 
     static _canStop(timeLine) {
@@ -539,7 +539,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @private
-     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
+     * @param {mCore.animation.timeLine.BaseTimeLine} timeLine
      */
 
     static _canPause(timeLine) {
@@ -549,7 +549,7 @@ class AnimationManager extends BaseManager {
     /**
      * @method
      * @private
-     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
+     * @param {mCore.animation.timeLine.BaseTimeLine} timeLine
      */
 
     static _canResume(timeLine) {
@@ -561,8 +561,8 @@ class AnimationManager extends BaseManager {
      * @method
      * @private
      * @param {string} animationName
-     * @param {string | MANTICORE.enumerator.animation.TIME_LINE} timeLineName
-     * @returns {MANTICORE.animation.timeLine.BaseTimeLine}
+     * @param {string | mCore.enumerator.animation.TIME_LINE} timeLineName
+     * @returns {mCore.animation.timeLine.BaseTimeLine}
      */
 
     _findTimeLine(animationName, timeLineName) {
@@ -589,7 +589,7 @@ class AnimationManager extends BaseManager {
      * @desc Remove time line from active.
      * @method
      * @private
-     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
+     * @param {mCore.animation.timeLine.BaseTimeLine} timeLine
      * @private
      */
 
@@ -613,7 +613,7 @@ class AnimationManager extends BaseManager {
      * @desc Add time line for update
      * @method
      * @private
-     * @param {MANTICORE.animation.timeLine.BaseTimeLine} timeLine
+     * @param {mCore.animation.timeLine.BaseTimeLine} timeLine
      * @private
      */
 
@@ -636,7 +636,7 @@ class AnimationManager extends BaseManager {
      * @desc Set event in repository.
      * @method
      * @private
-     * @param {MANTICORE.enumerator.animation.animation.TIME_LINE_EVENT | int} eventId
+     * @param {mCore.enumerator.animation.animation.TIME_LINE_EVENT | int} eventId
      * @param {string | null} event
      */
 
@@ -663,13 +663,13 @@ class AnimationManager extends BaseManager {
      * @desc Update time line events
      * @method
      * @private
-     * @param {MANTICORE.enumerator.animation.animation.TIME_LINE_EVENT | int} eventId
+     * @param {mCore.enumerator.animation.animation.TIME_LINE_EVENT | int} eventId
      * @param {?string} event
      */
 
     _setTimeLineEvent(eventId, event) {
         /**
-         * @type {MANTICORE.animation.ActionTimeLine[]}
+         * @type {mCore.animation.ActionTimeLine[]}
          */
         const timeLines = this._timeLines.values;
         const timeLineCount = timeLines.length;
@@ -777,7 +777,7 @@ class AnimationManager extends BaseManager {
     get animations() {
         const result = {};
         /**
-         * @type {MANTICORE.animation.timeLine.BaseTimeLine[]}
+         * @type {mCore.animation.timeLine.BaseTimeLine[]}
          */
         const timeLines = this._timeLines.values;
         const timeLineCount = timeLines.length;

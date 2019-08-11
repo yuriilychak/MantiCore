@@ -13,8 +13,8 @@ import VERTICAL_ALIGN from "./VerticalAlign";
 
 /**
  * @desc Namespace that contains ui enumerators.
- * @namespace MANTICORE.enumerator.ui
- * @memberOf MANTICORE.enumerator
+ * @namespace mCore.enumerator.ui
+ * @memberOf mCore.enumerator
  */
 
 export default {

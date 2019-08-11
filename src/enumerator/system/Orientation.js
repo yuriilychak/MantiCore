@@ -2,7 +2,7 @@
  * @desc Enumerator that contains orientation of app.
  * @name ORIENTATION
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.system
+ * @memberOf mCore.enumerator.system
  */
 
 export default {

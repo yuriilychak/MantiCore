@@ -7,8 +7,8 @@ import Boot from "boot";
 /**
  * @desc Realization of toggle button class.
  * @class
- * @extends MANTICORE.ui.BaseButton
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.BaseButton
+ * @memberOf mCore.ui
  */
 
 class ToggleButton extends BaseButton {
@@ -109,7 +109,7 @@ class ToggleButton extends BaseButton {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
@@ -181,8 +181,8 @@ class ToggleButton extends BaseButton {
 
     /**
      *
-     * @param {MANTICORE.enumerator.ui.TOGGLE_INTERACTIVE_STATE} selected
-     * @param {MANTICORE.enumerator.ui.TOGGLE_INTERACTIVE_STATE} deselected
+     * @param {mCore.enumerator.ui.TOGGLE_INTERACTIVE_STATE} selected
+     * @param {mCore.enumerator.ui.TOGGLE_INTERACTIVE_STATE} deselected
      * @private
      */
 

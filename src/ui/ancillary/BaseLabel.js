@@ -7,8 +7,8 @@ import Point from "geometry/Point";
 /**
  * @desc Base class for labels.
  * @class
- * @extends MANTICORE.ui.Widget
- * @memberOf MANTICORE.ui.ancillary
+ * @extends mCore.ui.Widget
+ * @memberOf mCore.ui.ancillary
  */
 
 class BaseLabel extends Widget {
@@ -21,14 +21,14 @@ class BaseLabel extends Widget {
         super();
 
         /**
-         * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+         * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
          * @private
          */
 
         this._verticalAlign = VERTICAL_ALIGN.TOP;
 
         /**
-         * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+         * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
          * @private
          */
 
@@ -81,7 +81,7 @@ class BaseLabel extends Widget {
     /**
      * @method
      * @public
-     * @return {MANTICORE.geometry.Point}
+     * @return {mCore.geometry.Point}
      */
 
     getShadowOffset() {
@@ -91,7 +91,7 @@ class BaseLabel extends Widget {
     /**
      * @method
      * @public
-     * @param {int | MANTICORE.geometry.Point} xOrPoint
+     * @param {int | mCore.geometry.Point} xOrPoint
      * @param {int} [y]
      */
 
@@ -120,7 +120,7 @@ class BaseLabel extends Widget {
      * @desc Calls when horizontal align change.
      * @method
      * @protected
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN} value
      */
 
     horizontalAlignChange(value) {}
@@ -129,7 +129,7 @@ class BaseLabel extends Widget {
      * @desc Calls when vertical align change.
      * @method
      * @protected
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
+     * @param {mCore.enumerator.ui.VERTICAL_ALIGN} value
      */
 
     verticalAlignChange(value) {}
@@ -239,7 +239,7 @@ class BaseLabel extends Widget {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN}
+     * @type {mCore.enumerator.ui.HORIZONTAL_ALIGN}
      */
 
     get horizontalAlign() {
@@ -256,7 +256,7 @@ class BaseLabel extends Widget {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.VERTICAL_ALIGN}
+     * @type {mCore.enumerator.ui.VERTICAL_ALIGN}
      */
 
     get verticalAlign() {

@@ -3,8 +3,8 @@ import ActionInterval from "./ActionInterval";
 /**
  * @desc Tween some display object property.
  * @class
- * @extends MANTICORE.animation.action.ActionInstant
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
  */
 
 class Tween extends ActionInterval {
@@ -68,7 +68,7 @@ class Tween extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Tween}
+     * @return {mCore.animation.action.Tween}
      */
     reverse() {
         return Tween.create(this.duration, this._key, this._to, this._from);
@@ -78,7 +78,7 @@ class Tween extends ActionInterval {
      * @desc To copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.Tween}
+     * @return {mCore.animation.action.Tween}
      */
     clone() {
         return Tween.create(this.duration, this._key, this._from, this._to);

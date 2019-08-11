@@ -6,8 +6,8 @@ import StateSlice9Sprite from "./StateSlice9Sprite";
 /**
  * @desc Namespace that contain some ancillary classes for create ui.
  * @namespace
- * @name MANTICORE.ui.ancillary
- * @memberOf MANTICORE.ui
+ * @name mCore.ui.ancillary
+ * @memberOf mCore.ui
  */
 
 const ancillary = {

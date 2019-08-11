@@ -2,8 +2,8 @@ import EaseBase from "./EaseBase";
 
 /**
  * @class
- * @memberOf MANTICORE.animation.easing
- * @extends MANTICORE.animation.easing.EaseBase
+ * @memberOf mCore.animation.easing
+ * @extends mCore.animation.easing.EaseBase
  */
 
 class EaseRate extends EaseBase {

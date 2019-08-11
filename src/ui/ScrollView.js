@@ -11,7 +11,7 @@ import ComScroller from "component/ui/ComScroller";
  * @enum {string}
  * @private
  * @readonly
- * @memberOf MANTICORE.ui.ScrollView.
+ * @memberOf mCore.ui.ScrollView.
  */
 
 const LOCAL_EVENT = {
@@ -25,14 +25,14 @@ const LOCAL_EVENT = {
 /**
  * @desc Scroll view element.
  * @class
- * @extends MANTICORE.ui.Panel
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.Panel
+ * @memberOf mCore.ui
  */
 
 class ScrollView extends Panel {
     /**
      * @constructor
-     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = mCore.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
      * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
      */
     constructor(graphicType = PANEL_GRAPHIC_TYPE.NONE, data = null) {
@@ -40,21 +40,21 @@ class ScrollView extends Panel {
 
         /**
          * @desc Container with elements.
-         * @type {MANTICORE.ui.Widget}
+         * @type {mCore.ui.Widget}
          * @private
          */
 
         this._innerContainer = Widget.create();
 
         /**
-         * @type {?MANTICORE.ui.Slider}
+         * @type {?mCore.ui.Slider}
          * @private
          */
 
         this._verticalSlider = null;
 
         /**
-         * @type {?MANTICORE.ui.Slider}
+         * @type {?mCore.ui.Slider}
          * @private
          */
 
@@ -110,7 +110,7 @@ class ScrollView extends Panel {
 
         /**
          * @desc Component for update scroll in scroll view.
-         * @type {MANTICORE.component.ui.ComScroller}
+         * @type {mCore.component.ui.ComScroller}
          * @private
          */
 
@@ -136,7 +136,7 @@ class ScrollView extends Panel {
      * @desc Calls by pool when object get from pool. Don't call it only override.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
+     * @param {mCore.enumerator.ui.PANEL_GRAPHIC_TYPE} [graphicType = mCore.enumerator.ui.PANEL_GRAPHIC_TYPE.NONE] - Type of graphic that use panel.
      * @param {?string | ?int} [data = null] - Data that need to init panel. If type Color this is color, if Sprite it link to texture.
      */
     reuse(graphicType, data) {
@@ -573,7 +573,7 @@ class ScrollView extends Panel {
     /**
      * @method
      * @protected
-     * @param {MANTICORE.eventDispatcher.EventModel} event
+     * @param {mCore.eventDispatcher.EventModel} event
      */
 
     onDragStartInnerContainerHandler(event) {
@@ -584,7 +584,7 @@ class ScrollView extends Panel {
     /**
      * @method
      * @protected
-     * @param {MANTICORE.eventDispatcher.EventModel} event
+     * @param {mCore.eventDispatcher.EventModel} event
      */
 
     onDragInnerContainerHandler(event) {
@@ -595,7 +595,7 @@ class ScrollView extends Panel {
     /**
      * @method
      * @protected
-     * @param {MANTICORE.eventDispatcher.EventModel} event
+     * @param {mCore.eventDispatcher.EventModel} event
      */
 
     onDragFinishInnerContainerHandler(event) {
@@ -606,7 +606,7 @@ class ScrollView extends Panel {
     /**
      * @method
      * @protected
-     * @param {MANTICORE.eventDispatcher.EventModel} event
+     * @param {mCore.eventDispatcher.EventModel} event
      */
 
     onScrollHorizontalHandler(event) {
@@ -616,7 +616,7 @@ class ScrollView extends Panel {
     /**
      * @method
      * @protected
-     * @param {MANTICORE.eventDispatcher.EventModel} event
+     * @param {mCore.eventDispatcher.EventModel} event
      */
 
     onScrollVerticalHandler(event) {
@@ -632,11 +632,11 @@ class ScrollView extends Panel {
      * @desc Update slider.
      * @method
      * @private
-     * @param {?MANTICORE.ui.Slider} prvSlider
-     * @param {?MANTICORE.ui.Slider} nxtSlider
-     * @param {MANTICORE.enumerator.ui.SCROLL_DIRECTION} direction
+     * @param {?mCore.ui.Slider} prvSlider
+     * @param {?mCore.ui.Slider} nxtSlider
+     * @param {mCore.enumerator.ui.SCROLL_DIRECTION} direction
      * @param {Function} handler
-     * @returns {?MANTICORE.ui.Slider}
+     * @returns {?mCore.ui.Slider}
      */
 
     _initSlider(prvSlider, nxtSlider, direction, handler) {
@@ -727,7 +727,7 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @type {MANTICORE.enumerator.ui.SCROLL_DIRECTION}
+     * @type {mCore.enumerator.ui.SCROLL_DIRECTION}
      */
 
     get scrollDirection() {
@@ -740,7 +740,7 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @type {?MANTICORE.ui.Slider}
+     * @type {?mCore.ui.Slider}
      */
 
     get horizontalSlider() {
@@ -757,7 +757,7 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @type {?MANTICORE.ui.Slider}
+     * @type {?mCore.ui.Slider}
      */
 
     get verticalSlider() {
@@ -774,7 +774,7 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @type {MANTICORE.ui.Widget}
+     * @type {mCore.ui.Widget}
      */
 
     get innerContainer() {
@@ -811,7 +811,7 @@ class ScrollView extends Panel {
 
     /**
      * @public
-     * @return {MANTICORE.manager.InteractionManager}
+     * @return {mCore.manager.InteractionManager}
      */
 
     get interactionManager() {

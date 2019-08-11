@@ -5,8 +5,8 @@ import Point from "geometry/Point";
 /**
  * @desc Base class for cardinal spline actions.
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
+ * @extends mCore.animation.action.ActionInterval
  */
 
 class CardinalSpline extends ActionInterval {
@@ -23,13 +23,13 @@ class CardinalSpline extends ActionInterval {
      * @method
      * @static
      * @protected
-     * @param {MANTICORE.geometry.Point} p0
-     * @param {MANTICORE.geometry.Point} p1
-     * @param {MANTICORE.geometry.Point} p2
-     * @param {MANTICORE.geometry.Point} p3
+     * @param {mCore.geometry.Point} p0
+     * @param {mCore.geometry.Point} p1
+     * @param {mCore.geometry.Point} p2
+     * @param {mCore.geometry.Point} p3
      * @param {number} tension
      * @param {number} t
-     * @return {MANTICORE.geometry.Point}
+     * @return {mCore.geometry.Point}
      */
     static cardinalSplineAt(p0, p1, p2, p3, tension, t) {
         const t2 = t * t;
@@ -52,9 +52,9 @@ class CardinalSpline extends ActionInterval {
      * @method
      * @static
      * @protected
-     * @param {MANTICORE.geometry.Point[]} controlPoints
+     * @param {mCore.geometry.Point[]} controlPoints
      * @param {int} pos
-     * @returns {MANTICORE.geometry.Point}
+     * @returns {mCore.geometry.Point}
      */
     static getControlPointAt(controlPoints, pos) {
         const index = Math.min(controlPoints.length - 1, Math.max(pos, 0));
@@ -66,8 +66,8 @@ class CardinalSpline extends ActionInterval {
      * @method
      * @static
      * @protected
-     * @param {MANTICORE.geometry.Point[]} controlPoints
-     * @returns {MANTICORE.geometry.Point[]}
+     * @param {mCore.geometry.Point[]} controlPoints
+     * @returns {mCore.geometry.Point[]}
      */
     static reverseControlPoints(controlPoints) {
         const result = [];
@@ -83,8 +83,8 @@ class CardinalSpline extends ActionInterval {
      * @method
      * @static
      * @protected
-     * @param {MANTICORE.geometry.Point[]} controlPoints
-     * @returns {MANTICORE.geometry.Point[]}
+     * @param {mCore.geometry.Point[]} controlPoints
+     * @returns {mCore.geometry.Point[]}
      */
 
     static cloneControlPoints(controlPoints) {

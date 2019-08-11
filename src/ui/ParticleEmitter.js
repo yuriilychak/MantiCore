@@ -12,22 +12,22 @@ import UI_ELEMENT from "enumerator/ui/UIElement";
 /**
  * @desc Particle emitter view.
  * @class
- * @extends MANTICORE.view.ComponentContainer
- * @memberOf MANTICORE.ui
+ * @extends mCore.view.ComponentContainer
+ * @memberOf mCore.ui
  */
 
 export default class ParticleEmitter extends ComponentContainer {
     /**
      * @constructor
      * @param {string} particleName
-     * @param {MANTICORE.enumerator.ui.CONTAINER_TYPE} containerType
+     * @param {mCore.enumerator.ui.CONTAINER_TYPE} containerType
      */
 
     constructor(particleName, containerType = CONTAINER_TYPE.DEFAULT) {
         super();
 
         /**
-         * @type {MANTICORE.enumerator.ui.CONTAINER_TYPE}
+         * @type {mCore.enumerator.ui.CONTAINER_TYPE}
          * @private
          */
 
@@ -41,7 +41,7 @@ export default class ParticleEmitter extends ComponentContainer {
         this._particleName = null;
 
         /**
-         * @type {MANTICORE.enumerator.PARTICLE_TYPE}
+         * @type {mCore.enumerator.PARTICLE_TYPE}
          * @private
          */
 
@@ -63,7 +63,7 @@ export default class ParticleEmitter extends ComponentContainer {
         this._particle = null;
 
         /**
-         * @type {MANTICORE.repository.Repository}
+         * @type {mCore.repository.Repository}
          * @private
          */
 
@@ -83,7 +83,7 @@ export default class ParticleEmitter extends ComponentContainer {
      * @method
      * @public
      * @param {string} particleName
-     * @param {MANTICORE.enumerator.ui.CONTAINER_TYPE} containerType
+     * @param {mCore.enumerator.ui.CONTAINER_TYPE} containerType
      */
 
     reuse(particleName, containerType = CONTAINER_TYPE.DEFAULT) {
@@ -209,7 +209,7 @@ export default class ParticleEmitter extends ComponentContainer {
 
     /**
      * @method
-     * @param {MANTICORE.enumerator.ui.PARTICLE_EVENT} eventId
+     * @param {mCore.enumerator.ui.PARTICLE_EVENT} eventId
      * @private
      */
 
@@ -240,7 +240,7 @@ export default class ParticleEmitter extends ComponentContainer {
     /**
      * @method
      * @param {string} particleName
-     * @param {MANTICORE.enumerator.ui.CONTAINER_TYPE} containerType
+     * @param {mCore.enumerator.ui.CONTAINER_TYPE} containerType
      * @private
      */
 
@@ -281,7 +281,7 @@ export default class ParticleEmitter extends ComponentContainer {
     /**
      * @desc Returns type of emitter.
      * @public
-     * @return {MANTICORE.enumerator.PARTICLE_TYPE}
+     * @return {mCore.enumerator.PARTICLE_TYPE}
      */
 
     get particleType() {
@@ -301,7 +301,7 @@ export default class ParticleEmitter extends ComponentContainer {
     /**
      * @desc Returns container type where particles emitted.
      * @public
-     * @return {MANTICORE.enumerator.ui.CONTAINER_TYPE}
+     * @return {mCore.enumerator.ui.CONTAINER_TYPE}
      */
 
     get containerType() {

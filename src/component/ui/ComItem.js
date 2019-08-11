@@ -3,8 +3,8 @@ import ComUI from "./ComUI";
 /**
  * @desc Component for manipulate with items in Item box.
  * @class
- * @extends MANTICORE.component.ui.ComUI
- * @memberOf MANTICORE.component.ui
+ * @extends mCore.component.ui.ComUI
+ * @memberOf mCore.component.ui
  */
 
 class ComItem extends ComUI {
@@ -30,7 +30,7 @@ class ComItem extends ComUI {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.ui.ComItem}
+     * @return {mCore.component.ui.ComItem}
      */
 
     clone() {

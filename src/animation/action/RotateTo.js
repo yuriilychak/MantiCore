@@ -4,8 +4,8 @@ import Math from "util/Math";
 /**
  * @desc Rotates display object to a certain angle by modifying its rotation property. The direction will be decided by the shortest angle.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const rotateTo = new RotateTo(2, 61.0);
  */
@@ -46,7 +46,7 @@ class RotateTo extends ActionInterval{
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.RotateTo}
+     * @return {mCore.animation.action.RotateTo}
      */
 
     clone() {

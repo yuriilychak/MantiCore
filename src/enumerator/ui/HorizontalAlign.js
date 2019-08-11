@@ -1,7 +1,7 @@
 /**
  * @desc Enumerator with horizontal alignment.
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator.ui
+ * @memberOf mCore.enumerator.ui
  */
 
 const HORIZONTAL_ALIGN = {

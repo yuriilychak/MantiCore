@@ -4,8 +4,8 @@ import Asset from "util/Asset";
 /**
  * @desc Class for change frames of sprite in animation.
  * @class
- * @memberOf MANTICORE.animation.action
- * @extends MANTICORE.animation.action.ActionInstant
+ * @memberOf mCore.animation.action
+ * @extends mCore.animation.action.ActionInstant
  */
 class FrameChange extends ActionInstant {
     /**
@@ -35,7 +35,7 @@ class FrameChange extends ActionInstant {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FrameChange}
+     * @return {mCore.animation.action.FrameChange}
      */
 
     clone(){
@@ -45,7 +45,7 @@ class FrameChange extends ActionInstant {
     /**
      * @method
      * @public
-     * @return {MANTICORE.animation.action.FrameChange}
+     * @return {mCore.animation.action.FrameChange}
      */
 
     reverse(){

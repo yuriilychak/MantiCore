@@ -10,10 +10,10 @@ import Point from "geometry/Point";
  * movement will be the sum of individual movements.
  * </p>
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
- * const actionTo = moveBy(2, new MANTICORE.geometry.Point(windowSize.width - 40, windowSize.height - 40));
+ * const actionTo = moveBy(2, new mCore.geometry.Point(windowSize.width - 40, windowSize.height - 40));
  */
 
 class MoveBy extends ActionInterval {
@@ -21,24 +21,24 @@ class MoveBy extends ActionInterval {
     /**
      * @constructor
      * @param {number} duration duration in seconds
-     * @param {MANTICORE.geometry.Point|number} deltaPos
+     * @param {mCore.geometry.Point|number} deltaPos
      * @param {number} [deltaY]
      */
 
     constructor(duration, deltaPos, deltaY) {
         super(duration);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._delta = Point.create(0, 0);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._startPoint = Point.create(0, 0);
         /**
-         * @type {MANTICORE.geometry.Point}
+         * @type {mCore.geometry.Point}
          * @private
          */
         this._prevPoint = Point.create(0, 0);
@@ -61,7 +61,7 @@ class MoveBy extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.MoveBy}
+     * @return {mCore.animation.action.MoveBy}
      */
 
     clone() {
@@ -106,7 +106,7 @@ class MoveBy extends ActionInterval {
      * @desc Returns a reversed action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.MoveBy}
+     * @return {mCore.animation.action.MoveBy}
      */
 
     reverse() {
@@ -118,7 +118,7 @@ class MoveBy extends ActionInterval {
      * @method
      * @public
      * @param {number} duration duration in seconds
-     * @param {MANTICORE.geometry.Point|number} deltaPos
+     * @param {mCore.geometry.Point|number} deltaPos
      * @param {number} [deltaY]
      */
 
@@ -160,7 +160,7 @@ class MoveBy extends ActionInterval {
 
     /**
      * @protected
-     * @returns {MANTICORE.geometry.Point|Point}
+     * @returns {mCore.geometry.Point|Point}
      */
 
     get delta() {

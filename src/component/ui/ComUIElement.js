@@ -5,8 +5,8 @@ import Type from "util/Type";
 /**
  * @desc Base Class for create components from bundle.
  * @class
- * @extends MANTICORE.component.ui.ComUI
- * @memberOf MANTICORE.component.ui
+ * @extends mCore.component.ui.ComUI
+ * @memberOf mCore.component.ui
  */
 
 class ComUIElement extends ComUI {
@@ -14,7 +14,7 @@ class ComUIElement extends ComUI {
      * @constructor
      * @param {string} elementName - Link to ui element in bundle
      * @param {?string} [bundleName = null] - Name of bundle. If not set search in all bundles.
-     * @param {?MANTICORE.view.ComponentContainer} [owner = null] - Owner of component. (Need for clone function.)
+     * @param {?mCore.view.ComponentContainer} [owner = null] - Owner of component. (Need for clone function.)
      */
     constructor(elementName, bundleName = null, owner = null) {
         super("ComUIElement");
@@ -39,7 +39,7 @@ class ComUIElement extends ComUI {
      * @desc Clone component
      * @method
      * @public
-     * @return {MANTICORE.component.ui.ComUIElement}
+     * @return {mCore.component.ui.ComUIElement}
      */
 
     clone() {

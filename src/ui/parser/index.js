@@ -56,11 +56,11 @@ import ComUILayout from "component/ui/ComUILayout";
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.ui.Widget} parent
+ * @memberOf mCore.ui.parser
+ * @param {mCore.ui.Widget} parent
  * @param {Object} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @param {MANTICORE.ui.Widget} globalParent
+ * @param {mCore.type.AssetBundle} bundle
+ * @param {mCore.ui.Widget} globalParent
  */
 
 function parseChild (parent, data, bundle, globalParent) {
@@ -181,10 +181,10 @@ function parseChild (parent, data, bundle, globalParent) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.ui.Widget} element
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @memberOf mCore.ui.parser
+ * @param {mCore.ui.Widget} element
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
  */
 
 function _parseWidgetData(element, data, bundle) {
@@ -281,11 +281,11 @@ function _parseWidgetData(element, data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.ui.Widget} element
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @param {MANTICORE.ui.Widget} globalParent
+ * @memberOf mCore.ui.parser
+ * @param {mCore.ui.Widget} element
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @param {mCore.ui.Widget} globalParent
  * @private
  */
 
@@ -298,7 +298,7 @@ function _parseAnimation(element, data, bundle, globalParent) {
     const animationCount = animations.length;
 
     /**
-     * @type {MANTICORE.animation.ActionTimeLine}
+     * @type {mCore.animation.ActionTimeLine}
      */
     const timeLine = ActionTimeLine.create(element, TIME_LINE.UI);
 
@@ -332,10 +332,10 @@ function _parseAnimation(element, data, bundle, globalParent) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.AnimationData} animation
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.animation.ActionAnimation}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.AnimationData} animation
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.animation.ActionAnimation}
  */
 
 function _createAnimation(animation, bundle) {
@@ -559,7 +559,7 @@ function _createAnimation(animation, bundle) {
     }
 
     /**
-     * @type {MANTICORE.animation.ActionAnimation}
+     * @type {mCore.animation.ActionAnimation}
      */
     const resultAnimation = ActionAnimation.create(tracks.length === 1 ? tracks[0] : Spawn.create(tracks));
 
@@ -587,7 +587,7 @@ function _createAnimation(animation, bundle) {
  * @method
  * @private
  * @param {int[] | null} easeData
- * @return {MANTICORE.animation.easing.EaseBase | null}
+ * @return {mCore.animation.easing.EaseBase | null}
  */
 
 function _createEasing(easeData) {
@@ -641,8 +641,8 @@ function _createEasing(easeData) {
 }
 
 /**
- * @param {MANTICORE.ui.Widget} element
- * @param {MANTICORE.type.ElementData} data
+ * @param {mCore.ui.Widget} element
+ * @param {mCore.type.ElementData} data
  * @private
  */
 
@@ -656,7 +656,7 @@ function _parseLayout(element, data) {
         return;
     }
     /**
-     * @type {MANTICORE.component.ui.ComUILayout}
+     * @type {mCore.component.ui.ComUILayout}
      */
     const layout = ComUILayout.create();
 
@@ -693,7 +693,7 @@ function _parseLayout(element, data) {
 
 /**
  * @function
- * @param {MANTICORE.type.AnimationFrame[]} frames
+ * @param {mCore.type.AnimationFrame[]} frames
  * @param {int} fps
  * @param {Function} onZeroFrame
  * @param {Function} onFrame
@@ -724,9 +724,9 @@ function _iterateFrames(frames, fps, onZeroFrame, onFrame) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.ui.Widget} element
- * @param {MANTICORE.type.ElementData} data
+ * @memberOf mCore.ui.parser
+ * @param {mCore.ui.Widget} element
+ * @param {mCore.type.ElementData} data
  */
 
 function _parseSlice9(element, data) {
@@ -747,10 +747,10 @@ function _parseSlice9(element, data) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.AtlasLabel}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.AtlasLabel}
  */
 
 function _createAtlasLabel(data, bundle) {
@@ -768,10 +768,10 @@ function _createAtlasLabel(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.ParticleEmitter}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.ParticleEmitter}
  */
 
 function _createParticleEmitter(data, bundle) {
@@ -787,10 +787,10 @@ function _createParticleEmitter(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.view.ComponentSpine}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.view.ComponentSpine}
  */
 
 function _createSpineSkeleton(data, bundle) {
@@ -811,10 +811,10 @@ function _createSpineSkeleton(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.ScrollView}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.ScrollView}
  */
 
 function _createScrollView(data, bundle) {
@@ -839,10 +839,10 @@ function _createScrollView(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.ScrollView}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.ScrollView}
  */
 
 function _createListView(data, bundle) {
@@ -869,10 +869,10 @@ function _createListView(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.CheckBox}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.CheckBox}
  */
 
 function _createCheckBox(data, bundle) {
@@ -906,10 +906,10 @@ function _createCheckBox(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.Button}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.Button}
  */
 
 function _createButton(data, bundle) {
@@ -938,10 +938,10 @@ function _createButton(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.ProgressBar}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.ProgressBar}
  */
 
 function _createProgressBar(data, bundle) {
@@ -955,10 +955,10 @@ function _createProgressBar(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.view.ComponentSprite}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.view.ComponentSprite}
  */
 
 function _createSprite(data, bundle) {
@@ -969,10 +969,10 @@ function _createSprite(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.Slider}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.Slider}
  */
 
 function _createSlider(data, bundle) {
@@ -990,11 +990,11 @@ function _createSlider(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
  * @param {PIXI.DisplayObject} parent
- * @returns {MANTICORE.ui.Label}
+ * @returns {mCore.ui.Label}
  */
 
 function _createLabel(data, bundle, parent) {
@@ -1003,14 +1003,14 @@ function _createLabel(data, bundle, parent) {
     let result;
     try {
         /**
-         * @type {MANTICORE.ui.Label}
+         * @type {mCore.ui.Label}
          */
         result = Label.create(name, font.size);
 
     }
     catch (error) {
         /**
-         * @type {MANTICORE.ui.Label}
+         * @type {mCore.ui.Label}
          */
         result = Label.create(Constant.EMPTY_FONT_ID, font.size);
         Logger.engineWarn(5, name, _getElementName(data.name, bundle), Ui.fullPath(parent));
@@ -1043,10 +1043,10 @@ function _createLabel(data, bundle, parent) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.TextField}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.TextField}
  */
 
 function _createTextField(data, bundle) {
@@ -1087,10 +1087,10 @@ function _createTextField(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.Panel}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.Panel}
  */
 
 function _createPanel(data, bundle) {
@@ -1110,10 +1110,10 @@ function _createPanel(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.Widget}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.Widget}
  */
 
 function _createUIElement(data, bundle) {
@@ -1128,10 +1128,10 @@ function _createUIElement(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.ImageView}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.ImageView}
  */
 
 function _createImageView(data, bundle) {
@@ -1146,10 +1146,10 @@ function _createImageView(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.ui.ToggleButton}
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.ui.ToggleButton}
  */
 
 function _createToggleButton(data, bundle) {
@@ -1180,10 +1180,10 @@ function _createToggleButton(data, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string | null}
  */
 
@@ -1194,9 +1194,9 @@ function _getTextureLinkFromData(data, index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string | null}
  */
 
@@ -1215,10 +1215,10 @@ function _getTextureFromData(index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string}
  */
 
@@ -1230,9 +1230,9 @@ function _getText(data, index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string}
  */
 
@@ -1243,9 +1243,9 @@ function _getElementName(index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string}
  */
 
@@ -1256,9 +1256,9 @@ function _getAnimatioName(index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {int[]}
  */
 
@@ -1269,11 +1269,11 @@ function _getAnchor(index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
- * @param {MANTICORE.type.ElementData} data
+ * @memberOf mCore.ui.parser
+ * @param {mCore.type.ElementData} data
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.type.AtlasFont}
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.type.AtlasFont}
  */
 
 function _getAtlasLabelData(data, index, bundle) {
@@ -1284,10 +1284,10 @@ function _getAtlasLabelData(data, index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} styleIndex
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.type.FontStyle | null}
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.type.FontStyle | null}
  */
 
 function _getFontStyle(styleIndex, bundle) {
@@ -1297,9 +1297,9 @@ function _getFontStyle(styleIndex, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} localeIndex
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string | null}
  */
 
@@ -1310,9 +1310,9 @@ function _getLocale(localeIndex, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} userDataIndex
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string | null}
  */
 
@@ -1323,9 +1323,9 @@ function _getUserData(userDataIndex, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} particleNameIndex
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string | null}
  */
 
@@ -1336,9 +1336,9 @@ function _getParticleName(particleNameIndex, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} skeletonNameIndex
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {string | null}
  */
 
@@ -1349,10 +1349,10 @@ function _getSkeletonName(skeletonNameIndex, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} styleIndex
- * @param {MANTICORE.type.AssetBundle} bundle
- * @returns {MANTICORE.type.TextFieldStyle | null}
+ * @param {mCore.type.AssetBundle} bundle
+ * @returns {mCore.type.TextFieldStyle | null}
  */
 
 function _getTextFieldStyle(styleIndex, bundle) {
@@ -1362,9 +1362,9 @@ function _getTextFieldStyle(styleIndex, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @returns {int}
  */
 
@@ -1375,9 +1375,9 @@ function _getColor(index, bundle) {
 /**
  * @function
  * @private
- * @memberOf MANTICORE.ui.parser
+ * @memberOf mCore.ui.parser
  * @param {int} index
- * @param {MANTICORE.type.AssetBundle} bundle
+ * @param {mCore.type.AssetBundle} bundle
  * @param {string} link
  * @param {*} [defaultValue]
  * @returns {*}
@@ -1390,8 +1390,8 @@ function _extractValue(index, bundle, link, defaultValue = null) {
 
 /**
  * @desc Namespace that contain methods for parse UI from Json.
- * @namespace MANTICORE.ui.parser
- * @memberOf MANTICORE.ui
+ * @namespace mCore.ui.parser
+ * @memberOf mCore.ui
  */
 
 export default {
@@ -1399,8 +1399,8 @@ export default {
      * @function
      * @param {string} name
      * @param {string} link
-     * @memberOf MANTICORE.ui.parser
-     * @returns {MANTICORE.ui.Widget}
+     * @memberOf mCore.ui.parser
+     * @returns {mCore.ui.Widget}
      */
     parseElement: function (name, link) {
         const bundle = BundleCache.getAssetBundle(link);

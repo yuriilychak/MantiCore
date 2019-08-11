@@ -4,8 +4,8 @@ import Point from "geometry/Point";
 
 /**
  * @desc Namespace for manipulate with geometry objects.
- * @namespace MANTICORE.util.geometry
- * @memberOf MANTICORE.util!
+ * @namespace mCore.util.geometry
+ * @memberOf mCore.util!
  */
 
 const geometry = {
@@ -13,12 +13,12 @@ const geometry = {
     /**
      * @desc Convert size to point
      * @function
-     * @memberOf MANTICORE.util.geometry
+     * @memberOf mCore.util.geometry
      * @param {PIXI.Container | Object} size - Size to convert
      * @param {number} size.width - Size to convert
      * @param {number} size.height - Size to convert
-     * @param {MANTICORE.geometry.Point | Point} [inPoint] - Point for store result.
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @param {mCore.geometry.Point | Point} [inPoint] - Point for store result.
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pFromSize: function(size, inPoint = Point.create(0, 0)) {
@@ -29,12 +29,12 @@ const geometry = {
     /**
      * @desc Convert half size to point
      * @function
-     * @memberOf MANTICORE.util.geometry
+     * @memberOf mCore.util.geometry
      * @param {PIXI.Container | Object} size - Size to convert
      * @param {number} size.width - Size to convert
      * @param {number} size.height - Size to convert
-     * @param {MANTICORE.geometry.Point | Point} [inPoint] - Point for store result.
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @param {mCore.geometry.Point | Point} [inPoint] - Point for store result.
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pHalfSize: function(size, inPoint = Point.create(0, 0)) {
@@ -48,15 +48,15 @@ const geometry = {
     /**
      * @desc Subtract two sizes and return result as point.
      * @function
-     * @memberOf MANTICORE.util.geometry
+     * @memberOf mCore.util.geometry
      * @param {PIXI.Container | Object} size1
      * @param {PIXI.Container | Object} size2
      * @param {number} size1.width - Size to convert
      * @param {number} size1.height - Size to convert
      * @param {number} size2.width - Size to convert
      * @param {number} size2.height - Size to convert
-     * @param {MANTICORE.geometry.Point | Point} [inPoint] - Point for store result.
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @param {mCore.geometry.Point | Point} [inPoint] - Point for store result.
+     * @returns {mCore.geometry.Point | Point}
      */
 
     sSub: function(size1, size2, inPoint = Point.create(0, 0)) {
@@ -66,11 +66,11 @@ const geometry = {
 
     /**
      * @desc Subtract points.
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p1
-     * @param {MANTICORE.geometry.Point | Point} p2
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p1
+     * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pSub: function(p1, p2, isIn = false) {
@@ -81,11 +81,11 @@ const geometry = {
 
     /**
      * @desc Add points.
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p1
-     * @param {MANTICORE.geometry.Point | Point} p2
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p1
+     * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pAdd: function(p1, p2, isIn = false) {
@@ -96,11 +96,11 @@ const geometry = {
 
     /**
      * @desc Multiply point to number.
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p
      * @param {number} multiplier
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pMult: function(p, multiplier, isIn = false) {
@@ -111,11 +111,11 @@ const geometry = {
 
     /**
      * @desc Multiply two points.
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p1
-     * @param {MANTICORE.geometry.Point | Point} p2
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p1
+     * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pCompMult: function (p1, p2, isIn = false) {
@@ -126,11 +126,11 @@ const geometry = {
 
     /**
      * @desc Divide two points.
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p1
-     * @param {MANTICORE.geometry.Point | Point} p2
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p1
+     * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pCompDiv: function (p1, p2, isIn = false) {
@@ -141,11 +141,11 @@ const geometry = {
 
     /**
      * @desc Return two maximum values from points.
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p1
-     * @param {MANTICORE.geometry.Point | Point} p2
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p1
+     * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pMax: function (p1, p2, isIn = false) {
@@ -156,11 +156,11 @@ const geometry = {
 
     /**
      * @desc Return two minimum values from points.
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p1
-     * @param {MANTICORE.geometry.Point | Point} p2
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p1
+     * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pMin: function (p1, p2, isIn = false) {
@@ -171,12 +171,12 @@ const geometry = {
 
     /**
      * @function
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
-    
+
     pNeg: function (p, isIn = false) {
         const x = -p.x;
         const y = -p.y;
@@ -186,10 +186,10 @@ const geometry = {
     /**
      * @function
      * @public
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pRound: function(p, isIn = false) {
@@ -202,12 +202,12 @@ const geometry = {
      * @desc Change point arguments
      * @function
      * @public
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p
-     * @param {MANTICORE.geometry.Point | Point} pLeft
-     * @param {MANTICORE.geometry.Point | Point} pRight
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p
+     * @param {mCore.geometry.Point | Point} pLeft
+     * @param {mCore.geometry.Point | Point} pRight
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pRange: function(p, pLeft, pRight, isIn = false) {
@@ -220,9 +220,9 @@ const geometry = {
      * @desc Returns is points equal.
      * @function
      * @public
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p1
-     * @param {MANTICORE.geometry.Point | Point} p2
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p1
+     * @param {mCore.geometry.Point | Point} p2
      * @returns {boolean}
      */
 
@@ -234,9 +234,9 @@ const geometry = {
      * @desc Return abs of point.
      * @function
      * @public
-     * @param {MANTICORE.geometry.Point | Point} p
+     * @param {mCore.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pAbs: function(p, isIn = false) {
@@ -249,9 +249,9 @@ const geometry = {
      * @desc Invert point.
      * @function
      * @public
-     * @param {MANTICORE.geometry.Point | Point} p
+     * @param {mCore.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     pInvert: function(p, isIn = false) {
@@ -264,8 +264,8 @@ const geometry = {
      * @desc Calculates dot product of two points.
      * @function
      * @public
-     * @param {MANTICORE.geometry.Point} p1
-     * @param {MANTICORE.geometry.Point} p2
+     * @param {mCore.geometry.Point} p1
+     * @param {mCore.geometry.Point} p2
      * @return {number}
      */
     pDot: function (p1, p2) {
@@ -276,8 +276,8 @@ const geometry = {
      * @desc Calculates cross product of two points.
      * @function
      * @public
-     * @param {MANTICORE.geometry.Point} p1
-     * @param {MANTICORE.geometry.Point} p2
+     * @param {mCore.geometry.Point} p1
+     * @param {mCore.geometry.Point} p2
      * @return {number}
      */
     pCross: function (p1, p2) {
@@ -288,7 +288,7 @@ const geometry = {
      * @desc Calculates the square length of a cc.Point (not calling sqrt() )
      * @function
      * @public
-     * @param {MANTICORE.geometry.Point} p
+     * @param {mCore.geometry.Point} p
      * @return {number}
      */
     pLengthSQ: function (p) {
@@ -299,7 +299,7 @@ const geometry = {
      * @desc Calculates distance between point an origin
      * @function
      * @public
-     * @param {MANTICORE.geometry.Point} p
+     * @param {mCore.geometry.Point} p
      * @return {number}
      */
     pLength: function (p) {
@@ -310,8 +310,8 @@ const geometry = {
      * @desc Calculates the distance between two points
      * @function
      * @public
-     * @param {MANTICORE.geometry.Point} p1
-     * @param {MANTICORE.geometry.Point} p2
+     * @param {mCore.geometry.Point} p1
+     * @param {mCore.geometry.Point} p2
      * @return {number}
      */
     pDistance: function (p1, p2) {
@@ -321,12 +321,12 @@ const geometry = {
     /**
      * @desc Generate result for point transformation.
      * @private
-     * @memberOf MANTICORE.util.geometry
-     * @param {MANTICORE.geometry.Point | Point} p
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p
      * @param {number} x
      * @param {number} y
      * @param {boolean} isIn
-     * @returns {MANTICORE.geometry.Point | Point}
+     * @returns {mCore.geometry.Point | Point}
      */
 
     _pGenResult(p, x, y, isIn) {

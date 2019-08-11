@@ -4,16 +4,16 @@ import type from "util/Type";
 /**
  * @desc Class for manipulate with game scenes.
  * @class
- * @extends MANTICORE.view.ComponentContainer
- * @memberOf MANTICORE.view
+ * @extends mCore.view.ComponentContainer
+ * @memberOf mCore.view
  */
 
 class Scene extends ComponentContainer {
 
     /**
      * @constructor
-     * @param {MANTICORE.component.Component} [comTransitionShow = null] - Component for transition start animation.
-     * @param {MANTICORE.component.Component} [comTransitionHide = null] - Component for transition end animation.
+     * @param {mCore.component.Component} [comTransitionShow = null] - Component for transition start animation.
+     * @param {mCore.component.Component} [comTransitionHide = null] - Component for transition end animation.
      */
 
     constructor(comTransitionShow = null, comTransitionHide = null) {
@@ -21,7 +21,7 @@ class Scene extends ComponentContainer {
 
         /**
          * @desc Component for show transition.
-         * @type {?MANTICORE.component.Component}
+         * @type {?mCore.component.Component}
          * @private
          */
 
@@ -32,7 +32,7 @@ class Scene extends ComponentContainer {
 
         /**
          * @desc Component for hide transition.
-         * @type {?MANTICORE.component.Component}
+         * @type {?mCore.component.Component}
          * @private
          */
 

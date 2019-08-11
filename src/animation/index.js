@@ -6,7 +6,7 @@ import ActionAnimation from "./ActionAnimation";
 /**
  * @desc Namespace that contains classes for manipulate with animated tweens.
  * @namespace animation
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 
 export default {

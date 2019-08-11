@@ -5,8 +5,8 @@ import Color from "util/Color";
  * @desc Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  * @warning This action doesn't support "reverse"
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  * @example
  * const action = new TintTo(2, 255, 0, 255);
  */
@@ -50,7 +50,7 @@ class TintTo extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.TintTo}
+     * @return {mCore.animation.action.TintTo}
      */
 
     clone() {

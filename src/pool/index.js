@@ -4,16 +4,16 @@ import Macro from "macro";
 /**
  * @desc Singleton object serves as an object cache pool.<br>
  *     It can helps you to improve your game performance for objects which need frequent release and recreate operations.
- * @namespace MANTICORE.pool
- * @memberOf MANTICORE
+ * @namespace mCore.pool
+ * @memberOf mCore
  */
 
 const pool = {
 
     /**
      * @desc Pool repository
-     * @type {MANTICORE.repository.Repository}
-     * @memberOf MANTICORE.pool
+     * @type {mCore.repository.Repository}
+     * @memberOf mCore.pool
      * @private
      */
 
@@ -21,8 +21,8 @@ const pool = {
 
     /**
      * @desc Pool bounds for some objects.
-     * @type {MANTICORE.repository.Repository}
-     * @memberOf MANTICORE.pool
+     * @type {mCore.repository.Repository}
+     * @memberOf mCore.pool
      * @private
      */
 
@@ -31,7 +31,7 @@ const pool = {
     /**
      * @desc Variable for generate pool id's.
      * @type {int}
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @private
      */
     _id: 0,
@@ -39,7 +39,7 @@ const pool = {
     /**
      * @desc Returns PID of object
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @private
      * @param {Object} objectClass
      * @returns {int}
@@ -69,7 +69,7 @@ const pool = {
     /**
      * @desc Destroy all elements by key.
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @private
      * @param {int} id
      */
@@ -88,7 +88,7 @@ const pool = {
     /**
      * @desc Put object in pool.
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @param {Object} object
      */
 
@@ -133,7 +133,7 @@ const pool = {
     /**
      * @desc Redifine max count of object in pool.
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @param {Object} object
      * @param {int} count
      */
@@ -172,7 +172,7 @@ const pool = {
     /**
      * @desc Check if this kind of object has already in pool.
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @param {Object} objectClass
      * @returns {boolean} if this kind of obj is already in pool return true,else return false;
      */
@@ -189,7 +189,7 @@ const pool = {
     /**
      * @desc Remove the obj if you want to delete it.
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @param {Object} object
      */
     removeObject: function (object) {
@@ -201,7 +201,7 @@ const pool = {
     /**
      * @desc Get object from pool.
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      * @param {...*} var_args
      */
     getObject: function (var_args) {
@@ -229,7 +229,7 @@ const pool = {
     /**
      * @desc Remove all objects from pool and reset it.
      * @function
-     * @memberOf MANTICORE.pool
+     * @memberOf mCore.pool
      */
 
     drain: function () {

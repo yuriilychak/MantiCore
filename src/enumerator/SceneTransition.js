@@ -1,7 +1,7 @@
 /**
  * @desc Enumerator for scene transitions.
  * @enumerator {string}
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  * @name SCENE_TRANSITION
  */
 

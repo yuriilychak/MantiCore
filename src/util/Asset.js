@@ -5,8 +5,8 @@ import ParticleCache from "cache/ParticleCache";
 
 /**
  * @desc Namespace that contain functions for manipulate with assets
- * @namespace MANTICORE.util.asset
- * @memberOf MANTICORE.util
+ * @namespace mCore.util.asset
+ * @memberOf mCore.util
  */
 
 const asset = {
@@ -14,7 +14,7 @@ const asset = {
     /**
      * @desc Get sprite frame if it exist or return null.
      * @function
-     * @memberOf MANTICORE.util.asset
+     * @memberOf mCore.util.asset
      * @param {string} link
      * @return {PIXI.Texture | null}
      */
@@ -38,7 +38,7 @@ const asset = {
      * @desc Create white sprite from default PIXI texture.
      * @function
      * @public
-     * @memberOf MANTICORE.util.asset
+     * @memberOf mCore.util.asset
      * @returns {PIXI.Sprite}
      */
 

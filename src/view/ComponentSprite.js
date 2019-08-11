@@ -20,7 +20,7 @@ import Constant from "constant";
  * @desc Class that implements composite pattern for sprite;
  * @class
  * @extends PIXI.Sprite
- * @memberOf MANTICORE.view
+ * @memberOf mCore.view
  */
 
 class ComponentSprite extends PIXI.Sprite {
@@ -33,7 +33,7 @@ class ComponentSprite extends PIXI.Sprite {
 
         /**
          * @desc Manager of components.
-         * @type {?MANTICORE.manager.ComponentManager}
+         * @type {?mCore.manager.ComponentManager}
          * @private
          */
 
@@ -41,7 +41,7 @@ class ComponentSprite extends PIXI.Sprite {
 
         /**
          * @desc Manager of listeners.
-         * @type {MANTICORE.manager.ListenerManager}
+         * @type {mCore.manager.ListenerManager}
          * @private
          */
 
@@ -49,7 +49,7 @@ class ComponentSprite extends PIXI.Sprite {
 
         /**
          * @desc Class for manipulate with animations.
-         * @type {?MANTICORE.manager.AnimationManager}
+         * @type {?mCore.manager.AnimationManager}
          * @private
          */
 
@@ -57,7 +57,7 @@ class ComponentSprite extends PIXI.Sprite {
 
         /**
          * @desc Class for manipulate with interactions.
-         * @type {MANTICORE.manager.InteractionManager}
+         * @type {mCore.manager.InteractionManager}
          * @private
          */
         this._interactionManager = null;
@@ -150,7 +150,7 @@ class ComponentSprite extends PIXI.Sprite {
         this._realTint = Color.COLORS.WHITE;
 
         /**
-         * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
+         * @type {mCore.enumerator.ui.UI_ELEMENT}
          * @private
          */
 
@@ -209,7 +209,7 @@ class ComponentSprite extends PIXI.Sprite {
             child = arguments[i];
             Geometry.pSub(child.position, offset, true);
             this.updateChildTint(child);
-            child.scale.copy(scale);
+            child.scale.copyFrom(scale);
             result.push(super.addChild(child));
         }
         if (this._hasComponentManager) {
@@ -231,7 +231,7 @@ class ComponentSprite extends PIXI.Sprite {
         const result = super.addChildAt(child, index);
         this.updateChildTint(child);
         Geometry.pSub(child.position, Geometry.pCompMult(Geometry.pFromSize(this), this.anchor), true);
-        child.scale.copy(Geometry.pInvert(this.scale));
+        child.scale.copyFrom(Geometry.pInvert(this.scale));
         if (this._hasComponentManager) {
             this._componentManager.addChildrenAction([result]);
         }
@@ -348,7 +348,7 @@ class ComponentSprite extends PIXI.Sprite {
      * @desc Calls when interactive manager emit event.
      * @method
      * @public
-     * @param {MANTICORE.enumerator.ui.INTERACTIVE_EVENT} eventType
+     * @param {mCore.enumerator.ui.INTERACTIVE_EVENT} eventType
      * @param {Object} event
      */
 
@@ -370,7 +370,7 @@ class ComponentSprite extends PIXI.Sprite {
             return;
         }
         /**
-         * @type {MANTICORE.component.ui.ComUILayout}
+         * @type {mCore.component.ui.ComUILayout}
          */
         const layout = this._componentManager.getComponent(Constant.COM_UI_LAYOUT_NAME);
         layout.refresh();
@@ -450,7 +450,7 @@ class ComponentSprite extends PIXI.Sprite {
     /**
      * @method
      * @protected
-     * @param {PIXI.DisplayObject | MANTICORE.view.ComponentContainer} child
+     * @param {PIXI.DisplayObject | mCore.view.ComponentContainer} child
      *
      */
 
@@ -474,7 +474,7 @@ class ComponentSprite extends PIXI.Sprite {
      * @desc Safe kill of manager.
      * @method
      * @private
-     * @param {MANTICORE.manager.BaseManager} manager
+     * @param {mCore.manager.BaseManager} manager
      * @returns {null}
      */
 
@@ -659,7 +659,7 @@ class ComponentSprite extends PIXI.Sprite {
     /**
      * @public
      * @readonly
-     * @type {MANTICORE.enumerator.ui.UI_ELEMENT}
+     * @type {mCore.enumerator.ui.UI_ELEMENT}
      */
 
     get uiType() {
@@ -713,7 +713,7 @@ class ComponentSprite extends PIXI.Sprite {
      * @desc Link to animation manager.
      * @public
      * @readonly
-     * @return {MANTICORE.manager.AnimationManager}
+     * @return {mCore.manager.AnimationManager}
      */
 
     get animationManager() {
@@ -728,7 +728,7 @@ class ComponentSprite extends PIXI.Sprite {
      * @desc Link to component manager
      * @readonly
      * @public
-     * @return {MANTICORE.manager.ComponentManager}
+     * @return {mCore.manager.ComponentManager}
      */
 
     get componentManager() {
@@ -742,7 +742,7 @@ class ComponentSprite extends PIXI.Sprite {
     /**
      * @desc Link to listener manager.
      * @public
-     * @return {MANTICORE.manager.ListenerManager}
+     * @return {mCore.manager.ListenerManager}
      */
 
     get listenerManager() {
@@ -757,7 +757,7 @@ class ComponentSprite extends PIXI.Sprite {
     /**
      * @desc Link to listener manager.
      * @public
-     * @return {MANTICORE.manager.InteractionManager}
+     * @return {mCore.manager.InteractionManager}
      */
 
     get interactionManager() {
@@ -801,7 +801,7 @@ class ComponentSprite extends PIXI.Sprite {
     /**
      * @desc Flag is view has interaction manager.
      * @public
-     * @return {MANTICORE.manager.InteractionManager}
+     * @return {mCore.manager.InteractionManager}
      */
 
     get hasInteractionManager() {

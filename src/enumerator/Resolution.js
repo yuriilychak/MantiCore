@@ -1,6 +1,6 @@
 /**
  * @desc Enum with game resolutions;
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  * @enumerator {int}
  * @name RESOLUTION
  */

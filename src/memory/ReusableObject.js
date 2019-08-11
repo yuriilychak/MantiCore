@@ -3,7 +3,7 @@ import Pool from "pool";
 /**
  * @desc Base class for manipulate with pool and destruction.
  * @class
- * @memberOf MANTICORE.memory
+ * @memberOf mCore.memory
  */
 
 class ReusableObject {

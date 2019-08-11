@@ -2,7 +2,7 @@
  * @desc Format of textures that avaliable in use.
  * @name TEXTURE_FORMAT
  * @enumerator {int}
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  */
 
 export default {

@@ -57,7 +57,7 @@ Hide.prototype.reverse = function () {
 /**
  * @desc Namespace that contain actions for use in animation.
  * @namespace action
- * @memberOf MANTICORE.animation
+ * @memberOf mCore.animation
  */
 
 export default {

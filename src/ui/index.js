@@ -17,8 +17,8 @@ import Widget from "./Widget";
 
 /**
  * @desc Namespace with UI components.
- * @namespace MANTICORE.ui
- * @memberOf MANTICORE
+ * @namespace mCore.ui
+ * @memberOf mCore
  */
 
 const ui = {

@@ -1,6 +1,6 @@
 /**
  * @desc Enum with number types;
- * @memberOf MANTICORE.enumerator
+ * @memberOf mCore.enumerator
  * @enumerator {int}
  * @name NUMBER_TYPE
  */

@@ -3,8 +3,8 @@ import ActionInterval from "./ActionInterval";
 /**
  * @desc Overrides the target of an action so that it always runs on the target specified at action creation rather than the one specified by runAction.
  * @class
- * @extends MANTICORE.animation.action.ActionInterval
- * @memberOf MANTICORE.animation.action
+ * @extends mCore.animation.action.ActionInterval
+ * @memberOf mCore.animation.action
  */
 
 class TargetedAction extends ActionInterval {
@@ -12,12 +12,12 @@ class TargetedAction extends ActionInterval {
     /**
      * @constructor
      * @param {PIXI.DisplayObject} target
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action
+     * @param {mCore.animation.action.FiniteTimeAction} action
      */
     constructor(target, action) {
         super(action.duration);
         /**
-         * @type {?MANTICORE.animation.action.FiniteTimeAction}
+         * @type {?mCore.animation.action.FiniteTimeAction}
          * @private
          */
         this._action = action;
@@ -38,7 +38,7 @@ class TargetedAction extends ActionInterval {
      * @desc Need to copy object with deep copy. Returns a clone of action.
      * @method
      * @public
-     * @return {MANTICORE.animation.action.TargetedAction}
+     * @return {mCore.animation.action.TargetedAction}
      */
 
     clone() {
@@ -71,7 +71,7 @@ class TargetedAction extends ActionInterval {
      * @method
      * @public
      * @param {PIXI.DisplayObject} target
-     * @param {MANTICORE.animation.action.FiniteTimeAction} action
+     * @param {mCore.animation.action.FiniteTimeAction} action
      */
 
     reuse(target, action) {

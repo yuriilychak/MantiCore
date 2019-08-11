@@ -10,7 +10,7 @@ import SYSTEM_EVENT from "enumerator/event/SystemEvent";
 /**
  * @desc Contains loader for load bundles and other resources.
  * @namespace particleSystem
- * @memberOf MANTICORE
+ * @memberOf mCore
  */
 export default {
     /**
@@ -20,7 +20,7 @@ export default {
     _system: null,
 
     /**
-     * @type {?MANTICORE.repository.Repository}
+     * @type {?mCore.repository.Repository}
      */
 
     _bundles: null,
@@ -34,7 +34,7 @@ export default {
     /**
      * @function
      * @public
-     * @memberOf MANTICORE.particleSystem
+     * @memberOf mCore.particleSystem
      */
 
     init() {
@@ -57,7 +57,7 @@ export default {
     /**
      * @function
      * @public
-     * @memberOf MANTICORE.particleSystem
+     * @memberOf mCore.particleSystem
      * @param {string} name
      * @return {revolt.ParticleEmitter | revolt.EffectSequence | null}
      */

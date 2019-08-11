@@ -10,8 +10,8 @@ import NUMBER_TYPE from "enumerator/NumberType";
 /**
  * @desc Class for manipulate with bitmap fonts.
  * @class
- * @extends MANTICORE.ui.ancillary.BaseLabel
- * @memberOf MANTICORE.ui
+ * @extends mCore.ui.ancillary.BaseLabel
+ * @memberOf mCore.ui
  */
 
 class Label extends BaseLabel {
@@ -25,7 +25,7 @@ class Label extends BaseLabel {
 
         /**
          * @desc Label that contain text.
-         * @type {MANTICORE.ui.ancillary.OutlineBitmapText}
+         * @type {mCore.ui.ancillary.OutlineBitmapText}
          * @private
          */
 
@@ -41,7 +41,7 @@ class Label extends BaseLabel {
 
         /**
          * @desc offset of shadow;
-         * @type {?MANTICORE.geometry.Point}
+         * @type {?mCore.geometry.Point}
          * @private
          */
 
@@ -49,7 +49,7 @@ class Label extends BaseLabel {
 
         /**
          * @desc Label that contain text.
-         * @type {MANTICORE.ui.ancillary.OutlineBitmapText}
+         * @type {mCore.ui.ancillary.OutlineBitmapText}
          * @private
          */
 
@@ -111,7 +111,7 @@ class Label extends BaseLabel {
     /**
      * @method
      * @public
-     * @return {MANTICORE.geometry.Point}
+     * @return {mCore.geometry.Point}
      */
 
     getShadowOffset() {
@@ -121,7 +121,7 @@ class Label extends BaseLabel {
     /**
      * @method
      * @public
-     * @param {int | MANTICORE.geometry.Point} xOrPoint
+     * @param {int | mCore.geometry.Point} xOrPoint
      * @param {int} [y]
      */
 
@@ -163,7 +163,7 @@ class Label extends BaseLabel {
      * @desc Calls when horizontal align change.
      * @method
      * @protected
-     * @param {MANTICORE.enumerator.ui.HORIZONTAL_ALIGN} value
+     * @param {mCore.enumerator.ui.HORIZONTAL_ALIGN} value
      */
 
     horizontalAlignChange(value) {
@@ -180,7 +180,7 @@ class Label extends BaseLabel {
      * @desc Calls when vertical align change.
      * @method
      * @protected
-     * @param {MANTICORE.enumerator.ui.VERTICAL_ALIGN} value
+     * @param {mCore.enumerator.ui.VERTICAL_ALIGN} value
      */
 
     verticalAlignChange(value) {
@@ -224,7 +224,7 @@ class Label extends BaseLabel {
     /**
      * @method
      * @private
-     * @param {MANTICORE.ui.ancillary.OutlineBitmapText} target
+     * @param {mCore.ui.ancillary.OutlineBitmapText} target
      * @param {int} [offset = 0]
      */
 
@@ -235,7 +235,7 @@ class Label extends BaseLabel {
     /**
      * @method
      * @private
-     * @param {MANTICORE.ui.ancillary.OutlineBitmapText} target
+     * @param {mCore.ui.ancillary.OutlineBitmapText} target
      * @param {int} [offset = 0]
      */
 

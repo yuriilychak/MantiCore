@@ -10,21 +10,21 @@ import Type from "util/Type";
 /**
  * @desc Class for store asset bundles
  * @class
- * @memberOf MANTICORE.bundle.bundle
- * @extends MANTICORE.bundle.bundle.BaseBundle
+ * @memberOf mCore.bundle.bundle
+ * @extends mCore.bundle.bundle.BaseBundle
  */
 
 class AssetBundle extends BaseBundle {
     /**
      * @constructor
-     * @param {MANTICORE.type.AssetBundle} data
+     * @param {mCore.type.AssetBundle} data
      */
     constructor (data) {
         super(data);
 
         /**
          * @desc Array with information about textures that use bundle.
-         * @type {MANTICORE.bundle.bundle.LinkedTexture[]}
+         * @type {mCore.bundle.bundle.LinkedTexture[]}
          * @private
          */
 
@@ -87,7 +87,7 @@ class AssetBundle extends BaseBundle {
      * @method
      * @public
      * @param {PIXI.BaseTexture} baseTexture
-     * @param {MANTICORE.type.AtlasInfo} atlas
+     * @param {mCore.type.AtlasInfo} atlas
      */
 
     generateTextureAtlas(baseTexture, atlas) {
@@ -187,7 +187,7 @@ class AssetBundle extends BaseBundle {
     /**
      * @method
      * @private
-     * @param {MANTICORE.type.AssetBundle} data
+     * @param {mCore.type.AssetBundle} data
      */
 
     _init(data) {
@@ -215,7 +215,7 @@ class AssetBundle extends BaseBundle {
 
     /**
      * @public
-     * @return {MANTICORE.bundle.bundle.LinkedTexture[]}
+     * @return {mCore.bundle.bundle.LinkedTexture[]}
      */
 
     get linkedTextures() {
