@@ -3,6 +3,7 @@ import BUNDLE_TYPE from "./BundleType";
 import DIRECTION from "./Direction";
 import ENGINE_MODE from "./EngineMode";
 import FILE_TYPE from "./FileType";
+import MOUSE_BUTTON from './MouseButton';
 import NUMBER_TYPE from "./NumberType";
 import PARTICLE_TYPE from "./ParticleType";
 import RESOLUTION from "./Resolution";
@@ -28,6 +29,7 @@ export default {
     DIRECTION,
     ENGINE_MODE,
     FILE_TYPE,
+    MOUSE_BUTTON,
     NUMBER_TYPE,
     PARTICLE_TYPE,
     RESOLUTION,

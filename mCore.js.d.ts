@@ -1522,6 +1522,13 @@ declare namespace mCore {
             MP3 = "mp3"
         }
 
+        export enum MOUSE_BUTTON {
+            NONE = -1,
+            LEFT = 0,
+            RIGHT = 2,
+            WHEEL = 4
+        }
+
         export enum NUMBER_TYPE {
             INT_8 = 0,
             INT_16 = 1,

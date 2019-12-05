@@ -1,7 +1,8 @@
 import BaseManager from "./BaseManager";
 import Repository from "repository/Repository";
 import Type from "util/Type";
-import INTERACTIVE_EVENT from "../enumerator/ui/InteractiveEvent";
+import INTERACTIVE_EVENT from "enumerator/ui/InteractiveEvent";
+import MOSE_BUTTON from "enumerator/MouseButton";
 import Geometry from "util/Geometry";
 import Math from "util/Math";
 import Constant from "constant";
@@ -93,6 +94,14 @@ class InteractionManager extends BaseManager {
          */
 
         this._interactive = false;
+
+        /**
+         * @desc Id of clicked button. Need for detect button during drag
+         * @type {mCore.enumerator.MOUSE_BUTTON}
+         * @private
+         */
+
+        this._currentButon = MOSE_BUTTON.NONE;
     }
 
     /**
@@ -258,6 +267,7 @@ class InteractionManager extends BaseManager {
         this._prevPos.copyFrom(globalPos);
         this._crtPos.copyFrom(globalPos);
         this._acumOffset.set(0, 0);
+        this._currentButon = event.button;
         return true;
     }
 
@@ -306,11 +316,11 @@ class InteractionManager extends BaseManager {
         }
         if (this._isInteractiveDown && !this._isInteractiveDrag) {
             this._isInteractiveDrag = true;
-            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, event);
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, {...event, button: this._currentButon});
         }
 
         if (this._isInteractiveDown) {
-            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG, event);
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG, {...event, button: this._currentButon});
             this._crtPos.copyFrom(globalPos);
             Geometry.pAdd(this._acumOffset, Geometry.pSub(this._crtPos, this._prevPos), true);
             this._prevPos.copyFrom(this._crtPos);
@@ -332,7 +342,7 @@ class InteractionManager extends BaseManager {
         }
         this.emitInteractiveEvent(INTERACTIVE_EVENT.UP, event);
         if (this._isInteractiveDrag) {
-            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, event);
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, {...event, button: this._currentButon});
             if (Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON && Math.abs(this._acumOffset.x) <= Constant.OFFSET_EPSILON) {
                 this.emitInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
             }
@@ -340,6 +350,7 @@ class InteractionManager extends BaseManager {
         else {
             this.emitInteractiveEvent(INTERACTIVE_EVENT.CLICK, event);
         }
+        this._currentButon = MOSE_BUTTON.NONE;
         this._isInteractiveDown = false;
         this._isInteractiveDrag = false;
         this._acumOffset.set(0, 0);
