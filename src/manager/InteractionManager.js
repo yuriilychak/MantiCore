@@ -316,11 +316,11 @@ class InteractionManager extends BaseManager {
         }
         if (this._isInteractiveDown && !this._isInteractiveDrag) {
             this._isInteractiveDrag = true;
-            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, {...event, button: this._currentButon});
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, {...event, data: { ...event.data, button: this._currentButon }});
         }
 
         if (this._isInteractiveDown) {
-            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG, {...event, button: this._currentButon});
+            this.emitInteractiveEvent(INTERACTIVE_EVENT.DRAG, {...event, data: { ...event.data, button: this._currentButon }});
             this._crtPos.copyFrom(globalPos);
             Geometry.pAdd(this._acumOffset, Geometry.pSub(this._crtPos, this._prevPos), true);
             this._prevPos.copyFrom(this._crtPos);
