@@ -1,667 +1,952 @@
 declare namespace mCore {
+    class TransformBase {
+        static IDENTITY: TransformBase;
+
+        worldTransform: Matrix;
+        localTransform: Matrix;
+
+        protected _worldID: number;
+        protected _parentID: number;
+
+        updateLocalTransform(): void;
+        updateTransform(parentTransform: TransformBase): void;
+        updateWorldTransform(parentTransform: TransformBase): void;
+    }
+
+    class Matrix {
+        constructor(a?: number, b?: number, c?: number, d?: number, tx?: number, ty?: number);
+
+        a: number;
+        b: number;
+        c: number;
+        d: number;
+        tx: number;
+        ty: number;
+        fromArray(array: number[]): void;
+        set(a: number, b: number, c: number, d: number, tx: number, ty: number): Matrix;
+        toArray(transpose?: boolean, out?: number[]): number[];
+        apply(pos: mCore.geometry.Point, newPos?: mCore.geometry.Point): mCore.geometry.Point;
+        applyInverse(pos: mCore.geometry.Point, newPos?: mCore.geometry.Point): mCore.geometry.Point;
+        translate(x: number, y: number): Matrix;
+        scale(x: number, y: number): Matrix;
+        rotate(angle: number): Matrix;
+        append(matrix: Matrix): Matrix;
+        setTransform(
+            x: number,
+            y: number,
+            pivotX: number,
+            pivotY: number,
+            scaleX: number,
+            scaleY: number,
+            rotation: number,
+            skewX: number,
+            skewY: number
+        ): Matrix;
+        prepend(matrix: Matrix): Matrix;
+        invert(): Matrix;
+        identity(): Matrix;
+        decompose(transform: TransformBase): TransformBase;
+        clone(): Matrix;
+        copy(matrix: Matrix): Matrix;
+
+        static IDENTITY: Matrix;
+        static TEMP_MATRIX: Matrix;
+    }
+
+    class BaseTexture {
+        static from(
+            source: string | HTMLImageElement | HTMLCanvasElement,
+            scaleMode?: number,
+            sourceScale?: number
+        ): BaseTexture;
+
+        constructor(
+            source?: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement,
+            scaleMode?: number,
+            resolution?: number
+        );
+
+        protected uuid?: number;
+        protected touched: number;
+        resolution: number;
+        width: number;
+        height: number;
+        realWidth: number;
+        realHeight: number;
+        scaleMode: number;
+        hasLoaded: boolean;
+        isLoading: boolean;
+        wrapMode: number;
+        source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | null;
+        origSource: HTMLImageElement | null;
+        imageType: string | null;
+        sourceScale: number;
+        premultipliedAlpha: boolean;
+        imageUrl: string | null;
+        protected isPowerOfTwo: boolean;
+        mipmap: boolean;
+        wrap?: boolean;
+        protected _glTextures: any;
+        protected _enabled: number;
+        protected _id?: number;
+        protected _virtualBoundId: number;
+        protected readonly _destroyed: boolean;
+        textureCacheIds: string[];
+
+        update(): void;
+        protected _updateDimensions(): void;
+        protected _updateImageType(): void;
+        protected _loadSvgSource(): void;
+        protected _loadSvgSourceUsingDataUri(dataUri: string): void;
+        protected _loadSvgSourceUsingXhr(): void;
+        protected _loadSvgSourceUsingString(svgString: string): void;
+        protected loadSource(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement): void;
+        protected _sourceLoaded(): void;
+        destroy(): void;
+        dispose(): void;
+        updateSourceImage(newSrc: string): void;
+
+        static fromImage(
+            imageUrl: string,
+            crossorigin?: boolean,
+            scaleMode?: number,
+            sourceScale?: number
+        ): BaseTexture;
+        static fromCanvas(canvas: HTMLCanvasElement, scaleMode?: number, origin?: string): BaseTexture;
+        static addToCache(baseTexture: BaseTexture, id: string): void;
+        static removeFromCache(baseTexture: string | BaseTexture): BaseTexture;
+
+        on(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        once(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        removeListener(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn?: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        removeAllListeners(event?: "update" | "loaded" | "error" | "dispose"): this;
+        off(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn?: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        addListener(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+    }
+
+    class Texture {
+        constructor(
+            baseTexture: BaseTexture,
+            frame?: mCore.geometry.Rectangle,
+            orig?: mCore.geometry.Rectangle,
+            trim?: mCore.geometry.Rectangle,
+            rotate?: number,
+            anchor?: mCore.geometry.Point
+        );
+
+        noFrame: boolean;
+        baseTexture: BaseTexture;
+        protected _frame: mCore.geometry.Rectangle;
+        trim?: mCore.geometry.Rectangle;
+        valid: boolean;
+        requiresUpdate: boolean;
+        protected _uvs: TextureUvs;
+        orig: mCore.geometry.Rectangle;
+        defaultAnchor: mCore.geometry.Point;
+        protected _updateID: number;
+        transform: TextureMatrix;
+        textureCacheIds: string[];
+
+        update(): void;
+        protected onBaseTextureLoaded(baseTexture: BaseTexture): void;
+        protected onBaseTextureUpdated(baseTexture: BaseTexture): void;
+        destroy(destroyBase?: boolean): void;
+        clone(): Texture;
+        _updateUvs(): void;
+
+        static fromImage(imageUrl: string, crossOrigin?: boolean, scaleMode?: number, sourceScale?: number): Texture;
+        static fromFrame(frameId: string): Texture;
+        static fromCanvas(canvas: HTMLCanvasElement, scaleMode?: number, origin?: string): Texture;
+        static fromVideo(
+            video: HTMLVideoElement | string,
+            scaleMode?: number,
+            crossorigin?: boolean,
+            autoPlay?: boolean
+        ): Texture;
+        static fromVideoUrl(videoUrl: string, scaleMode?: number, crossorigin?: boolean, autoPlay?: boolean): Texture;
+        static from(
+            source: number | string | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | BaseTexture
+        ): Texture;
+        static fromLoader(source: HTMLImageElement | HTMLCanvasElement, imageUrl: string, name?: string): Texture;
+        static addToCache(texture: Texture, id: string): void;
+        static removeFromCache(texture: string | Texture): Texture;
+
+        // depreciation
+        static addTextureToCache(texture: Texture, id: string): void;
+        static removeTextureFromCache(id: string): Texture;
+
+        frame: mCore.geometry.Rectangle;
+        protected _rotate: boolean | 0;
+        rotate: number;
+        width: number;
+        height: number;
+
+        static EMPTY: Texture;
+        static WHITE: Texture;
+
+        on(event: "update", fn: (texture: Texture) => void, context?: any): this;
+        once(event: "update", fn: (texture: Texture) => void, context?: any): this;
+        removeListener(event: "update", fn?: (texture: Texture) => void, context?: any): this;
+        removeAllListeners(event?: "update"): this;
+        off(event: "update", fn?: (texture: Texture) => void, context?: any): this;
+        addListener(event: "update", fn: (texture: Texture) => void, context?: any): this;
+    }
+    class TextureMatrix {
+        constructor(texture: Texture, clampMargin?: number);
+
+        protected _texture: Texture;
+        mapCoord: Matrix;
+        uClampFrame: Float32Array;
+        uClampOffset: Float32Array;
+        protected _lastTextureID: number;
+
+        clampOffset: number;
+        clampMargin: number;
+
+        texture: Texture;
+
+        update(forceUpdate?: boolean): boolean;
+        multiplyUvs(uvs: Float32Array, out?: Float32Array): Float32Array;
+    }
+    class TextureUvs {
+        x0: number;
+        y0: number;
+        x1: number;
+        y1: number;
+        x2: number;
+        y2: number;
+        x3: number;
+        y3: number;
+
+        uvsUint32: Uint32Array;
+
+        protected set(frame: mCore.geometry.Rectangle, baseFrame: mCore.geometry.Rectangle, rotate: number): void;
+    }
+
     export namespace animation {
         export namespace action {
-            export class Action extends MANTICORE.memory.ReusableObject{
+            // @ts-ignore
+            export class Action extends mCore.memory.ReusableObject{
                 constructor ();
 
                 readonly isDone: boolean;
-                target: PIXI.DisplayObject;
-                originalTarget: PIXI.DisplayObject;
+                target: mCore.view.ComponentContainer;
+                originalTarget: mCore.view.ComponentContainer;
 
-                clone(): MANTICORE.animation.action.Action;
+                clone(): mCore.animation.action.Action;
                 hasTarget(): boolean;
-                startWithTarget(target: PIXI.DisplayObject): void;
+                startWithTarget(target: mCore.view.ComponentContainer): void;
                 stop(): void;
                 step(dt: number): void;
                 update (dt: number):void;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Action>(): T;
+                static create<T extends mCore.animation.action.Action>(): T;
             }
 
-            export class ActionInstant extends MANTICORE.animation.action.FiniteTimeAction{
+            export class ActionInstant extends mCore.animation.action.FiniteTimeAction{
                 reverse(): any;
-                clone(): MANTICORE.animation.action.ActionInstant;
+                clone(): mCore.animation.action.ActionInstant;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.ActionInstant>(): T;
+                static create<T extends mCore.animation.action.ActionInstant>(): T;
             }
 
-            export class ActionInterval extends MANTICORE.animation.action.FiniteTimeAction {
+            // @ts-ignore
+            export class ActionInterval extends mCore.animation.action.FiniteTimeAction {
                 constructor(duration?: number);
 
                 readonly elapsed: number;
-                ease: MANTICORE.animation.easing.EaseBase;
+                ease: mCore.animation.easing.EaseBase;
                 repeatForever: boolean;
                 speedMethod: boolean;
                 repeatMethod: boolean;
                 amplitudeRate: number;
                 speed: number;
 
-                clone(): MANTICORE.animation.action.ActionInterval;
+                clone(): mCore.animation.action.ActionInterval;
                 changeSpeed(speed: number): number;
                 repeat(times: number): void;
 
-                protected doClone<T extends MANTICORE.animation.action.ActionInterval>(action: T): T;
-                protected doReverse<T extends MANTICORE.animation.action.ActionInterval>(action: T): T;
+                protected doClone<T extends mCore.animation.action.ActionInterval>(action: T): T;
+                protected doReverse<T extends mCore.animation.action.ActionInterval>(action: T): T;
                 protected computeEaseTime(dt: number): number;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.ActionInterval>(duration?: number): T;
+                static create<T extends mCore.animation.action.ActionInterval>(duration?: number): T;
             }
 
-            export class BezierBy extends MANTICORE.animation.action.ActionInterval{
-                constructor(duration: number, controlPoints: MANTICORE.geometry.Point[]);
+            // @ts-ignore
+            export class BezierBy extends mCore.animation.action.ActionInterval{
+                constructor(duration: number, controlPoints: mCore.geometry.Point[]);
 
-                protected readonly startPoint: MANTICORE.geometry.Point;
-                protected readonly config: MANTICORE.geometry.Point[];
+                protected readonly startPoint: mCore.geometry.Point;
+                protected readonly config: mCore.geometry.Point[];
 
-                clone(): MANTICORE.animation.action.BezierBy;
-                reverse(): MANTICORE.animation.action.BezierBy;
+                clone(): mCore.animation.action.BezierBy;
+                reverse(): mCore.animation.action.BezierBy;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.BezierBy>(duration: number, controlPoints: MANTICORE.geometry.Point[]): T;
+                static create<T extends mCore.animation.action.BezierBy>(duration: number, controlPoints: mCore.geometry.Point[]): T;
             }
 
-            export class BezierTo extends MANTICORE.animation.action.BezierBy {
-                clone(): MANTICORE.animation.action.BezierTo;
+            export class BezierTo extends mCore.animation.action.BezierBy {
+                clone(): mCore.animation.action.BezierTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.BezierTo>(duration: number, controlPoints: MANTICORE.geometry.Point[]): T;
+                static create<T extends mCore.animation.action.BezierTo>(duration: number, controlPoints: mCore.geometry.Point[]): T;
             }
 
+            // @ts-ignore
             export class Blink extends ActionInterval {
                 constructor(duration: number, blinks: number);
 
-                clone(): MANTICORE.animation.action.Blink;
-                reverse(): MANTICORE.animation.action.Blink;
+                clone(): mCore.animation.action.Blink;
+                reverse(): mCore.animation.action.Blink;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Blink>(duration: number, blinks: number): T;
+                static create<T extends mCore.animation.action.Blink>(duration: number, blinks: number): T;
             }
 
-            export class CallFunc extends MANTICORE.animation.action.ActionInstant {
-                constructor(callback: MANTICORE.animation.callback.CallFuncExecute, context?: Object, data?: any);
+            // @ts-ignore
+            export class CallFunc extends mCore.animation.action.ActionInstant {
+                constructor(callback: mCore.animation.callback.CallFuncExecute, context?: Object, data?: any);
 
                 context: Object | null;
 
                 execute(): void;
-                clone(): MANTICORE.animation.action.CallFunc;
+                clone(): mCore.animation.action.CallFunc;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.CallFunc>(callback: MANTICORE.animation.callback.CallFuncExecute, context?: Object, data?: any): T;
+                static create<T extends mCore.animation.action.CallFunc>(callback: mCore.animation.callback.CallFuncExecute, context?: Object, data?: any): T;
             }
 
-            export class CardinalSpline extends MANTICORE.animation.action.ActionInterval {
-                protected static cardinalSplineAt(p0: MANTICORE.geometry.Point, p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, p3: MANTICORE.geometry.Point, tension: number, t: number): MANTICORE.geometry.Point;
-                protected static getControlPointAt(controlPoints: MANTICORE.geometry.Point[], pos: number): MANTICORE.geometry.Point;
-                protected static reverseControlPoints(controlPoints: MANTICORE.geometry.Point[]): MANTICORE.geometry.Point[];
-                protected static cloneControlPoints(controlPoints: MANTICORE.geometry.Point[]): MANTICORE.geometry.Point[];
+            export class CardinalSpline extends mCore.animation.action.ActionInterval {
+                protected static cardinalSplineAt(p0: mCore.geometry.Point, p1: mCore.geometry.Point, p2: mCore.geometry.Point, p3: mCore.geometry.Point, tension: number, t: number): mCore.geometry.Point;
+                protected static getControlPointAt(controlPoints: mCore.geometry.Point[], pos: number): mCore.geometry.Point;
+                protected static reverseControlPoints(controlPoints: mCore.geometry.Point[]): mCore.geometry.Point[];
+                protected static cloneControlPoints(controlPoints: mCore.geometry.Point[]): mCore.geometry.Point[];
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.CardinalSpline>(duration: number): T;
+                static create<T extends mCore.animation.action.CardinalSpline>(duration: number): T;
             }
 
-            export class CardinalSplineBy extends MANTICORE.animation.action.CardinalSplineTo {
-                constructor(duration: number, points: MANTICORE.geometry.Point[], tension?: number);
+            export class CardinalSplineBy extends mCore.animation.action.CardinalSplineTo {
+                constructor(duration: number, points: mCore.geometry.Point[], tension?: number);
 
-                clone(): MANTICORE.animation.action.CardinalSplineBy;
-                reverse(): MANTICORE.animation.action.CardinalSplineBy;
-                updatePosition(newPos: MANTICORE.geometry.Point): void;
+                clone(): mCore.animation.action.CardinalSplineBy;
+                reverse(): mCore.animation.action.CardinalSplineBy;
+                updatePosition(newPos: mCore.geometry.Point): void;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.CardinalSplineBy>(duration: number): T;
+                static create<T extends mCore.animation.action.CardinalSplineBy>(duration: number): T;
             }
 
-            export class CardinalSplineTo extends MANTICORE.animation.action.CardinalSpline {
-                constructor(duration: number, points: MANTICORE.geometry.Point[], tension?: number);
+            // @ts-ignore
+            export class CardinalSplineTo extends mCore.animation.action.CardinalSpline {
+                constructor(duration: number, points: mCore.geometry.Point[], tension?: number);
 
-                points: MANTICORE.geometry.Point[];
+                points: mCore.geometry.Point[];
                 protected readonly tension: number;
-                protected previousPosition: MANTICORE.geometry.Point;
+                protected previousPosition: mCore.geometry.Point;
 
-                clone(): MANTICORE.animation.action.CardinalSplineTo;
-                reverse(): MANTICORE.animation.action.CardinalSplineTo;
-                updatePosition(newPos: MANTICORE.geometry.Point): void;
-
-                // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.CardinalSplineTo>(duration: number): T;
-            }
-
-            export class CatmullRomBy extends MANTICORE.animation.action.CardinalSplineBy {
-                constructor(duration: number, points: MANTICORE.geometry.Point[]);
-
-                clone(): MANTICORE.animation.action.CatmullRomBy;
+                clone(): mCore.animation.action.CardinalSplineTo;
+                reverse(): mCore.animation.action.CardinalSplineTo;
+                updatePosition(newPos: mCore.geometry.Point): void;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.CatmullRomBy>(duration: number, points: MANTICORE.geometry.Point[]): T;
+                static create<T extends mCore.animation.action.CardinalSplineTo>(duration: number): T;
             }
 
-            export class CatmullRomTo extends MANTICORE.animation.action.CardinalSplineTo {
-                constructor(duration: number, points: MANTICORE.geometry.Point[]);
+            // @ts-ignore
+            export class CatmullRomBy extends mCore.animation.action.CardinalSplineBy {
+                constructor(duration: number, points: mCore.geometry.Point[]);
 
-                clone(): MANTICORE.animation.action.CatmullRomTo;
+                clone(): mCore.animation.action.CatmullRomBy;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.CatmullRomTo>(duration: number, points: MANTICORE.geometry.Point[]): T;
+                static create<T extends mCore.animation.action.CatmullRomBy>(duration: number, points: mCore.geometry.Point[]): T;
             }
 
-            export class DelayTime extends MANTICORE.animation.action.ActionInterval{
-                reverse(): MANTICORE.animation.action.DelayTime;
-                clone(): MANTICORE.animation.action.DelayTime;
+            // @ts-ignore
+            export class CatmullRomTo extends mCore.animation.action.CardinalSplineTo {
+                constructor(duration: number, points: mCore.geometry.Point[]);
+
+                clone(): mCore.animation.action.CatmullRomTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.DelayTime>(duration: number): T;
+                static create<T extends mCore.animation.action.CatmullRomTo>(duration: number, points: mCore.geometry.Point[]): T;
             }
 
-            export class FadeIn extends MANTICORE.animation.action.FadeTo {
+            // @ts-ignore
+            export class DelayTime extends mCore.animation.action.ActionInterval{
+                reverse(): mCore.animation.action.DelayTime;
+                clone(): mCore.animation.action.DelayTime;
+
+                // noinspection JSAnnotator
+                static create<T extends mCore.animation.action.DelayTime>(duration: number): T;
+            }
+
+            // @ts-ignore
+            export class FadeIn extends mCore.animation.action.FadeTo {
                 constructor(duration: number);
-                reverse(): MANTICORE.animation.action.FadeTo;
-                clone(): MANTICORE.animation.action.FadeIn;
+                reverse(): mCore.animation.action.FadeTo;
+                clone(): mCore.animation.action.FadeIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.FadeIn>(duration: number): T;
+                static create<T extends mCore.animation.action.FadeIn>(duration: number): T;
             }
 
-            export class FadeOut extends MANTICORE.animation.action.FadeTo {
+            // @ts-ignore
+            export class FadeOut extends mCore.animation.action.FadeTo {
                 constructor(duration: number);
 
-                reverse(): MANTICORE.animation.action.FadeTo;
-                clone(): MANTICORE.animation.action.FadeOut;
+                reverse(): mCore.animation.action.FadeTo;
+                clone(): mCore.animation.action.FadeOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.FadeOut>(duration: number): T;
+                static create<T extends mCore.animation.action.FadeOut>(duration: number): T;
             }
 
-            export class FadeTo extends MANTICORE.animation.action.ActionInterval{
+            // @ts-ignore
+            export class FadeTo extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, alpha: number);
 
-                clone(): MANTICORE.animation.action.FadeTo;
+                clone(): mCore.animation.action.FadeTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.FadeTo>(duration: number, alpha: number): T;
+                static create<T extends mCore.animation.action.FadeTo>(duration: number, alpha: number): T;
             }
 
-            export class FiniteTimeAction extends MANTICORE.animation.action.Action {
+            // @ts-ignore
+            export class FiniteTimeAction extends mCore.animation.action.Action {
                 duration: number;
                 repeatCount: number;
                 repeatMethod: boolean;
 
-                reverse(): MANTICORE.animation.action.FiniteTimeAction;
-                clone(): MANTICORE.animation.action.FiniteTimeAction;
+                reverse(): mCore.animation.action.FiniteTimeAction;
+                clone(): mCore.animation.action.FiniteTimeAction;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.FiniteTimeAction>(): T;
+                static create<T extends mCore.animation.action.FiniteTimeAction>(): T;
             }
 
-            export class FlipX extends MANTICORE.animation.action.ActionInstant {
-                clone(): MANTICORE.animation.action.FlipX;
-                reverse(): MANTICORE.animation.action.FlipX;
+            export class FlipX extends mCore.animation.action.ActionInstant {
+                clone(): mCore.animation.action.FlipX;
+                reverse(): mCore.animation.action.FlipX;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.FlipX>(): T;
+                static create<T extends mCore.animation.action.FlipX>(): T;
             }
 
-            export class FlipY extends MANTICORE.animation.action.ActionInstant {
-                reverse(): MANTICORE.animation.action.FlipY;
-                clone(): MANTICORE.animation.action.FlipY;
+            export class FlipY extends mCore.animation.action.ActionInstant {
+                reverse(): mCore.animation.action.FlipY;
+                clone(): mCore.animation.action.FlipY;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.FlipY>(): T;
+                static create<T extends mCore.animation.action.FlipY>(): T;
             }
 
-            export class Follow extends MANTICORE.animation.action.Action {
-                constructor(followedDisplayObject: PIXI.DisplayObject, rect: PIXI.Rectangle);
+            // @ts-ignore
+            export class Follow extends mCore.animation.action.Action {
+                constructor(followedDisplayObject: mCore.view.ComponentContainer, rect: mCore.geometry.Rectangle);
 
                 boundarySet: boolean;
 
-                clone(): MANTICORE.animation.action.Follow;
+                clone(): mCore.animation.action.Follow;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Follow>(followedDisplayObject: PIXI.DisplayObject, rect: PIXI.Rectangle): T;
+                static create<T extends mCore.animation.action.Follow>(followedDisplayObject: mCore.view.ComponentContainer, rect: mCore.geometry.Rectangle): T;
             }
 
-            export class FrameChange extends MANTICORE.animation.action.ActionInstant {
+            // @ts-ignore
+            export class FrameChange extends mCore.animation.action.ActionInstant {
                 constructor(frame: string);
-                clone(): MANTICORE.animation.action.FrameChange;
-                reverse(): MANTICORE.animation.action.FrameChange;
+                clone(): mCore.animation.action.FrameChange;
+                reverse(): mCore.animation.action.FrameChange;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.FrameChange>(frame: string): T;
+                static create<T extends mCore.animation.action.FrameChange>(frame: string): T;
             }
 
-            export class Hide extends MANTICORE.animation.action.ActionInstant {
-                clone(): MANTICORE.animation.action.Hide;
-                reverse(): MANTICORE.animation.action.Show;
+            export class Hide extends mCore.animation.action.ActionInstant {
+                clone(): mCore.animation.action.Hide;
+                reverse(): mCore.animation.action.Show;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Hide>(): T;
+                static create<T extends mCore.animation.action.Hide>(): T;
             }
 
-            export class JumpBy extends MANTICORE.animation.action.ActionInterval {
-                constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number);
+            // @ts-ignore
+            export class JumpBy extends mCore.animation.action.ActionInterval {
+                constructor(duration: number, position: mCore.geometry.Point | number, y: number, height: number, jumps?: number);
 
-                clone(): MANTICORE.animation.action.JumpBy;
-                reverse(): MANTICORE.animation.action.JumpBy;
+                clone(): mCore.animation.action.JumpBy;
+                reverse(): mCore.animation.action.JumpBy;
 
                 protected readonly height: number;
                 protected readonly jumps: number;
-                protected readonly delta: MANTICORE.geometry.Point;
-                protected readonly startPoint: MANTICORE.geometry.Point;
+                protected readonly delta: mCore.geometry.Point;
+                protected readonly startPoint: mCore.geometry.Point;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.JumpBy>(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number): T;
+                static create<T extends mCore.animation.action.JumpBy>(duration: number, position: mCore.geometry.Point | number, y: number, height: number, jumps?: number): T;
             }
 
-            export class JumpTo extends MANTICORE.animation.action.JumpBy {
-                constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number);
+            export class JumpTo extends mCore.animation.action.JumpBy {
+                constructor(duration: number, position: mCore.geometry.Point | number, y: number, height: number, jumps?: number);
 
-                clone(): MANTICORE.animation.action.JumpTo;
+                clone(): mCore.animation.action.JumpTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.JumpTo>(duration: number, position: MANTICORE.geometry.Point | number, y: number, height: number, jumps?: number): T;
+                static create<T extends mCore.animation.action.JumpTo>(duration: number, position: mCore.geometry.Point | number, y: number, height: number, jumps?: number): T;
             }
 
-            export class MoveBy extends MANTICORE.animation.action.ActionInterval {
-                constructor(duration: number, deltaPos: MANTICORE.geometry.Point | number, deltaY?: number);
+            // @ts-ignore
+            export class MoveBy extends mCore.animation.action.ActionInterval {
+                constructor(duration: number, deltaPos: mCore.geometry.Point | number, deltaY?: number);
 
-                protected readonly delta: MANTICORE.geometry.Point;
+                protected readonly delta: mCore.geometry.Point;
 
-                clone(): MANTICORE.animation.action.MoveBy;
-                reverse(): MANTICORE.animation.action.MoveBy;
+                clone(): mCore.animation.action.MoveBy;
+                reverse(): mCore.animation.action.MoveBy;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.MoveBy>(duration: number, deltaPos: MANTICORE.geometry.Point | number, deltaY?: number): T;
+                static create<T extends mCore.animation.action.MoveBy>(duration: number, deltaPos: mCore.geometry.Point | number, deltaY?: number): T;
             }
 
-            export class MoveTo extends MANTICORE.animation.action.MoveBy {
-                constructor(duration: number, position: MANTICORE.geometry.Point | number, y: number);
+            export class MoveTo extends mCore.animation.action.MoveBy {
+                constructor(duration: number, position: mCore.geometry.Point | number, y: number);
 
-                clone(): MANTICORE.animation.action.MoveTo;
+                clone(): mCore.animation.action.MoveTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.MoveTo>(duration: number, position: MANTICORE.geometry.Point | number, y: number): T;
+                static create<T extends mCore.animation.action.MoveTo>(duration: number, position: mCore.geometry.Point | number, y: number): T;
             }
 
-            export class Place extends MANTICORE.animation.action.ActionInstant {
-                constructor(x: MANTICORE.geometry.Point | number, y?: number);
+            // @ts-ignore
+            export class Place extends mCore.animation.action.ActionInstant {
+                constructor(x: mCore.geometry.Point | number, y?: number);
 
-                clone(): MANTICORE.animation.action.Place;
-                reverse(): MANTICORE.animation.action.Place;
+                clone(): mCore.animation.action.Place;
+                reverse(): mCore.animation.action.Place;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Place>(x: MANTICORE.geometry.Point | number, y?: number): T;
+                static create<T extends mCore.animation.action.Place>(x: mCore.geometry.Point | number, y?: number): T;
             }
 
-            export class PointAction extends MANTICORE.animation.action.ActionInterval{
+            // @ts-ignore
+            export class PointAction extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, x: number, y?:number);
 
-                protected readonly startPoint: MANTICORE.geometry.Point;
-                protected readonly endPoint: MANTICORE.geometry.Point;
-                protected readonly delta: MANTICORE.geometry.Point;
+                protected readonly startPoint: mCore.geometry.Point;
+                protected readonly endPoint: mCore.geometry.Point;
+                protected readonly delta: mCore.geometry.Point;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.PointAction>(duration: number, x: number, y?:number): T;
+                static create<T extends mCore.animation.action.PointAction>(duration: number, x: number, y?:number): T;
             }
 
-            export class RemoveSelf extends MANTICORE.animation.action.ActionInstant {
+            export class RemoveSelf extends mCore.animation.action.ActionInstant {
                 constructor(isKill?: boolean);
-                clone(): MANTICORE.animation.action.RemoveSelf;
+                clone(): mCore.animation.action.RemoveSelf;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.RemoveSelf>(isKill?: boolean): T;
+                static create<T extends mCore.animation.action.RemoveSelf>(isKill?: boolean): T;
             }
 
+            // @ts-ignore
             export class Repeat extends ActionInterval {
-                constructor(action: MANTICORE.animation.action.FiniteTimeAction, times?: number);
+                constructor(action: mCore.animation.action.FiniteTimeAction, times?: number);
 
-                clone(): MANTICORE.animation.action.Repeat;
-                reverse(): MANTICORE.animation.action.Repeat;
+                clone(): mCore.animation.action.Repeat;
+                reverse(): mCore.animation.action.Repeat;
 
-                innerAction: MANTICORE.animation.action.FiniteTimeAction;
+                innerAction: mCore.animation.action.FiniteTimeAction;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Repeat>(action: MANTICORE.animation.action.FiniteTimeAction, times?: number): T;
+                static create<T extends mCore.animation.action.Repeat>(action: mCore.animation.action.FiniteTimeAction, times?: number): T;
             }
 
-            export class RepeatForever extends MANTICORE.animation.action.ActionInterval{
-                constructor(action: MANTICORE.animation.action.ActionInterval);
+            // @ts-ignore
+            export class RepeatForever extends mCore.animation.action.ActionInterval{
+                constructor(action: mCore.animation.action.ActionInterval);
 
-                innerAction: MANTICORE.animation.action.ActionInterval;
+                innerAction: mCore.animation.action.ActionInterval;
 
-                clone(): MANTICORE.animation.action.RepeatForever;
-                reverse(): MANTICORE.animation.action.RepeatForever;
+                clone(): mCore.animation.action.RepeatForever;
+                reverse(): mCore.animation.action.RepeatForever;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.RepeatForever>(action: MANTICORE.animation.action.ActionInterval): T;
+                static create<T extends mCore.animation.action.RepeatForever>(action: mCore.animation.action.ActionInterval): T;
             }
 
-            export class ReverseTime extends MANTICORE.animation.action.ActionInterval {
-                constructor(action: MANTICORE.animation.action.FiniteTimeAction);
+            // @ts-ignore
+            export class ReverseTime extends mCore.animation.action.ActionInterval {
+                constructor(action: mCore.animation.action.FiniteTimeAction);
 
-                clone(): MANTICORE.animation.action.ReverseTime;
-                reverse(): MANTICORE.animation.action.ReverseTime;
+                clone(): mCore.animation.action.ReverseTime;
+                reverse(): mCore.animation.action.ReverseTime;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.ReverseTime>(action: MANTICORE.animation.action.FiniteTimeAction): T;
+                static create<T extends mCore.animation.action.ReverseTime>(action: mCore.animation.action.FiniteTimeAction): T;
             }
 
-            export class RotateBy extends MANTICORE.animation.action.ActionInterval {
+            // @ts-ignore
+            export class RotateBy extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, deltaAngle: number);
 
-                clone(): MANTICORE.animation.action.RotateBy;
-                reverse(): MANTICORE.animation.action.RotateBy;
+                clone(): mCore.animation.action.RotateBy;
+                reverse(): mCore.animation.action.RotateBy;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.RotateBy>(duration: number, deltaAngle: number): T;
+                static create<T extends mCore.animation.action.RotateBy>(duration: number, deltaAngle: number): T;
             }
 
-            export class RotateTo extends MANTICORE.animation.action.ActionInterval{
+            // @ts-ignore
+            export class RotateTo extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, deltaAngle: number);
 
-                clone(): MANTICORE.animation.action.RotateTo;
+                clone(): mCore.animation.action.RotateTo;
                 reverse(): null;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.RotateTo>(duration: number, deltaAngle: number): T;
+                static create<T extends mCore.animation.action.RotateTo>(duration: number, deltaAngle: number): T;
             }
 
-            export class ScaleBy extends MANTICORE.animation.action.ScaleTo {
-                reverse(): MANTICORE.animation.action.ScaleBy;
-                clone(): MANTICORE.animation.action.ScaleBy;
+            // @ts-ignore
+            export class ScaleBy extends mCore.animation.action.ScaleTo {
+                reverse(): mCore.animation.action.ScaleBy;
+                clone(): mCore.animation.action.ScaleBy;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.ScaleBy>(duration: number, sx: number, sy?:number): T;
+                static create<T extends mCore.animation.action.ScaleBy>(duration: number, sx: number, sy?:number): T;
             }
 
-            export class ScaleTo extends MANTICORE.animation.action.PointAction{
+            // @ts-ignore
+            export class ScaleTo extends mCore.animation.action.PointAction{
                 constructor(duration: number, sx: number, sy?:number);
 
-                clone(): MANTICORE.animation.action.ScaleTo;
+                clone(): mCore.animation.action.ScaleTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.ScaleTo>(duration: number, sx: number, sy?:number): T;
+                static create<T extends mCore.animation.action.ScaleTo>(duration: number, sx: number, sy?:number): T;
             }
 
-            export class Sequence extends MANTICORE.animation.action.ActionInterval {
-                constructor(...var_args: MANTICORE.animation.action.FiniteTimeAction[]);
+            // @ts-ignore
+            export class Sequence extends mCore.animation.action.ActionInterval {
+                constructor(...var_args: mCore.animation.action.FiniteTimeAction[]);
 
                 reversed: boolean;
 
-                clone(): MANTICORE.animation.action.Sequence;
-                reverse(): MANTICORE.animation.action.Sequence;
+                clone(): mCore.animation.action.Sequence;
+                reverse(): mCore.animation.action.Sequence;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Sequence>(...var_args: MANTICORE.animation.action.FiniteTimeAction[]): T;
+                static create<T extends mCore.animation.action.Sequence>(...var_args: mCore.animation.action.FiniteTimeAction[]): T;
             }
 
-            export class Show extends MANTICORE.animation.action.ActionInstant {
-                clone(): MANTICORE.animation.action.Show;
-                reverse(): MANTICORE.animation.action.Hide;
+            export class Show extends mCore.animation.action.ActionInstant {
+                clone(): mCore.animation.action.Show;
+                reverse(): mCore.animation.action.Hide;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Show>(): T;
+                static create<T extends mCore.animation.action.Show>(): T;
             }
 
-            export class SkewBy extends MANTICORE.animation.action.SkewTo{
+            // @ts-ignore
+            export class SkewBy extends mCore.animation.action.SkewTo{
                 constructor(t: number, sx: number, sy: number);
 
-                clone(): MANTICORE.animation.action.SkewBy;
-                reverse(): MANTICORE.animation.action.SkewBy;
+                clone(): mCore.animation.action.SkewBy;
+                reverse(): mCore.animation.action.SkewBy;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.SkewBy>(t: number, sx: number, sy: number): T;
+                static create<T extends mCore.animation.action.SkewBy>(t: number, sx: number, sy: number): T;
             }
 
-            export class SkewTo extends MANTICORE.animation.action.PointAction{
+            // @ts-ignore
+            export class SkewTo extends mCore.animation.action.PointAction{
                 constructor(t: number, sx: number, sy: number);
 
-                clone(): MANTICORE.animation.action.SkewTo;
+                clone(): mCore.animation.action.SkewTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.SkewTo>(t: number, sx: number, sy: number): T;
+                static create<T extends mCore.animation.action.SkewTo>(t: number, sx: number, sy: number): T;
             }
 
+            // @ts-ignore
             export class Spawn extends ActionInterval {
-                constructor(...var_args: MANTICORE.animation.action.FiniteTimeAction[]);
+                constructor(...var_args: mCore.animation.action.FiniteTimeAction[]);
 
-                clone(): MANTICORE.animation.action.Spawn;
-                reverse(): MANTICORE.animation.action.Spawn;
+                clone(): mCore.animation.action.Spawn;
+                reverse(): mCore.animation.action.Spawn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Spawn>(...var_args: MANTICORE.animation.action.FiniteTimeAction[]): T;
+                static create<T extends mCore.animation.action.Spawn>(...var_args: mCore.animation.action.FiniteTimeAction[]): T;
             }
 
+            // @ts-ignore
             export class Speed extends Action{
-                constructor (action: MANTICORE.animation.action.ActionInterval, speed: number);
+                constructor (action: mCore.animation.action.ActionInterval, speed: number);
 
                 speed: number;
-                innerAction: MANTICORE.animation.action.ActionInterval;
+                innerAction: mCore.animation.action.ActionInterval;
 
-                clone(): MANTICORE.animation.action.Speed;
-                reverse(): MANTICORE.animation.action.Speed;
-
-                // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Speed>(action: MANTICORE.animation.action.ActionInterval, speed: number): T;
-            }
-
-            export class TargetedAction extends MANTICORE.animation.action.ActionInterval {
-                constructor(target: PIXI.DisplayObject, action: MANTICORE.animation.action.FiniteTimeAction);
-
-                forcedTarget: PIXI.DisplayObject;
-
-                clone(): MANTICORE.animation.action.TargetedAction;
+                clone(): mCore.animation.action.Speed;
+                reverse(): mCore.animation.action.Speed;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.TargetedAction>(target: PIXI.DisplayObject, action: MANTICORE.animation.action.FiniteTimeAction): T;
+                static create<T extends mCore.animation.action.Speed>(action: mCore.animation.action.ActionInterval, speed: number): T;
             }
 
-            export class TintBy extends MANTICORE.animation.action.ActionInterval{
+            // @ts-ignore
+            export class TargetedAction extends mCore.animation.action.ActionInterval {
+                constructor(target: mCore.view.ComponentContainer, action: mCore.animation.action.FiniteTimeAction);
+
+                forcedTarget: mCore.view.ComponentContainer;
+
+                clone(): mCore.animation.action.TargetedAction;
+
+                // noinspection JSAnnotator
+                static create<T extends mCore.animation.action.TargetedAction>(target: mCore.view.ComponentContainer, action: mCore.animation.action.FiniteTimeAction): T;
+            }
+
+            // @ts-ignore
+            export class TintBy extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number);
 
-                clone(): MANTICORE.animation.action.TintBy;
-                reverse(): MANTICORE.animation.action.TintBy;
+                clone(): mCore.animation.action.TintBy;
+                reverse(): mCore.animation.action.TintBy;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.TintBy>(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): T;
+                static create<T extends mCore.animation.action.TintBy>(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): T;
             }
 
-            export class TintTo extends MANTICORE.animation.action.ActionInterval {
+            // @ts-ignore
+            export class TintTo extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, red: number, green: number, blue: number);
 
-                clone(): MANTICORE.animation.action.TintTo;
+                clone(): mCore.animation.action.TintTo;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.TintTo>(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): T;
+                static create<T extends mCore.animation.action.TintTo>(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): T;
             }
 
-            export class ToggleVisibility extends MANTICORE.animation.action.ActionInstant {
-                clone(): MANTICORE.animation.action.ToggleVisibility;
-                reverse(): MANTICORE.animation.action.ToggleVisibility;
+            export class ToggleVisibility extends mCore.animation.action.ActionInstant {
+                clone(): mCore.animation.action.ToggleVisibility;
+                reverse(): mCore.animation.action.ToggleVisibility;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.ToggleVisibility>(): T;
+                static create<T extends mCore.animation.action.ToggleVisibility>(): T;
             }
 
-            export class Tween extends MANTICORE.animation.action.ActionInterval {
+            // @ts-ignore
+            export class Tween extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, key: string, from:  number, to: number);
-                reverse(): MANTICORE.animation.action.Tween;
-                clone(): MANTICORE.animation.action.Tween;
+                reverse(): mCore.animation.action.Tween;
+                clone(): mCore.animation.action.Tween;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.action.Tween>(duration: number, key: string, from:  number, to: number): T;
+                static create<T extends mCore.animation.action.Tween>(duration: number, key: string, from:  number, to: number): T;
             }
         }
         export namespace callback {
-            export type CallFuncExecute = (target: PIXI.DisplayObject, data?: any)=>void;
+            export type CallFuncExecute = (target: mCore.view.ComponentContainer, data?: any)=>void;
         }
         export namespace easing {
-            export class EaseBackIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBackIn extends mCore.animation.easing.EaseBase {
                 reverse(): EaseBackIn;
                 clone(): EaseBackIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBackIn>(): T;
+                static create<T extends mCore.animation.easing.EaseBackIn>(): T;
             }
-            export class EaseBackInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBackInOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseBackInOut;
                 clone(): EaseBackInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBackInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseBackInOut>(): T;
             }
-            export class EaseBackOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBackOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseBackOut;
                 clone(): EaseBackOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBackOut>(): T;
+                static create<T extends mCore.animation.easing.EaseBackOut>(): T;
             }
-            export class EaseBase extends MANTICORE.memory.ReusableObject {
+            // @ts-ignore
+            export class EaseBase extends mCore.memory.ReusableObject {
                 constructor();
                 easing(time: number): void;
                 reverse(): EaseBase;
                 clone(): EaseBase;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBase>(): T;
+                static create<T extends mCore.animation.easing.EaseBase>(): T;
             }
-            export class EaseBezier extends MANTICORE.animation.easing.EaseBase {
+            export class EaseBezier extends mCore.animation.easing.EaseBase {
                 constructor(first: number, second: number, third: number, fourth: number);
                 reverse(): EaseBezier;
                 clone(): EaseBezier;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBezier>(): T;
+                static create<T extends mCore.animation.easing.EaseBezier>(): T;
             }
-            export class EaseBounceIn extends MANTICORE.animation.easing.EaseBounceTime {
+            export class EaseBounceIn extends mCore.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceIn;
                 clone(): EaseBounceIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBounceIn>(): T;
+                static create<T extends mCore.animation.easing.EaseBounceIn>(): T;
             }
-            export class EaseBounceInOut extends MANTICORE.animation.easing.EaseBounceTime {
+            export class EaseBounceInOut extends mCore.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceInOut;
                 clone(): EaseBounceInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBounceInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseBounceInOut>(): T;
             }
-            export class EaseBounceOut extends MANTICORE.animation.easing.EaseBounceTime {
+            export class EaseBounceOut extends mCore.animation.easing.EaseBounceTime {
                 reverse(): EaseBounceOut;
                 clone(): EaseBounceOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBounceOut>(): T;
+                static create<T extends mCore.animation.easing.EaseBounceOut>(): T;
             }
+            // @ts-ignore
             export class EaseBounceTime  extends EaseBase {
                 protected bounceTime (time: number): number;
                 reverse(): EaseBounceTime;
                 clone(): EaseBounceTime;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseBounceTime>(): T;
+                static create<T extends mCore.animation.easing.EaseBounceTime>(): T;
             }
-            export class EaseCircleIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCircleIn extends mCore.animation.easing.EaseBase {
                 reverse(): EaseCircleIn;
                 clone(): EaseCircleIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseCircleIn>(): T;
+                static create<T extends mCore.animation.easing.EaseCircleIn>(): T;
             }
-            export class EaseCircleInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCircleInOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseCircleInOut;
                 clone(): EaseCircleInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseCircleInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseCircleInOut>(): T;
             }
-            export class EaseCircleOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCircleOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseCircleOut;
                 clone(): EaseCircleOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseCircleOut>(): T;
+                static create<T extends mCore.animation.easing.EaseCircleOut>(): T;
             }
-            export class EaseCubicIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCubicIn extends mCore.animation.easing.EaseBase {
                 reverse(): EaseCubicIn;
                 clone(): EaseCubicIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseCubicIn>(): T;
+                static create<T extends mCore.animation.easing.EaseCubicIn>(): T;
             }
-            export class EaseCubicInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCubicInOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseCubicInOut;
                 clone(): EaseCubicInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseCubicInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseCubicInOut>(): T;
             }
-            export class EaseCubicOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseCubicOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseCubicOut;
                 clone(): EaseCubicOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseCubicOut>(): T;
+                static create<T extends mCore.animation.easing.EaseCubicOut>(): T;
             }
-            export class EaseElasticIn  extends MANTICORE.animation.easing.EasePeriod {
+            export class EaseElasticIn  extends mCore.animation.easing.EasePeriod {
                 reverse(): EaseElasticIn;
                 clone(): EaseElasticIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseElasticIn>(): T;
+                static create<T extends mCore.animation.easing.EaseElasticIn>(): T;
             }
-            export class EaseElasticInOut  extends MANTICORE.animation.easing.EasePeriod {
+            export class EaseElasticInOut  extends mCore.animation.easing.EasePeriod {
                 reverse(): EaseElasticInOut;
                 clone(): EaseElasticInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseElasticInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseElasticInOut>(): T;
             }
-            export class EaseElasticOut  extends MANTICORE.animation.easing.EasePeriod {
+            export class EaseElasticOut  extends mCore.animation.easing.EasePeriod {
                 reverse(): EaseElasticOut;
                 clone(): EaseElasticOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseElasticOut>(): T;
+                static create<T extends mCore.animation.easing.EaseElasticOut>(): T;
             }
-            export class EaseExponentialIn extends MANTICORE.animation.easing.EaseBase {
+            export class EaseExponentialIn extends mCore.animation.easing.EaseBase {
                 reverse(): EaseExponentialIn;
                 clone(): EaseExponentialIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseExponentialIn>(): T;
+                static create<T extends mCore.animation.easing.EaseExponentialIn>(): T;
             }
-            export class EaseExponentialInOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseExponentialInOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseExponentialInOut;
                 clone(): EaseExponentialInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseExponentialInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseExponentialInOut>(): T;
             }
-            export class EaseExponentialOut extends MANTICORE.animation.easing.EaseBase {
+            export class EaseExponentialOut extends mCore.animation.easing.EaseBase {
                 reverse(): EaseExponentialOut;
                 clone(): EaseExponentialOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseExponentialOut>(): T;
+                static create<T extends mCore.animation.easing.EaseExponentialOut>(): T;
             }
-            export class EaseIn extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseIn;
                 clone(): EaseIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseIn>(rate?: number): T;
+                static create<T extends mCore.animation.easing.EaseIn>(rate?: number): T;
             }
-            export class EaseInOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseInOut;
                 clone(): EaseInOut
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseInOut>(rate?: number): T;
+                static create<T extends mCore.animation.easing.EaseInOut>(rate?: number): T;
             }
-            export class EaseOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseOut;
                 clone(): EaseOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseOut>(rate?: number): T;
+                static create<T extends mCore.animation.easing.EaseOut>(rate?: number): T;
             }
-            export class EasePeriod extends MANTICORE.animation.easing.EaseBase {
+            // @ts-ignore
+            export class EasePeriod extends mCore.animation.easing.EaseBase {
                 constructor(period?: number);
 
                 public period: number;
@@ -674,133 +959,146 @@ declare namespace mCore {
                 protected easingDefault(time: number): number;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EasePeriod>(period?: number): T;
+                static create<T extends mCore.animation.easing.EasePeriod>(period?: number): T;
             }
 
-            export class EaseQuadraticIn extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuadraticIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuadraticIn;
                 clone(): EaseQuadraticIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuadraticIn>(): T;
+                static create<T extends mCore.animation.easing.EaseQuadraticIn>(): T;
             }
-            export class EaseQuadraticInOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuadraticInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuadraticInOut;
                 clone(): EaseQuadraticInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuadraticInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseQuadraticInOut>(): T;
             }
-            export class EaseQuadraticOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuadraticOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuadraticOut;
                 clone(): EaseQuadraticOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuadraticOut>(): T;
+                static create<T extends mCore.animation.easing.EaseQuadraticOut>(): T;
             }
-            export class EaseQuarticIn extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuarticIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuarticIn;
                 clone(): EaseQuarticIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuarticIn>(): T;
+                static create<T extends mCore.animation.easing.EaseQuarticIn>(): T;
             }
-            export class EaseQuarticInOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuarticInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuarticInOut;
                 clone(): EaseQuarticInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuarticInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseQuarticInOut>(): T;
             }
-            export class EaseQuarticOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuarticOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuarticOut;
                 clone(): EaseQuarticOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuarticOut>(): T;
+                static create<T extends mCore.animation.easing.EaseQuarticOut>(): T;
             }
-            export class EaseQuinticIn extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuinticIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuinticIn;
                 clone(): EaseQuinticIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuinticIn>(): T;
+                static create<T extends mCore.animation.easing.EaseQuinticIn>(): T;
             }
-            export class EaseQuinticInOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuinticInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuinticInOut;
                 clone(): EaseQuinticInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuinticInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseQuinticInOut>(): T;
             }
-            export class EaseQuinticOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseQuinticOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuinticOut;
                 clone(): EaseQuinticOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseQuinticOut>(): T;
+                static create<T extends mCore.animation.easing.EaseQuinticOut>(): T;
             }
-            export class EaseRate extends MANTICORE.animation.easing.EaseBase {
+            // @ts-ignore
+            export class EaseRate extends mCore.animation.easing.EaseBase {
                 constructor(rate?: number);
                 public rate;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseRate>(rate?: number): T;
+                static create<T extends mCore.animation.easing.EaseRate>(rate?: number): T;
             }
-            export class EaseSineIn extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseSineIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseSineIn;
                 clone(): EaseSineIn;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseSineIn>(): T;
+                static create<T extends mCore.animation.easing.EaseSineIn>(): T;
             }
-            export class EaseSineInOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseSineInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseSineInOut;
                 clone(): EaseSineInOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseSineInOut>(): T;
+                static create<T extends mCore.animation.easing.EaseSineInOut>(): T;
             }
-            export class EaseSineOut extends MANTICORE.animation.easing.EaseRate {
+            // @ts-ignore
+            export class EaseSineOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseSineOut;
                 clone(): EaseSineOut;
 
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.animation.easing.EaseSineOut>(): T;
+                static create<T extends mCore.animation.easing.EaseSineOut>(): T;
             }
         }
 
         export namespace timeLine {
-            export class ActionTimeLine extends MANTICORE.animation.timeLine.BaseTimeLine{
-                constructor(target: PIXI.DisplayObject, name);
+            export class ActionTimeLine extends mCore.animation.timeLine.BaseTimeLine{
+                constructor(target: mCore.view.ComponentContainer, name);
 
                 public inherit: boolean;
                 public isResetParameters: boolean;
                 public readonly isDone: boolean;
 
-                public clone(): MANTICORE.animation.timeLine.ActionTimeLine;
-                public addNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-                public removeNestedChild(child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
+                public clone(): mCore.animation.timeLine.ActionTimeLine;
+                public addNestedChild(child: mCore.view.ComponentContainer | mCore.view.ComponentSprite): void;
+                public removeNestedChild(child: mCore.view.ComponentContainer | mCore.view.ComponentSprite): void;
 
                 public refreshStartParameters(): void;
-                public addAnimation(name: string, animation: MANTICORE.animation.ActionAnimation): boolean;
+                public addAnimation(name: string, animation: mCore.animation.ActionAnimation): boolean;
                 public removeAnimation(name: string): boolean;
                 public removeAllAnimations(): void;
 
-                public runAction(action: MANTICORE.animation.action.Action, loop?: boolean): void;
+                public runAction(action: mCore.animation.action.Action, loop?: boolean): void;
                 public resetParameters(): void;
             }
 
-            export class BaseTimeLine extends MANTICORE.memory.ReusableObject{
-                constructor(target: PIXI.DisplayObject, name);
+            export class BaseTimeLine extends mCore.memory.ReusableObject{
+                constructor(target: mCore.view.ComponentContainer, name);
 
                 name: string;
                 fps: number;
                 loop: boolean;
-                type: MANTICORE.enumerator.animation.TIME_LINE_TYPE;
+                type: mCore.enumerator.animation.TIME_LINE_TYPE;
                 protected readonly fpsCoef;
                 protected runningName;
-                protected target: PIXI.DisplayObject;
+                protected target: mCore.view.ComponentContainer;
                 readonly animations: string;
                 readonly isEmpty: boolean;
                 readonly isPlaying: boolean;
@@ -814,25 +1112,25 @@ declare namespace mCore {
                 resume(): void;
                 update(dt: number): void;
                 stop(): boolean;
-                setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT, event: string | null);
+                setEvent(eventId: mCore.enumerator.animation.TIME_LINE_EVENT, event: string | null);
 
                 protected runAnimation(name: string): void;
                 protected playAnimation(): void;
                 protected clearRunningAnimation(): boolean;
-                protected dispatchEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT): void;
+                protected dispatchEvent(eventId: mCore.enumerator.animation.TIME_LINE_EVENT): void;
             }
 
-            export class SpineTimeLine extends MANTICORE.animation.timeLine.BaseTimeLine{
-                constructor(target: PIXI.DisplayObject, name);
+            export class SpineTimeLine extends mCore.animation.timeLine.BaseTimeLine{
+                constructor(target: mCore.view.ComponentContainer, name);
             }
         }
 
-        export class ActionAnimation extends MANTICORE.memory.ReusableObject {
-            constructor(action: MANTICORE.animation.action.ActionInterval);
+        export class ActionAnimation extends mCore.memory.ReusableObject {
+            constructor(action: mCore.animation.action.ActionInterval);
 
-            positionOffset: MANTICORE.geometry.Point;
-            scaleOffset: MANTICORE.geometry.Point;
-            skewOffset: MANTICORE.geometry.Point;
+            positionOffset: mCore.geometry.Point;
+            scaleOffset: mCore.geometry.Point;
+            skewOffset: mCore.geometry.Point;
             rotationOffset: number;
             tint: number;
             alpha: number;
@@ -840,29 +1138,29 @@ declare namespace mCore {
             readonly isDone: boolean;
             readonly duration: number;
 
-            play(target: PIXI.DisplayObject): void;
+            play(target: mCore.view.ComponentContainer): void;
             stop(): void;
             update(dt: number): void;
-            clone(): MANTICORE.animation.ActionAnimation;
+            clone(): mCore.animation.ActionAnimation;
         }
     }
 
     export namespace boot {
         export const OS_VERSION: string;
-        export const OS: MANTICORE.enumerator.system.OS;
-        export const BROWSER: MANTICORE.enumerator.system.BROWSER;
+        export const OS: mCore.enumerator.system.OS;
+        export const BROWSER: mCore.enumerator.system.BROWSER;
         export const BROWSER_VERSION: number;
-        export const CLIENT: MANTICORE.enumerator.system.CLIENT;
+        export const CLIENT: mCore.enumerator.system.CLIENT;
         export const COOKIES_ENABLED: boolean;
-        export const PLATFORM: MANTICORE.enumerator.system.PLATFORM;
+        export const PLATFORM: mCore.enumerator.system.PLATFORM;
         export const MOUSE_ENABLED: boolean;
         export const MOUSE_WHEEL_ENABLED: boolean;
         export const KEYBOARD_ENABLED: boolean;
         export const TOUCHES_ENABLED: boolean;
         export const ACCELEROMETER_ENABLED: boolean;
         export const TYPED_ARRAY_SUPPORTED: boolean;
-        export const SUPPORTED_FORMATS: MANTICORE.enumerator.TEXTURE_FORMAT[];
-        export const RESOLUTION: MANTICORE.enumerator.RESOLUTION;
+        export const SUPPORTED_FORMATS: mCore.enumerator.TEXTURE_FORMAT[];
+        export const RESOLUTION: mCore.enumerator.RESOLUTION;
 
         export function init(callback: Function, parentContainer: HTMLDivElement);
         export function isMobile(): boolean;
@@ -872,28 +1170,28 @@ declare namespace mCore {
 
     export namespace builder {
         export namespace layoutBuilder {
-            export function infiniteLayout(component: MANTICORE.component.ui.ComLayout): void;
+            export function infiniteLayout(component: mCore.component.ui.ComLayout): void;
         }
     }
 
     export namespace bundle {
         export namespace ancillary {
             export class TextureAtlas {
-                constructor(baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo, bundle: MANTICORE.type.AssetBundle);
+                constructor(baseTexture: mCore.BaseTexture, atlas: mCore.type.AtlasInfo, bundle: mCore.type.AssetBundle);
             }
         }
         export namespace bundle {
-            export class AssetBundle extends MANTICORE.bundle.bundle.BaseBundle {
-                constructor (data: MANTICORE.type.AssetBundle);
+            export class AssetBundle extends mCore.bundle.bundle.BaseBundle {
+                constructor (data: mCore.type.AssetBundle);
 
 
-                readonly linkedTextures: MANTICORE.bundle.bundle.LinkedTexture[];
+                readonly linkedTextures: mCore.bundle.bundle.LinkedTexture[];
 
-                generateTextureAtlas(baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo): void;
+                generateTextureAtlas(baseTexture: mCore.BaseTexture, atlas: mCore.type.AtlasInfo): void;
                 atlasLoadComplete(): void;
 
             }
-            export class BaseBundle extends MANTICORE.memory.ReusableObject{
+            export class BaseBundle extends mCore.memory.ReusableObject{
                 constructor();
             }
 
@@ -901,26 +1199,26 @@ declare namespace mCore {
                 link: string;
                 name: string;
                 isLoaded: boolean;
-                atlas: MANTICORE.type.AtlasInfo;
+                atlas: mCore.type.AtlasInfo;
             }
         }
         export namespace middleware {
-            export function bundleParser(resource: MANTICORE.loader.LoaderResource, next: MANTICORE.loader.LoaderCallback): void;
+            export function bundleParser(resource: mCore.loader.LoaderResource, next: Function): void;
         }
     }
 
     export namespace cache {
         export namespace atlasCache{
-            export function add(name: string, baseTexture: PIXI.BaseTexture, atlas: MANTICORE.type.AtlasInfo, bundle: MANTICORE.type.AssetBundle): void;
+            export function add(name: string, baseTexture: mCore.BaseTexture, atlas: mCore.type.AtlasInfo, bundle: mCore.type.AssetBundle): void;
             export function remove(fontName: string): boolean;
         }
         export namespace bundleCache {
-            export function addAssetBundle(data: MANTICORE.type.AssetBundle): MANTICORE.bundle.bundle.AssetBundle | null;
-            export function getAssetBundle(name: string): MANTICORE.bundle.bundle.AssetBundle | null;
+            export function addAssetBundle(data: mCore.type.AssetBundle): mCore.bundle.bundle.AssetBundle | null;
+            export function getAssetBundle(name: string): mCore.bundle.bundle.AssetBundle | null;
             export function removeAssetBundle(name: string): boolean;
         }
         export namespace fontCache{
-            export function add(font: MANTICORE.type.FontData, fontName: string, baseTexture: PIXI.BaseTexture, resolution: number): void;
+            export function add(font: mCore.type.FontData, fontName: string, baseTexture: mCore.BaseTexture, resolution: number): void;
             export function remove(fontName: string): boolean;
             export function getName(fontName: string, size: number): string;
         }
@@ -939,10 +1237,10 @@ declare namespace mCore {
             export function remove(name: string): boolean;
             export function get(name: string): Object | null;
             export function clear(): void;
-            export function getParticle(name: string): MANTICORE.cache.particleCache.ParticleInfo | null;
+            export function getParticle(name: string): mCore.cache.particleCache.ParticleInfo | null;
             export interface ParticleInfo {
                 name: string;
-                type: MANTICORE.enumerator.PARTICLE_TYPE;
+                type: mCore.enumerator.PARTICLE_TYPE;
                 source: string;
             }
         }
@@ -951,23 +1249,23 @@ declare namespace mCore {
             export const names: string[];
             export function add(name: string, data: Object): void;
             export function remove(name: string): boolean;
-            export function getSkeleton(name: string): PIXI.spine.core.SkeletonData;
+            export function getSkeleton(name: string): any;
         }
     }
 
     export namespace component {
         namespace callback {
-            export type IterateChildren = (child: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, index?: number, realIndex?: number)=>void;
+            export type IterateChildren = (child: mCore.view.ComponentContainer | mCore.view.ComponentSprite, index?: number, realIndex?: number)=>void;
 
         }
 
         export namespace sceneTransition {
-            export class ComSceneTransition extends MANTICORE.component.Component {
+            export class ComSceneTransition extends mCore.component.Component {
             }
         }
 
         export namespace ui {
-            export class ComChildListener extends MANTICORE.component.ComChildIterator {
+            export class ComChildListener extends mCore.component.ComChildIterator {
                 constructor();
 
                 eventUp: string | null;
@@ -981,11 +1279,11 @@ declare namespace mCore {
                 eventDragFinish: string | null;
 
                 // noinspection JSAnnotator
-                static create(): MANTICORE.component.ui.ComChildListener;
-                clone(): MANTICORE.component.ui.ComChildListener;
+                static create(): mCore.component.ui.ComChildListener;
+                clone(): mCore.component.ui.ComChildListener;
             }
 
-            export class ComLayout extends MANTICORE.component.ComChildIterator {
+            export class ComLayout extends mCore.component.ComChildIterator {
                 constructor();
 
                 resizeItems: boolean;
@@ -997,51 +1295,53 @@ declare namespace mCore {
                 maxHeight: number;
                 contentWidth: number;
                 contentHeight: number;
-                innerPadding: MANTICORE.geometry.Point;
-                outerPadding: MANTICORE.geometry.Point;
-                verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
-                horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
+                innerPadding: mCore.geometry.Point;
+                outerPadding: mCore.geometry.Point;
+                verticalAlign: mCore.enumerator.ui.VERTICAL_ALIGN;
+                horizontalAlign: mCore.enumerator.ui.HORIZONTAL_ALIGN;
 
                 // noinspection JSAnnotator
-                static create(): MANTICORE.component.ui.ComLayout;
+                static create(): mCore.component.ui.ComLayout;
                 refresh(): void;
-                clone(): MANTICORE.component.ui.ComLayout;
+                clone(): mCore.component.ui.ComLayout;
             }
 
-            export class ComItem extends MANTICORE.component.ui.ComUI {
+            // @ts-ignore
+            export class ComItem extends mCore.component.ui.ComUI {
                 constructor(name?: string);
 
                 index: number;
                 // noinspection JSAnnotator
-                static create<T extends MANTICORE.component.ui.ComItem>(): T;
+                static create<T extends mCore.component.ui.ComItem>(): T;
                 updateData(data: any): void;
-                clone(): MANTICORE.component.ui.ComItem;
+                clone(): mCore.component.ui.ComItem;
             }
 
             // @ts-ignore
-            class ComItemBox extends MANTICORE.component.Component {
-                constructor(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number);
+            class ComItemBox extends mCore.component.Component {
+                constructor(templateComponent: mCore.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number);
                 readonly startIndex: number;
                 readonly templateName: string;
                 readonly templateNumCount: number;
-                readonly componentTemplate: MANTICORE.component.ui.ComItem;
+                readonly componentTemplate: mCore.component.ui.ComItem;
                 readonly length: number;
 
                 // noinspection JSAnnotator
-                static create(templateComponent: MANTICORE.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number): MANTICORE.component.ui.ComItemBox;
+                static create(templateComponent: mCore.component.ui.ComItem, templateName: string, numCount?:number , startIndex?: number): mCore.component.ui.ComItemBox;
                 iterateItems(callback: Function, beginIndex?: number, endIndex?: number): void;
                 updateData(data: any[]): void;
-                getElement<T extends MANTICORE.component.ui.ComItem>(index: number): T | null;
+                getElement<T extends mCore.component.ui.ComItem>(index: number): T | null;
                 updateElementData(index: number, data: any): boolean;
-                addItem<T extends MANTICORE.view.ComponentContainer>(child: T): void;
-                clone(): MANTICORE.component.ui.ComItemBox;
+                addItem<T extends mCore.view.ComponentContainer>(child: T): void;
+                clone(): mCore.component.ui.ComItemBox;
             }
 
-            export class ComScroller extends MANTICORE.component.Component {
+            // @ts-ignore
+            export class ComScroller extends mCore.component.Component {
                 constructor();
 
-                scrollDirection: MANTICORE.enumerator.ui.SCROLL_DIRECTION;
-                innerBoundary: MANTICORE.geometry.Point;
+                scrollDirection: mCore.enumerator.ui.SCROLL_DIRECTION;
+                innerBoundary: mCore.geometry.Point;
                 bounceEnabled: boolean;
 
                 jumpToBottom(): void;
@@ -1066,55 +1366,57 @@ declare namespace mCore {
                 scrollToPercentHorizontal(time: number, percent: number): void;
                 scrollToPercentVertical(time: number, percent: number): void;
                 scrollToPercentBoth(time: number, percentH: number, percentV?: number): void;
-                updateDragStart(position: MANTICORE.geometry.Point): void;
-                updateDragMove(position: MANTICORE.geometry.Point): void;
-                updateDragFinish(position: MANTICORE.geometry.Point): void;
+                updateDragStart(position: mCore.geometry.Point): void;
+                updateDragMove(position: mCore.geometry.Point): void;
+                updateDragFinish(position: mCore.geometry.Point): void;
                 isVertical(): boolean;
                 isHorizontal(): boolean;
-                updateScrollDimension(progress: number, direction: MANTICORE.enumerator.ui.SCROLL_DIRECTION): void;
+                updateScrollDimension(progress: number, direction: mCore.enumerator.ui.SCROLL_DIRECTION): void;
                 // noinspection JSAnnotator
-                static create(): MANTICORE.component.ui.ComScroller;
+                static create(): mCore.component.ui.ComScroller;
             }
 
-            export class ComUI extends MANTICORE.component.Component {
+            // @ts-ignore
+            export class ComUI extends mCore.component.Component {
                 constructor(name?: string);
 
                 listenInteractions: boolean;
 
                 // noinspection JSAnnotator
-                static create <T extends MANTICORE.component.ui.ComUI>(name?: string): T;
-                emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
-                logHierarchy(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, maxLevel?: number): void;
-                logUnlocalizedFields(widget?: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-                setChildText<T extends PIXI.Container>(text: any, path: string, widget?: T): boolean;
-                localize<T extends PIXI.Container>(key: string, path: string, widget?: T): boolean;
-                getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
-                addComponentToChild<P extends PIXI.Container, T extends MANTICORE.component.Component>(component: T, path?: string, widget?: P): T;
-                addChildListener<T extends PIXI.Container>(listener: MANTICORE.eventDispatcher.InteractiveCallback, eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
-                removeChildListener<T extends PIXI.Container>(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, path: string,  widget?: T): boolean;
+                static create <T extends mCore.component.ui.ComUI>(name?: string): T;
+                emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
+                logHierarchy(widget?: mCore.view.ComponentContainer | mCore.view.ComponentSprite, maxLevel?: number): void;
+                logUnlocalizedFields(widget?: mCore.view.ComponentContainer | mCore.view.ComponentSprite): void;
+                setChildText<T extends mCore.view.ComponentContainer>(text: any, path: string, widget?: T): boolean;
+                localize<T extends mCore.view.ComponentContainer>(key: string, path: string, widget?: T): boolean;
+                getChildView<T extends mCore.view.ComponentContainer>(path: string, widget?: T): T | null;
+                addComponentToChild<P extends mCore.view.ComponentContainer, T extends mCore.component.Component>(component: T, path?: string, widget?: P): T;
+                addChildListener<T extends mCore.view.ComponentContainer>(listener: mCore.eventDispatcher.InteractiveCallback, eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
+                removeChildListener<T extends mCore.view.ComponentContainer>(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, path: string,  widget?: T): boolean;
                 removeAllChildListeners() : void;
-                clone(): MANTICORE.component.ui.ComUI;
+                clone(): mCore.component.ui.ComUI;
             }
 
 
-            export class ComUIElement extends MANTICORE.component.ui.ComUI {
-                constructor(elementName: string, bundleName?: string, owner?: MANTICORE.view.ComponentContainer);
+            // @ts-ignore
+            export class ComUIElement extends mCore.component.ui.ComUI {
+                constructor(elementName: string, bundleName?: string, owner?: mCore.view.ComponentContainer);
                 // noinspection JSAnnotator
-                static create(elementName: string, bundleName?: string, owner?: MANTICORE.view.ComponentContainer): MANTICORE.component.ui.ComUIElement;
-                clone(): MANTICORE.component.ui.ComUIElement;
+                static create(elementName: string, bundleName?: string, owner?: mCore.view.ComponentContainer): mCore.component.ui.ComUIElement;
+                clone(): mCore.component.ui.ComUIElement;
             }
 
-            export class ComUILayout extends MANTICORE.component.Component {
+            export class ComUILayout extends mCore.component.Component {
                 constructor();
 
-                percentSize: MANTICORE.geometry.Point;
+                percentSize: mCore.geometry.Point;
                 isPercentSize: boolean;
                 isPercentPosX: boolean;
                 percentPosX: number;
                 isPercentPosY: boolean;
                 percentPosY: number;
-                horizontalEdge: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
-                verticalEdge: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
+                horizontalEdge: mCore.enumerator.ui.HORIZONTAL_ALIGN;
+                verticalEdge: mCore.enumerator.ui.VERTICAL_ALIGN;
                 leftMargin: number;
                 rightMargin: number;
                 topMargin: number;
@@ -1131,43 +1433,44 @@ declare namespace mCore {
             }
         }
 
-        export class ComChildIterator extends MANTICORE.component.Component {
+        // @ts-ignore
+        export class ComChildIterator extends mCore.component.Component {
             constructor(name?: string);
 
             childCount: number;
 
             // noinspection JSAnnotator
-            static create(name?: string): MANTICORE.component.ComChildIterator;
+            static create(name?: string): mCore.component.ComChildIterator;
             hasChildren(): void;
-            iterateChildren(callback: MANTICORE.component.callback.IterateChildren): void;
-            clone(): MANTICORE.component.ComChildIterator;
+            iterateChildren(callback: mCore.component.callback.IterateChildren): void;
+            clone(): mCore.component.ComChildIterator;
         }
 
         // @ts-ignore
-        export class Component extends MANTICORE.memory.ReusableObject {
+        export class Component extends mCore.memory.ReusableObject {
             constructor(name?: string);
 
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
             name: string;
-            owner: MANTICORE.view.ComponentContainer | null;
+            owner: mCore.view.ComponentContainer | null;
             active: boolean;
             listenChildren: boolean;
             listenVisible: boolean;
             readonly hasListenerManager: boolean;
-            readonly listenerManager: MANTICORE.manager.ListenerManager;
+            readonly listenerManager: mCore.manager.ListenerManager;
 
             // noinspection JSAnnotator
-            static create<T extends MANTICORE.component.Component>(name?: string): T;
+            static create<T extends mCore.component.Component>(name?: string): T;
             hasOwner(): boolean;
-            onAdd(owner: MANTICORE.view.ComponentContainer): void;
+            onAdd(owner: mCore.view.ComponentContainer): void;
             onRemove(): void;
             onUpdate(dt: number): void;
-            onAddChild(child: PIXI.DisplayObject): void;
-            onRemoveChild(child: PIXI.DisplayObject): void;
+            onAddChild(child: mCore.view.ComponentContainer): void;
+            onRemoveChild(child: mCore.view.ComponentContainer): void;
             onVisibleChange(visible: boolean): void;
-            clone(): MANTICORE.component.Component;
+            clone(): mCore.component.Component;
         }
     }
 
@@ -1531,22 +1834,22 @@ declare namespace mCore {
     }
 
     export namespace eventDispatcher {
-        export function addListener(type: string, listener: MANTICORE.eventDispatcher.InteractiveCallback, target: Object): void;
+        export function addListener(type: string, listener: mCore.eventDispatcher.InteractiveCallback, target: Object): void;
         export function hasListener(type: string, target: Object): boolean;
         export function removeListener(type: string, target: Object): boolean;
         export function dispatch(type: string, targetOrEvent?: Object, data?: Object): void;
 
-        type InteractiveCallback = (event: MANTICORE.eventDispatcher.EventModel) => void;
+        type InteractiveCallback = (event: mCore.eventDispatcher.EventModel) => void;
 
-        export class EventModel extends MANTICORE.model.Model {
+        export class EventModel extends mCore.model.Model {
             constructor(target: Object, data: any);
 
             data: any;
             target: Object;
         }
 
-        export class ListenerModel extends MANTICORE.model.Model {
-            constructor(event: string, listener: MANTICORE.eventDispatcher.InteractiveCallback, target: Object);
+        export class ListenerModel extends mCore.model.Model {
+            constructor(event: string, listener: mCore.eventDispatcher.InteractiveCallback, target: Object);
 
             event: string;
             target: Object;
@@ -1556,28 +1859,31 @@ declare namespace mCore {
     }
 
     export namespace geometry {
-        export class Point extends PIXI.Point implements MANTICORE.memory.ReusableObject {
-            constructor(x?: number, y?: number, type?: MANTICORE.enumerator.NUMBER_TYPE);
+
+        // @ts-ignore
+        export class Point implements mCore.memory.ReusableObject {
+            constructor(x?: number, y?: number, type?: mCore.enumerator.NUMBER_TYPE);
 
             public x: number;
             public y: number;
-            public type: MANTICORE.enumerator.NUMBER_TYPE;
+            public type: mCore.enumerator.NUMBER_TYPE;
 
-            public copyFrom(p: MANTICORE.geometry.Point): void;
-            public copyTo(p: MANTICORE.geometry.Point): void;
-            public equals (p: MANTICORE.geometry.Point): boolean;
+            public copyFrom(p: mCore.geometry.Point): void;
+            public copyTo(p: mCore.geometry.Point): void;
+            public equals (p: mCore.geometry.Point): boolean;
             public set(x: number, y?: number): void;
             public initChangeCallback(callback: Function, context: Object): void;
             public clearChangeCallback(): void;
-            public clone(): MANTICORE.geometry.Point;
+            public clone(): mCore.geometry.Point;
             // noinspection JSAnnotator
-            public static create<T extends MANTICORE.geometry.Point>(x?: number, y?: number, type?: MANTICORE.enumerator.NUMBER_TYPE): T;
+            public static create<T extends mCore.geometry.Point>(x?: number, y?: number, type?: mCore.enumerator.NUMBER_TYPE): T;
         }
 
-        export class Rectangle extends PIXI.Point implements MANTICORE.memory.ReusableObject {
-            constructor(x?: number, y?: number, width?: number, height?: number, type?: MANTICORE.enumerator.NUMBER_TYPE);
+        // @ts-ignore
+        export class Rectangle extends mCore.geometry.Point implements mCore.memory.ReusableObject {
+            constructor(x?: number, y?: number, width?: number, height?: number, type?: mCore.enumerator.NUMBER_TYPE);
 
-            public static EMPTY: MANTICORE.geometry.Rectangle;
+            public static EMPTY: mCore.geometry.Rectangle;
             public x: number;
             public y: number;
             public width: number;
@@ -1587,30 +1893,30 @@ declare namespace mCore {
             public readonly top: number;
             public readonly bottom: number;
 
-            public clone(): MANTICORE.geometry.Rectangle;
-            public copyFrom(rectangle: MANTICORE.geometry.Rectangle): MANTICORE.geometry.Rectangle;
-            public copyTo(rectangle: MANTICORE.geometry.Rectangle): MANTICORE.geometry.Rectangle;
+            public clone(): mCore.geometry.Rectangle;
+            public copyFrom(rectangle: mCore.geometry.Rectangle): mCore.geometry.Rectangle;
+            public copyTo(rectangle: mCore.geometry.Rectangle): mCore.geometry.Rectangle;
             public contains(x: number, y: number): boolean;
             public pad(paddingX: number, paddingY: number): void;
-            public fit(rectangle: MANTICORE.geometry.Rectangle): void;
+            public fit(rectangle: mCore.geometry.Rectangle): void;
             public ceil(resolution?: number, eps?: number): void;
-            public enlarge(rectangle: MANTICORE.geometry.Rectangle): void;
+            public enlarge(rectangle: mCore.geometry.Rectangle): void;
 
             // noinspection JSAnnotator
-            public static create<T extends MANTICORE.geometry.Rectangle>(x?: number, y?: number, width?: number, height?: number, type?: MANTICORE.enumerator.NUMBER_TYPE): T;
+            public static create<T extends mCore.geometry.Rectangle>(x?: number, y?: number, width?: number, height?: number, type?: mCore.enumerator.NUMBER_TYPE): T;
         }
     }
 
     export namespace launcher {
-        export const app: PIXI.Application;
-        export let orientation: MANTICORE.enumerator.system.ORIENTATION;
-        export const designResolution: MANTICORE.geometry.Point;
-        export const appResolution: MANTICORE.geometry.Point;
-        export const canvasResolution: MANTICORE.geometry.Point;
-        export const currentScene: MANTICORE.view.Scene;
+        export const app: any;
+        export let orientation: mCore.enumerator.system.ORIENTATION;
+        export const designResolution: mCore.geometry.Point;
+        export const appResolution: mCore.geometry.Point;
+        export const canvasResolution: mCore.geometry.Point;
+        export const currentScene: mCore.view.Scene;
 
-        export function initApp(config?: MANTICORE.launcher.AppConfig, designWidth?: number, designHeight?: number, onComplete?: Function, parentContainer?: HTMLElement): void;
-        export function runScene(scene: MANTICORE.view.Scene): void;
+        export function initApp(config?: mCore.launcher.AppConfig, designWidth?: number, designHeight?: number, onComplete?: Function, parentContainer?: HTMLElement): void;
+        export function runScene(scene: mCore.view.Scene): void;
         export function resize(width: number, height: number, resizeRendere?: boolean);
 
         export interface AppConfig {
@@ -1646,16 +1952,16 @@ declare namespace mCore {
         export interface AssetInfo {
             name: string;
             path: string;
-            type: MANTICORE.enumerator.ASSET_TYPE | null;
-            resolution: MANTICORE.enumerator.FILE_TYPE | string | null;
+            type: mCore.enumerator.ASSET_TYPE | null;
+            resolution: mCore.enumerator.FILE_TYPE | string | null;
             useAssetDir: boolean;
         }
 
-        export const assetForLoad: MANTICORE.loader.AssetInfo[];
-        export const assetLoaded: MANTICORE.loader.AssetInfo[];
+        export const assetForLoad: mCore.loader.AssetInfo[];
+        export const assetLoaded: mCore.loader.AssetInfo[];
         export const isLoading: boolean;
 
-        export function addAsset(name: string, type: MANTICORE.enumerator.ASSET_TYPE, path?: string, resolution?: MANTICORE.enumerator.FILE_TYPE | string, useAssetDir?: boolean): void;
+        export function addAsset(name: string, type: mCore.enumerator.ASSET_TYPE, path?: string, resolution?: mCore.enumerator.FILE_TYPE | string, useAssetDir?: boolean): void;
         export function load(): void;
     }
 
@@ -1672,7 +1978,7 @@ declare namespace mCore {
         export let KEYBOARD_ENABLED: boolean;
         export let MOUSE_WHEEL_ENABLED: boolean;
         export let BLOCK_BROWSER_HOT_KEYS: boolean;
-        export let MODE: MANTICORE.enumerator.ENGINE_MODE;
+        export let MODE: mCore.enumerator.ENGINE_MODE;
         export let DEFAULT_POOL_SIZE: number;
         export let OUTLINE_SAMPLES: number;
         export let ASSET_DIR: string;
@@ -1681,8 +1987,8 @@ declare namespace mCore {
 
     export namespace manager {
 
-        export class AnimationManager extends MANTICORE.manager.BaseManager {
-            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite);
+        export class AnimationManager extends mCore.manager.BaseManager {
+            constructor(owner: mCore.view.ComponentContainer | mCore.view.ComponentSprite);
 
             eventStart: string;
             eventEnd: string;
@@ -1692,55 +1998,55 @@ declare namespace mCore {
             eventComplete: string;
             readonly animations: { [key:string]:string; };
 
-            public addAnimation(name: string, animation: MANTICORE.animation.action.ActionInterval, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public removeAnimation(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public removeAllAnimations(timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): void;
-            public runAction(action: MANTICORE.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): void;
-            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public stop(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public addAnimation(name: string, animation: mCore.animation.action.ActionInterval, timeLine?: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public removeAnimation(name: string, timeLine?: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public removeAllAnimations(timeLine?: string | mCore.enumerator.animation.TIME_LINE): void;
+            public runAction(action: mCore.animation.action.ActionInterval, loop?: boolean, frame?: number, timeLine?: string | mCore.enumerator.animation.TIME_LINE): void;
+            public play(name: string, loop?: boolean, frame?: number, timeLine?: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public stop(name: string, timeLine?: string | mCore.enumerator.animation.TIME_LINE): boolean;
             public stopAll(): void;
-            public pause(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public resume(name: string, timeLine?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public pause(name: string, timeLine?: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public resume(name: string, timeLine?: string | mCore.enumerator.animation.TIME_LINE): boolean;
 
             public refreshTimeLines(): void;
-            public addTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE, timeLine?: MANTICORE.animation.timeLine.BaseTimeLine): boolean;
-            public getTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): MANTICORE.animation.timeLine.BaseTimeLine | null;
-            public pauseTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public resumeTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public removeTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public stopTimeLine(name: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public addTimeLine(name: string | mCore.enumerator.animation.TIME_LINE, timeLine?: mCore.animation.timeLine.BaseTimeLine): boolean;
+            public getTimeLine(name: string | mCore.enumerator.animation.TIME_LINE): mCore.animation.timeLine.BaseTimeLine | null;
+            public pauseTimeLine(name: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public resumeTimeLine(name: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public removeTimeLine(name: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public stopTimeLine(name: string | mCore.enumerator.animation.TIME_LINE): boolean;
             public removeAllTimeLines(): void;
 
-            public setEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT | number, event: string, timeLineName?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
-            public clearEvent(eventId: MANTICORE.enumerator.animation.TIME_LINE_EVENT | number, timeLineName?: string | MANTICORE.enumerator.animation.TIME_LINE): boolean;
+            public setEvent(eventId: mCore.enumerator.animation.TIME_LINE_EVENT | number, event: string, timeLineName?: string | mCore.enumerator.animation.TIME_LINE): boolean;
+            public clearEvent(eventId: mCore.enumerator.animation.TIME_LINE_EVENT | number, timeLineName?: string | mCore.enumerator.animation.TIME_LINE): boolean;
             public resetParameters(): void;
         }
 
-        export class BaseManager extends MANTICORE.memory.ReusableObject {
-            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject);
+        export class BaseManager extends mCore.memory.ReusableObject {
+            constructor(owner: mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.memory.ReusableObject);
 
             active: boolean;
-            protected owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject;
+            protected owner: mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.memory.ReusableObject;
 
             update(dt: number): void;
         }
-        export class ComponentManager extends MANTICORE.manager.BaseManager {
-            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite);
+        export class ComponentManager extends mCore.manager.BaseManager {
+            constructor(owner: mCore.view.ComponentContainer | mCore.view.ComponentSprite);
 
-            iterateUIComponents(callback: MANTICORE.view.callback.IterateComponent);
-            addChildrenAction(children: PIXI.DisplayObject[]): void;
-            removeChildrenAction(children: PIXI.DisplayObject[]): void;
+            iterateUIComponents(callback: mCore.view.callback.IterateComponent);
+            addChildrenAction(children: mCore.view.ComponentContainer[]): void;
+            removeChildrenAction(children: mCore.view.ComponentContainer[]): void;
             visibleAction(visible: boolean): void;
-            addComponent(component: MANTICORE.component.Component): boolean;
+            addComponent(component: mCore.component.Component): boolean;
             addComponents(components: any[]): void;
             hasComponent(name: string): boolean;
-            getComponent(name: string): MANTICORE.component.Component | null;
+            getComponent(name: string): mCore.component.Component | null;
             removeComponent(name: string): boolean;
             removeAllComponents(): void;
         }
 
-        export class InteractionManager extends MANTICORE.manager.BaseManager {
-            constructor(owner: MANTICORE.component.Component);
+        export class InteractionManager extends mCore.manager.BaseManager {
+            constructor(owner: mCore.component.Component);
 
             interactive: boolean;
             eventUp: string | null;
@@ -1754,13 +2060,13 @@ declare namespace mCore {
             eventDragStart: string | null;
             propagateChildrenEvents: boolean;
 
-            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event?: any): void;
-            public getInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT): string;
-            public updateInteractiveEvent(id: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, name?: string): void;
+            public emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event?: any): void;
+            public getInteractiveEvent(id: mCore.enumerator.ui.INTERACTIVE_EVENT): string;
+            public updateInteractiveEvent(id: mCore.enumerator.ui.INTERACTIVE_EVENT, name?: string): void;
         }
 
-        export class LayoutSizeManager extends MANTICORE.manager.BaseManager {
-            constructor(owner: MANTICORE.component.Component);
+        export class LayoutSizeManager extends mCore.manager.BaseManager {
+            constructor(owner: mCore.component.Component);
 
             staticWidth: boolean;
             staticHeight: boolean;
@@ -1772,14 +2078,14 @@ declare namespace mCore {
             contentHeight: number;
         }
 
-        export class ListenerManager extends MANTICORE.manager.BaseManager {
-            constructor(owner: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite | MANTICORE.memory.ReusableObject);
+        export class ListenerManager extends mCore.manager.BaseManager {
+            constructor(owner: mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.memory.ReusableObject);
 
             blockEvents: boolean;
 
             isListenEvent(event: string): boolean;
 
-            addEventListener(event: string, handler: MANTICORE.eventDispatcher.InteractiveCallback): boolean;
+            addEventListener(event: string, handler: mCore.eventDispatcher.InteractiveCallback): boolean;
             removeEventListener(event: string): void;
             removeAllEventListeners(): void;
             dispatchEvent(event: string, data?: any): void;
@@ -1799,7 +2105,7 @@ declare namespace mCore {
             disuse(): void
             destroy(): void;
             kill(): void;
-            static create<T extends MANTICORE.memory.ReusableObject>(...var_args: any[]): T;
+            static create<T extends mCore.memory.ReusableObject>(...var_args: any[]): T;
 
             protected clearData(): void;
 
@@ -1807,7 +2113,7 @@ declare namespace mCore {
     }
 
     export namespace model {
-        export class Model extends MANTICORE.memory.ReusableObject {
+        export class Model extends mCore.memory.ReusableObject {
             constructor(id: number);
             id: number;
             protected reuseId(): void;
@@ -1865,11 +2171,11 @@ declare namespace mCore {
             name: number;
             fps: number;
             length: number;
-            frames: MANTICORE.type.AnimationFrame[];
+            frames: mCore.type.AnimationFrame[];
         }
 
         export interface AnimationFrame {
-            type: MANTICORE.enumerator.animation.ACTION_TYPE;
+            type: mCore.enumerator.animation.ACTION_TYPE;
             index: number;
             data: number[] | null;
             ease: number[] | null;
@@ -1878,15 +2184,15 @@ declare namespace mCore {
         export interface AssetBundle {
             anchors: number[];
             animationNames: string[];
-            bundleType: MANTICORE.enumerator.BUNDLE_TYPE;
-            atlases: MANTICORE.type.AtlasInfo[];
-            atlasFonts: MANTICORE.type.AtlasFont[];
+            bundleType: mCore.enumerator.BUNDLE_TYPE;
+            atlases: mCore.type.AtlasInfo[];
+            atlasFonts: mCore.type.AtlasFont[];
             colors: number[];
             componentNames: string[];
             elementNames: string[];
-            fontData: MANTICORE.type.FontData[];
+            fontData: mCore.type.FontData[];
             fonts: string[];
-            fontStyles: MANTICORE.type.FontStyle[];
+            fontStyles: mCore.type.FontStyle[];
             name: string;
             particleDat: Object[],
             particleNames: string[],
@@ -1895,12 +2201,12 @@ declare namespace mCore {
             texts: string[];
             textures: number[];
             textureParts: string[];
-            textFieldStyles: MANTICORE.type.TextFieldStyle[];
-            ui: MANTICORE.type.ElementData[];
+            textFieldStyles: mCore.type.TextFieldStyle[];
+            ui: mCore.type.ElementData[];
         }
 
         export interface AtlasInfo {
-            frames: MANTICORE.type.AtlasFrame[];
+            frames: mCore.type.AtlasFrame[];
             name: string;
             images: string[];
             scale: number;
@@ -1930,7 +2236,7 @@ declare namespace mCore {
         }
 
         export interface FontData {
-            chars: MANTICORE.type.CharData[];
+            chars: mCore.type.CharData[];
             size: number;
             spacing: number;
             kerning: number[][];
@@ -1952,12 +2258,12 @@ declare namespace mCore {
         export interface ElementData {
             alpha: number;
             anchor: number;
-            animations: MANTICORE.type.AnimationData[] | null;
-            children: MANTICORE.type.ElementData[];
+            animations: mCore.type.AnimationData[] | null;
+            children: mCore.type.ElementData[];
             clipped: boolean;
-            content: MANTICORE.type.ElementData;
+            content: mCore.type.ElementData;
             dimensions: number[];
-            edge: MANTICORE.enumerator.ui.VERTICAL_ALIGN[] | MANTICORE.enumerator.ui.HORIZONTAL_ALIGN[] | null;
+            edge: mCore.enumerator.ui.VERTICAL_ALIGN[] | mCore.enumerator.ui.HORIZONTAL_ALIGN[] | null;
             fileData: number[];
             flip: boolean[];
             interactive: boolean;
@@ -1969,7 +2275,7 @@ declare namespace mCore {
             scale: number[];
             slice9: number[];
             stretch: boolean[] | null;
-            type: MANTICORE.enumerator.ui.UI_ELEMENT;
+            type: mCore.enumerator.ui.UI_ELEMENT;
             tint: number;
             visible: boolean;
         }
@@ -1984,11 +2290,11 @@ declare namespace mCore {
 
     export namespace ui {
         export namespace ancillary {
-            export class BaseButton extends MANTICORE.ui.Widget {
+            export class BaseButton extends mCore.ui.Widget {
                 constructor(frame: string, state: number);
 
                 enabled: boolean;
-                title: MANTICORE.ui.ancillary.BaseLabel;
+                title: mCore.ui.ancillary.BaseLabel;
                 titleText: string;
 
                 hasTitle(): boolean;
@@ -2000,7 +2306,7 @@ declare namespace mCore {
 
             }
 
-            export class BaseLabel extends MANTICORE.ui.Widget {
+            export class BaseLabel extends mCore.ui.Widget {
                 constructor();
 
                 fontSize: number;
@@ -2012,23 +2318,23 @@ declare namespace mCore {
                 shadowEnabled: boolean;
                 text: string;
                 color: number;
-                horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
-                verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
+                horizontalAlign: mCore.enumerator.ui.HORIZONTAL_ALIGN;
+                verticalAlign: mCore.enumerator.ui.VERTICAL_ALIGN;
                 lineHeight: number;
                 localized: boolean;
                 autoSize: boolean;
                 letterSpacing: number;
 
-                getShadowOffset(): MANTICORE.geometry.Point;
-                setShadowOffset(xOrPoint: number | MANTICORE.geometry.Point, y?: number): void;
-                protected horizontalAlignChange(value: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN): void;
-                protected verticalAlignChange(value: MANTICORE.enumerator.ui.VERTICAL_ALIGN): void;
+                getShadowOffset(): mCore.geometry.Point;
+                setShadowOffset(xOrPoint: number | mCore.geometry.Point, y?: number): void;
+                protected horizontalAlignChange(value: mCore.enumerator.ui.HORIZONTAL_ALIGN): void;
+                protected verticalAlignChange(value: mCore.enumerator.ui.VERTICAL_ALIGN): void;
 
             }
 
-            export class OutlineBitmapText extends PIXI.Container {
+            export class OutlineBitmapText extends mCore.view.ComponentContainer {
                 constructor(fontName: string, size: number);
-                anchor: MANTICORE.geometry.Point;
+                anchor: mCore.geometry.Point;
                 maxWidth: number;
                 fontName: string;
                 fontSize: number;
@@ -2036,8 +2342,8 @@ declare namespace mCore {
                 outlineSize: number;
                 color: number;
                 outlineColor: number;
-                horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
-                verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
+                horizontalAlign: mCore.enumerator.ui.HORIZONTAL_ALIGN;
+                verticalAlign: mCore.enumerator.ui.VERTICAL_ALIGN;
                 lineHeight: number;
                 text: string;
                 parentTint: number;
@@ -2046,11 +2352,11 @@ declare namespace mCore {
                 updateText(): void;
                 updateColorByLetter(beginIndex: number, count: number, color: number): void;
                 clearLetterColors(): void;
-                clone(): MANTICORE.ui.ancillary.OutlineBitmapText;
+                clone(): mCore.ui.ancillary.OutlineBitmapText;
 
             }
 
-            class StateSlice9Sprite extends MANTICORE.view.Slice9Sprite {
+            class StateSlice9Sprite extends mCore.view.Slice9Sprite {
                 constructor(frameName: string, state: number | string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number);
                 state: number | string;
 
@@ -2062,18 +2368,18 @@ declare namespace mCore {
         }
 
         export namespace parser {
-            export function parseElement(name: string, link: string): MANTICORE.ui.Widget;
+            export function parseElement(name: string, link: string): mCore.ui.Widget;
         }
 
         // @ts-ignore
-        export class AtlasLabel extends MANTICORE.ui.ancillary.BaseLabel {
+        export class AtlasLabel extends mCore.ui.ancillary.BaseLabel {
             constructor(frame: string, letterWidth: number, letterHeight: number, dotWidth: number);
             // noinspection JSAnnotator
-            static create(frame: string, letterWidth: number, letterHeight: number, dotWidth: number): MANTICORE.ui.AtlasLabel;
+            static create(frame: string, letterWidth: number, letterHeight: number, dotWidth: number): mCore.ui.AtlasLabel;
         }
 
         // @ts-ignore
-        export class Button extends MANTICORE.ui.ancillary.BaseButton {
+        export class Button extends mCore.ui.ancillary.BaseButton {
             constructor(upFrame: string, downFrame?: string, overFrame?: string, disabledFrame?: string);
 
             upFrame: string | null;
@@ -2082,7 +2388,7 @@ declare namespace mCore {
             disabledFrame: string | null;
 
             // noinspection JSAnnotator
-            static create(upFrame: string, downFrame?: string, overFrame?: string, disabledFrame?: string): MANTICORE.ui.Button;
+            static create(upFrame: string, downFrame?: string, overFrame?: string, disabledFrame?: string): mCore.ui.Button;
             protected onActionUpHandler(event: Object): boolean;
             protected onActionDownHandler(event: Object): boolean;
             protected onActionOverHandler(event: Object): void;
@@ -2093,7 +2399,7 @@ declare namespace mCore {
         }
 
         // @ts-ignore
-        export class CheckBox extends MANTICORE.ui.ancillary.BaseButton {
+        export class CheckBox extends mCore.ui.ancillary.BaseButton {
             constructor(
                 upBackFrame: string,
                 upIconFrame: string,
@@ -2115,20 +2421,21 @@ declare namespace mCore {
                 downIconFrame?: string,
                 overIconFrame?: string,
                 disableIconFrame?: string
-            ): MANTICORE.ui.CheckBox;
-            icon: MANTICORE.ui.ancillary.StateSlice9Sprite;
+            ): mCore.ui.CheckBox;
+            icon: mCore.ui.ancillary.StateSlice9Sprite;
             selected: boolean;
 
             protected onActionClickHandler(event: Object): void;
         }
 
-        export class ParticleEmitter extends MANTICORE.view.ComponentContainer {
-            constructor(particleName:string, containerType?: MANTICORE.enumerator.ui.CONTAINER_TYPE);
+        // @ts-ignore
+        export class ParticleEmitter extends mCore.view.ComponentContainer {
+            constructor(particleName:string, containerType?: mCore.enumerator.ui.CONTAINER_TYPE);
 
             public readonly canEmit: boolean;
-            public readonly particleType: MANTICORE.enumerator.PARTICLE_TYPE;
+            public readonly particleType: mCore.enumerator.PARTICLE_TYPE;
             public readonly particleName: string;
-            public readonly containerType: MANTICORE.enumerator.ui.CONTAINER_TYPE;
+            public readonly containerType: mCore.enumerator.ui.CONTAINER_TYPE;
 
             public eventStart: string;
             public eventComplete: string;
@@ -2140,62 +2447,62 @@ declare namespace mCore {
             public stop(killImmediately?: boolean);
 
             // noinspection JSAnnotator
-            static create(particleName:string, containerType?: MANTICORE.enumerator.ui.CONTAINER_TYPE): MANTICORE.ui.ParticleEmitter;
+            static create(particleName:string, containerType?: mCore.enumerator.ui.CONTAINER_TYPE): mCore.ui.ParticleEmitter;
         }
 
-        export class ImageView extends MANTICORE.view.Slice9Sprite{
+        export class ImageView extends mCore.view.Slice9Sprite{
             constructor(frameName: string);
 
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
-            uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
+            uiType: mCore.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             tint: number;
             parentTint: number;
             protected  readonly realTint: number;
             readonly isDestroyed: boolean;
-            readonly animationManager: MANTICORE.manager.AnimationManager;
-            readonly componentManager: MANTICORE.manager.ComponentManager;
-            readonly listenerManager: MANTICORE.manager.ListenerManager;
-            readonly interactionManager: MANTICORE.manager.InteractionManager;
+            readonly animationManager: mCore.manager.AnimationManager;
+            readonly componentManager: mCore.manager.ComponentManager;
+            readonly listenerManager: mCore.manager.ListenerManager;
+            readonly interactionManager: mCore.manager.InteractionManager;
             readonly hasAnimationManager: boolean;
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
             readonly hasInteractionManager: boolean;
 
-            static create<T extends MANTICORE.view.ComponentContainer>(...var_args: any[]): T;
+            static create<T extends mCore.view.ComponentContainer>(...var_args: any[]): T;
             public reuse(...var_args: any[]): void;
             public disuse(): void;
             public kill(): void;
             public destroy(): void;
-            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+            public emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
             protected onUpdate(dt: number): void;
             // noinspection JSAnnotator
-            static create(frameName: string): MANTICORE.ui.ImageView;
+            static create(frameName: string): mCore.ui.ImageView;
         }
 
         // @ts-ignore
-        export class Label extends MANTICORE.ui.ancillary.BaseLabel {
+        export class Label extends mCore.ui.ancillary.BaseLabel {
             constructor(fontName: string, size: number);
             public realFontSize: number;
             public locale: string | null;
             // noinspection JSAnnotator
-            static create(fontName: string, size: number): MANTICORE.ui.Label;
+            static create(fontName: string, size: number): mCore.ui.Label;
             updateColorByLetter(beginIndex: number, count: number, color: number): void;
             clearLetterColors(): void;
         }
 
-        export class ListView extends MANTICORE.ui.ScrollView{
-            constructor(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
+        export class ListView extends mCore.ui.ScrollView{
+            constructor(graphicType?: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
 
-            layout: MANTICORE.component.ui.ComLayout;
+            layout: mCore.component.ui.ComLayout;
 
-            verticalAlign: MANTICORE.enumerator.ui.VERTICAL_ALIGN;
-            horizontalAlign: MANTICORE.enumerator.ui.HORIZONTAL_ALIGN;
+            verticalAlign: mCore.enumerator.ui.VERTICAL_ALIGN;
+            horizontalAlign: mCore.enumerator.ui.HORIZONTAL_ALIGN;
 
             eventItemUp: string | null;
             eventItemDown: string | null;
@@ -2207,55 +2514,55 @@ declare namespace mCore {
             eventItemDragFinish: string | null;
             eventItemDragStart: string | null;
 
-            slider: MANTICORE.ui.Slider;
+            slider: mCore.ui.Slider;
 
-            innerPadding: MANTICORE.geometry.Point;
-            outerPadding: MANTICORE.geometry.Point;
+            innerPadding: mCore.geometry.Point;
+            outerPadding: mCore.geometry.Point;
 
             // noinspection JSAnnotator
-            static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ListView;
+            static create(graphicType?: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): mCore.ui.ListView;
             scrollToItem(time: number, index: number): void;
         }
 
         // @ts-ignore
         export class ProgressBar extends Widget {
-            constructor(frameLink: string, direction?: MANTICORE.enumerator.DIRECTION, type?: MANTICORE.enumerator.ui.PROGRESS_TYPE);
-            direction: MANTICORE.enumerator.DIRECTION;
+            constructor(frameLink: string, direction?: mCore.enumerator.DIRECTION, type?: mCore.enumerator.ui.PROGRESS_TYPE);
+            direction: mCore.enumerator.DIRECTION;
             progress: number;
-            type: MANTICORE.enumerator.ui.PROGRESS_TYPE;
+            type: mCore.enumerator.ui.PROGRESS_TYPE;
             frameName: string;
 
             // noinspection JSAnnotator
-            static create(frameLink: string, direction?: MANTICORE.enumerator.DIRECTION, type?: MANTICORE.enumerator.ui.PROGRESS_TYPE): MANTICORE.ui.ProgressBar;
+            static create(frameLink: string, direction?: mCore.enumerator.DIRECTION, type?: mCore.enumerator.ui.PROGRESS_TYPE): mCore.ui.ProgressBar;
         }
 
         // @ts-ignore
-        export class Panel extends MANTICORE.ui.Widget{
-            constructor(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
+        export class Panel extends mCore.ui.Widget{
+            constructor(graphicType?: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
 
             backgroundColor: number;
             backgroundAlpha: number;
-            readonly panelType: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE;
-            setType(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): void;
+            readonly panelType: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE;
+            setType(graphicType?: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): void;
 
             // noinspection JSAnnotator
-            static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.Panel;
+            static create(graphicType?: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): mCore.ui.Panel;
         }
 
         // @ts-ignore
-        export class ScrollView extends MANTICORE.ui.Widget {
-            constructor(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
+        export class ScrollView extends mCore.ui.Widget {
+            constructor(graphicType?: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number);
 
-            scrollDirection: MANTICORE.enumerator.ui.SCROLL_DIRECTION;
-            horizontalSlider: MANTICORE.ui.Slider;
-            verticalSlider: MANTICORE.ui.Slider;
-            innerContainer: MANTICORE.ui.Widget;
+            scrollDirection: mCore.enumerator.ui.SCROLL_DIRECTION;
+            horizontalSlider: mCore.ui.Slider;
+            verticalSlider: mCore.ui.Slider;
+            innerContainer: mCore.ui.Widget;
             innerWidth: number;
             innerHeight: number;
             bounceEnabled: boolean;
 
             // noinspection JSAnnotator
-            static create(graphicType?: MANTICORE.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): MANTICORE.ui.ScrollView;
+            static create(graphicType?: mCore.enumerator.ui.PANEL_GRAPHIC_TYPE, data?: string | number): mCore.ui.ScrollView;
 
             jumpToBottom(): void;
             jumpToBottomLeft(): void;
@@ -2282,29 +2589,29 @@ declare namespace mCore {
 
             protected isVertical(): boolean;
             protected isHorizontal(): boolean;
-            protected onDragStartInnerContainerHandler(event: MANTICORE.eventDispatcher.EventModel): void;
-            protected onDragInnerContainerHandler(event: MANTICORE.eventDispatcher.EventModel): void;
-            protected onScrollHorizontalHandler(event: MANTICORE.eventDispatcher.EventModel): void;
-            protected onScrollVerticalHandler(event: MANTICORE.eventDispatcher.EventModel): void;
+            protected onDragStartInnerContainerHandler(event: mCore.eventDispatcher.EventModel): void;
+            protected onDragInnerContainerHandler(event: mCore.eventDispatcher.EventModel): void;
+            protected onScrollHorizontalHandler(event: mCore.eventDispatcher.EventModel): void;
+            protected onScrollVerticalHandler(event: mCore.eventDispatcher.EventModel): void;
         }
 
         // @ts-ignore
-        export class Slider extends MANTICORE.ui.Widget {
-            constructor(ball: MANTICORE.ui.Widget, direction?: MANTICORE.enumerator.DIRECTION, progressFrame?: string);
+        export class Slider extends mCore.ui.Widget {
+            constructor(ball: mCore.ui.Widget, direction?: mCore.enumerator.DIRECTION, progressFrame?: string);
 
             eventScroll: string;
             progressFrameName: string | null;
-            progressBar: MANTICORE.ui.ProgressBar | null;
-            direction: MANTICORE.enumerator.DIRECTION;
+            progressBar: mCore.ui.ProgressBar | null;
+            direction: mCore.enumerator.DIRECTION;
             progress: number;
             enabled: boolean;
 
             // noinspection JSAnnotator
-            static create(ball: MANTICORE.ui.Widget, direction?: MANTICORE.enumerator.DIRECTION, progressFrame?: string): MANTICORE.ui.Slider;
+            static create(ball: mCore.ui.Widget, direction?: mCore.enumerator.DIRECTION, progressFrame?: string): mCore.ui.Slider;
             hasProgressBar(): boolean;
         }
 
-        export class TextField extends MANTICORE.ui.Label {
+        export class TextField extends mCore.ui.Label {
             constructor(fontName: string, size: number);
 
             text: string;
@@ -2319,45 +2626,45 @@ declare namespace mCore {
             pattern: string;
 
             // noinspection JSAnnotator
-            static create(fontName: string, size: number): MANTICORE.ui.TextField;
+            static create(fontName: string, size: number): mCore.ui.TextField;
             protected onActionUpHandler(event: Object): boolean;
         }
 
         // @ts-ignore
-        export class ToggleButton extends MANTICORE.ui.ancillary.BaseButton{
+        export class ToggleButton extends mCore.ui.ancillary.BaseButton{
             constructor(dUpFrame: string, sUpFrame: string, sDownFrame?: string, dDownFrame?: string, dOverFrame?: string, sOverFrame?: string, dDisabledFrame?: string, sDisabledFrame?: string);
             selected: boolean;
 
             // noinspection JSAnnotator
-            static create(dUpFrame: string, sUpFrame: string, sDownFrame?: string, dDownFrame?: string, dOverFrame?: string, sOverFrame?: string, dDisabledFrame?: string, sDisabledFrame?: string): MANTICORE.ui.ToggleButton;
+            static create(dUpFrame: string, sUpFrame: string, sDownFrame?: string, dDownFrame?: string, dOverFrame?: string, sOverFrame?: string, dDisabledFrame?: string, sDisabledFrame?: string): mCore.ui.ToggleButton;
             protected onEnabledChange(enabled: boolean): void;
 
         }
 
         // @ts-ignore
-        export class Widget extends MANTICORE.view.ComponentContainer {
-            constructor(collider?: PIXI.Sprite | MANTICORE.view.Slice9Sprite);
+        export class Widget extends mCore.view.ComponentContainer {
+            constructor(collider?: mCore.view.ComponentSprite | mCore.view.Slice9Sprite);
 
             clipping: boolean;
-            clippingType: MANTICORE.enumerator.ui.CLIPPING_TYPE;
+            clippingType: mCore.enumerator.ui.CLIPPING_TYPE;
             tint: number;
-            anchor: MANTICORE.geometry.Point;
+            anchor: mCore.geometry.Point;
             flipX: boolean;
             flipY: boolean;
 
             // noinspection JSAnnotator
-            static create(collider?: PIXI.Sprite | MANTICORE.view.Slice9Sprite): MANTICORE.ui.Widget;
+            static create(collider?: mCore.view.ComponentSprite | mCore.view.Slice9Sprite): mCore.ui.Widget;
             public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
 
-            protected collider: PIXI.Sprite | MANTICORE.view.Slice9Sprite | MANTICORE.ui.ancillary.StateSlice9Sprite;
+            protected collider: mCore.view.ComponentSprite | mCore.view.Slice9Sprite | mCore.ui.ancillary.StateSlice9Sprite;
         }
     }
 
 
     export namespace util {
         export namespace asset {
-            export function getSpriteFrame(link: string): PIXI.Texture | null;
-            export function createWhiteSprite(): PIXI.Sprite;
+            export function getSpriteFrame(link: string): Texture | null;
+            export function createWhiteSprite(): mCore.view.ComponentSprite;
         }
         export namespace color {
             export enum COLORS {
@@ -2386,7 +2693,7 @@ declare namespace mCore {
         }
         export namespace format {
             export function getUniqueId(): string;
-            export function addFileType(value: string, type: MANTICORE.enumerator.FILE_TYPE): string;
+            export function addFileType(value: string, type: mCore.enumerator.FILE_TYPE): string;
             export function formatNumber(value: number | string, numCount: number): string;
             export function replaceAt(targetString: string, index: number, char: string): string;
             export function generateEventName(target: Object, event: string): string;
@@ -2402,27 +2709,27 @@ declare namespace mCore {
 
         }
         export namespace geometry {
-            export function pFromSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: MANTICORE.geometry.Point): MANTICORE.geometry.Point;
-            export function pHalfSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: MANTICORE.geometry.Point): MANTICORE.geometry.Point;
-            export function sSub(size1: PIXI.Container | PIXI.Rectangle, size2: PIXI.Container | PIXI.Rectangle, inPoint?: MANTICORE.geometry.Point): MANTICORE.geometry.Point;
-            export function pSub(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pAdd(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pMult(p: MANTICORE.geometry.Point, multiplier: number, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pCompMult(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pCompDiv(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pMax(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pMin(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pNeg(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pAbs(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pRound(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pInvert(p: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pRange(p: MANTICORE.geometry.Point, pLeft: MANTICORE.geometry.Point, pRight: MANTICORE.geometry.Point, isIn?: boolean): MANTICORE.geometry.Point;
-            export function pEqual(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): boolean;
-            export function pDot(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): number;
-            export function pCross(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): number;
-            export function pLengthSQ(p: MANTICORE.geometry.Point): number;
-            export function pLength(p: MANTICORE.geometry.Point): number;
-            export function pDistance(p1: MANTICORE.geometry.Point, p2: MANTICORE.geometry.Point): number;
+            export function pFromSize(size: mCore.view.ComponentContainer | mCore.geometry.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
+            export function pHalfSize(size: mCore.view.ComponentContainer | mCore.geometry.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
+            export function sSub(size1: mCore.view.ComponentContainer | mCore.geometry.Rectangle, size2: mCore.view.ComponentContainer | mCore.geometry.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
+            export function pSub(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pAdd(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pMult(p: mCore.geometry.Point, multiplier: number, isIn?: boolean): mCore.geometry.Point;
+            export function pCompMult(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pCompDiv(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pMax(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pMin(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pNeg(p: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pAbs(p: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pRound(p: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pInvert(p: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pRange(p: mCore.geometry.Point, pLeft: mCore.geometry.Point, pRight: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
+            export function pEqual(p1: mCore.geometry.Point, p2: mCore.geometry.Point): boolean;
+            export function pDot(p1: mCore.geometry.Point, p2: mCore.geometry.Point): number;
+            export function pCross(p1: mCore.geometry.Point, p2: mCore.geometry.Point): number;
+            export function pLengthSQ(p: mCore.geometry.Point): number;
+            export function pLength(p: mCore.geometry.Point): number;
+            export function pDistance(p1: mCore.geometry.Point, p2: mCore.geometry.Point): number;
 
         }
         export namespace math {
@@ -2474,44 +2781,52 @@ declare namespace mCore {
         }
 
         export namespace ui {
-            export function fullPath<T extends PIXI.DisplayObject>(node: T): string;
-            export function logHierarchy(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite, maxLevel?: number): void;
-            export function logUnlocalizedFields(widget: MANTICORE.view.ComponentContainer | MANTICORE.view.ComponentSprite): void;
-            export function getChildView<T extends PIXI.Container>(path: string, firstElement: T): T| null;
-            export function localize<T extends PIXI.DisplayObject>(root: T): void;
+            export function fullPath<T extends mCore.view.ComponentContainer>(node: T): string;
+            export function logHierarchy(widget: mCore.view.ComponentContainer | mCore.view.ComponentSprite, maxLevel?: number): void;
+            export function logUnlocalizedFields(widget: mCore.view.ComponentContainer | mCore.view.ComponentSprite): void;
+            export function getChildView<T extends mCore.view.ComponentContainer>(path: string, firstElement: T): T| null;
+            export function localize<T extends mCore.view.ComponentContainer>(root: T): void;
         }
     }
 
     export namespace view {
         namespace callback {
-            type ChildAction = (component: MANTICORE.component.Component, child: PIXI.DisplayObject) => void;
-            type IterateComponent = (component: MANTICORE.component.Component, index?: number) => void;
+            type ChildAction = (component: mCore.component.Component, child: mCore.view.ComponentContainer) => void;
+            type IterateComponent = (component: mCore.component.Component, index?: number) => void;
         }
 
-        export class ComponentContainer extends PIXI.Container {
+        export class ComponentContainer {
             constructor();
 
-
+            rotation: number;
+            worldTransform: Matrix;
+            localTransform: Matrix;
+            parent: mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.view.ComponentSpine;
+            height: number;
+            width: number;
+            position: mCore.geometry.Point;
+            anchor: mCore.geometry.Point;
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
-            uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
+            uiType: mCore.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             tint: number;
             parentTint: number;
             userData: number | string | Object | Array<any> | boolean | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
-            readonly animationManager: MANTICORE.manager.AnimationManager;
-            readonly componentManager: MANTICORE.manager.ComponentManager;
-            readonly listenerManager: MANTICORE.manager.ListenerManager;
-            readonly interactionManager: MANTICORE.manager.InteractionManager;
+            readonly animationManager: mCore.manager.AnimationManager;
+            readonly componentManager: mCore.manager.ComponentManager;
+            readonly listenerManager: mCore.manager.ListenerManager;
+            readonly interactionManager: mCore.manager.InteractionManager;
             readonly hasAnimationManager: boolean;
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
             readonly hasInteractionManager: boolean;
 
-            static create<T extends MANTICORE.view.ComponentContainer>(...var_args: any[]): T;
+            // noinspection JSAnnotator
+            static create<T extends mCore.view.ComponentContainer>(...var_args: any[]): T;
 
             public reuse(...var_args: any[]): void;
 
@@ -2521,37 +2836,45 @@ declare namespace mCore {
 
             public destroy(): void;
 
-            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+            public toLocal(point: mCore.geometry.Point): mCore.geometry.Point;
+
+            public toGlobal(point: mCore.geometry.Point): mCore.geometry.Point;
+
+            public emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
 
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            public updateTransform(): void;
+
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
 
             protected onUpdate(dt: number): void;
         }
 
-        export class ComponentSpine extends PIXI.spine.Spine {
+
+        // @ts-ignore
+        export class ComponentSpine extends mCore.view.ComponentContainer {
             constructor(skeletonName: string);
 
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
-            uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
+            uiType: mCore.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             parentTint: number;
             userData: number | string | Object | Array<any> | boolean | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
-            readonly animationManager: MANTICORE.manager.AnimationManager;
-            readonly componentManager: MANTICORE.manager.ComponentManager;
-            readonly listenerManager: MANTICORE.manager.ListenerManager;
-            readonly interactionManager: MANTICORE.manager.InteractionManager;
+            readonly animationManager: mCore.manager.AnimationManager;
+            readonly componentManager: mCore.manager.ComponentManager;
+            readonly listenerManager: mCore.manager.ListenerManager;
+            readonly interactionManager: mCore.manager.InteractionManager;
             readonly hasAnimationManager: boolean;
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
             readonly hasInteractionManager: boolean;
 
-            static create<T extends MANTICORE.view.ComponentSpine>(skeletonName: string): T;
+            static create<T extends mCore.view.ComponentSpine>(skeletonName: string): T;
 
             public reuse(...var_args: any[]): void;
 
@@ -2561,38 +2884,40 @@ declare namespace mCore {
 
             public destroy(): void;
 
-            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+            public emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
 
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
 
             protected onUpdate(dt: number): void;
 
         }
 
-        export class ComponentSprite extends PIXI.Sprite {
+        // @ts-ignore
+        export class ComponentSprite extends mCore.view.ComponentContainer {
             constructor(frameName: string);
 
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
-            uiType: MANTICORE.enumerator.ui.UI_ELEMENT;
+            uiType: mCore.enumerator.ui.UI_ELEMENT;
             isUpdate: boolean;
             parentTint: number;
             userData: number | string | Object | Array<any> | boolean | null;
             protected readonly realTint: number;
             readonly isDestroyed: boolean;
-            readonly animationManager: MANTICORE.manager.AnimationManager;
-            readonly componentManager: MANTICORE.manager.ComponentManager;
-            readonly listenerManager: MANTICORE.manager.ListenerManager;
-            readonly interactionManager: MANTICORE.manager.InteractionManager;
+            readonly animationManager: mCore.manager.AnimationManager;
+            readonly componentManager: mCore.manager.ComponentManager;
+            readonly listenerManager: mCore.manager.ListenerManager;
+            readonly interactionManager: mCore.manager.InteractionManager;
             readonly hasAnimationManager: boolean;
             readonly hasComponentManager: boolean;
             readonly hasListenerManager: boolean;
             readonly hasInteractionManager: boolean;
 
-            static create<T extends MANTICORE.view.ComponentSprite>(frameName: string): T;
+            // noinspection JSAnnotator
+            static create<T extends mCore.view.ComponentSprite>(frameName: string): T;
 
             public reuse(...var_args: any[]): void;
 
@@ -2602,20 +2927,22 @@ declare namespace mCore {
 
             public destroy(): void;
 
-            public emitInteractiveEvent(eventType: MANTICORE.enumerator.ui.INTERACTIVE_EVENT, event: MANTICORE.eventDispatcher.EventModel): void;
+            public emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
 
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
 
             protected onUpdate(dt: number): void;
 
         }
 
-        export class Scene extends PIXI.Container {
-            constructor(comTransitionShow?: MANTICORE.component.Component, comTransitionHide?: MANTICORE.component.Component);
+        // @ts-ignore
+        export class Scene extends mCore.view.ComponentContainer {
+            constructor(comTransitionShow?: mCore.component.Component, comTransitionHide?: mCore.component.Component);
 
-            static create<T extends MANTICORE.view.Scene>(comTransitionShow?: MANTICORE.component.Component, comTransitionHide?: MANTICORE.component.Component): T;
+            // noinspection JSAnnotator
+            static create<T extends mCore.view.Scene>(comTransitionShow?: mCore.component.Component, comTransitionHide?: mCore.component.Component): T;
 
             public show(): void;
 
@@ -2631,12 +2958,13 @@ declare namespace mCore {
 
         }
 
-        export class Slice9Sprite extends PIXI.Container {
+        // @ts-ignore
+        export class Slice9Sprite extends mCore.view.ComponentContainer {
             constructor(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number);
 
             tint: number;
             parentTint: number;
-            anchor: MANTICORE.geometry.Point;
+            anchor: mCore.geometry.Point;
             leftSlice: number;
             rightSlice: number;
             topSlice: number;
@@ -2645,7 +2973,8 @@ declare namespace mCore {
             slice: number[];
             protected readonly realTint: number;
 
-            static create<T extends MANTICORE.view.Slice9Sprite>(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): T;
+            // noinspection JSAnnotator
+            static create<T extends mCore.view.Slice9Sprite>(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): T;
         }
     }
 }
