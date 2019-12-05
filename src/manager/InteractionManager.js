@@ -267,7 +267,7 @@ class InteractionManager extends BaseManager {
         this._prevPos.copyFrom(globalPos);
         this._crtPos.copyFrom(globalPos);
         this._acumOffset.set(0, 0);
-        this._currentButon = event.button;
+        this._currentButon = event.data.button;
         return true;
     }
 
