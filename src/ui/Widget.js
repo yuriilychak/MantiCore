@@ -9,6 +9,7 @@ import Constant from "constant/index";
 import Geometry from "util/Geometry";
 import Point from "geometry/Point";
 import Color from "util/Color";
+import NUMBER_TYPE from "enumerator/NumberType";
 
 /**
  * @desc Base component for all UI elements.
@@ -42,6 +43,13 @@ class Widget extends ComponentContainer {
         this._anchor = Point.create();
 
         /**
+         * @type {Point}
+         * @private
+         */
+
+        this._size = Point.create(super.width, super.height, NUMBER_TYPE.INT_32);
+
+        /**
          * @desc Clipping mask.
          * @type {?PIXI.Sprite | ?PIXI.Graphics}
          * @private
@@ -50,6 +58,9 @@ class Widget extends ComponentContainer {
         this._clippingMask = null;
 
         this._anchor.initChangeCallback(this._onAnchorPointUpdate, this);
+
+
+        this._size.initChangeCallback(this.onSizeChange, this);
 
         if (this._collider instanceof PIXI.Sprite) {
             this._collider.width = 100;
@@ -133,6 +144,30 @@ class Widget extends ComponentContainer {
         this._anchor.set(0, 0);
         this._clippingMask = null;
         super.clearData();
+    }
+
+    /**
+     * @desc Calls when size of object change.
+     * @method
+     * @protected
+     */
+
+    onSizeChange() {
+        if (this._collider.width !== this._size.x) {
+            this.pivot.x = Math.round(this._size.x * this._anchor.x);
+            this._collider.width = this._size.x;
+            if (this._isClipped()) {
+                this._clippingMask.width = this._size.x;
+            }
+        }
+
+        if (this._collider.height !== this._size.y) {
+            this._collider.height = this._size.y;
+            this.pivot.y = Math.round(this._size.y * this._anchor.y);
+            if (this._isClipped()) {
+                this._clippingMask.height = this._size.y;
+            }
+        }
     }
 
     /**
@@ -227,19 +262,14 @@ class Widget extends ComponentContainer {
      */
 
     get width() {
-        return this._collider.width;
+        return this._size.x;
     }
 
     set width(value) {
-        value = Math.round(value);
-        if (this._collider.width === value) {
+        if (this._size.x === value) {
             return;
         }
-        this.pivot.x = Math.round(value * this._anchor.x);
-        this._collider.width = value;
-        if (this._isClipped()) {
-            this._clippingMask.width = value;
-        }
+        this._size.x = value;
     }
 
     /**
@@ -248,20 +278,24 @@ class Widget extends ComponentContainer {
      */
 
     get height() {
-        return this._collider.height;
+        return this._size.y;
     }
 
     set height(value) {
-        value = Math.round(value);
-        if (this._collider.height === value) {
+        if (this._size.y === value) {
             return;
         }
+        this._size.y = value;
+    }
 
-        this._collider.height = value;
-        this.pivot.y = Math.round(value * this._anchor.y);
-        if (this._isClipped()) {
-            this._clippingMask.height = value;
-        }
+    /**
+     * @desc Size of element
+     * @public
+     * @return {Point}
+     */
+
+    get rate() {
+        return this._size;
     }
 
     /**

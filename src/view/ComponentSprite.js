@@ -13,6 +13,8 @@ import ComponentManager from "manager/ComponentManager";
 import ListenerManager from "manager/ListenerManager";
 import InteractionManager from "manager/InteractionManager";
 
+import Point from "geometry/Point";
+
 import Pool from "pool";
 import Constant from "constant";
 
@@ -170,6 +172,15 @@ class ComponentSprite extends PIXI.Sprite {
          */
 
         this._userData = null;
+
+        /**
+         * @type {Point}
+         * @private
+         */
+
+        this._size = Point.create(super.width, super.height);
+
+        this._size.initChangeCallback(this.onSizeChange, this);
 
         this._updateTint();
     }
@@ -466,6 +477,17 @@ class ComponentSprite extends PIXI.Sprite {
     }
 
     /**
+     * @desc Calls when size of object change.
+     * @method
+     * @protected
+     */
+
+    onSizeChange() {
+        super.width = this._size.x;
+        super.height = this._size.y;
+    }
+
+    /**
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -509,6 +531,52 @@ class ComponentSprite extends PIXI.Sprite {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Returns width of object
+     * @public
+     * @return {number}
+     */
+
+    get width() {
+        return this._size.x;
+    }
+
+    set width(value) {
+        if (this._size.x === value) {
+            return;
+        }
+
+        this._size.x = value;
+    }
+
+    /**
+     * @desc Returns width of object
+     * @public
+     * @return {number}
+     */
+
+    get height() {
+        return this._size.y;
+    }
+
+    set height(value) {
+        if (this._size.y === value) {
+            return;
+        }
+
+        this._size.y = value;
+    }
+
+    /**
+     * @desc Size of element
+     * @public
+     * @return {Point}
+     */
+
+    get rate() {
+        return this._size;
+    }
 
     /**
      * @desc Returns is object interactive

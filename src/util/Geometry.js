@@ -21,7 +21,7 @@ const geometry = {
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pFromSize: function(size, inPoint = Point.create(0, 0)) {
+    pFromSize(size, inPoint = Point.create(0, 0)) {
         inPoint.set(Type.setValue(size.width, 0), Type.setValue(size.height, 0));
         return inPoint;
     },
@@ -37,7 +37,7 @@ const geometry = {
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pHalfSize: function(size, inPoint = Point.create(0, 0)) {
+    pHalfSize(size, inPoint = Point.create(0, 0)) {
         inPoint.set(
             Math.divPowTwo(Type.setValue(size.width, 0)),
             Math.divPowTwo(Type.setValue(size.height, 0))
@@ -59,7 +59,7 @@ const geometry = {
      * @returns {mCore.geometry.Point | Point}
      */
 
-    sSub: function(size1, size2, inPoint = Point.create(0, 0)) {
+    sSub(size1, size2, inPoint = Point.create(0, 0)) {
         inPoint.set(size1.width - size2.width, size1.height - size2.height);
         return inPoint;
     },
@@ -70,12 +70,14 @@ const geometry = {
      * @param {mCore.geometry.Point | Point} p1
      * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pSub: function(p1, p2, isIn = false) {
+    pSub(p1, p2, isIn = false, isClear = false) {
         const x = p1.x - p2.x;
         const y = p1.y - p2.y;
+        this._destroyTmp(p2, isClear);
         return this._pGenResult(p1, x, y, isIn);
     },
 
@@ -85,12 +87,14 @@ const geometry = {
      * @param {mCore.geometry.Point | Point} p1
      * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pAdd: function(p1, p2, isIn = false) {
+    pAdd(p1, p2, isIn = false, isClear = false) {
         const x = p1.x + p2.x;
         const y = p1.y + p2.y;
+        this._destroyTmp(p2, isClear);
         return this._pGenResult(p1, x, y, isIn);
     },
 
@@ -103,10 +107,12 @@ const geometry = {
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pMult: function(p, multiplier, isIn = false) {
-        const x = p.x * multiplier;
-        const y = p.y * multiplier;
-        return this._pGenResult(p, x, y, isIn);
+    pMult(p, multiplier, isIn = false) {
+        return this._pGenResult(
+            p,
+            p.x * multiplier,
+            p.y * multiplier,
+            isIn);
     },
 
     /**
@@ -115,12 +121,14 @@ const geometry = {
      * @param {mCore.geometry.Point | Point} p1
      * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pCompMult: function (p1, p2, isIn = false) {
+    pCompMult(p1, p2, isIn = false, isClear = false) {
         const x = p1.x * p2.x;
         const y = p1.y * p2.y;
+        this._destroyTmp(p2, isClear);
         return this._pGenResult(p1, x, y, isIn);
     },
 
@@ -130,12 +138,14 @@ const geometry = {
      * @param {mCore.geometry.Point | Point} p1
      * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pCompDiv: function (p1, p2, isIn = false) {
+    pCompDiv(p1, p2, isIn = false, isClear = false) {
         const x = p1.x / p2.x;
         const y = p1.y / p2.y;
+        this._destroyTmp(p2, isClear);
         return this._pGenResult(p1, x, y, isIn);
     },
 
@@ -145,12 +155,14 @@ const geometry = {
      * @param {mCore.geometry.Point | Point} p1
      * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pMax: function (p1, p2, isIn = false) {
+    pMax(p1, p2, isIn = false, isClear = false) {
         const x = Math.max(p1.x, p2.x);
         const y = Math.max(p1.y, p2.y);
+        this._destroyTmp(p2, isClear);
         return this._pGenResult(p1, x, y, isIn);
     },
 
@@ -160,12 +172,14 @@ const geometry = {
      * @param {mCore.geometry.Point | Point} p1
      * @param {mCore.geometry.Point | Point} p2
      * @param {boolean} [isIn = false] - Is save result to first point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pMin: function (p1, p2, isIn = false) {
+    pMin(p1, p2, isIn = false, isClear = false) {
         const x = Math.min(p1.x, p2.x);
         const y = Math.min(p1.y, p2.y);
+        this._destroyTmp(p2, isClear);
         return this._pGenResult(p1, x, y, isIn);
     },
 
@@ -177,10 +191,8 @@ const geometry = {
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pNeg: function (p, isIn = false) {
-        const x = -p.x;
-        const y = -p.y;
-        return this._pGenResult(p, x, y, isIn);
+    pNeg(p, isIn = false) {
+        return this._pGenResult(p, -p.x, -p.y, isIn);
     },
 
     /**
@@ -189,13 +201,27 @@ const geometry = {
      * @memberOf mCore.util.geometry
      * @param {mCore.geometry.Point | Point} p
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pRound: function(p, isIn = false) {
-        const x = Math.round(p.x);
-        const y = Math.round(p.y);
-        return this._pGenResult(p, x, y, isIn);
+    pRound(p, isIn = false, isClear = false) {
+        return this._pGenResult(p,  Math.round(p.x), Math.round(p.y), isIn);
+    },
+
+    /**
+     * @function
+     * @public
+     * @memberOf mCore.util.geometry
+     * @param {mCore.geometry.Point | Point} p
+     * @param {int} [numCount = 2] - Num count after dot to round.
+     * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
+     * @returns {mCore.geometry.Point | Point}
+     */
+
+    pFixed(p, numCount = 2, isIn = false, isClear = false) {
+        return this._pGenResult(p, Math.toFixed(p.x, numCount), Math.toFixed(p.y, numCount), isIn);
     },
 
     /**
@@ -207,12 +233,15 @@ const geometry = {
      * @param {mCore.geometry.Point | Point} pLeft
      * @param {mCore.geometry.Point | Point} pRight
      * @param {boolean} [isIn = false] - Is save result to point. (Need to avoid creation of new points).
+     * @param {boolean} [isClear = false] - Is need  to destroy second point after calculation.
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pRange: function(p, pLeft, pRight, isIn = false) {
+    pRange(p, pLeft, pRight, isIn = false, isClear = false) {
         const x = Math.range(p.x, pLeft.x, pRight.x);
         const y = Math.range(p.y, pLeft.y, pRight.y);
+        this._destroyTmp(pLeft, isClear);
+        this._destroyTmp(pRight, isClear);
         return this._pGenResult(p, x, y, isIn);
     },
 
@@ -226,7 +255,7 @@ const geometry = {
      * @returns {boolean}
      */
 
-    pEqual: function(p1, p2) {
+    pEqual(p1, p2) {
         return p1.x === p2.x && p1.y === p2.y;
     },
 
@@ -239,10 +268,8 @@ const geometry = {
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pAbs: function(p, isIn = false) {
-        const x = Math.abs(p.x);
-        const y = Math.abs(p.y);
-        return this._pGenResult(p, x, y, isIn);
+    pAbs(p, isIn = false) {
+        return this._pGenResult(p, Math.abs(p.x), Math.abs(p.y), isIn);
     },
 
     /**
@@ -254,10 +281,8 @@ const geometry = {
      * @returns {mCore.geometry.Point | Point}
      */
 
-    pInvert: function(p, isIn = false) {
-        const x = 1 / p.x;
-        const y = 1 / p.y;
-        return this._pGenResult(p, x, y, isIn);
+    pInvert(p, isIn = false) {
+        return this._pGenResult(p, 1 / p.x, 1 / p.y, isIn);
     },
 
     /**
@@ -268,7 +293,7 @@ const geometry = {
      * @param {mCore.geometry.Point} p2
      * @return {number}
      */
-    pDot: function (p1, p2) {
+    pDot(p1, p2) {
     return p1.x * p2.x + p1.y * p2.y;
     },
 
@@ -280,7 +305,7 @@ const geometry = {
      * @param {mCore.geometry.Point} p2
      * @return {number}
      */
-    pCross: function (p1, p2) {
+    pCross(p1, p2) {
         return p1.x * p2.y - p1.y * p2.x;
     },
 
@@ -291,7 +316,7 @@ const geometry = {
      * @param {mCore.geometry.Point} p
      * @return {number}
      */
-    pLengthSQ: function (p) {
+    pLengthSQ(p) {
         return this.pDot(p, p);
     },
 
@@ -302,7 +327,7 @@ const geometry = {
      * @param {mCore.geometry.Point} p
      * @return {number}
      */
-    pLength: function (p) {
+    pLength(p) {
         return Math.sqrt(this.pLengthSQ(p));
     },
 
@@ -314,7 +339,7 @@ const geometry = {
      * @param {mCore.geometry.Point} p2
      * @return {number}
      */
-    pDistance: function (p1, p2) {
+    pDistance(p1, p2) {
         return this.pLength(this.pSub(p1, p2));
     },
 
@@ -335,6 +360,21 @@ const geometry = {
             return p;
         }
         return Point.create(x, y);
+    },
+
+    /**
+     * @desc Destroy point if it acceptable
+     * @private
+     * @param {mCore.geometry.Point | Point} p
+     * @param {boolean} isDestroy
+     * @private
+     */
+
+    _destroyTmp(p, isDestroy) {
+        if (!isDestroy || !p.destroy) {
+            return;
+        }
+        p.destroy();
     }
 };
 

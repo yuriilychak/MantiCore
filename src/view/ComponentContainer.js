@@ -530,6 +530,10 @@ class ComponentContainer extends PIXI.Container {
 
     set height(value) {}
 
+    get size() {
+        return Point.create();
+    }
+
     /**
      * @desc Returns anchor point.
      * @public
