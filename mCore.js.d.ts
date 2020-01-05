@@ -2806,12 +2806,14 @@ declare namespace mCore {
         export class ComponentContainer {
             constructor();
 
+            uid: number;
             rotation: number;
             worldTransform: Matrix;
             localTransform: Matrix;
             parent: mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.view.ComponentSpine;
             height: number;
             width: number;
+            visible: boolean;
             readonly position: mCore.geometry.Point;
             readonly anchor: mCore.geometry.Point;
             readonly scale: mCore.geometry.Point;

@@ -30,6 +30,13 @@ class ComponentContainer extends PIXI.Container {
         super();
 
         /**
+         * @type {number}
+         * @private
+         */
+
+        this._uid = PIXI.utils.uid();
+
+        /**
          * @desc Storage of components.
          * @type {?mCore.manager.ComponentManager}
          * @private
@@ -168,6 +175,8 @@ class ComponentContainer extends PIXI.Container {
          */
 
         this._userData = null;
+
+        this.name = `stageElement_${this._uid.toString(10).padStart(6, "0")}`;
     }
 
     /**
@@ -859,6 +868,15 @@ class ComponentContainer extends PIXI.Container {
             return;
         }
         this._userData = value;
+    }
+
+    /**
+     * @public
+     * @return {number}
+     */
+
+    get uid() {
+        return this._uid;
     }
 }
 

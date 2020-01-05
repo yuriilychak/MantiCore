@@ -34,6 +34,13 @@ class ComponentSprite extends PIXI.Sprite {
         super(Asset.getSpriteFrame(frameName));
 
         /**
+         * @type {number}
+         * @private
+         */
+
+        this._uid = PIXI.utils.uid();
+
+        /**
          * @desc Manager of components.
          * @type {?mCore.manager.ComponentManager}
          * @private
@@ -183,6 +190,8 @@ class ComponentSprite extends PIXI.Sprite {
         this._size.initChangeCallback(this.onSizeChange, this);
 
         this._updateTint();
+
+        this.name = `stageElement_${this._uid.toString(10).padStart(6, "0")}`;
     }
 
     /**
@@ -891,6 +900,15 @@ class ComponentSprite extends PIXI.Sprite {
             return;
         }
         this._userData = value;
+    }
+
+    /**
+     * @public
+     * @return {number}
+     */
+
+    get uid() {
+        return this._uid;
     }
 }
 

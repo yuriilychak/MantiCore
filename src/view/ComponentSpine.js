@@ -32,6 +32,13 @@ class ComponentSpine extends PIXI.spine.Spine {
         super(SpineCache.getSkeleton(skeletonName));
 
         /**
+         * @type {number}
+         * @private
+         */
+
+        this._uid = PIXI.utils.uid();
+
+        /**
          * @desc Manager of components.
          * @type {?mCore.manager.ComponentManager}
          * @private
@@ -174,6 +181,8 @@ class ComponentSpine extends PIXI.spine.Spine {
         this.animationManager.addTimeLine(TIME_LINE.SPINE, SpineTimeLine.create(this, TIME_LINE.SPINE));
 
         this._updateTint();
+
+        this.name = `stageElement_${this._uid.toString(10).padStart(6, "0")}`;
     }
 
     /**
@@ -820,6 +829,15 @@ class ComponentSpine extends PIXI.spine.Spine {
             return;
         }
         this._userData = value;
+    }
+
+    /**
+     * @public
+     * @return {number}
+     */
+
+    get uid() {
+        return this._uid;
     }
 }
 

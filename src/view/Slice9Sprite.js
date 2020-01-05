@@ -28,6 +28,13 @@ class Slice9Sprite extends PIXI.Container {
         super();
 
         /**
+         * @type {number}
+         * @private
+         */
+
+        this._uid = PIXI.utils.uid();
+
+        /**
          * @desc anchor point of sprite.
          * @type {mCore.geometry.Point}
          * @private
@@ -103,6 +110,8 @@ class Slice9Sprite extends PIXI.Container {
 
 
         this.frameName = frameName;
+
+        this.name = `stageElement_${this._uid.toString(10).padStart(6, "0")}`;
     }
 
     /**
@@ -598,6 +607,20 @@ class Slice9Sprite extends PIXI.Container {
                 vPosition[col]
             );
         });
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @public
+     * @return {number}
+     */
+
+    get uid() {
+        return this._uid;
     }
 }
 
