@@ -539,7 +539,13 @@ class ComponentContainer extends PIXI.Container {
 
     set height(value) {}
 
-    get size() {
+    /**
+     * @desc Returns size point.
+     * @public
+     * @return {mCore.geometry.Point}
+     */
+
+    get rate() {
         return Point.create();
     }
 
