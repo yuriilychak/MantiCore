@@ -2743,6 +2743,8 @@ declare namespace mCore {
         export namespace math {
             export const PI: number;
             export const HALF_CIRCLE: number;
+            export const FULL_CIRCLE: number;
+            export const MAX_PERCENT: number;
             export const MAX_BYTE: number;
             export function abs(value: number): number;
             export function sign(value: number): number;
@@ -2759,7 +2761,7 @@ declare namespace mCore {
             export function min(...var_args: number[]): number;
             export function toRadians(degrees: number): number;
             export function range(value: number, leftBound: number, rightBound: number): number;
-            export function toDegrees(radians: number): number;
+            export function toDegrees(radians: number, isRound?: boolean): number;
             export function floatToPercent(value: number, isRound?: boolean): number;
             export function percentToFloat(value: number): number;
             export function getUniqueId(): number;

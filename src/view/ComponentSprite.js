@@ -542,6 +542,21 @@ class ComponentSprite extends PIXI.Sprite {
      */
 
     /**
+     * @public
+     * @returns {number}
+     */
+
+
+    get rotation() {
+        return Math.toRadians((Math.FULL_CIRCLE - Math.toDegrees(super.rotation)) % Math.FULL_CIRCLE);
+    }
+
+    set rotation(value) {
+        super.rotation = value;
+    }
+
+
+    /**
      * @desc Returns width of object
      * @public
      * @return {number}

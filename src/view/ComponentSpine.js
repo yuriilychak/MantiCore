@@ -516,6 +516,21 @@ class ComponentSpine extends PIXI.spine.Spine {
      */
 
     /**
+     * @public
+     * @returns {number}
+     */
+
+
+    get rotation() {
+        return Math.toRadians((Math.FULL_CIRCLE - Math.toDegrees(super.rotation)) % Math.FULL_CIRCLE);
+    }
+
+    set rotation(value) {
+        super.rotation = value;
+    }
+
+
+    /**
      * @desc Returns is object interactive
      * @public
      * @return {boolean}

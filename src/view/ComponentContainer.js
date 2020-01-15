@@ -522,6 +522,20 @@ class ComponentContainer extends PIXI.Container {
      * @returns {number}
      */
 
+
+    get rotation() {
+        return Math.toRadians((Math.FULL_CIRCLE - Math.toDegrees(super.rotation)) % Math.FULL_CIRCLE);
+    }
+
+    set rotation(value) {
+        super.rotation = value;
+    }
+
+    /**
+     * @public
+     * @returns {number}
+     */
+
     get width() {
         return 0;
     }

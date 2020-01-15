@@ -120,6 +120,21 @@ class Slice9Sprite extends PIXI.Container {
      */
 
     /**
+     * @public
+     * @returns {number}
+     */
+
+
+    get rotation() {
+        return Math.toRadians((Math.FULL_CIRCLE - Math.toDegrees(super.rotation)) % Math.FULL_CIRCLE);
+    }
+
+    set rotation(value) {
+        super.rotation = value;
+    }
+
+
+    /**
      * @desc Real tint of parent element.
      * @public
      * @type {int}

@@ -48,6 +48,28 @@ const math = {
     HALF_CIRCLE: 180,
 
     /**
+     * @desc Full degree circle need for manipulate with angles.
+     * @type {int}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf mCore.util.math
+     */
+
+    FULL_CIRCLE: 360,
+
+    /**
+     * @desc Max percent value need to manipulate with percents.
+     * @type {int}
+     * @public
+     * @readonly
+     * @const
+     * @memberOf mCore.util.math
+     */
+
+    MAX_PERCENT: 100,
+
+    /**
      * @desc Max value of byte number. Need for manipulate with colors.
      * @type {int}
      * @public
@@ -365,12 +387,14 @@ const math = {
      * @desc Convert radians to degrees
      * @function
      * @param {number} radians
+     * @param {boolean} [isRound = false] - Is need to round value.
      * @memberOf mCore.util.math
      * @return {number}
      */
 
-    toDegrees: function (radians) {
-        return radians * this.HALF_CIRCLE / this.PI;
+    toDegrees: function (radians, isRound = false) {
+        const result = radians * this.HALF_CIRCLE / this.PI;
+        return isRound ? this.round(result) : result;
     },
 
     /**
@@ -383,7 +407,7 @@ const math = {
      */
 
     floatToPercent: function (value, isRound = false) {
-        const result = value * 100;
+        const result = value * this.MAX_PERCENT;
         return isRound ? this.round(result) : result;
     },
 
