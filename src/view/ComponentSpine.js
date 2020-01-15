@@ -526,7 +526,7 @@ class ComponentSpine extends PIXI.spine.Spine {
     }
 
     set rotation(value) {
-        super.rotation = value;
+        super.rotation = -value;
     }
 
 

@@ -130,7 +130,7 @@ class Slice9Sprite extends PIXI.Container {
     }
 
     set rotation(value) {
-        super.rotation = value;
+        super.rotation = -value;
     }
 
 

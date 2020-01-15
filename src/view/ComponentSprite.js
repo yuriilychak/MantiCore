@@ -552,7 +552,7 @@ class ComponentSprite extends PIXI.Sprite {
     }
 
     set rotation(value) {
-        super.rotation = value;
+        super.rotation = -value;
     }
 
 
