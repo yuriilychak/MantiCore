@@ -478,9 +478,12 @@ class Label extends BaseLabel {
 
         this._label.fontSize = this._fontSize;
         this._lineHeight = this._label.lineHeight;
+        this._label.updateText();
+
 
         if (this._isShadowEnabled) {
             this._shadow.fontSize = this._fontSize;
+            this._shadow.updateText();
         }
 
         this._updateAutoSize();
