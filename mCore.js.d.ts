@@ -2331,6 +2331,7 @@ declare namespace mCore {
                 localized: boolean;
                 autoSize: boolean;
                 letterSpacing: number;
+                shadowOffset: mCore.geometry.Point;
 
                 getShadowOffset(): mCore.geometry.Point;
                 setShadowOffset(xOrPoint: number | mCore.geometry.Point, y?: number): void;

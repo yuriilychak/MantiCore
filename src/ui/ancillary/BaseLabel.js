@@ -140,6 +140,20 @@ class BaseLabel extends Widget {
      */
 
     /**
+     * @public
+     * @return {mCore.geometry.Point}
+     */
+
+    get shadowOffset() {
+        return this.getShadowOffset();
+    }
+
+    set shadowOffset(value) {
+        return this.setShadowOffset(value);
+    }
+
+
+    /**
      * @desc Flag is need to change size of font to size of container.
      * @public
      * @return {boolean}
