@@ -111,6 +111,15 @@ class Slice9Sprite extends PIXI.Container {
 
         this.frameName = frameName;
 
+        /**
+         * @type {Point}
+         * @private
+         */
+
+        this._size = Point.create(this.width, this.height);
+
+        this._size.initChangeCallback(this.onSizeChange, this);
+
         this.name = `stageElement_${this._uid.toString(10).padStart(6, "0")}`;
     }
 
@@ -118,6 +127,16 @@ class Slice9Sprite extends PIXI.Container {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @desc Size of element
+     * @public
+     * @return {Point}
+     */
+
+    get rate() {
+        return this._size;
+    }
 
     /**
      * @public
@@ -313,11 +332,13 @@ class Slice9Sprite extends PIXI.Container {
     set width(value) {
         const sliceSum = this._slice[0] + this._slice[1];
         this._setDimension(value < sliceSum ? sliceSum : value, "width");
+        this._size.x = value;
     }
 
     set height(value) {
         const sliceSum = this._slice[2] + this._slice[3];
         this._setDimension(value < sliceSum ? sliceSum : value, "height");
+        this._size.y = value;
     }
 
     /**
@@ -336,6 +357,22 @@ class Slice9Sprite extends PIXI.Container {
             this._slice[i] = Math.round(value[i]);
         }
         this._updateTransform();
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @desc Calls when size of object change.
+     * @method
+     * @protected
+     */
+
+    onSizeChange() {
+        this.width = this._size.x;
+        this.height = this._size.y;
     }
 
     /**
