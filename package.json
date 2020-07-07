@@ -39,7 +39,7 @@
     "babel-loader": "^8.0.4",
     "jsdoc": "^3.5.5",
     "jsdoc-webpack-plugin-v2": "^2.0.2",
-    "npm": "^6.4.1",
+    "npm": "^6.14.6",
     "pixi-spine": "^1.5.19",
     "pixi.js": "^4.8.2",
     "revolt-fx": "^1.0.1",
