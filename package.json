@@ -43,7 +43,7 @@
     "pixi-spine": "^1.5.19",
     "pixi.js": "^4.8.2",
     "revolt-fx": "^1.0.1",
-    "terser": "^3.11.0",
+    "terser": "^4.8.1",
     "tsd-jsdoc": "^2.0.0-beta.6",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.22.0",
